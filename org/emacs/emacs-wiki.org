@@ -159,15 +159,21 @@ Forget religious fantasies, run Emacs as daemon and connect to this
 hell creature in graphics mode or from terminal or...both...several
 times.  Here's how:
 
-~emacs --daemon~
+#+BEGIN_SRC sh
+emacs --daemon
+#+END_SRC
 
 Now, to connect in graphical frame, invoke:
 
+#+BEGIN_SRC sh
 ~emacsclient -c~
+#+END_SRC
 
 and/or in terminal:
 
+#+BEGIN_SRC sh
 ~emacsclient -t~
+#+END_SRC
 
 The --daemon option is certainly available under GNU/Linux and BSDs.
 It might even work for BSD rip off like MacOS but not under Windows.
@@ -536,12 +542,9 @@ Now all current Emacs buffer are listed.  How convenient.  Now hit:
 
 ~* u~
 
-and all buffers with unsaved changes are marked.  Now press:
-
-~S~
-
-to save them all.  Job done.  As all within La la land, IBuffer is
-[[http://www.emacswiki.org/emacs/IbufferMode][full of tricks and neat features]], I even have it bound to:
+and all buffers with unsaved changes are marked.  Now press capital
+~<S>~ to save them all.  Job done.  As all within La la land, IBuffer
+is [[http://www.emacswiki.org/emacs/IbufferMode][full of tricks and neat features]], I even have it bound to:
 
 ~C-x C-b~
 
@@ -556,9 +559,7 @@ but even then, why bother with grep? Try:
 
 You'll again get a list of results and can jump between locations.
 Handy for quick indexes of whatever search pattern.  If using recent
-version of GNU Emacs, you can edit results in place after pressing:
-
-~e~
+version of GNU Emacs, you can edit results in place pressing ~<e>~.
 
 ** If it moves - compile
 
@@ -576,11 +577,7 @@ Emacs as an OS - do whatever you like because your computer is as
 responsive as an idle machine of your colleagues.
 
 You may keep the compilation buffer around even after compilation has
-finished.  Within it, you can just press:
-
-~g~
-
-to recompile.
+finished.  Within it, you can just press ~<g>~ to recompile.
 
 ** Find file in project
 
@@ -697,7 +694,7 @@ If a file is in conflict state, open it and:
 		/-- Jamie Zawinski/
 
 Not surprisingly, [[http://en.wikipedia.org/wiki/Regular_expressions][regexes]] are supported all over the place.  There are
-some [[http://emacswiki.org/emacs/RegularExpression][differences]] to the popular [[http://en.wikipedia.org/wiki/Pcre][PCRE]] style and if you're serious about
+some differences to the popular [[http://en.wikipedia.org/wiki/Pcre][PCRE]] style and if you're serious about
 it, you should read the appropriate sections in the great Emacs and
 Elisp info pages.
 
@@ -713,7 +710,7 @@ buffer.  Provided the regex is somewhat correct.
 ** GDB
 
 Remember Visual Studio?  Aaaarrrrgh, the horror!  Well, you can get
-some of it integrating with the [[http://www.gnu.org/software/gdb/][GNU Debugger]]:
+some of it integrating with [[http://www.gnu.org/software/gdb/][GNU Debugger]]:
 
 #+BEGIN_SRC emacs-lisp
 (custom-set-variables
@@ -733,7 +730,7 @@ executable and rock!
 Recently Emacs is acquiring infrastructure for more unified code
 awareness in the face of the [[http://cedet.sourceforge.net/][CEDET]] utilities.  Here are some
 customizations that give you basic niceties like echoing information
-about object under cursor, colouring of instances of local variables,
+about object under cursor, colouring local variables instances,
 highlighting current function:
 
 #+BEGIN_SRC emacs-lisp
@@ -866,7 +863,7 @@ present in the root project folder):
 
 ~M-x my-ebrowse-refresh~
 
-It refreshes the DB for the current project and opens it in
+It loads/refreshes the DB for the current project and opens it in
 background.  Now, to jump over function/variable definition:
 
 ~C-c C-m f NAME-OF-SOME-FUNCTION-OR-METHOD-OR-MEMBER~
@@ -879,6 +876,11 @@ To see more enabled functionality:
 
 ~C-c C-m C-h~
 
+Unfortunately you can't use two ebrowse DB at a time.  To load another
+one (by being in another ~.emacs-project~ governed location):
+
+~C-u M-x my-ebrowse-refresh~
+
 * Documentation
 
 Emacs documentation is the most complete and accessible set of
@@ -886,9 +888,10 @@ resources I have ever seen (only second to Lisp Machines but they are
 20 years in the past and as one may observe, technology is stubbornly
 regressing in this along other aspects since then).
 
-This is the only environment that has enabled me learn a language and
-easily add useful functionality without internet access.  And do this
-with pleasure and still have hair on my head.  It's that good.
+This is the only environment that has enabled me in a day learn a
+language and easily add useful functionality without internet access.
+And do this with pleasure and still have hair on my head.  It's that
+good.
 
 ** Info
 
@@ -958,7 +961,7 @@ running system.
 ** Apropos
 
 The above is useful when you have vague idea about the first symbols,
-which normally denote package.  If it's not the case, there is even
+which normally denote package.  If this is not the case, there is even
 better search for random Emacs objects:
 
 ~M-x apropos~
@@ -1005,14 +1008,60 @@ There is another wonderful thing that comes with Emacs known as
 planning, and authoring with a fast and effective plain-text system."
 
 This wiki entry is all done in Org Mode and then exported to HTML (one
-of many available formats).  At first you'll probably be fine with the
-minimum - number of stars at the beginning of line signifies heading
-in the document hierarchy.  The less stars - the more important the
-heading.  You can easily reorder headers at the same level (reordering
-all sub-headers as well) with ~<Alt>+<Shift>+<Up>~ and
+of many available formats).
+
+*** Basic usage
+
+To launch Org mode either:
+
+~M-x org-mode~
+
+for existing buffer, or name your file with an ~.org~ extension.
+
+You'll go a long way even with the minimum - number of stars at the
+beginning of line signifies heading in the document hierarchy.  The
+less stars - the more important the heading.  Here's a random Org
+rambling:
+
+#+BEGIN_SRC org
+* This is important header
+
+** This is sub-header
+
+Here's a cool report:
+
+|-------+-------------|
+| month | revenue     |
+|-------+-------------|
+|     1 | 0           |
+|     2 | 6 000       |
+|     3 | - 1 000 000 |
+|     4 |             |
+|-------+-------------|
+
+*** This is sub-sub-header (maybe even a bullet)
+
+Some specific information...
+
+** Another sub-header
+
+Some rescue plan.
+
+****** This is so low, I don't even know how will be exported
+****** At least there are two of us
+#+END_SRC
+
+You can press:
+
+~C-c C-e~
+
+and choose some format to export.
+
+You can easily reorder headers at the same level (reordering all
+sub-headers and content as well) with ~<Alt>+<Shift>+<Up>~ and
 ~<Alt>+<Shift>+<Down>~, change nesting level of a header hierarchy
 with ~<Alt>+<Shift>+<Left>~ and ~<Alt>+<Shift>+<Right>~ and so on.
-Have a look at the site for details
+Have a look at the site or the manuals for details.
 
 *** Tables
 
@@ -1023,8 +1072,8 @@ Org tables rock!  Here's how to start one:
 #+END_SRC
 
 Now press <Tab> and new row will be added.  <Tab> now moves over the
-fields and automatically resizes table fields if longer text is
-entered somewhere.  To insert row separator enter:
+fields and automatically resizes the table if longer text is entered
+somewhere.  To insert row separator enter:
 
 #+BEGIN_SRC org
 |-
@@ -1048,10 +1097,10 @@ Write an org-mode file and export it to PDF (through [[http://en.wikipedia.org/w
 take care of all details, add table of content even.
 
 Setting up a header page is a little work though.  Here's a little
-[[https://gist.github.com/m00natic/15410be25f7475984a71][example]] how to setup special header page with some logo in file
-vayant-logo.jpg and integrate it within an Org document.  I have added
-some optional information like author, title and export type as well.
-Tweak it however you want.
+[[https://gist.github.com/m00natic/15410be25f7475984a71][example]] how to make header page with some picture logo and integrate
+it within an Org document.  I have added some optional information
+like author, title and export type as well.  Tweak it however you
+want.
 
 ** Vim
 
