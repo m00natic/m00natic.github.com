@@ -1,0 +1,11 @@
+#+TITLE: Sitemap
+
+   + emacs
+     + [[file:emacs/emacs-wiki.org][Andrey's Opinionated Emacs Guide]]
+     + [[file:emacs/emacs-intro-bg.org][Въведение в Емакс]]
+   + presentations
+     + [[file:presentations/git.org][Git vs Subversion]]
+     + [[file:presentations/haskell.org][Haskell (pure and lazy, yet functional)]]
+     + [[file:presentations/lisp.org][Lisp (what ITA might have that we don't)]]
+   + [[file:index.org][Home]]
+   + [[file:README-PC.org][If you happen to sit on my computer...]]

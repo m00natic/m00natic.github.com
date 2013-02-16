@@ -1,0 +1,294 @@
+#+SETUPFILE: ~/.emacs.d/org-templates/level-1.org
+#+TITLE:     Haskell (pure and lazy, yet functional)
+
+#+LaTeX_CLASS: beamer
+#+LaTeX_CLASS_OPTIONS: [presentation]
+#+BEAMER_FRAME_LEVEL: 2
+
+#+BEAMER_HEADER_EXTRA: \usetheme{Singapore}\usecolortheme{structure}
+#+COLUMNS: %45ITEM %10BEAMER_env(Env) %10BEAMER_envargs(Env Args) %4BEAMER_col(Col) %8BEAMER_extra(Extra)
+#+PROPERTY: BEAMER_col_ALL 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0 :ETC
+#+LATEX: \setbeamertemplate{background}{\includegraphics[width=\paperwidth]{Haskell-Logo.eps}}
+
+#+LATEX_HEADER: \usepackage{listings}
+
+* Quick overview
+
+** History and stuff
+
+*** Unification of efforts in lazy functional programming
+*** A lot of theory underneath
+*** Academy driven, cutting edge research
+*** Evolving standard
+*** Glasgow Haskell Compiler being the canonical implementation
+*** Avoid Success at All Costs
+\pause
+*** Hoare quote							    :B_quote:
+    :PROPERTIES:
+    :BEAMER_env: quote
+    :END:
+I fear that Haskell is doomed to succeed.
+
+-- C.A.R. Hoare
+
+** Theoretical base
+
+*** (Typed) \lambda -calculus
+*** Category theory
+*** Hindley-Milner(-Damas) type inference
+
+** Technical merits
+
+*** Purely functional
+*** Lazy (non-strict)
+*** Polymorphic strong static typing
+\pause
+*** Elegant (sort of), math inspired syntax
+
+* The language from bird's-eye
+
+** Pure functional?
+
+*** Program is a tree of nested expresions
+*** Functions are the base building unit
+*** No side effects by default
+**** like in mathematic functions
+
+** Functions
+
+*** Pattern matching
+
+#+BEGIN_SRC haskell
+map :: (a -> b) -> [a] -> [b]
+map _ [] = []
+map f (x:xs) = f x : map f xs
+#+END_SRC
+
+*** Curring
+**** Function of N arguments is actually an application of N 1-argument functions
+
+#+BEGIN_SRC haskell
+map (5 +) [1..10]
+#+END_SRC
+
+*** Composition
+
+#+BEGIN_SRC haskell
+map (negate . sum . tail) [[1..5],[3..6],[1..7]]
+#+END_SRC
+
+** Lazy?
+
+*** Evaluation order
+*** Thunks
+**** Delayed computations
+
+\begin{lstlisting}[language=c++]
+int* take(int amount, int collection[])
+{...}
+#+END_SRC
+
+**** Don't compute anything until/unless required
+
+#+BEGIN_SRC haskell
+take 10 $ map (5 +) [1..]
+#+END_SRC
+
+** Strong static typing?
+
+*** Each expression has a type known at compile time
+**** so do functions
+
+*** Our types determine a theorem and compiling is a proof of its correctness within the Haskell world
+**** common theme for such advanced type systems
+*** Polymorphic types
+
+Prelude> :t filter
+#+BEGIN_SRC haskell
+filter :: (a -> Bool) -> [a] -> [a]
+#+END_SRC
+
+** Algebraic data types
+
+*** Union of possible values or value constructors
+
+#+BEGIN_SRC haskell
+data Bool = False | True
+
+data Car = Car {model :: String
+	       , year :: Int
+	       , burnTime :: Int
+	       } deriving (Show)
+#+END_SRC
+
+*** Type parameters
+
+#+BEGIN_SRC haskell
+data Maybe a = Nothing | Just a
+
+data Tree a = EmptyTree | Node a (Tree a)
+			  (Tree a)
+	    deriving (Show, Read, Eq)
+#+END_SRC
+
+** Typeclasses
+
+*** Interfaces sort of
+*** If it quacks like a duck, it's a duck
+
+#+BEGIN_SRC haskell
+class Eq a where
+    (==) :: a -> a -> Bool
+    (/=) :: a -> a -> Bool
+    x == y = not (x /= y)
+    x /= y = not (x == y)
+
+instance (Eq m) => Eq (Maybe m) where
+
+    Just x == Just y = x == y
+    Nothing == Nothing = True
+    _ == _ = False
+#+END_SRC
+
+** I/O vs Purity
+
+*** The IO Monad
+
+*** Reverse words
+
+#+BEGIN_SRC haskell
+main = do
+    line <- getLine
+    if null line
+	then return ()
+	else do
+	    putStrLn $ reverseWords line
+	    main
+
+reverseWords :: String -> String
+reverseWords = unwords . map reverse . words
+#+END_SRC
+
+*** Cool one-liner
+
+#+BEGIN_SRC haskell
+main = interact $ unlines .
+       filter ((>200) . length) . lines
+#+END_SRC
+
+** Functors
+
+*** Don't confuse with C++ ;-)
+*** Iterable?
+*** Lift ordinary function to operate on boxed value
+
+#+BEGIN_SRC haskell
+class Functor f where
+    fmap :: (a -> b) -> f a -> f b
+
+instance Functor [] where
+    fmap = map
+
+instance Functor Maybe where
+    fmap f (Just x) = Just (f x)
+    fmap f Nothing = Nothing
+#+END_SRC
+
+** Applicative
+
+*** Beefed up functors
+*** Sequence of several boxed actions
+
+#+BEGIN_SRC haskell
+class (Functor f) => Applicative f where
+    pure :: a -> f a
+    (<*>) :: f (a -> b) -> f a -> f b
+
+instance Applicative Maybe where
+    pure = Just
+    Nothing <*> _ = Nothing
+    (Just f) <*> something = fmap f something
+#+END_SRC
+
+*** pure f <*> x \equiv fmap f x
+
+** Monoids
+
+*** Associative binary function + identity value
+*** Accumulate a boxed value from several boxes
+
+#+BEGIN_SRC haskell
+class Monoid m where
+    mempty :: m
+    mappend :: m -> m -> m
+    mconcat :: [m] -> m
+    mconcat = foldr mappend mempty
+
+instance Monoid [a] where
+    mempty = []
+    mappend = (++)
+#+END_SRC
+
+** Monads
+
+*** Beefed up applicatives
+
+#+BEGIN_SRC haskell
+class Monad m where
+    return :: a -> m a
+    (>>=) :: m a -> (a -> m b) -> m b
+
+    (>>) :: m a -> m b -> m b
+    x >> y = x >>= \_ -> y
+
+    fail :: String -> m a
+    fail msg = error msg
+
+instance Monad Maybe where
+    return x = Just x
+    Nothing >>= f = Nothing
+    Just x >>= f  = f x
+    fail _ = Nothing
+#+END_SRC
+
+* Pros and cons
+
+** Benefits
+
+*** The pervasive type system gives a lot of information to the compiler
+**** many types (pun intended) of bugs are prevented at compile time
+**** much room for automatic optimizations
+***** Data Parallel Haskell
+**** secure and formally verifiable programs
+
+*** Side effects are not the norm and are explicitly specified and controlled
+**** easier to reason about
+**** better concurrency state
+***** how many languages have a _working_ STM implementation?
+
+** Problems
+
+*** There are cases where static typing may not be natural
+*** For huge systems, you may paint yourself in the corner if having somehow wrong base
+*** Laziness makes order of evaluation non-obvious
+**** trouble with performance bottlenecks identification
+**** memory spikes
+
+* Resources
+
+** Links & books
+
+*** [[http://haskell.org][Official site]]
+*** [[http://learnyouahaskell.com][Learn You a Haskell for Great Good!]]
+*** [[http://stefan-klinger.de/files/monadGuide.pdf][The Haskell Programmer's Guide to the IO Monad - Don't Panic.]]
+*** [[http://book.realworldhaskell.org][Real World Haskell]]
+*** [[http://haskell.org/haskellwiki/Tutorials][Great list of tutorials]]
+*** [[http://channel9.msdn.com/Blogs/Charles/YOW-2011-Simon-Peyton-Jones-Closer-to-Nirvana][Recent interview with Simon Peyton-Jones]]
+
+* Fun
+
+** Why so serious?
+
+[[./newline.jpg]]
+
+*** [[http://www.willamette.edu/~fruehr/haskell/evolution.html][The Evolution of a Haskell Programmer]]

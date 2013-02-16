@@ -1,0 +1,1224 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+               "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>Lisp (what ITA might have that we don't)</title>
+<meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1"/>
+<meta name="title" content="Lisp (what ITA might have that we don't)"/>
+<meta name="generator" content="Org-mode"/>
+<meta name="generated" content="2013-02-16 18:25:25 EET"/>
+<meta name="author" content="Andrey Kotlarski"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  html { font-family: Times, serif; font-size: 12pt; }
+  .title  { text-align: center; }
+  .todo   { color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #add8e6; font-weight:normal }
+  .target { }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .right  {margin-left:auto; margin-right:0px;  text-align:right;}
+  .left   {margin-left:0px;  margin-right:auto; text-align:left;}
+  .center {margin-left:auto; margin-right:auto; text-align:center;}
+  p.verse { margin-left: 3% }
+  pre {
+	border: 1pt solid #AEBDCC;
+	background-color: #F3F5F7;
+	padding: 5pt;
+	font-family: courier, monospace;
+        font-size: 90%;
+        overflow:auto;
+  }
+  table { border-collapse: collapse; }
+  td, th { vertical-align: top;  }
+  th.right  { text-align:center;  }
+  th.left   { text-align:center;   }
+  th.center { text-align:center; }
+  td.right  { text-align:right;  }
+  td.left   { text-align:left;   }
+  td.center { text-align:center; }
+  dt { font-weight: bold; }
+  div.figure { padding: 0.5em; }
+  div.figure p { text-align: center; }
+  div.inlinetask {
+    padding:10px;
+    border:2px solid gray;
+    margin:10px;
+    background: #ffffcc;
+  }
+  textarea { overflow-x: auto; }
+  .linenr { font-size:smaller }
+  .code-highlighted {background-color:#ffff00;}
+  .org-info-js_info-navigation { border-style:none; }
+  #org-info-js_console-label { font-size:10px; font-weight:bold;
+                               white-space:nowrap; }
+  .org-info-js_search-highlight {background-color:#ffff00; color:#000000;
+                                 font-weight:bold; }
+  /*]]>*/-->
+</style>
+<link rel="stylesheet" type="text/css" href="../css/worg-classic.css" />
+<script type="text/javascript">
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+<script type="text/javascript" src="http://orgmode.org/mathjax/MathJax.js">
+<!--/*--><![CDATA[/*><!--*/
+    MathJax.Hub.Config({
+        // Only one of the two following lines, depending on user settings
+        // First allows browser-native MathML display, second forces HTML/CSS
+        //  config: ["MMLorHTML.js"], jax: ["input/TeX"],
+            jax: ["input/TeX", "output/HTML-CSS"],
+        extensions: ["tex2jax.js","TeX/AMSmath.js","TeX/AMSsymbols.js",
+                     "TeX/noUndefined.js"],
+        tex2jax: {
+            inlineMath: [ ["\\(","\\)"] ],
+            displayMath: [ ['$$','$$'], ["\\[","\\]"], ["\\begin{displaymath}","\\end{displaymath}"] ],
+            skipTags: ["script","noscript","style","textarea","pre","code"],
+            ignoreClass: "tex2jax_ignore",
+            processEscapes: false,
+            processEnvironments: true,
+            preview: "TeX"
+        },
+        showProcessingMessages: true,
+        displayAlign: "center",
+        displayIndent: "2em",
+
+        "HTML-CSS": {
+             scale: 100,
+             availableFonts: ["STIX","TeX"],
+             preferredFont: "TeX",
+             webFont: "TeX",
+             imageFont: "TeX",
+             showMathMenu: true,
+        },
+        MMLorHTML: {
+             prefer: {
+                 MSIE:    "MML",
+                 Firefox: "MML",
+                 Opera:   "HTML",
+                 other:   "HTML"
+             }
+        }
+    });
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="org-div-home-and-up" style="text-align:right;font-size:70%;white-space:nowrap;">
+ <a accesskey="h" href="../index.html"> UP </a>
+ |
+ <a accesskey="H" href="../sitemap.html"> HOME </a>
+</div>
+
+<div id="preamble">
+
+</div>
+
+<div id="content">
+<h1 class="title">Lisp (what ITA might have that we don't)</h1>
+
+
+
+
+
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1 Quick Overview</a>
+<ul>
+<li><a href="#sec-1-1">1.1 History and stuff</a>
+<ul>
+<li><a href="#sec-1-1-1">1.1.1 One of the oldest programming languages still in use</a></li>
+<li><a href="#sec-1-1-2">1.1.2 Actually a family of languages</a></li>
+<li><a href="#sec-1-1-3">1.1.3 Academic wing (Scheme), industrial wing (Common Lisp, maybe Clojure)</a></li>
+<li><a href="#sec-1-1-4">1.1.4 Starting in days of limited hardware, it's quite efficient</a></li>
+<li><a href="#sec-1-1-5">1.1.5 Accidentally or not, raised by the Artificial Intelligence pioneers and for long time being the standard there</a></li>
+<li><a href="#sec-1-1-6">1.1.6 Lots of groundbreaking ideas for its time, most of them have slowly crept to mainstream and are now taken for granted (garbage collection, dynamic typing, tree data structures, interactive development)</a></li>
+<li><a href="#sec-1-1-7">1.1.7 Easy to implement, has standards, lots of realisations</a></li>
+<li><a href="#sec-1-1-8">1.1.8 Based on Alonzo Church's lambda calculus</a></li>
+</ul>
+</li>
+<li><a href="#sec-1-2">1.2 Common Lisp nowadays</a>
+<ul>
+<li><a href="#sec-1-2-1">1.2.1 Never quite in the mainstream, but with somewhat growing interest in recent years</a></li>
+<li><a href="#sec-1-2-2">1.2.2 Aging standard but the language doesn't feel handicapped</a></li>
+<li><a href="#sec-1-2-3">1.2.3 HyperSpec, excellent documentation</a></li>
+<li><a href="#sec-1-2-4">1.2.4 Lots of implementations, 2 of them commercial</a></li>
+<li><a href="#sec-1-2-5">1.2.5 The most popular open source implementation SBCL (Steel Bank Common Lisp) is actually the fastest and written in&hellip;Common Lisp</a></li>
+<li><a href="#sec-1-2-6">1.2.6 Small community but with increasingly better library support</a></li>
+<li><a href="#sec-1-2-7">1.2.7 Lots of great books</a></li>
+<li><a href="#sec-1-2-8">1.2.8 Known usage includes 3D graphics suits, game engines, semantic web reasoning systems, knowledge and rule based systems, theorem provers, compilers, algebra systems, telecom systems, fare search engine&hellip;</a></li>
+</ul>
+</li>
+<li><a href="#sec-1-3">1.3 Technical features</a>
+<ul>
+<li><a href="#sec-1-3-1">1.3.1 Multi-paradigm: supports procedural, functional and object-oriented styles out of the box</a></li>
+<li><a href="#sec-1-3-2">1.3.2 Minimal, consistent syntax based on S-expressions</a></li>
+<li><a href="#sec-1-3-3">1.3.3 Code is data</a></li>
+<li><a href="#sec-1-3-4">1.3.4 Programmer has essentially everything that the language creators have had, great extensibility</a></li>
+<li><a href="#sec-1-3-5">1.3.5 Dynamic typing with optional type annotation</a></li>
+<li><a href="#sec-1-3-6">1.3.6 Read Eval Print Loop</a></li>
+<li><a href="#sec-1-3-7">1.3.7 Supports incremental development</a></li>
+<li><a href="#sec-1-3-8">1.3.8 Efficiently compiled</a></li>
+<li><a href="#sec-1-3-9">1.3.9 Macros</a></li>
+<li><a href="#sec-1-3-10">1.3.10 Condition system</a></li>
+<li><a href="#sec-1-3-11">1.3.11 CLOS</a></li>
+</ul></li>
+</ul>
+</li>
+<li><a href="#sec-2">2 The Language</a>
+<ul>
+<li><a href="#sec-2-1">2.1 S-expressions and evaluation</a>
+<ul>
+<li><a href="#sec-2-1-1">2.1.1 S-expressions (lists) are actually the abstract syntax tree that directly feeds the lisp compiler</a></li>
+<li><a href="#sec-2-1-2">2.1.2 Each S-expression returns a value</a></li>
+<li><a href="#sec-2-1-3">2.1.3 Evaluating non empty list normally asks the environment for the function/macro represented by the first symbol.</a></li>
+<li><a href="#sec-2-1-4">2.1.4 When function, rest of the list is treated like arguments that are also evaluated and passed to the function.</a></li>
+<li><a href="#sec-2-1-5">2.1.5 When macro, rest of the list is treated like arguments that are passed as they are to the macro.</a></li>
+<li><a href="#sec-2-1-6">2.1.6 Lists are treated as function/macro invocations unless quoted</a></li>
+</ul>
+</li>
+<li><a href="#sec-2-2">2.2 Variables</a>
+<ul>
+<li><a href="#sec-2-2-1">2.2.1 Lexical scope by default, with a twist</a></li>
+<li><a href="#sec-2-2-2">2.2.2 Closures</a></li>
+</ul>
+</li>
+<li><a href="#sec-2-3">2.3 Variables (continued)</a>
+<ul>
+<li><a href="#sec-2-3-1">2.3.1 Dynamic aka special variables</a></li>
+</ul>
+</li>
+<li><a href="#sec-2-4">2.4 Functions</a>
+<ul>
+<li><a href="#sec-2-4-1">2.4.1 First class citizens</a></li>
+<li><a href="#sec-2-4-2">2.4.2 Anonymous functions</a></li>
+<li><a href="#sec-2-4-3">2.4.3 Functions as data</a></li>
+<li><a href="#sec-2-4-4">2.4.4 Multiple return values</a></li>
+</ul>
+</li>
+<li><a href="#sec-2-5">2.5 Macros</a>
+<ul>
+<li><a href="#sec-2-5-1">2.5.1 Program life-cycle</a></li>
+<li><a href="#sec-2-5-2">2.5.2 Run-time vs. compilation</a></li>
+<li><a href="#sec-2-5-3">2.5.3 Macro expansion time</a></li>
+<li><a href="#sec-2-5-4">2.5.4 Programming the compiler</a></li>
+<li><a href="#sec-2-5-5">2.5.5 Almost like functions on the outside</a></li>
+<li><a href="#sec-2-5-6">2.5.6 Programming over the source code with all the power of the language</a></li>
+</ul>
+</li>
+<li><a href="#sec-2-6">2.6 Condition System</a>
+<ul>
+<li><a href="#sec-2-6-1">2.6.1 Beyond exception handling</a></li>
+<li><a href="#sec-2-6-2">2.6.2 Conditions and restarts</a></li>
+<li><a href="#sec-2-6-3">2.6.3 Condition handlers</a></li>
+<li><a href="#sec-2-6-4">2.6.4 handler-case similar to catch</a></li>
+</ul>
+</li>
+<li><a href="#sec-2-7">2.7 Condition System (continued)</a>
+<ul>
+<li><a href="#sec-2-7-1">2.7.1 restart-case</a></li>
+</ul>
+</li>
+<li><a href="#sec-2-8">2.8 Condition System (continued)</a>
+<ul>
+<li><a href="#sec-2-8-1">2.8.1 handler-bind</a></li>
+<li><a href="#sec-2-8-2">2.8.2 Signals, why just errors</a></li>
+<li><a href="#sec-2-8-3">2.8.3 Restarts at lower levels, handlers at higher</a></li>
+</ul>
+</li>
+<li><a href="#sec-2-9">2.9 Common Lisp Object System</a>
+<ul>
+<li><a href="#sec-2-9-1">2.9.1 Message passing</a></li>
+<li><a href="#sec-2-9-2">2.9.2 Decoupling classes from methods</a></li>
+<li><a href="#sec-2-9-3">2.9.3 Generic functions</a></li>
+<li><a href="#sec-2-9-4">2.9.4 Method combinations</a></li>
+<li><a href="#sec-2-9-5">2.9.5 Multimethods</a></li>
+</ul></li>
+</ul>
+</li>
+<li><a href="#sec-3">3 A bit of code</a>
+<ul>
+<li><a href="#sec-3-1">3.1 Switch to Emacs please</a></li>
+</ul>
+</li>
+<li><a href="#sec-4">4 Resources</a>
+<ul>
+<li><a href="#sec-4-1">4.1 Books</a>
+<ul>
+<li><a href="#sec-4-1-1">4.1.1 Practical Common Lisp</a></li>
+<li><a href="#sec-4-1-2">4.1.2 HyperSpec</a></li>
+<li><a href="#sec-4-1-3">4.1.3 Common Lisp the Language, 2nd Edition</a></li>
+<li><a href="#sec-4-1-4">4.1.4 On Lisp: Advanced Techniques for Common Lisp</a></li>
+<li><a href="#sec-4-1-5">4.1.5 Common Lisp: A Gentle Introduction to Symbolic Computation</a></li>
+<li><a href="#sec-4-1-6">4.1.6 Paradigms of Artificial Intelligence Programming</a></li>
+<li><a href="#sec-4-1-7">4.1.7 Structure and Interpretation of Computer Programs</a></li>
+</ul>
+</li>
+<li><a href="#sec-4-2">4.2 Links</a>
+<ul>
+<li><a href="#sec-4-2-1">4.2.1 CLiki</a></li>
+<li><a href="#sec-4-2-2">4.2.2 CL resources</a></li>
+<li><a href="#sec-4-2-3">4.2.3 Implementations: A Survey</a></li>
+<li><a href="#sec-4-2-4">4.2.4 Quicklisp - CL package manager</a></li>
+<li><a href="#sec-4-2-5">4.2.5 SLIME: The Superior Lisp Interaction Mode for Emacs</a></li>
+<li><a href="#sec-4-2-6">4.2.6 Dr. Edmund Weitz's great libraries</a></li>
+<li><a href="#sec-4-2-7">4.2.7 Steel Bank Common Lisp</a></li>
+<li><a href="#sec-4-2-8">4.2.8 Some SBCL benchmarks</a></li>
+<li><a href="#sec-4-2-9">4.2.9 Franz Inc.</a></li>
+<li><a href="#sec-4-2-10">4.2.10 LispWorks</a></li>
+</ul></li>
+</ul>
+</li>
+<li><a href="#sec-5">5 Fun</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Quick Overview</h2>
+<div class="outline-text-2" id="text-1">
+
+
+
+</div>
+
+<div id="outline-container-1-1" class="outline-3">
+<h3 id="sec-1-1"><span class="section-number-3">1.1</span> History and stuff</h3>
+<div class="outline-text-3" id="text-1-1">
+
+
+
+</div>
+
+<div id="outline-container-1-1-1" class="outline-4">
+<h4 id="sec-1-1-1"><span class="section-number-4">1.1.1</span> One of the oldest programming languages still in use</h4>
+<div class="outline-text-4" id="text-1-1-1">
+
+</div>
+
+</div>
+
+<div id="outline-container-1-1-2" class="outline-4">
+<h4 id="sec-1-1-2"><span class="section-number-4">1.1.2</span> Actually a family of languages</h4>
+<div class="outline-text-4" id="text-1-1-2">
+
+</div>
+
+</div>
+
+<div id="outline-container-1-1-3" class="outline-4">
+<h4 id="sec-1-1-3"><span class="section-number-4">1.1.3</span> Academic wing (Scheme), industrial wing (Common Lisp, maybe Clojure)</h4>
+<div class="outline-text-4" id="text-1-1-3">
+
+</div>
+
+</div>
+
+<div id="outline-container-1-1-4" class="outline-4">
+<h4 id="sec-1-1-4"><span class="section-number-4">1.1.4</span> Starting in days of limited hardware, it's quite efficient</h4>
+<div class="outline-text-4" id="text-1-1-4">
+
+</div>
+
+</div>
+
+<div id="outline-container-1-1-5" class="outline-4">
+<h4 id="sec-1-1-5"><span class="section-number-4">1.1.5</span> Accidentally or not, raised by the Artificial Intelligence pioneers and for long time being the standard there</h4>
+<div class="outline-text-4" id="text-1-1-5">
+
+</div>
+
+</div>
+
+<div id="outline-container-1-1-6" class="outline-4">
+<h4 id="sec-1-1-6"><span class="section-number-4">1.1.6</span> Lots of groundbreaking ideas for its time, most of them have slowly crept to mainstream and are now taken for granted (garbage collection, dynamic typing, tree data structures, interactive development)</h4>
+<div class="outline-text-4" id="text-1-1-6">
+
+</div>
+
+</div>
+
+<div id="outline-container-1-1-7" class="outline-4">
+<h4 id="sec-1-1-7"><span class="section-number-4">1.1.7</span> Easy to implement, has standards, lots of realisations</h4>
+<div class="outline-text-4" id="text-1-1-7">
+
+</div>
+
+</div>
+
+<div id="outline-container-1-1-8" class="outline-4">
+<h4 id="sec-1-1-8"><span class="section-number-4">1.1.8</span> Based on Alonzo Church's lambda calculus</h4>
+<div class="outline-text-4" id="text-1-1-8">
+
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-1-2" class="outline-3">
+<h3 id="sec-1-2"><span class="section-number-3">1.2</span> Common Lisp nowadays</h3>
+<div class="outline-text-3" id="text-1-2">
+
+
+
+</div>
+
+<div id="outline-container-1-2-1" class="outline-4">
+<h4 id="sec-1-2-1"><span class="section-number-4">1.2.1</span> Never quite in the mainstream, but with somewhat growing interest in recent years</h4>
+<div class="outline-text-4" id="text-1-2-1">
+
+</div>
+
+</div>
+
+<div id="outline-container-1-2-2" class="outline-4">
+<h4 id="sec-1-2-2"><span class="section-number-4">1.2.2</span> Aging standard but the language doesn't feel handicapped</h4>
+<div class="outline-text-4" id="text-1-2-2">
+
+</div>
+
+</div>
+
+<div id="outline-container-1-2-3" class="outline-4">
+<h4 id="sec-1-2-3"><span class="section-number-4">1.2.3</span> HyperSpec, excellent documentation</h4>
+<div class="outline-text-4" id="text-1-2-3">
+
+</div>
+
+</div>
+
+<div id="outline-container-1-2-4" class="outline-4">
+<h4 id="sec-1-2-4"><span class="section-number-4">1.2.4</span> Lots of implementations, 2 of them commercial</h4>
+<div class="outline-text-4" id="text-1-2-4">
+
+</div>
+
+</div>
+
+<div id="outline-container-1-2-5" class="outline-4">
+<h4 id="sec-1-2-5"><span class="section-number-4">1.2.5</span> The most popular open source implementation SBCL (Steel Bank Common Lisp) is actually the fastest and written in&hellip;Common Lisp</h4>
+<div class="outline-text-4" id="text-1-2-5">
+
+</div>
+
+</div>
+
+<div id="outline-container-1-2-6" class="outline-4">
+<h4 id="sec-1-2-6"><span class="section-number-4">1.2.6</span> Small community but with increasingly better library support</h4>
+<div class="outline-text-4" id="text-1-2-6">
+
+</div>
+
+</div>
+
+<div id="outline-container-1-2-7" class="outline-4">
+<h4 id="sec-1-2-7"><span class="section-number-4">1.2.7</span> Lots of great books</h4>
+<div class="outline-text-4" id="text-1-2-7">
+
+</div>
+
+</div>
+
+<div id="outline-container-1-2-8" class="outline-4">
+<h4 id="sec-1-2-8"><span class="section-number-4">1.2.8</span> Known usage includes 3D graphics suits, game engines, semantic web reasoning systems, knowledge and rule based systems, theorem provers, compilers, algebra systems, telecom systems, fare search engine&hellip;</h4>
+<div class="outline-text-4" id="text-1-2-8">
+
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-1-3" class="outline-3">
+<h3 id="sec-1-3"><span class="section-number-3">1.3</span> Technical features</h3>
+<div class="outline-text-3" id="text-1-3">
+
+
+
+</div>
+
+<div id="outline-container-1-3-1" class="outline-4">
+<h4 id="sec-1-3-1"><span class="section-number-4">1.3.1</span> Multi-paradigm: supports procedural, functional and object-oriented styles out of the box</h4>
+<div class="outline-text-4" id="text-1-3-1">
+
+</div>
+
+</div>
+
+<div id="outline-container-1-3-2" class="outline-4">
+<h4 id="sec-1-3-2"><span class="section-number-4">1.3.2</span> Minimal, consistent syntax based on S-expressions</h4>
+<div class="outline-text-4" id="text-1-3-2">
+
+</div>
+
+</div>
+
+<div id="outline-container-1-3-3" class="outline-4">
+<h4 id="sec-1-3-3"><span class="section-number-4">1.3.3</span> Code is data</h4>
+<div class="outline-text-4" id="text-1-3-3">
+
+</div>
+
+</div>
+
+<div id="outline-container-1-3-4" class="outline-4">
+<h4 id="sec-1-3-4"><span class="section-number-4">1.3.4</span> Programmer has essentially everything that the language creators have had, great extensibility</h4>
+<div class="outline-text-4" id="text-1-3-4">
+
+</div>
+
+</div>
+
+<div id="outline-container-1-3-5" class="outline-4">
+<h4 id="sec-1-3-5"><span class="section-number-4">1.3.5</span> Dynamic typing with optional type annotation</h4>
+<div class="outline-text-4" id="text-1-3-5">
+
+</div>
+
+</div>
+
+<div id="outline-container-1-3-6" class="outline-4">
+<h4 id="sec-1-3-6"><span class="section-number-4">1.3.6</span> Read Eval Print Loop</h4>
+<div class="outline-text-4" id="text-1-3-6">
+
+</div>
+
+</div>
+
+<div id="outline-container-1-3-7" class="outline-4">
+<h4 id="sec-1-3-7"><span class="section-number-4">1.3.7</span> Supports incremental development</h4>
+<div class="outline-text-4" id="text-1-3-7">
+
+</div>
+
+</div>
+
+<div id="outline-container-1-3-8" class="outline-4">
+<h4 id="sec-1-3-8"><span class="section-number-4">1.3.8</span> Efficiently compiled</h4>
+<div class="outline-text-4" id="text-1-3-8">
+
+</div>
+
+</div>
+
+<div id="outline-container-1-3-9" class="outline-4">
+<h4 id="sec-1-3-9"><span class="section-number-4">1.3.9</span> Macros</h4>
+<div class="outline-text-4" id="text-1-3-9">
+
+</div>
+
+</div>
+
+<div id="outline-container-1-3-10" class="outline-4">
+<h4 id="sec-1-3-10"><span class="section-number-4">1.3.10</span> Condition system</h4>
+<div class="outline-text-4" id="text-1-3-10">
+
+</div>
+
+</div>
+
+<div id="outline-container-1-3-11" class="outline-4">
+<h4 id="sec-1-3-11"><span class="section-number-4">1.3.11</span> CLOS</h4>
+<div class="outline-text-4" id="text-1-3-11">
+
+
+</div>
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> The Language</h2>
+<div class="outline-text-2" id="text-2">
+
+
+
+</div>
+
+<div id="outline-container-2-1" class="outline-3">
+<h3 id="sec-2-1"><span class="section-number-3">2.1</span> S-expressions and evaluation</h3>
+<div class="outline-text-3" id="text-2-1">
+
+
+
+</div>
+
+<div id="outline-container-2-1-1" class="outline-4">
+<h4 id="sec-2-1-1"><span class="section-number-4">2.1.1</span> S-expressions (lists) are actually the abstract syntax tree that directly feeds the lisp compiler</h4>
+<div class="outline-text-4" id="text-2-1-1">
+
+</div>
+
+</div>
+
+<div id="outline-container-2-1-2" class="outline-4">
+<h4 id="sec-2-1-2"><span class="section-number-4">2.1.2</span> Each S-expression returns a value</h4>
+<div class="outline-text-4" id="text-2-1-2">
+
+</div>
+
+</div>
+
+<div id="outline-container-2-1-3" class="outline-4">
+<h4 id="sec-2-1-3"><span class="section-number-4">2.1.3</span> Evaluating non empty list normally asks the environment for the function/macro represented by the first symbol.</h4>
+<div class="outline-text-4" id="text-2-1-3">
+
+</div>
+
+</div>
+
+<div id="outline-container-2-1-4" class="outline-4">
+<h4 id="sec-2-1-4"><span class="section-number-4">2.1.4</span> When function, rest of the list is treated like arguments that are also evaluated and passed to the function.</h4>
+<div class="outline-text-4" id="text-2-1-4">
+
+
+
+
+
+<pre class="src src-common-lisp">(some-function arguments that are first evaluated)
+</pre>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-2-1-5" class="outline-4">
+<h4 id="sec-2-1-5"><span class="section-number-4">2.1.5</span> When macro, rest of the list is treated like arguments that are passed as they are to the macro.</h4>
+<div class="outline-text-4" id="text-2-1-5">
+
+
+
+
+
+<pre class="src src-common-lisp">(some-macro arguments passed as they are)
+</pre>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-2-1-6" class="outline-4">
+<h4 id="sec-2-1-6"><span class="section-number-4">2.1.6</span> Lists are treated as function/macro invocations unless quoted</h4>
+<div class="outline-text-4" id="text-2-1-6">
+
+
+
+
+
+<pre class="src src-common-lisp">'(some list with unevaluated elements)
+</pre>
+
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-2-2" class="outline-3">
+<h3 id="sec-2-2"><span class="section-number-3">2.2</span> Variables</h3>
+<div class="outline-text-3" id="text-2-2">
+
+
+
+</div>
+
+<div id="outline-container-2-2-1" class="outline-4">
+<h4 id="sec-2-2-1"><span class="section-number-4">2.2.1</span> Lexical scope by default, with a twist</h4>
+<div class="outline-text-4" id="text-2-2-1">
+
+</div>
+
+</div>
+
+<div id="outline-container-2-2-2" class="outline-4">
+<h4 id="sec-2-2-2"><span class="section-number-4">2.2.2</span> Closures &nbsp;&nbsp;&nbsp;<span class="tag"><span class="B_example">B_example</span></span></h4>
+<div class="outline-text-4" id="text-2-2-2">
+
+
+
+
+
+<pre class="src src-lisp">(<span style="color: #f0dfaf; font-weight: bold;">let</span> ((counter 0))
+  (<span style="color: #f0dfaf; font-weight: bold;">defun</span> <span style="color: #8cd0d3;">inc-counter</span> ()
+    (incf counter))
+
+  (<span style="color: #f0dfaf; font-weight: bold;">defun</span> <span style="color: #8cd0d3;">dec-counter</span> ()
+    (decf counter)))
+</pre>
+
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-2-3" class="outline-3">
+<h3 id="sec-2-3"><span class="section-number-3">2.3</span> Variables (continued)</h3>
+<div class="outline-text-3" id="text-2-3">
+
+
+
+</div>
+
+<div id="outline-container-2-3-1" class="outline-4">
+<h4 id="sec-2-3-1"><span class="section-number-4">2.3.1</span> Dynamic aka special variables &nbsp;&nbsp;&nbsp;<span class="tag"><span class="B_example">B_example</span></span></h4>
+<div class="outline-text-4" id="text-2-3-1">
+
+
+
+
+
+<pre class="src src-lisp">(<span style="color: #f0dfaf; font-weight: bold;">defparameter</span> <span style="color: #dfaf8f;">*debug*</span> nil)
+
+(<span style="color: #f0dfaf; font-weight: bold;">defun</span> <span style="color: #8cd0d3;">bla-bla</span> ()
+  (no-debugging)
+  (<span style="color: #f0dfaf; font-weight: bold;">let</span> ((*debug* t))
+    (do-some-stuff-with-debugging))
+  (no-debugging))
+</pre>
+
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-2-4" class="outline-3">
+<h3 id="sec-2-4"><span class="section-number-3">2.4</span> Functions</h3>
+<div class="outline-text-3" id="text-2-4">
+
+
+
+</div>
+
+<div id="outline-container-2-4-1" class="outline-4">
+<h4 id="sec-2-4-1"><span class="section-number-4">2.4.1</span> First class citizens</h4>
+<div class="outline-text-4" id="text-2-4-1">
+
+</div>
+
+</div>
+
+<div id="outline-container-2-4-2" class="outline-4">
+<h4 id="sec-2-4-2"><span class="section-number-4">2.4.2</span> Anonymous functions</h4>
+<div class="outline-text-4" id="text-2-4-2">
+
+</div>
+
+</div>
+
+<div id="outline-container-2-4-3" class="outline-4">
+<h4 id="sec-2-4-3"><span class="section-number-4">2.4.3</span> Functions as data</h4>
+<div class="outline-text-4" id="text-2-4-3">
+
+</div>
+
+</div>
+
+<div id="outline-container-2-4-4" class="outline-4">
+<h4 id="sec-2-4-4"><span class="section-number-4">2.4.4</span> Multiple return values</h4>
+<div class="outline-text-4" id="text-2-4-4">
+
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-2-5" class="outline-3">
+<h3 id="sec-2-5"><span class="section-number-3">2.5</span> Macros</h3>
+<div class="outline-text-3" id="text-2-5">
+
+
+
+</div>
+
+<div id="outline-container-2-5-1" class="outline-4">
+<h4 id="sec-2-5-1"><span class="section-number-4">2.5.1</span> Program life-cycle</h4>
+<div class="outline-text-4" id="text-2-5-1">
+
+</div>
+
+</div>
+
+<div id="outline-container-2-5-2" class="outline-4">
+<h4 id="sec-2-5-2"><span class="section-number-4">2.5.2</span> Run-time vs. compilation</h4>
+<div class="outline-text-4" id="text-2-5-2">
+
+</div>
+
+</div>
+
+<div id="outline-container-2-5-3" class="outline-4">
+<h4 id="sec-2-5-3"><span class="section-number-4">2.5.3</span> Macro expansion time</h4>
+<div class="outline-text-4" id="text-2-5-3">
+
+</div>
+
+</div>
+
+<div id="outline-container-2-5-4" class="outline-4">
+<h4 id="sec-2-5-4"><span class="section-number-4">2.5.4</span> Programming the compiler</h4>
+<div class="outline-text-4" id="text-2-5-4">
+
+</div>
+
+</div>
+
+<div id="outline-container-2-5-5" class="outline-4">
+<h4 id="sec-2-5-5"><span class="section-number-4">2.5.5</span> Almost like functions on the outside</h4>
+<div class="outline-text-4" id="text-2-5-5">
+
+</div>
+
+</div>
+
+<div id="outline-container-2-5-6" class="outline-4">
+<h4 id="sec-2-5-6"><span class="section-number-4">2.5.6</span> Programming over the source code with all the power of the language</h4>
+<div class="outline-text-4" id="text-2-5-6">
+
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-2-6" class="outline-3">
+<h3 id="sec-2-6"><span class="section-number-3">2.6</span> Condition System</h3>
+<div class="outline-text-3" id="text-2-6">
+
+
+
+</div>
+
+<div id="outline-container-2-6-1" class="outline-4">
+<h4 id="sec-2-6-1"><span class="section-number-4">2.6.1</span> Beyond exception handling</h4>
+<div class="outline-text-4" id="text-2-6-1">
+
+</div>
+
+</div>
+
+<div id="outline-container-2-6-2" class="outline-4">
+<h4 id="sec-2-6-2"><span class="section-number-4">2.6.2</span> Conditions and restarts</h4>
+<div class="outline-text-4" id="text-2-6-2">
+
+</div>
+
+</div>
+
+<div id="outline-container-2-6-3" class="outline-4">
+<h4 id="sec-2-6-3"><span class="section-number-4">2.6.3</span> Condition handlers</h4>
+<div class="outline-text-4" id="text-2-6-3">
+
+</div>
+
+</div>
+
+<div id="outline-container-2-6-4" class="outline-4">
+<h4 id="sec-2-6-4"><span class="section-number-4">2.6.4</span> handler-case similar to catch &nbsp;&nbsp;&nbsp;<span class="tag"><span class="B_example">B_example</span></span></h4>
+<div class="outline-text-4" id="text-2-6-4">
+
+
+
+
+
+<pre class="src src-lisp">(<span style="color: #f0dfaf; font-weight: bold;">handler-case</span>
+    (<span style="color: #f0dfaf; font-weight: bold;">progn</span>
+      (do-stuff)
+      (do-more-stuff))
+  (some-exception (se) (recover se)))
+</pre>
+
+
+<p>
+\hfill \(\qed\)
+</p>
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-2-7" class="outline-3">
+<h3 id="sec-2-7"><span class="section-number-3">2.7</span> Condition System (continued)</h3>
+<div class="outline-text-3" id="text-2-7">
+
+
+
+</div>
+
+<div id="outline-container-2-7-1" class="outline-4">
+<h4 id="sec-2-7-1"><span class="section-number-4">2.7.1</span> restart-case &nbsp;&nbsp;&nbsp;<span class="tag"><span class="B_example">B_example</span></span></h4>
+<div class="outline-text-4" id="text-2-7-1">
+
+
+
+
+
+<pre class="src src-lisp">(<span style="color: #f0dfaf; font-weight: bold;">defun</span> <span style="color: #8cd0d3;">parse-log-file</span> (file)
+  (<span style="color: #f0dfaf; font-weight: bold;">with-open-file</span> (in file <span style="color: #93e0e3;">:direction</span> <span style="color: #93e0e3;">:input</span>)
+    (<span style="color: #f0dfaf; font-weight: bold;">loop</span> for text = (read-line in nil nil)
+          while text
+          for entry = (<span style="color: #f0dfaf; font-weight: bold;">restart-case</span>
+                          (parse-log-entry text)
+                        (skip-log-entry () nil))
+          when entry collect it)))
+</pre>
+
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-2-8" class="outline-3">
+<h3 id="sec-2-8"><span class="section-number-3">2.8</span> Condition System (continued)</h3>
+<div class="outline-text-3" id="text-2-8">
+
+
+
+</div>
+
+<div id="outline-container-2-8-1" class="outline-4">
+<h4 id="sec-2-8-1"><span class="section-number-4">2.8.1</span> handler-bind &nbsp;&nbsp;&nbsp;<span class="tag"><span class="B_example">B_example</span></span></h4>
+<div class="outline-text-4" id="text-2-8-1">
+
+
+
+
+
+<pre class="src src-lisp">(<span style="color: #f0dfaf; font-weight: bold;">defun</span> <span style="color: #8cd0d3;">log-analyzer</span> ()
+  (<span style="color: #f0dfaf; font-weight: bold;">handler-bind</span>
+      ((malformed-log-entry-error
+         #'(<span style="color: #f0dfaf; font-weight: bold;">lambda</span> (c)
+             (invoke-restart'skip-log-entry))))
+    (<span style="color: #f0dfaf; font-weight: bold;">dolist</span> (log (find-all-logs))
+      (analyze-log log))))
+</pre>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-2-8-2" class="outline-4">
+<h4 id="sec-2-8-2"><span class="section-number-4">2.8.2</span> Signals, why just errors</h4>
+<div class="outline-text-4" id="text-2-8-2">
+
+</div>
+
+</div>
+
+<div id="outline-container-2-8-3" class="outline-4">
+<h4 id="sec-2-8-3"><span class="section-number-4">2.8.3</span> Restarts at lower levels, handlers at higher</h4>
+<div class="outline-text-4" id="text-2-8-3">
+
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-2-9" class="outline-3">
+<h3 id="sec-2-9"><span class="section-number-3">2.9</span> Common Lisp Object System</h3>
+<div class="outline-text-3" id="text-2-9">
+
+
+
+</div>
+
+<div id="outline-container-2-9-1" class="outline-4">
+<h4 id="sec-2-9-1"><span class="section-number-4">2.9.1</span> Message passing</h4>
+<div class="outline-text-4" id="text-2-9-1">
+
+</div>
+
+</div>
+
+<div id="outline-container-2-9-2" class="outline-4">
+<h4 id="sec-2-9-2"><span class="section-number-4">2.9.2</span> Decoupling classes from methods</h4>
+<div class="outline-text-4" id="text-2-9-2">
+
+</div>
+
+</div>
+
+<div id="outline-container-2-9-3" class="outline-4">
+<h4 id="sec-2-9-3"><span class="section-number-4">2.9.3</span> Generic functions</h4>
+<div class="outline-text-4" id="text-2-9-3">
+
+</div>
+
+</div>
+
+<div id="outline-container-2-9-4" class="outline-4">
+<h4 id="sec-2-9-4"><span class="section-number-4">2.9.4</span> Method combinations</h4>
+<div class="outline-text-4" id="text-2-9-4">
+
+</div>
+
+</div>
+
+<div id="outline-container-2-9-5" class="outline-4">
+<h4 id="sec-2-9-5"><span class="section-number-4">2.9.5</span> Multimethods</h4>
+<div class="outline-text-4" id="text-2-9-5">
+
+
+</div>
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> A bit of code</h2>
+<div class="outline-text-2" id="text-3">
+
+
+
+</div>
+
+<div id="outline-container-3-1" class="outline-3">
+<h3 id="sec-3-1"><span class="section-number-3">3.1</span> Switch to Emacs please</h3>
+<div class="outline-text-3" id="text-3-1">
+
+
+<p>
+<b>&hellip;</b>
+</p>
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> Resources</h2>
+<div class="outline-text-2" id="text-4">
+
+
+
+</div>
+
+<div id="outline-container-4-1" class="outline-3">
+<h3 id="sec-4-1"><span class="section-number-3">4.1</span> Books</h3>
+<div class="outline-text-3" id="text-4-1">
+
+
+
+</div>
+
+<div id="outline-container-4-1-1" class="outline-4">
+<h4 id="sec-4-1-1"><span class="section-number-4">4.1.1</span> <a href="http://www.gigamonkeys.com/book/">Practical Common Lisp</a></h4>
+<div class="outline-text-4" id="text-4-1-1">
+
+</div>
+
+</div>
+
+<div id="outline-container-4-1-2" class="outline-4">
+<h4 id="sec-4-1-2"><span class="section-number-4">4.1.2</span> <a href="http://www.lispworks.com/documentation/HyperSpec/Front/">HyperSpec</a></h4>
+<div class="outline-text-4" id="text-4-1-2">
+
+</div>
+
+</div>
+
+<div id="outline-container-4-1-3" class="outline-4">
+<h4 id="sec-4-1-3"><span class="section-number-4">4.1.3</span> <a href="http://www.cs.cmu.edu/Groups/AI/html/cltl/clm/clm.html">Common Lisp the Language, 2nd Edition</a></h4>
+<div class="outline-text-4" id="text-4-1-3">
+
+</div>
+
+</div>
+
+<div id="outline-container-4-1-4" class="outline-4">
+<h4 id="sec-4-1-4"><span class="section-number-4">4.1.4</span> <a href="http://www.paulgraham.com/onlisptext.html">On Lisp: Advanced Techniques for Common Lisp</a></h4>
+<div class="outline-text-4" id="text-4-1-4">
+
+</div>
+
+</div>
+
+<div id="outline-container-4-1-5" class="outline-4">
+<h4 id="sec-4-1-5"><span class="section-number-4">4.1.5</span> <a href="http://www.cs.cmu.edu/~dst/LispBook/">Common Lisp: A Gentle Introduction to Symbolic Computation</a></h4>
+<div class="outline-text-4" id="text-4-1-5">
+
+</div>
+
+</div>
+
+<div id="outline-container-4-1-6" class="outline-4">
+<h4 id="sec-4-1-6"><span class="section-number-4">4.1.6</span> Paradigms of Artificial Intelligence Programming</h4>
+<div class="outline-text-4" id="text-4-1-6">
+
+</div>
+
+</div>
+
+<div id="outline-container-4-1-7" class="outline-4">
+<h4 id="sec-4-1-7"><span class="section-number-4">4.1.7</span> <a href="http://www-mitpress.mit.edu/sicp/">Structure and Interpretation of Computer Programs</a></h4>
+<div class="outline-text-4" id="text-4-1-7">
+
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-4-2" class="outline-3">
+<h3 id="sec-4-2"><span class="section-number-3">4.2</span> Links</h3>
+<div class="outline-text-3" id="text-4-2">
+
+
+
+</div>
+
+<div id="outline-container-4-2-1" class="outline-4">
+<h4 id="sec-4-2-1"><span class="section-number-4">4.2.1</span> <a href="http://www.cliki.net/index">CLiki</a></h4>
+<div class="outline-text-4" id="text-4-2-1">
+
+</div>
+
+</div>
+
+<div id="outline-container-4-2-2" class="outline-4">
+<h4 id="sec-4-2-2"><span class="section-number-4">4.2.2</span> <a href="http://www.common-lisp.net/">CL resources</a></h4>
+<div class="outline-text-4" id="text-4-2-2">
+
+</div>
+
+</div>
+
+<div id="outline-container-4-2-3" class="outline-4">
+<h4 id="sec-4-2-3"><span class="section-number-4">4.2.3</span> <a href="http://common-lisp.net/~dlw/LispSurvey.html">Implementations: A Survey</a></h4>
+<div class="outline-text-4" id="text-4-2-3">
+
+</div>
+
+</div>
+
+<div id="outline-container-4-2-4" class="outline-4">
+<h4 id="sec-4-2-4"><span class="section-number-4">4.2.4</span> <a href="http://www.quicklisp.org/">Quicklisp - CL package manager</a></h4>
+<div class="outline-text-4" id="text-4-2-4">
+
+</div>
+
+</div>
+
+<div id="outline-container-4-2-5" class="outline-4">
+<h4 id="sec-4-2-5"><span class="section-number-4">4.2.5</span> <a href="http://common-lisp.net/project/slime">SLIME: The Superior Lisp Interaction Mode for Emacs</a></h4>
+<div class="outline-text-4" id="text-4-2-5">
+
+</div>
+
+</div>
+
+<div id="outline-container-4-2-6" class="outline-4">
+<h4 id="sec-4-2-6"><span class="section-number-4">4.2.6</span> <a href="http://weitz.de/">Dr. Edmund Weitz's great libraries</a></h4>
+<div class="outline-text-4" id="text-4-2-6">
+
+</div>
+
+</div>
+
+<div id="outline-container-4-2-7" class="outline-4">
+<h4 id="sec-4-2-7"><span class="section-number-4">4.2.7</span> <a href="http://www.sbcl.org/">Steel Bank Common Lisp</a></h4>
+<div class="outline-text-4" id="text-4-2-7">
+
+</div>
+
+</div>
+
+<div id="outline-container-4-2-8" class="outline-4">
+<h4 id="sec-4-2-8"><span class="section-number-4">4.2.8</span> <a href="http://shootout.alioth.debian.org/u64/which-language-is-best.php">Some SBCL benchmarks</a></h4>
+<div class="outline-text-4" id="text-4-2-8">
+
+</div>
+
+</div>
+
+<div id="outline-container-4-2-9" class="outline-4">
+<h4 id="sec-4-2-9"><span class="section-number-4">4.2.9</span> <a href="http://franz.com">Franz Inc.</a></h4>
+<div class="outline-text-4" id="text-4-2-9">
+
+</div>
+
+</div>
+
+<div id="outline-container-4-2-10" class="outline-4">
+<h4 id="sec-4-2-10"><span class="section-number-4">4.2.10</span> <a href="http://www.lispworks.com">LispWorks</a></h4>
+<div class="outline-text-4" id="text-4-2-10">
+
+
+</div>
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-5" class="outline-2">
+<h2 id="sec-5"><span class="section-number-2">5</span> Fun</h2>
+<div class="outline-text-2" id="text-5">
+
+
+<p>
+<a href="http://www.youtube.com/watch?v=HM1Zb3xmvMc">Land of Lisp- The Music Video!</a>
+</p>
+
+<div class="figure">
+<p><img src="./lisplogo_fancy_256.png"  alt="./lisplogo_fancy_256.png" /></p>
+<p>Secret alien technology</p>
+</div>
+
+
+<div class="figure">
+<p><img src="./lisp-programmers.jpg"  alt="./lisp-programmers.jpg" /></p>
+<p>Lispers</p>
+</div>
+
+
+<div class="figure">
+<p><img src="./plang-fanboys.jpg"  alt="./plang-fanboys.jpg" /></p>
+<p>Fanboys</p>
+</div>
+</div>
+</div>
+</div>
+
+<div id="postamble">
+<p class="date">Date: 2013-02-16 18:25:25 EET</p>
+<p class="author">Author: Andrey Kotlarski</p>
+<p class="creator">Org version 7.8.11 with Emacs version 24</p>
+<a href="http://validator.w3.org/check?uri=referer">Validate XHTML 1.0</a>
+
+</div>
+</body>
+</html>

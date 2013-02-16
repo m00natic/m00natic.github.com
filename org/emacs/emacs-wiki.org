@@ -1,0 +1,1077 @@
+#+SETUPFILE: ~/.emacs.d/org-templates/level-1.org
+#+TITLE: Andrey's Opinionated Emacs Guide
+
+* Introduction
+
+*Emacs is the red pill.*
+
+Now that we have this out of the way, note that there are many Emacs
+flavours but what follows generally refers only to the eldest and most
+thriving at present - [[http://en.wikipedia.org/wiki/Emacs][GNU Emacs]].  If something below doesn't work for
+you, then you are probably using version older than 24.
+
+Emacs works in terminal almost at full capacity (imagine that under
+the Windows command line!).  In graphical mode you get better
+colouring, fonts, more key-sequences, ability to see images and pdf
+documents.
+
+** Glossary
+
+*** User terminology
+
+Emacs is so ancient that it predates currently popular graphical
+layouts.  As such, it has terminology that may seem odd to poor
+contemporary users.  Here's a little correspondence table for some of
+the basics:
+
+|----------------------------------------------+----------------------------------------------------|
+| *Emacs land (I'll call it La la land below)* | *Rest of the world*                                |
+|----------------------------------------------+----------------------------------------------------|
+| frame                                        | program window                                     |
+| window                                       | sub window (may take the whole program window too) |
+| buffer                                       | file or something that may have text in it         |
+| kill                                         | cut                                                |
+| yank                                         | paste                                              |
+| region                                       | selection                                          |
+|----------------------------------------------+----------------------------------------------------|
+
+Buffer may not be associated to file?!  What is this planet, [[http://en.wikipedia.org/wiki/Kin-dza-dza][Pluke]]?
+Furthermore buffers may be currently hidden.  You can also have same
+buffer visible in several windows or frames.  Confusing?  Priceless
+when you have to look simultaneously at several parts of one huge
+file.  Emacs frames are actually [[http://en.wikipedia.org/wiki/Tiling_window_manager][tiling window managers]] but I'll have
+mercy and stop here.
+
+*** Keys
+
+Emacsers like keyboard shortcuts so much that they often sequence
+several in a row.  Here's how to read some examples:
+
+~M-x tetris~
+
+(M stands for <Alt>, so invoke <Alt>+<x>, release these keys, type
+<tetris> and press <Enter> ...by the way this is a real command, try
+it!)
+
+~C-x C-f PATH-TO-SOME-FILE~
+
+(C stands for <Ctrl>, so invoke <Ctrl>+<x>, release these keys, invoke
+<Ctrl>+<f>, release these keys, type path to some file or directory
+and then press <Enter>)
+
+~C-x v d PATH-TO-SOME-VERSION-CONTROLLED-FOLDER~
+
+(invoke <Ctrl>+<x>, relese these keys, press <v>, release, press <d>,
+release, type path to some directory and then hit <Enter>)
+
+*** Modes
+
+Each buffer is associated with something called major mode and may
+have a bunch of active minor modes.  What is this thing, a [[http://stefan-klinger.de/files/monadGuide.pdf][Monad]]?  No,
+save me from another "Grok Monads in 2^365 easy steps" tutorial!
+
+Modes are sets of specific rules and key-bindings active for some
+buffer.  There is a read-only mode that forbids you editing, there are
+[[http://emacswiki.org/emacs/ProgrammingModes][language aware modes]] for (shell scripts / makefiles / python / java /
+c / scheme / clojure / haskell / agda / insert your favourite niche
+language here) that give proper colouring, automatic indentation
+rules, special key-bindings for specific niceties...  There are modes
+for [[http://www.gnus.org/][reading or composing mail]], [[http://orgmode.org][creating presentations/books]], [[http://emacswiki.org/emacs/CategoryVersionControl][version
+control]], [[http://emacswiki.org/emacs/CategoryShell][shells]], [[http://emacswiki.org/emacs/CategorySql][DB prompts]], [[http://emacswiki.org/emacs/CategoryDocumentation][composing/reading documentation]],
+[[http://www.emacswiki.org/emacs/CategoryCalendar][calendar]], [[http://www.emacswiki.org/emacs/CategoryCalculators][stack calculator]], dictionaries, agendas and organizers,
+spreadsheets, [[http://emacs-w3m.namazu.org/][browsing the internetz]], [[http://emacswiki.org/emacs/ArtistMode][ASCII drawing]], [[http://www.gnu.org/software/emms/][media collection
+managers]] and [[http://www.emacswiki.org/emacs/MusicPlayers][players]], [[http://www.emacswiki.org/emacs/CategoryGames][games]], [[http://emacswiki.org/emacs/EmacsDoctor][psychotherapist]], [[http://youtu.be/D1sXuHnf_lo][controlling
+vibrators]]... to name a few.  Oops, overdid it somewhere.
+
+To get description of the major mode for the current buffer:
+
+~C-h m~
+
+To get all currently available key-bindings grouped by modes:
+
+~C-h b~
+
+** First steps
+
+If you are new to Emacs, invoke:
+
+~C-h t~
+
+to get the intro tutorial.  It's really good and will save you
+headbanging.  Unless you are a metal-head \m/
+
+** Execute code/settings on the fly
+
+Unlike other environments and programs that pretend to be interactive,
+Emacs actually is.  When you see a code snippet closed between
+parenthesis like for example:
+
+#+BEGIN_SRC emacs-lisp
+(message "Mozart is a great %s."
+         (if (> (string-to-number (emacs-uptime "%H")) 3)
+             "programmer"
+           "composer"))
+#+END_SRC
+
+it can be immediately executed by placing the cursor just after the
+last closing paren and pressing:
+
+~C-x C-e~
+
+You can (re)set/(re)define functions, variables, whatever this way and
+it immediately comes into effect.  This holds for everything you see
+below.
+
+** Settings
+
+Settings usually reside in ~/.emacs.d/init.el
+This is where you can paste the tips from below and expect to be in
+effect on each Emacs invocation.
+
+If you somehow manage to push settings that make your Emacs unusable
+(I would expect that this would take some talent) like for example:
+
+#+BEGIN_SRC emacs-lisp
+(fset 'self-insert-command
+      (lambda () "Print message instead of entering characters."
+        (interactive)
+        (message "HALLO?")))
+#+END_SRC
+
+just fix it with [[http://www.vim.org/][Vim]].  Got the joke?  Nah, run Emacs like this:
+
+~emacs -Q~
+
+and it will skip loading the init.el file giving you a chance to clean
+the mess.
+
+* General tips and tricks
+
+** Run Emacs as daemon
+
+Stock Emacs is quick and nimble (extensions are loaded only when/if
+demanded), you can use it just like Vim, start it to edit a file then
+kill it.  However, Emacs is so much more useful that many emacsers
+prefer to start it once and reuse this single instance for many tasks.
+So...
+
+Forget religious fantasies, run Emacs as daemon and connect to this
+hell creature in graphics mode or from terminal or...both...several
+times.  Here's how:
+
+~emacs --daemon~
+
+Now, to connect in graphical frame, invoke:
+
+~emacsclient -c~
+
+and/or in terminal:
+
+~emacsclient -t~
+
+The --daemon option is certainly available under GNU/Linux and BSDs.
+It might even work for BSD rip off like MacOS but not under Windows.
+Nah.  A true programmer would "use" the latter two only under death
+threat or starvation anyway.
+
+** Cancel current action
+
+Sometimes you start some action, Emacs asks you questions, or you're
+in a middle of [[http://emacswiki.org/emacs/IncrementalSearch][incremental search]] or whatever.  Suddenly you come to
+realize that you don't want to continue and stop immediately:
+
+~C-g~
+
+This is the universal cancel/quit command.  If one press doesn't end
+it, press it again.  Normally 2-3 invocations are enough to take you
+out of whatever complicated action.
+
+** Commands, completion and hints
+
+Emacs is all running on commands.  Press whatever button, bam, some
+command is invoked.  There are so many that one can remember just a
+percent of what there is.  So how to find something useful?  Should
+you use menus like in other programs?  Possible, but what kind of menu
+would hold 3 000+ commands in coherent way... Call the Devil by name:
+
+~M-x SOME-COMMAND-NAME~
+
+<TAB> can be used for completion.  Furthermore, you can do:
+
+#+BEGIN_SRC emacs-lisp
+(custom-set-variables
+ '(icomplete-mode t))
+#+END_SRC
+
+and you'll get smart hints what commands are available while entering
+characters.
+
+** Additional packages
+
+Emacs has tons of them.  Your grandmother probably has written one or
+two too.  Until recently there was no canonical way to distribute and
+install extensions though (I'm talking about GNU Emacs specifically,
+XEmacs has had this for a decade or so).  If you are using version 24
+or above, you are one lucky bastard!  GNU Emacs is living to its
+promise to become full fledged operating system and now has a packet
+manager that you can invoke with:
+
+~M-x list-packages~
+
+To install package from there, position to the line of the desired one
+and press <I> (yes, capital).  You can do this several times.  When
+done shopping, press <x>, answer some prompts and you'll soon have
+these extensions in your ~/.emacs.d/elpa directory ready to be used.
+
+By default only the GNU package repository is used but you can add
+others too:
+
+#+BEGIN_SRC emacs-lisp
+(custom-set-variables
+ '(package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
+		      ("elpa" . "http://tromey.com/elpa/")
+		      ("melpa" . "http://melpa.milkbox.net/packages/")
+		      ("marmalade" .
+		       "http://marmalade-repo.org/packages/"))))
+#+END_SRC
+
+** Yes-No prompts, why type so much?
+
+Often Emacs asks you something and expects you to type <yes> or <no>
+followed by <Enter>.  Here's how to change this and when faced with
+such question to be able to just press <y> or <n> instead:
+
+#+BEGIN_SRC emacs-lisp
+(fset 'yes-or-no-p 'y-or-n-p)
+#+END_SRC
+
+** Assign key bindings to commands
+
+You're in love with some command but there is no key sequence to
+invoke it and you have to resort to:
+
+~M-x BELOVED-COMMAND~
+
+Here's how to assign global key-binding:
+
+#+BEGIN_SRC emacs-lisp
+(define-key global-map (kbd "C-c z") 'BELOVED-COMMAND)
+#+END_SRC
+
+Et voilà.  Now you'll have your beloved command available anywhere
+through <Ctrl>-c + z.  Some mode may override this very binding
+though.  It is recommended that user defined combinations should be
+<Ctrl>-c followed by single letter (may be capital too).  To see what
+is the key combination sequence syntax accepted by the `kbd' function
+see:
+
+~C-h f edmacro-mode~
+
+What if you want to assign special key combination only for some
+specific mode?  You'll generally have to know the name key map
+variable for this mode:
+
+#+BEGIN_SRC emacs-lisp
+(define-key occur-mode-map "n" 'occur-next)
+#+END_SRC
+
+** Work with directories
+
+[[http://emacswiki.org/emacs/DiredMode][Dired]] is the most capable file manager I've encountered.  To start it:
+
+~C-x C-f PATH-TO-SOME-DIRECTORY~
+
+Now hit:
+
+~C-h m~
+
+to get summary of what it can do.
+
+** Fuzzy matching when navigating the file system
+
+Sounds nice?  Add this to init.el:
+
+#+BEGIN_SRC emacs-lisp
+(custom-set-variables
+ '(ido-enable-flex-matching t)
+ '(ido-mode 'both)
+ '(ido-use-virtual-buffers t))
+#+END_SRC
+
+If you now invoke:
+
+~C-x C-f~
+
+you'll be able to navigate directories and files of the current folder
+by entering parts of their name.  To go directory up, <Backspace>
+would suffice.  To open currently shown directory, press <C-d>.  To
+create a new file, type its desired name and press <C-j>.
+
+There's more magic.  Using the traditional way to switch to a buffer:
+
+~C-x b~
+
+you'll get matching by parts of name and may also get suggestions for
+files that have been opened in previous sessions.
+
+** Remote network and sudo access using TRAMP
+
+Why reside to primitive shell & ssh to peek/edit a file on some remote
+server?  You can do it directly from Emacs:
+
+~C-x C-f /ssh:akotlarski@gn1:/ezsroot/current RET~
+(enter password when/if prompted for it)
+
+Local servers here have some fancy colourful prompts that get in the
+way of the default settings though.  Don't cry yet, I have a fix.
+Paste this in your init.el:
+
+#+BEGIN_SRC emacs-lisp
+(custom-set-variables
+ '(tramp-shell-prompt-pattern
+   "\\(?:^\\|\\)[^]#$%>\n]*#?[]#$%>] *\\(;?\\[[0-9;]*[a-zA-Z] *\\)*"))
+#+END_SRC
+
+Need to quickly edit some system file?  Don't touch the shell, Emacs
+started by your user is just enough:
+
+~C-x C-f /sudo:root@localhost:/etc/fstab RET~
+(enter password when/if prompted for it)
+
+The [[http://emacswiki.org/emacs/TrampMode][TRAMP]] built-in package is a killer.  It supports plethora of
+protocols.  For more information invoke/type:
+
+~C-h i m TRAMP~
+
+** Backup and file versions
+
+By default Emacs creates backups for each edited file and places them
+in the same directory adding tilde to the original file name.  This
+might be mildly annoying if you are Chuck Norris.  There is an easy
+way to forbid this but I have a better proposition.  How about saving
+all backups in a single place?
+
+#+BEGIN_SRC emacs-lisp
+(setq backup-directory-alist
+      `(("." . ,(concat user-emacs-directory "backup/")))
+      tramp-backup-directory-alist backup-directory-alist)
+#+END_SRC
+
+While at it, how about some primitive form of version control for each
+file you edit with Emacs?
+
+#+BEGIN_SRC emacs-lisp
+(custom-set-variables
+ '(version-control t))
+#+END_SRC
+
+With the two above spells, all backup files are collected to
+~/.emacs.d/backup/ and some number of old versions is kept.  Borked
+some critical file somewhere and regret it?  Do not panic!  Go to the
+backup folder (it may be in ~/root/.emacs.d/backup/~ if edited as
+root, including through TRAMP) and find some stable older version.
+This has saved my ass not once or twice.  This backup/version scheme
+doesn't apply to files that are under "official" version control
+system.  Guess what, you don't need it there anyway.
+
+** Manage GnuPG encrypted files
+
+For this you'll need the [[http://www.gnupg.org/][GNU Privacy Guard]] program.  Open new file
+like example.gpg (note the file extension).  Write something there and
+save it.  You'll be asked for symmetrical encryption password.  Enter
+such, et voilà, your file is now encrypted.  When attempting to open
+encrypted file with gpg extension from Emacs, you'll be asked for
+password.  Magic.
+
+** Don't ask for sudo or ssh passwords - authinfo
+
+Create a file ~/.authinfo.gpg and paste there something like:
+
+#+BEGIN_SRC sh
+machine localhost port sudo login root password very-very-secret
+machine gridnode02 port ssh login akotlarski password very-secret
+#+END_SRC
+
+Save this file (entering password for encryption).  Now, when you
+attempt to ssh (to gn2) or sudo directly from Emacs as explained
+above, you'll be asked for the .authinfo.gpg password once and from
+there on (for this Emacs session), the passwords listed there will be
+automatically used when you try to access the respective resources.
+
+** Gnus for mail and news
+
+/Every program attempts to expand until it can read mail./
+		/-- Jamie Zawinski/
+
+There are a lot of ways to manage mail within Emacs.  I use the
+built-in mail/news kitchen sink [[http://www.gnus.org/][Gnus]].  Here's its glory documented (it
+would be too much to give opinionated guide):
+
+~C-h i m Gnus~
+
+[[https://github.com/m00natic/dot-emacs/blob/master/conf/my-mail.el][Here]] are my current mail settings.  To summarize, it attaches to my
+gmail, vayant mail accounts (through imap) and also to the gmane/gwene
+news/rss server (I try to follow about 100 mailing lists and blogs).
+There are heuristics to guess default mail sender/server (yeah, I
+frequently send spam from both), workarounds for the flaky Vayant
+Exchange server, integration with the [[http://en.wikipedia.org/wiki/Fortune_%2528Unix%2529][fortune]](-mod) program (where all
+stupid quotes on the back of my mails come from), [[http://www.emacswiki.org/emacs/FlySpell][automatic
+spell-checking]] and [[http://emacswiki.org/emacs/LineWrap][line wrapping]] (don't you hate when mail text goes
+out of your wide screen?), integration with [[http://bbdb.sourceforge.net/][The Insidious Big Brother
+Database]] (BBDB) for managing contacts, automatic checking for new
+messages for selected (mail)boxes and notifications.  For
+notifications I'm using the notify.el package which can be easily
+installed through the package manager (BBDB is also there).
+
+Wouldn't want to type passwords every now and then when dealing with
+mail accounts?  authinfo(.gpg) to the rescue again!
+
+#+BEGIN_SRC sh
+machine vayant port 993 login akotlarski password very-very-secret
+machine mail.vayant.com port 587 login akotlarski password very-very-secret
+#+END_SRC
+
+** Shell, terminal, console, whatever you call it
+
+Tired of unable to search or copy properly inside the terminal
+program?  Emacsers like shells (and don't start them on [[http://en.wikipedia.org/wiki/REPL][REPL]]s) so much
+that have tons of them and at least 3 somewhat differing are available
+by default. The first one integrates nicely with [[http://en.wikipedia.org/wiki/Elisp][Elisp]]:
+
+~M-x eshell~
+
+This one is an almost 1:1 wrapper for systems that provide bash:
+
+~M-x ansi-term~
+
+This one is good for systems with somewhat dumb command line:
+
+~M-x shell~
+
+All of them have advantages and disadvantages to one another but it
+will be too much to go into details.  The package manager offers some
+more.
+
+** Microsoft Windows (tm)
+
+Death threat?  Starvation?  Feel for you, sis.  Here is something to
+ease your pain:
+
+~M-x doctor~
+
+Emacs is generally good enough to make you forget what iron you are
+running upon.  Until you reach for outside programs.  To make your
+windows experience in general more acceptable, use [[http://www.cygwin.com][Cygwin]].  It gives
+you bash terminal and package manager to the ever useful GNU tools and
+other ported stuff.
+
+To make Emacs aware of the cygwin environment and prefer it instead of
+the crippled windows eco-system, install `cygwin-mount' from the Emacs
+package manager and then:
+
+#+BEGIN_SRC emacs-lisp
+(defconst +win-path+ "C:/" "Windows root path.")
+
+;;; Cygwin
+(let ((cygwin-dir (concat +win-path+ "cygwin/bin")))
+  (when (file-exists-p cygwin-dir)
+    (setq shell-file-name "bash"
+	  explicit-shell-file-name "bash")
+    (setenv "SHELL" shell-file-name)
+    (setenv "CYGWIN" "nodosfilewarning")
+
+    (when (require 'cygwin-mount nil t)
+      (cygwin-mount-activate)
+      (setq w32shell-cygwin-bin cygwin-dir))))
+#+END_SRC
+
+This assumes that C:\cygwin is used for cygwin root and C:\cygwin\bin
+holds the binaries.
+
+Dealing with what path is taken as home directory under Windows is a
+headache.  And you need this to know where init.el should reside.  I
+remotely remember [[http://www.emacswiki.org/emacs/MsWindowsInstallation][setting HOME variable]] in some MyComputer settings
+(also modifying the PATH one to prefer cygwin's paths).
+
+* General programming tips and tricks
+
+** Grep on steroids
+
+Like other [[http://www.gnu.org/][GNU tools]], grep has nice integration within Emacs.  I most
+frequently need recursive searching within some directory and its
+sub-directories.  Here's how to do it and get hyperlinks to the
+results:
+
+~M-x rgrep~
+
+On the second step you'll be asked what files the search should be
+constrained upon.  Glob patterns are accepted like:
+
+~*.cpp *.h~
+
+Note that SPC invokes completion here.  To actually insert a space
+character, "quote" it with C-q
+
+** Edit grep results in place
+
+Jumping to result locations is not enough for you?  You, spoiled brat!
+Try wgrep (available through the package manager):
+
+~M-x wgrep-change-to-wgrep-mode~
+
+while in grep buffer.  Now you can edit in place result lines (regex
+replacing M-% is intelligently acting only over the actual text and
+skipping file/line information).  After you're done:
+
+~C-x C-s~
+
+Now all files that have had their lines edited are opened with your
+changes there waiting to be saved.  If it happens to be a lot of
+files and you're confident that you want all these changes saved use
+the built-in IBuffer:
+
+~M-x ibuffer~
+
+Now all current Emacs buffer are listed.  How convenient.  Now hit:
+
+~* u~
+
+and all buffers with unsaved changes are marked.  Now press:
+
+~S~
+
+to save them all.  Job done.  As all within La la land, IBuffer is
+[[http://www.emacswiki.org/emacs/IbufferMode][full of tricks and neat features]], I even have it bound to:
+
+~C-x C-b~
+
+instead the built-in `list-buffers'.
+
+** Occur
+
+Wanna grep something within the current buffer?  It may not be a file
+but even then, why bother with grep? Try:
+
+~M-x occur~
+
+You'll again get a list of results and can jump between locations.
+Handy for quick indexes of whatever search pattern.  If using recent
+version of GNU Emacs, you can edit results in place after pressing:
+
+~e~
+
+** If it moves - compile
+
+Welcome 20 years back!  You can compile through Emacs and get
+errors/warnings as hyperlinks to the offending locations:
+
+~M-x compile~
+
+You're asked for a compile command, WTF?!  Here's what I usually type:
+
+~cd ~/branches/trunk/release && make -j4~
+
+...now get a cup of tea.  Or if you're a minimalist like me and use
+Emacs as an OS - do whatever you like because your computer is as
+responsive as an idle machine of your colleagues.
+
+You may keep the compilation buffer around even after compilation has
+finished.  Within it, you can just press:
+
+~g~
+
+to recompile.
+
+** Find file in project
+
+Well, get find-file-in-project through the package manager and then
+bind the same-named command to a key like:
+
+#+BEGIN_SRC emacs-lisp
+(define-key global-map "\C-cf" 'find-file-in-project)
+#+END_SRC
+
+Now hit:
+
+~C-c f~
+
+And you'll be able to select a file.  If you have ido-mode enabled for
+files, you'll get flex matching.  Note that the GNU find command is
+expected, which means that under Windows, you'll probably need the
+Cygwin environment with the settings given above.
+
+Here's a sample customization for C++ project:
+
+#+BEGIN_SRC emacs-lisp
+(setq-default
+ ffip-project-file ".emacs-project"
+ ffip-patterns (nconc '("*.cpp" "*.h" "*.hpp" "*.c")
+                      ffip-patterns)
+ ffip-find-options
+ "-not -regex \".*\\(debug\\|release\\|svn\\|git\\).*\""
+ ffip-limit 4096)
+#+END_SRC
+
+This makes directories that have file named:
+
+~.emacs-project~
+
+root project folders.  Also C-like sources are added to list of files
+to offer.  Some source control and build directories are skipped from
+indexing and maximum amount of files offered is set to 4096.
+
+I know this is nothing new for you, IDE cry-babies.  But can we
+generalize a bit?  I like this recursive locating of files, why do it
+just for projects?  Lets get hands dirty then:
+
+#+BEGIN_SRC emacs-lisp
+(eval-after-load "find-file-in-project"
+  '(progn
+     (defun my-ffip-project-root-function ()
+       "Check for `ffip-project-file' and if no such, \
+return current directory."
+       (let ((project-directory
+              (if (listp ffip-project-file)
+                  (some (apply-partially 'locate-dominating-file
+                                         default-directory)
+                        ffip-project-file)
+                (locate-dominating-file default-directory
+                                        ffip-project-file))))
+         (or project-directory default-directory)))
+
+     (setq-default
+      ffip-project-root-function 'my-ffip-project-root-function)))
+#+END_SRC
+
+With these magic incantations we get the expected behaviour when
+within a project directory tree.  When not, current directory is
+treated like a root project directory, file name search will be done
+there and within all sub-folders as well.  Sweet.
+
+** Source control
+
+Are you tired of the different command line interfaces of the many
+version control systems that you use?  Even worse if you use GUIs.
+Emacs provides unified interface to some of the widely used VCSes (and
+of course has additional packages for more rarely used).  To see what
+I'm talking about:
+
+~C-x v d PATH-TO-FOLDER-UNDER-VERSION-CONTROL~
+
+Emacs also automatically detects if a file that you've opened is under
+some version control and gives you key-bindings to view diff of
+uncommitted changes, history of the file (and you can look at each
+individual diff), blame (annotate) and travel in time for lines
+functionality and more.  To see what is available:
+
+~C-x v C-h~
+
+And these are commands that by default have been given keys.  To see
+all available:
+
+~M-x vc-<TAB>~
+
+** Interactive diff and merging
+
+Have you ever had two chunks of text with rare differences that you
+need to find, needle in a haystack?  In La la land you would yank
+each text in separate buffer and invoke:
+
+~M-x ediff-buffers~
+
+selecting names of the buffers to compare.  Now you can jump
+difference by difference and throw them between buffers doing
+impromptu merging if you want.  [[http://emacswiki.org/emacs/EdiffMode][Ediff]] is really powerful and handy.
+
+Could we use this to resolve conflicts under version control?  Yes!
+If a file is in conflict state, open it and:
+
+~M-x vc-resolve-conflicts~
+
+(you may need really recent version for this, like GNU Emacs 24.2)
+
+** Regular expressions
+
+/Some people, when confronted with a problem, think "I know, I'll use/
+/regular expressions." Now they have two problems./
+		/-- Jamie Zawinski/
+
+Not surprisingly, [[http://en.wikipedia.org/wiki/Regular_expressions][regexes]] are supported all over the place.  There are
+some [[http://emacswiki.org/emacs/RegularExpression][differences]] to the popular [[http://en.wikipedia.org/wiki/Pcre][PCRE]] style and if you're serious about
+it, you should read the appropriate sections in the great Emacs and
+Elisp info pages.
+
+I would like to open your eyes about some gem however.  If you invoke
+this in some buffer:
+
+~M-x regexp-builder~
+
+you'll be able to interactively build regular expression and on each
+character entered, matching terms will be highlighted in the initial
+buffer.  Provided the regex is somewhat correct.
+
+** GDB
+
+Remember Visual Studio?  Aaaarrrrgh, the horror!  Well, you can get
+some of it integrating with the [[http://www.gnu.org/software/gdb/][GNU Debugger]]:
+
+#+BEGIN_SRC emacs-lisp
+(custom-set-variables
+ '(gdb-many-windows t))
+#+END_SRC
+
+Now invoke (it will be nice if you open the destination directory
+first):
+
+~M-x gdb~
+
+You'll be asked how to run it, append the path of the desired
+executable and rock!
+
+** Semantic
+
+Recently Emacs is acquiring infrastructure for more unified code
+awareness in the face of the [[http://cedet.sourceforge.net/][CEDET]] utilities.  Here are some
+customizations that give you basic niceties like echoing information
+about object under cursor, colouring of instances of local variables,
+highlighting current function:
+
+#+BEGIN_SRC emacs-lisp
+(eval-after-load "semantic"
+   '(progn
+      (add-to-list 'semantic-default-submodes
+		   'global-semantic-decoration-mode)
+      (add-to-list 'semantic-default-submodes
+		   'global-semantic-idle-summary-mode)
+      (add-to-list 'semantic-default-submodes
+		   'global-semantic-idle-local-symbol-highlight-mode)
+      (add-to-list 'semantic-default-submodes
+		   'global-semantic-mru-bookmark-mode)))
+#+END_SRC
+
+To activate:
+
+~M-x semantic~
+
+** Completion
+
+There are many packages that deal with code (and not only) completion,
+but none are particularly good at C++.  I use auto-complete (install
+through the package manager) and here is some setup:
+
+#+BEGIN_SRC emacs-lisp
+(when (ignore-errors (require 'auto-complete-config nil t))
+  (ac-config-default)
+  (ac-flyspell-workaround)
+
+  (when-library
+   t semantic
+   (eval-after-load "semantic"
+     '(setq-default ac-sources
+		    (cons 'ac-source-semantic ac-sources)))))
+#+END_SRC
+
+On the pros side, you'll get particularly useful suggestions for
+symbols typed anywhere in the currently opened buffers.  Long
+function/variable names become non issue.
+
+** General coding IDE
+
+I'm sure your grannies have used [[http://en.wikipedia.org/wiki/Integrated_development_environment][IDE]]s all their life.  There is a
+package called Emacs Code Browser (ECB) that is available through the
+package manager and may give you a breeze of life-supporting IDE
+familiarity.  Furthermore, imagine how cool it is to have IDE working
+in terminal...yes, it does, just like rest of Emacs.  Here are some
+settings for it (some of them are necessary to get it started at all):
+
+#+BEGIN_SRC emacs-lisp
+(custom-set-variables
+ '(ecb-options-version "2.40"))
+
+(eval-after-load "ecb"
+    `(progn (defvar stack-trace-on-error nil)
+	    (defconst ecb-cedet-required-version-max '(2 1 4 9))
+	    (let ((prog-path "~/Programs")) ; set folder where you store projects, not really important
+	      (ecb-add-source-path prog-path prog-path t))))
+#+END_SRC
+
+Now fire it:
+
+~M-x ecb-activate~
+
+* C++
+
+Emacs doesn't come with shining C/C++ support, sorry.  Here are a few
+ways to get something.  Firstly some general customization:
+
+#+BEGIN_SRC emacs-lisp
+(custom-set-variables
+ '(c-default-style '((java-mode . "java")
+		     (awk-mode . "awk")
+		     (other . "stroustrup")))
+ '(indent-tabs-mode nil)
+ '(which-function-mode t))
+#+END_SRC
+
+It sets some automatic indent styles for C-like languages.  Uses
+spaces instead of tabs and shows in the mode-line the name of function
+that the cursor is currently placed in.
+
+** Jump to definitions
+
+Emacs comes with a separate binary [[http://www.emacswiki.org/emacs/EmacsBrowse][ebrowse]] that can annotate multiple
+C/C++ source files and create some form of DB which can be used for
+getting different kind of information for the indexed sources.  Here's
+a little wrapper shell script that should be placed somewhere on your
+PATH (/usr/local/bin/ preferably), named ebrowse++ and made
+executable:
+
+#+BEGIN_SRC sh
+#!/bin/sh
+
+DIR=$1
+
+if [ ! "$DIR" = "" ]; then
+    cd $DIR
+fi
+
+find . -regex ".*\.\(hpp\|cpp\|h\|c\)" \
+    -not -regex ".*\(debug\|release\|svn\|git\).*" | ebrowse
+#+END_SRC
+
+Again it needs the GNU find program.  Now, to make use of it:
+
+#+BEGIN_SRC emacs-lisp
+(when (executable-find "ebrowse-c++")
+  (defun my-ebrowse-refresh (arg)
+    "Refresh existing ebrowse db or if *Tree* buffer is missing \
+or ARG is non nil - locate project file for current directory."
+    (interactive "P")
+    (save-excursion
+      (if (and (not arg) (ignore-errors (set-buffer "*Tree*")))
+	  (let ((ebrowse-file buffer-file-name))
+	    (call-process "ebrowse-c++")
+	    (kill-buffer)
+	    (find-file-noselect ebrowse-file))
+	(let ((project-dir (locate-dominating-file default-directory
+						   ".emacs-project")))
+	  (when project-dir
+	    (save-excursion
+	      (call-process "ebrowse-c++" nil nil nil project-dir)
+	      (find-file-noselect (concat project-dir "BROWSE")))))))))
+#+END_SRC
+
+Now, while in some project directory (again assuming .emacs-project is
+present in the root project folder):
+
+~M-x my-ebrowse-refresh~
+
+It refreshes the DB for the current project and opens it in
+background.  Now, to jump over function/variable definition:
+
+~C-c C-m f NAME-OF-SOME-FUNCTION-OR-METHOD-OR-MEMBER~
+
+Don't worry, you'll get completion.  To jump to declaration:
+
+~C-c C-m F NAME-OF-SOME-FUNCTION-OR-METHOD-OR-MEMBER~
+
+To see more enabled functionality:
+
+~C-c C-m C-h~
+
+* Documentation
+
+Emacs documentation is the most complete and accessible set of
+resources I have ever seen (only second to Lisp Machines but they are
+20 years in the past and as one may observe, technology is stubbornly
+regressing in this along other aspects since then).
+
+This is the only environment that has enabled me learn a language and
+easily add useful functionality without internet access.  And do this
+with pleasure and still have hair on my head.  It's that good.
+
+** Info
+
+To invoke the info reader:
+
+~C-h i~
+
+Here's access to the info manuals on your system.  Within it, you can
+jump to the Emacs documentation:
+
+~m Emacs~
+
+the Elisp documentation is top notch too:
+
+~m Elisp~
+
+Mostly [[http://en.wikipedia.org/wiki/Richard_M_Stallman][Dick Stallman]] has done exceptional job, enjoy!
+
+** Woman is better than man
+
+You can read system's man pages within Emacs too:
+
+~M-x woman~
+
+Now choose with completion the desired manual.
+
+You know, women are not the most reliable thing in the world.
+Sometimes they can not read manuals and randomly crash upon, blaming
+you for whatever.  Screw these bitches:
+
+~M-x man~
+
+** Elisp live documentation
+
+Not only is Emacs interactive, it's self-documenting!  No need for
+doxygen or other such offline stuff.  Once you declare function,
+macro, variable, constant or mode and document it properly with a
+docstring, for example:
+
+#+BEGIN_SRC emacs-lisp
+(defmacro define-keys (mode &rest keys)
+  "Define cascade of keys for a MODE.
+KEYS is alternating key-value list."
+  `(progn ,@(let ((res nil))
+	      (while keys
+		(push `(define-key ,mode ,(car keys) ,(cadr keys))
+		      res)
+		(setq keys (cddr keys)))
+	      (nreverse res))))
+#+END_SRC
+
+The documentation becomes immediately available to the doc system for
+retrieval:
+
+~C-h f define-keys~
+
+This is for functions, macros and modes.  For variables use:
+
+~C-h v SOME-VARIABLE-NAME~
+
+Completion should ease you in both cases.
+
+If object is loaded from file, not only is documentation available,
+but you'll get hyperlink to the source.  Invaluable way to explore the
+running system.
+
+** Apropos
+
+The above is useful when you have vague idea about the first symbols,
+which normally denote package.  If it's not the case, there is even
+better search for random Emacs objects:
+
+~M-x apropos~
+
+** Discover available long key-binding sequences by their first part
+
+I always have problems remembering what kind of register commands
+there are.  But I remember they start with:
+
+~C-x r~
+
+Can Emacs help me?  Rhetorical!  Add C-h to the end of some sequence
+and you'll get all command bindings starting this way:
+
+~C-x r C-h~
+
+** Where is some command?
+
+~C-x b~
+
+lists you all available key-bindings for the current buffer.  If you
+are lazy to invoke a search there to find some elusive command:
+
+~C-h w SOME-COMMAND-NAME~
+
+to see if SOME-COMMAND-NAME is currently available through some key
+combination.
+
+** In short
+
+~C-h C-h~
+
+* Random
+
+** Org mode
+
+/I rarely write documents and presentations.  When I do, I use Org mode./
+		/-- Mahatma Gandhi/
+
+There is another wonderful thing that comes with Emacs known as
+[[http://orgmode.org/][Org mode]].  Here's what's written on their site:
+
+"Org mode is for keeping notes, maintaining TODO lists, doing project
+planning, and authoring with a fast and effective plain-text system."
+
+This wiki entry is all done in Org Mode and then exported to HTML (one
+of many available formats).  At first you'll probably be fine with the
+minimum - number of stars at the beginning of line signifies heading
+in the document hierarchy.  The less stars - the more important the
+heading.  You can easily reorder headers at the same level (reordering
+all sub-headers as well) with ~<Alt>+<Shift>+<Up>~ and
+~<Alt>+<Shift>+<Down>~, change nesting level of a header hierarchy
+with ~<Alt>+<Shift>+<Left>~ and ~<Alt>+<Shift>+<Right>~ and so on.
+Have a look at the site for details
+
+*** Tables
+
+Org tables rock!  Here's how to start one:
+
+#+BEGIN_SRC org
+| heading1 | heading2 | bla |
+#+END_SRC
+
+Now press <Tab> and new row will be added.  <Tab> now moves over the
+fields and automatically resizes table fields if longer text is
+entered somewhere.  To insert row separator enter:
+
+#+BEGIN_SRC org
+|-
+#+END_SRC
+
+and press <Tab>, it will expand as much as necessary.  You can create
+tables from blocks of text that look like one (like coma or whitespace
+separated rows of values) with
+
+~M-x org-table-create-or-convert-from-region~
+
+You can do sorting on columns, calculations on rows or columns or
+parts of them and more - it has spreadsheet functionality.  Very handy
+for quick dealing with formatted program output.
+
+*** Lightening fast documents
+
+Have to write some official document?  Wanna concentrate on content
+and structure rather than fonts, colours, headings and what not?
+Write an org-mode file and export it to PDF (through [[http://en.wikipedia.org/wiki/LaTeX][LaTeX]])!  It will
+take care of all details, add table of content even.
+
+Setting up a header page is a little work though.  Here's a little
+[[https://gist.github.com/m00natic/15410be25f7475984a71][example]] how to setup special header page with some logo in file
+vayant-logo.jpg and integrate it within an Org document.  I have added
+some optional information like author, title and export type as well.
+Tweak it however you want.
+
+** Vim
+
+Can Vim emulate Emacs?  Forget it!  But the other way works.  There
+are many packages that give some sort of [[http://www.emacswiki.org/emacs/CategoryEmulation][Vim emulation]].  If you are
+such an insert/escape addict but still want all the power of symbolic
+universe, you might try one of them.  The current poster child is Evil
+(install through the package manager) and seems praised as the most
+potent emulation not just in La la land.
+
+* Support
+
+The excellent documentation is not enough?!
+
+** Andrey
+
+You can always peek at [[https://github.com/m00natic/dot-emacs/][my personal settings]] as a source of mastery and
+inspiration.
+
+** Internet
+
+Just google for it, or go to the trash bin of Emacs resources -
+[[http://www.emacswiki.org/][EmacsWiki]].  Also [[http://emacsrocks.com/][here]] are some series to blow your mind.

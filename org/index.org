@@ -1,0 +1,20 @@
+#+SETUPFILE: ~/.emacs.d/org-templates/level-0.org
+#+TITLE: Home
+
+* Emacs
+
+[[./emacs/emacs-intro-bg.org][Въведение в Емакс]]
+
+[[./emacs/emacs-wiki.org][Opinionated Emacs guide for newbies]]
+
+* Presentations
+
+[[./presentations/lisp.pdf][Lisp]]
+
+[[./presentations/git.pdf][Git]]
+
+[[./presentations/haskell.pdf][Haskell]]
+
+* Miscellaneous
+
+[[./README-PC.org][If you happen to sit on my computer]]

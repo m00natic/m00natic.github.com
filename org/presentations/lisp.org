@@ -1,0 +1,238 @@
+#+SETUPFILE: ~/.emacs.d/org-templates/level-1.org
+#+TITLE:     Lisp (what ITA might have that we don't)
+
+#+LaTeX_CLASS: beamer
+#+LaTeX_CLASS_OPTIONS: [presentation]
+#+BEAMER_FRAME_LEVEL: 2
+
+#+BEAMER_HEADER_EXTRA: \usetheme{Marburg}\usecolortheme{fly}
+#+COLUMNS: %45ITEM %10BEAMER_env(Env) %10BEAMER_envargs(Env Args) %4BEAMER_col(Col) %8BEAMER_extra(Extra)
+#+PROPERTY: BEAMER_col_ALL 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0 :ETC
+
+#+LATEX_HEADER: \usepackage{listings}
+
+* Quick Overview
+
+** History and stuff
+
+*** One of the oldest programming languages still in use
+*** Actually a family of languages
+*** Academic wing (Scheme), industrial wing (Common Lisp, maybe Clojure)
+*** Starting in days of limited hardware, it's quite efficient
+*** Accidentally or not, raised by the Artificial Intelligence pioneers and for long time being the standard there
+*** Lots of groundbreaking ideas for its time, most of them have slowly crept to mainstream and are now taken for granted (garbage collection, dynamic typing, tree data structures, interactive development)
+*** Easy to implement, has standards, lots of realisations
+*** Based on Alonzo Church's lambda calculus
+
+** Common Lisp nowadays
+
+*** Never quite in the mainstream, but with somewhat growing interest in recent years
+*** Aging standard but the language doesn't feel handicapped
+*** HyperSpec, excellent documentation
+*** Lots of implementations, 2 of them commercial
+*** The most popular open source implementation SBCL (Steel Bank Common Lisp) is actually the fastest and written in...Common Lisp
+*** Small community but with increasingly better library support
+*** Lots of great books
+*** Known usage includes 3D graphics suits, game engines, semantic web reasoning systems, knowledge and rule based systems, theorem provers, compilers, algebra systems, telecom systems, fare search engine...
+
+** Technical features
+
+*** Multi-paradigm: supports procedural, functional and object-oriented styles out of the box
+*** Minimal, consistent syntax based on S-expressions
+*** Code is data
+*** Programmer has essentially everything that the language creators have had, great extensibility
+*** Dynamic typing with optional type annotation
+*** Read Eval Print Loop
+*** Supports incremental development
+*** Efficiently compiled
+*** Macros
+*** Condition system
+*** CLOS
+
+* The Language
+
+** S-expressions and evaluation
+
+*** S-expressions (lists) are actually the abstract syntax tree that directly feeds the lisp compiler
+*** Each S-expression returns a value
+*** Evaluating non empty list normally asks the environment for the function/macro represented by the first symbol.
+*** When function, rest of the list is treated like arguments that are also evaluated and passed to the function.
+
+#+begin_src common-lisp
+(some-function arguments that are first evaluated)
+#+end_src
+
+*** When macro, rest of the list is treated like arguments that are passed as they are to the macro.
+
+#+begin_src common-lisp
+(some-macro arguments passed as they are)
+#+end_src
+
+*** Lists are treated as function/macro invocations unless quoted
+
+#+begin_src common-lisp
+'(some list with unevaluated elements)
+#+end_src
+
+** Variables
+
+*** Lexical scope by default, with a twist
+*** Closures							  :B_example:
+    :PROPERTIES:
+    :BEAMER_env: example
+    :END:
+
+#+BEGIN_SRC lisp
+(let ((counter 0))
+  (defun inc-counter ()
+    (incf counter))
+
+  (defun dec-counter ()
+    (decf counter)))
+#+END_SRC
+
+** Variables (continued)
+
+*** Dynamic aka special variables 				  :B_example:
+    :PROPERTIES:
+    :BEAMER_env: example
+    :END:
+
+#+BEGIN_SRC lisp
+(defparameter *debug* nil)
+
+(defun bla-bla ()
+  (no-debugging)
+  (let ((*debug* t))
+    (do-some-stuff-with-debugging))
+  (no-debugging))
+#+END_SRC
+
+** Functions
+
+*** First class citizens
+*** Anonymous functions
+*** Functions as data
+*** Multiple return values
+
+** Macros
+
+*** Program life-cycle
+*** Run-time vs. compilation
+*** Macro expansion time
+*** Programming the compiler
+*** Almost like functions on the outside
+*** Programming over the source code with all the power of the language
+
+** Condition System
+
+*** Beyond exception handling
+*** Conditions and restarts
+*** Condition handlers
+*** handler-case similar to catch 				  :B_example:
+    :PROPERTIES:
+    :BEAMER_env: example
+    :END:
+
+#+BEGIN_SRC lisp
+(handler-case
+    (progn
+      (do-stuff)
+      (do-more-stuff))
+  (some-exception (se) (recover se)))
+#+END_SRC
+
+\hfill \(\qed\)
+
+** Condition System (continued)
+
+*** restart-case 						  :B_example:
+    :PROPERTIES:
+    :BEAMER_env: example
+    :END:
+
+#+BEGIN_SRC lisp
+(defun parse-log-file (file)
+  (with-open-file (in file :direction :input)
+    (loop for text = (read-line in nil nil)
+	  while text
+	  for entry = (restart-case
+			  (parse-log-entry text)
+			(skip-log-entry () nil))
+	  when entry collect it)))
+#+END_SRC
+
+** Condition System (continued)
+
+*** handler-bind 						  :B_example:
+    :PROPERTIES:
+    :BEAMER_env: example
+    :END:
+
+#+BEGIN_SRC lisp
+(defun log-analyzer ()
+  (handler-bind
+      ((malformed-log-entry-error
+	 #'(lambda (c)
+	     (invoke-restart'skip-log-entry))))
+    (dolist (log (find-all-logs))
+      (analyze-log log))))
+#+END_SRC
+
+*** Signals, why just errors
+*** Restarts at lower levels, handlers at higher
+
+** Common Lisp Object System
+
+*** Message passing
+*** Decoupling classes from methods
+*** Generic functions
+*** Method combinations
+*** Multimethods
+
+* A bit of code
+
+** Switch to Emacs please
+
+*...*
+
+* Resources
+
+** Books
+
+*** [[http://www.gigamonkeys.com/book/][Practical Common Lisp]]
+*** [[http://www.lispworks.com/documentation/HyperSpec/Front/][HyperSpec]]
+*** [[http://www.cs.cmu.edu/Groups/AI/html/cltl/clm/clm.html][Common Lisp the Language, 2nd Edition]]
+*** [[http://www.paulgraham.com/onlisptext.html][On Lisp: Advanced Techniques for Common Lisp]]
+*** [[http://www.cs.cmu.edu/~dst/LispBook/][Common Lisp: A Gentle Introduction to Symbolic Computation]]
+*** Paradigms of Artificial Intelligence Programming
+*** [[http://www-mitpress.mit.edu/sicp/][Structure and Interpretation of Computer Programs]]
+
+** Links
+
+*** [[http://www.cliki.net/index][CLiki]]
+*** [[http://www.common-lisp.net/][CL resources]]
+*** [[http://common-lisp.net/~dlw/LispSurvey.html][Implementations: A Survey]]
+*** [[http://www.quicklisp.org/][Quicklisp - CL package manager]]
+*** [[http://common-lisp.net/project/slime][SLIME: The Superior Lisp Interaction Mode for Emacs]]
+*** [[http://weitz.de/][Dr. Edmund Weitz's great libraries]]
+*** [[http://www.sbcl.org/][Steel Bank Common Lisp]]
+*** [[http://shootout.alioth.debian.org/u64/which-language-is-best.php][Some SBCL benchmarks]]
+*** [[http://franz.com][Franz Inc.]]
+*** [[http://www.lispworks.com][LispWorks]]
+
+* Fun
+
+[[http://www.youtube.com/watch?v%3DHM1Zb3xmvMc][Land of Lisp- The Music Video!]]
+
+#+CAPTION: Secret alien technology
+#+ATTR_LaTeX: width=0.8\textwidth wrap placement={r}{0.8\textwidth}
+[[./lisplogo_fancy_256.png]]
+
+#+CAPTION: Lispers
+#+ATTR_LaTeX: width=0.8\textwidth wrap placement={r}{0.8\textwidth}
+[[./lisp-programmers.jpg]]
+
+#+CAPTION: Fanboys
+#+ATTR_LaTeX: width=1.20\textwidth wrap placement={r}{1.20\textwidth}
+[[./plang-fanboys.jpg]]
