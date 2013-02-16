@@ -1,1 +1,5 @@
-Collection of useless ramblings.
+This is a collection of arbitrary and less so articles and
+presentations that I've done at some point.  The ~org~ directory
+contains Org sources which generate the site located at
+
+http://m00natic.github.com
