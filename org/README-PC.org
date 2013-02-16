@@ -5,16 +5,16 @@
 
 Read on to see how to get started.
 
-* [[http://colemak.com][Colemak]]
+* Colemak
 
-Firstly, colemak keyboard layout is used by default.  If this is
+Firstly, [[http://colemak.com][Colemak]] keyboard layout is used by default.  If this is
 unsuitable, you can switch to other layouts with the <menu> button
 (somewhere between right <alt> and <ctrl>).
 
-* [[http://xmonad.org][XMonad]]
+* XMonad
 
-Secondly, the XMonad window manager is used.  Here's a brief
-description of important keyboard shortcuts to get you going where Mod
+Secondly, the [[http://xmonad.org][XMonad]] window manager is employed.  Here's a brief
+description of important keyboard shortcuts to get you going.  Mod
 corresponds to the left windows key and + is a composition of key
 presses on "standard" (qwerty) keyboard layout:
 
@@ -27,31 +27,29 @@ presses on "standard" (qwerty) keyboard layout:
 |                               | to respective virtual desktop from 1 to 9                                     |
 | <space>                       | toggle layout for current virtual desktop                                     |
 | <shift> + c                   | close current application window                                              |
-| <Left Mouse Button>           | bring focus to the window under the mouse cursor                              |
 | <Left Mouse Button> dragging  | move window under the mouse cursor (taking it out of tiling)                  |
 | <Right Mouse Button> dragging | change size of the window under the mouse cursor (taking it out of tiling)    |
 | t (g on qwerty)               | push current application window back to tiling                                |
 | b                             | toggle taskbar visibility                                                     |
-| u (u on qwerty)               | launch shell prompt to start a program by partial name                        |
+| u (u on qwerty)               | launch shell prompt to start a program by name (use <tab> for completion)     |
 | g (d on qwerty)               | launch a menu of currently opened application windows on all virtual desktops |
 |                               | and choose one to visit by using arrows and <enter>                           |
-| <shift> + <enter>             | launch XTerm                                                                  |
+| <shift> + <enter>             | launch terminal                                                               |
 | k (e on qwerty)               | focus the next application window                                             |
 | j (n on qwerty)               | focus the previous application window                                         |
 | l (i on qwerty)               | grow master area (normally on the left)                                       |
 | h                             | shrink master area                                                            |
 | ,                             | increment number of windows in the master area                                |
 | .                             | decrement number of windows in the master area                                |
-| q                             | restart XMonad (you'd normally not want this)                                 |
-| <shift> + q                   | quit XMonad (you'd rarely need this as either no WM will be used              |
-|                               | or you'll quit X server as well)                                              |
+| q                             | restart XMonad                                                                |
+| <shift> + q                   | quit XMonad                                                                   |
 |-------------------------------+-------------------------------------------------------------------------------|
 
-Note that if you change keyboard layout to us qwerty, you'll have to
-use key in the parenthesis.
+Note that if you change keyboard layout to US qwerty, you'll have to
+use keys in the parenthesis where noted.
 
-* [[http://www.gnu.org/software/emacs][Emacs]]
+* Emacs
 
-Lastly, GNU Emacs is actually my operating system and kitchen sink.
+Lastly, [[http://www.gnu.org/software/emacs][GNU Emacs]] is actually my operating system and kitchen sink.
 I'm also sort of minimalist, thus don't be surprised to see some
 graphical (and not only) programs missing.
