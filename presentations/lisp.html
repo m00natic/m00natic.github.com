@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1"/>
 <meta name="title" content="Lisp (what ITA might have that we don't)"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2013-02-16 23:50:37 EET"/>
+<meta name="generated" content="2013-02-17T13:11+0200"/>
 <meta name="author" content="Andrey Kotlarski"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
@@ -62,6 +62,30 @@
 </style>
 <link rel="stylesheet" type="text/css" href="../css/worg-classic.css" />
 <script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012  Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
 <!--/*--><![CDATA[/*><!--*/
  function CodeHighlightOn(elem, id)
  {
@@ -84,6 +108,56 @@
 /*]]>*///-->
 </script>
 <script type="text/javascript" src="http://orgmode.org/mathjax/MathJax.js">
+/**
+ *
+ * @source: http://orgmode.org/mathjax/MathJax.js
+ *
+ * @licstart  The following is the entire license notice for the
+ *  JavaScript code in http://orgmode.org/mathjax/MathJax.js.
+ *
+ * Copyright (C) 2012  MathJax
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ * @licend  The above is the entire license notice
+ * for the JavaScript code in http://orgmode.org/mathjax/MathJax.js.
+ *
+ */
+
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code below.
+
+Copyright (C) 2012  Free Software Foundation, Inc.
+
+The JavaScript code below is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code below.
+*/
 <!--/*--><![CDATA[/*><!--*/
     MathJax.Hub.Config({
         // Only one of the two following lines, depending on user settings
@@ -666,11 +740,11 @@
 
 
 
-<pre class="src src-lisp">(<span style="color: #f0dfaf; font-weight: bold;">let</span> ((counter 0))
-  (<span style="color: #f0dfaf; font-weight: bold;">defun</span> <span style="color: #8cd0d3;">inc-counter</span> ()
+<pre class="src src-lisp">(<span style="color: #0f2050; font-weight: bold;">let</span> ((counter 0))
+  (<span style="color: #0f2050; font-weight: bold;">defun</span> <span style="color: #732f2c;">inc-counter</span> ()
     (incf counter))
 
-  (<span style="color: #f0dfaf; font-weight: bold;">defun</span> <span style="color: #8cd0d3;">dec-counter</span> ()
+  (<span style="color: #0f2050; font-weight: bold;">defun</span> <span style="color: #732f2c;">dec-counter</span> ()
     (decf counter)))
 </pre>
 
@@ -696,11 +770,11 @@
 
 
 
-<pre class="src src-lisp">(<span style="color: #f0dfaf; font-weight: bold;">defparameter</span> <span style="color: #dfaf8f;">*debug*</span> nil)
+<pre class="src src-lisp">(<span style="color: #0f2050; font-weight: bold;">defparameter</span> <span style="color: #205070;">*debug*</span> nil)
 
-(<span style="color: #f0dfaf; font-weight: bold;">defun</span> <span style="color: #8cd0d3;">bla-bla</span> ()
+(<span style="color: #0f2050; font-weight: bold;">defun</span> <span style="color: #732f2c;">bla-bla</span> ()
   (no-debugging)
-  (<span style="color: #f0dfaf; font-weight: bold;">let</span> ((*debug* t))
+  (<span style="color: #0f2050; font-weight: bold;">let</span> ((*debug* t))
     (do-some-stuff-with-debugging))
   (no-debugging))
 </pre>
@@ -851,8 +925,8 @@
 
 
 
-<pre class="src src-lisp">(<span style="color: #f0dfaf; font-weight: bold;">handler-case</span>
-    (<span style="color: #f0dfaf; font-weight: bold;">progn</span>
+<pre class="src src-lisp">(<span style="color: #0f2050; font-weight: bold;">handler-case</span>
+    (<span style="color: #0f2050; font-weight: bold;">progn</span>
       (do-stuff)
       (do-more-stuff))
   (some-exception (se) (recover se)))
@@ -883,11 +957,11 @@
 
 
 
-<pre class="src src-lisp">(<span style="color: #f0dfaf; font-weight: bold;">defun</span> <span style="color: #8cd0d3;">parse-log-file</span> (file)
-  (<span style="color: #f0dfaf; font-weight: bold;">with-open-file</span> (in file <span style="color: #93e0e3;">:direction</span> <span style="color: #93e0e3;">:input</span>)
-    (<span style="color: #f0dfaf; font-weight: bold;">loop</span> for text = (read-line in nil nil)
+<pre class="src src-lisp">(<span style="color: #0f2050; font-weight: bold;">defun</span> <span style="color: #732f2c;">parse-log-file</span> (file)
+  (<span style="color: #0f2050; font-weight: bold;">with-open-file</span> (in file <span style="color: #6c1f1c;">:direction</span> <span style="color: #6c1f1c;">:input</span>)
+    (<span style="color: #0f2050; font-weight: bold;">loop</span> for text = (read-line in nil nil)
           while text
-          for entry = (<span style="color: #f0dfaf; font-weight: bold;">restart-case</span>
+          for entry = (<span style="color: #0f2050; font-weight: bold;">restart-case</span>
                           (parse-log-entry text)
                         (skip-log-entry () nil))
           when entry collect it)))
@@ -915,12 +989,12 @@
 
 
 
-<pre class="src src-lisp">(<span style="color: #f0dfaf; font-weight: bold;">defun</span> <span style="color: #8cd0d3;">log-analyzer</span> ()
-  (<span style="color: #f0dfaf; font-weight: bold;">handler-bind</span>
+<pre class="src src-lisp">(<span style="color: #0f2050; font-weight: bold;">defun</span> <span style="color: #732f2c;">log-analyzer</span> ()
+  (<span style="color: #0f2050; font-weight: bold;">handler-bind</span>
       ((malformed-log-entry-error
-         #'(<span style="color: #f0dfaf; font-weight: bold;">lambda</span> (c)
+         #'(<span style="color: #0f2050; font-weight: bold;">lambda</span> (c)
              (invoke-restart'skip-log-entry))))
-    (<span style="color: #f0dfaf; font-weight: bold;">dolist</span> (log (find-all-logs))
+    (<span style="color: #0f2050; font-weight: bold;">dolist</span> (log (find-all-logs))
       (analyze-log log))))
 </pre>
 
@@ -1214,9 +1288,9 @@
 </div>
 
 <div id="postamble">
-<p class="date">Date: 2013-02-16 23:50:37 EET</p>
+<p class="date">Date: 2013-02-17T13:11+0200</p>
 <p class="author">Author: Andrey Kotlarski</p>
-<p class="creator">Org version 7.8.11 with Emacs version 24</p>
+<p class="creator"><a href="http://orgmode.org">Org</a> version 7.9.2+ with <a href="http://www.gnu.org/software/emacs/">Emacs</a> version 24</p>
 <a href="http://validator.w3.org/check?uri=referer">Validate XHTML 1.0</a>
 
 </div>
