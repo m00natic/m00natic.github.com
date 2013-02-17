@@ -5,9 +5,13 @@
 
 [[./emacs/emacs-intro-bg.org][Въведение в Емакс]]
 
-[[./emacs/emacs-wiki.org][Opinionated Emacs guide for newbies]]
+[[./emacs/emacs-wiki.org][Opinionated Emacs guide for newbies and beyond]], written for my
+colleagues but being general and self-contained thus applicable to
+broader public.
 
 * Presentations
+
+Introductions done for my coworkers.
 
 [[./presentations/lisp.pdf][Lisp]]
 
@@ -17,4 +21,9 @@
 
 * Miscellaneous
 
-[[./README-PC.org][If you happen to sit on my computer]]
+[[./my-pc.org][If you happen to sit on my computer]] don't panic!
+
+[[https://github.com/m00natic][Here]] I'm on github.  Considering that this site is a project there -
+the circle is now complete.
+
+[[./andrey-kotlarski-cv.pdf][My Curriculum Vitae]] kept on [[https://gitorious.org/~m00natic][Gitorious]] for a change.
