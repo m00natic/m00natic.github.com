@@ -153,13 +153,28 @@
   /*     border: 2px solid grey; */
   /* } */
 
+  /* pre { */
+  /*     background-color: black; */
+  /*     border: 4px solid grey; */
+  /*     color: #EEE; */
+  /*     overflow: auto; */
+  /*     padding: 1em; */
+  /*  } */
+
+  /* pre { */
+  /*     background-color: white; */
+  /*     color: black; */
+  /*     overflow: auto; */
+  /*     padding: 1em; */
+  /*     border: 4px solid grey; */
+  /* } */
+
   pre {
-      background-color: black;
-      border: 4px solid grey;
-      color: #EEE;
+      background-color: #3f3f3f /* #c0c0c0 */;
+      color: #dcdccc /* #232333 */;
       overflow: auto;
       padding: 1em;
-   }
+  }
 
   .org-info-box {
     clear:both;

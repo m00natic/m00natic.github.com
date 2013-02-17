@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 <meta name="title" content="Andrey's Opinionated Emacs Guide"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2013-02-17T13:11+0200"/>
+<meta name="generated" content="2013-02-17T15:06+0200"/>
 <meta name="author" content="Andrey Kotlarski"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
@@ -392,10 +392,10 @@ parenthesis like for example:
 
 
 
-<pre class="src src-emacs-lisp">(message <span style="color: #336c6c;">"Mozart is a great %s."</span>
-         (<span style="color: #0f2050; font-weight: bold;">if</span> (&gt; (string-to-number (emacs-uptime <span style="color: #336c6c;">"%H"</span>)) 3)
-             <span style="color: #336c6c;">"programmer"</span>
-           <span style="color: #336c6c;">"composer"</span>))
+<pre class="src src-emacs-lisp">(message <span style="color: #cc9393;">"Mozart is a great %s."</span>
+         (<span style="color: #f0dfaf; font-weight: bold;">if</span> (&gt; (string-to-number (emacs-uptime <span style="color: #cc9393;">"%H"</span>)) 3)
+             <span style="color: #cc9393;">"programmer"</span>
+           <span style="color: #cc9393;">"composer"</span>))
 </pre>
 
 
@@ -433,9 +433,9 @@ If you somehow manage to push settings that make your Emacs unusable
 
 
 <pre class="src src-emacs-lisp">(fset 'self-insert-command
-      (<span style="color: #0f2050; font-weight: bold;">lambda</span> () <span style="color: #704d70;">"Print message instead of entering characters."</span>
+      (<span style="color: #f0dfaf; font-weight: bold;">lambda</span> () <span style="color: #8fb28f;">"Print message instead of entering characters."</span>
         (interactive)
-        (message <span style="color: #336c6c;">"HALLO?"</span>)))
+        (message <span style="color: #cc9393;">"HALLO?"</span>)))
 </pre>
 
 
@@ -603,11 +603,11 @@ others too:
 
 
 <pre class="src src-emacs-lisp">(custom-set-variables
- '(package-archives '((<span style="color: #336c6c;">"gnu"</span> . <span style="color: #336c6c;">"http://elpa.gnu.org/packages/"</span>)
-                      (<span style="color: #336c6c;">"elpa"</span> . <span style="color: #336c6c;">"http://tromey.com/elpa/"</span>)
-                      (<span style="color: #336c6c;">"melpa"</span> . <span style="color: #336c6c;">"http://melpa.milkbox.net/packages/"</span>)
-                      (<span style="color: #336c6c;">"marmalade"</span> .
-                       <span style="color: #336c6c;">"http://marmalade-repo.org/packages/"</span>))))
+ '(package-archives '((<span style="color: #cc9393;">"gnu"</span> . <span style="color: #cc9393;">"http://elpa.gnu.org/packages/"</span>)
+                      (<span style="color: #cc9393;">"elpa"</span> . <span style="color: #cc9393;">"http://tromey.com/elpa/"</span>)
+                      (<span style="color: #cc9393;">"melpa"</span> . <span style="color: #cc9393;">"http://melpa.milkbox.net/packages/"</span>)
+                      (<span style="color: #cc9393;">"marmalade"</span> .
+                       <span style="color: #cc9393;">"http://marmalade-repo.org/packages/"</span>))))
 </pre>
 
 
@@ -654,7 +654,7 @@ Here's how to assign global key-binding:
 
 
 
-<pre class="src src-emacs-lisp">(define-key global-map (kbd <span style="color: #336c6c;">"C-c z"</span>) 'BELOVED-COMMAND)
+<pre class="src src-emacs-lisp">(define-key global-map (kbd <span style="color: #cc9393;">"C-c z"</span>) 'BELOVED-COMMAND)
 </pre>
 
 
@@ -677,7 +677,7 @@ variable for this mode:
 
 
 
-<pre class="src src-emacs-lisp">(define-key occur-mode-map <span style="color: #336c6c;">"n"</span> 'occur-next)
+<pre class="src src-emacs-lisp">(define-key occur-mode-map <span style="color: #cc9393;">"n"</span> 'occur-next)
 </pre>
 
 
@@ -776,8 +776,8 @@ Paste this in your init.el:
 
 <pre class="src src-emacs-lisp">(custom-set-variables
  '(tramp-shell-prompt-pattern
-   <span style="color: #336c6c;">"</span><span style="color: #336c6c; font-weight: bold;">\\</span><span style="color: #336c6c; font-weight: bold;">(?:</span><span style="color: #336c6c;">^</span><span style="color: #336c6c; font-weight: bold;">\\</span><span style="color: #336c6c; font-weight: bold;">|</span><span style="color: #336c6c;">
-</span><span style="color: #336c6c; font-weight: bold;">\\</span><span style="color: #336c6c; font-weight: bold;">)</span><span style="color: #336c6c;">[</span><span style="color: #232333;">^</span><span style="color: #336c6c;">]#$%&gt;\n]*#?[]#$%&gt;] *</span><span style="color: #336c6c; font-weight: bold;">\\</span><span style="color: #336c6c; font-weight: bold;">(</span><span style="color: #336c6c;">;?&#27;\\[[0-9;]*[a-zA-Z] *</span><span style="color: #336c6c; font-weight: bold;">\\</span><span style="color: #336c6c; font-weight: bold;">)</span><span style="color: #336c6c;">*"</span>))
+   <span style="color: #cc9393;">"</span><span style="color: #cc9393; font-weight: bold;">\\</span><span style="color: #cc9393; font-weight: bold;">(?:</span><span style="color: #cc9393;">^</span><span style="color: #cc9393; font-weight: bold;">\\</span><span style="color: #cc9393; font-weight: bold;">|</span><span style="color: #cc9393;">
+</span><span style="color: #cc9393; font-weight: bold;">\\</span><span style="color: #cc9393; font-weight: bold;">)</span><span style="color: #cc9393;">[</span><span style="color: #dcdccc;">^</span><span style="color: #cc9393;">]#$%&gt;\n]*#?[]#$%&gt;] *</span><span style="color: #cc9393; font-weight: bold;">\\</span><span style="color: #cc9393; font-weight: bold;">(</span><span style="color: #cc9393;">;?&#27;\\[[0-9;]*[a-zA-Z] *</span><span style="color: #cc9393; font-weight: bold;">\\</span><span style="color: #cc9393; font-weight: bold;">)</span><span style="color: #cc9393;">*"</span>))
 </pre>
 
 
@@ -816,7 +816,7 @@ all backups in a single place?
 
 
 <pre class="src src-emacs-lisp">(setq backup-directory-alist
-      `((<span style="color: #336c6c;">"."</span> . ,(concat user-emacs-directory <span style="color: #336c6c;">"backup/"</span>)))
+      `((<span style="color: #cc9393;">"."</span> . ,(concat user-emacs-directory <span style="color: #cc9393;">"backup/"</span>)))
       tramp-backup-directory-alist backup-directory-alist)
 </pre>
 
@@ -999,17 +999,17 @@ package manager and then:
 
 
 
-<pre class="src src-emacs-lisp">(<span style="color: #0f2050; font-weight: bold;">defconst</span> <span style="color: #205070;">+win-path+</span> <span style="color: #336c6c;">"C:/"</span> <span style="color: #704d70;">"Windows root path."</span>)
+<pre class="src src-emacs-lisp">(<span style="color: #f0dfaf; font-weight: bold;">defconst</span> <span style="color: #dfaf8f;">+win-path+</span> <span style="color: #cc9393;">"C:/"</span> <span style="color: #8fb28f;">"Windows root path."</span>)
 
-<span style="color: #806080;">;;; </span><span style="color: #806080;">Cygwin</span>
-(<span style="color: #0f2050; font-weight: bold;">let</span> ((cygwin-dir (concat +win-path+ <span style="color: #336c6c;">"cygwin/bin"</span>)))
-  (<span style="color: #0f2050; font-weight: bold;">when</span> (file-exists-p cygwin-dir)
-    (setq shell-file-name <span style="color: #336c6c;">"bash"</span>
-          explicit-shell-file-name <span style="color: #336c6c;">"bash"</span>)
-    (setenv <span style="color: #336c6c;">"SHELL"</span> shell-file-name)
-    (setenv <span style="color: #336c6c;">"CYGWIN"</span> <span style="color: #336c6c;">"nodosfilewarning"</span>)
+<span style="color: #7f9f7f;">;;; </span><span style="color: #7f9f7f;">Cygwin</span>
+(<span style="color: #f0dfaf; font-weight: bold;">let</span> ((cygwin-dir (concat +win-path+ <span style="color: #cc9393;">"cygwin/bin"</span>)))
+  (<span style="color: #f0dfaf; font-weight: bold;">when</span> (file-exists-p cygwin-dir)
+    (setq shell-file-name <span style="color: #cc9393;">"bash"</span>
+          explicit-shell-file-name <span style="color: #cc9393;">"bash"</span>)
+    (setenv <span style="color: #cc9393;">"SHELL"</span> shell-file-name)
+    (setenv <span style="color: #cc9393;">"CYGWIN"</span> <span style="color: #cc9393;">"nodosfilewarning"</span>)
 
-    (<span style="color: #0f2050; font-weight: bold;">when</span> (<span style="color: #0f2050; font-weight: bold;">require</span> '<span style="color: #401440;">cygwin-mount</span> nil t)
+    (<span style="color: #f0dfaf; font-weight: bold;">when</span> (<span style="color: #f0dfaf; font-weight: bold;">require</span> '<span style="color: #bfebbf;">cygwin-mount</span> nil t)
       (cygwin-mount-activate)
       (setq w32shell-cygwin-bin cygwin-dir))))
 </pre>
@@ -1181,7 +1181,7 @@ bind the same-named command to a key like:
 
 
 
-<pre class="src src-emacs-lisp">(define-key global-map <span style="color: #336c6c;">"\C-cf"</span> 'find-file-in-project)
+<pre class="src src-emacs-lisp">(define-key global-map <span style="color: #cc9393;">"\C-cf"</span> 'find-file-in-project)
 </pre>
 
 
@@ -1204,11 +1204,11 @@ Here's a sample customization for C++ project:
 
 
 <pre class="src src-emacs-lisp">(setq-default
- ffip-project-file <span style="color: #336c6c;">".emacs-project"</span>
- ffip-patterns (nconc '(<span style="color: #336c6c;">"*.cpp"</span> <span style="color: #336c6c;">"*.h"</span> <span style="color: #336c6c;">"*.hpp"</span> <span style="color: #336c6c;">"*.c"</span>)
+ ffip-project-file <span style="color: #cc9393;">".emacs-project"</span>
+ ffip-patterns (nconc '(<span style="color: #cc9393;">"*.cpp"</span> <span style="color: #cc9393;">"*.h"</span> <span style="color: #cc9393;">"*.hpp"</span> <span style="color: #cc9393;">"*.c"</span>)
                       ffip-patterns)
  ffip-find-options
- <span style="color: #336c6c;">"-not -regex \".*</span><span style="color: #336c6c; font-weight: bold;">\\</span><span style="color: #336c6c; font-weight: bold;">(</span><span style="color: #336c6c;">debug</span><span style="color: #336c6c; font-weight: bold;">\\</span><span style="color: #336c6c; font-weight: bold;">|</span><span style="color: #336c6c;">release</span><span style="color: #336c6c; font-weight: bold;">\\</span><span style="color: #336c6c; font-weight: bold;">|</span><span style="color: #336c6c;">svn</span><span style="color: #336c6c; font-weight: bold;">\\</span><span style="color: #336c6c; font-weight: bold;">|</span><span style="color: #336c6c;">git</span><span style="color: #336c6c; font-weight: bold;">\\</span><span style="color: #336c6c; font-weight: bold;">)</span><span style="color: #336c6c;">.*\""</span>
+ <span style="color: #cc9393;">"-not -regex \".*</span><span style="color: #cc9393; font-weight: bold;">\\</span><span style="color: #cc9393; font-weight: bold;">(</span><span style="color: #cc9393;">debug</span><span style="color: #cc9393; font-weight: bold;">\\</span><span style="color: #cc9393; font-weight: bold;">|</span><span style="color: #cc9393;">release</span><span style="color: #cc9393; font-weight: bold;">\\</span><span style="color: #cc9393; font-weight: bold;">|</span><span style="color: #cc9393;">svn</span><span style="color: #cc9393; font-weight: bold;">\\</span><span style="color: #cc9393; font-weight: bold;">|</span><span style="color: #cc9393;">git</span><span style="color: #cc9393; font-weight: bold;">\\</span><span style="color: #cc9393; font-weight: bold;">)</span><span style="color: #cc9393;">.*\""</span>
  ffip-limit 4096)
 </pre>
 
@@ -1232,13 +1232,13 @@ just for projects?  Lets get hands dirty then:
 
 
 
-<pre class="src src-emacs-lisp">(<span style="color: #0f2050; font-weight: bold;">eval-after-load</span> <span style="color: #336c6c;">"find-file-in-project"</span>
-  '(<span style="color: #0f2050; font-weight: bold;">progn</span>
-     (<span style="color: #0f2050; font-weight: bold;">defun</span> <span style="color: #732f2c;">my-ffip-project-root-function</span> ()
-       <span style="color: #704d70;">"Check for `</span><span style="color: #401440;">ffip-project-file</span><span style="color: #704d70;">' and if no such, \</span>
-<span style="color: #704d70;">return current directory."</span>
-       (<span style="color: #0f2050; font-weight: bold;">let</span> ((project-directory
-              (<span style="color: #0f2050; font-weight: bold;">if</span> (listp ffip-project-file)
+<pre class="src src-emacs-lisp">(<span style="color: #f0dfaf; font-weight: bold;">eval-after-load</span> <span style="color: #cc9393;">"find-file-in-project"</span>
+  '(<span style="color: #f0dfaf; font-weight: bold;">progn</span>
+     (<span style="color: #f0dfaf; font-weight: bold;">defun</span> <span style="color: #8cd0d3;">my-ffip-project-root-function</span> ()
+       <span style="color: #8fb28f;">"Check for `</span><span style="color: #bfebbf;">ffip-project-file</span><span style="color: #8fb28f;">' and if no such, \</span>
+<span style="color: #8fb28f;">return current directory."</span>
+       (<span style="color: #f0dfaf; font-weight: bold;">let</span> ((project-directory
+              (<span style="color: #f0dfaf; font-weight: bold;">if</span> (listp ffip-project-file)
                   (some (apply-partially 'locate-dominating-file
                                          default-directory)
                         ffip-project-file)
@@ -1408,8 +1408,8 @@ highlighting current function:
 
 
 
-<pre class="src src-emacs-lisp">(<span style="color: #0f2050; font-weight: bold;">eval-after-load</span> <span style="color: #336c6c;">"semantic"</span>
-   '(<span style="color: #0f2050; font-weight: bold;">progn</span>
+<pre class="src src-emacs-lisp">(<span style="color: #f0dfaf; font-weight: bold;">eval-after-load</span> <span style="color: #cc9393;">"semantic"</span>
+   '(<span style="color: #f0dfaf; font-weight: bold;">progn</span>
       (add-to-list 'semantic-default-submodes
                    'global-semantic-decoration-mode)
       (add-to-list 'semantic-default-submodes
@@ -1444,13 +1444,13 @@ through the package manager) and here is some setup:
 
 
 
-<pre class="src src-emacs-lisp">(<span style="color: #0f2050; font-weight: bold;">when</span> (<span style="color: #0f2050; font-weight: bold;">ignore-errors</span> (<span style="color: #0f2050; font-weight: bold;">require</span> '<span style="color: #401440;">auto-complete-config</span> nil t))
+<pre class="src src-emacs-lisp">(<span style="color: #f0dfaf; font-weight: bold;">when</span> (<span style="color: #f0dfaf; font-weight: bold;">ignore-errors</span> (<span style="color: #f0dfaf; font-weight: bold;">require</span> '<span style="color: #bfebbf;">auto-complete-config</span> nil t))
   (ac-config-default)
   (ac-flyspell-workaround)
 
   (when-library
    t semantic
-   (<span style="color: #0f2050; font-weight: bold;">eval-after-load</span> <span style="color: #336c6c;">"semantic"</span>
+   (<span style="color: #f0dfaf; font-weight: bold;">eval-after-load</span> <span style="color: #cc9393;">"semantic"</span>
      '(setq-default ac-sources
                     (cons 'ac-source-semantic ac-sources)))))
 </pre>
@@ -1482,12 +1482,12 @@ settings for it (some of them are necessary to get it started at all):
 
 
 <pre class="src src-emacs-lisp">(custom-set-variables
- '(ecb-options-version <span style="color: #336c6c;">"2.40"</span>))
+ '(ecb-options-version <span style="color: #cc9393;">"2.40"</span>))
 
-(<span style="color: #0f2050; font-weight: bold;">eval-after-load</span> <span style="color: #336c6c;">"ecb"</span>
-    `(<span style="color: #0f2050; font-weight: bold;">progn</span> (<span style="color: #0f2050; font-weight: bold;">defvar</span> <span style="color: #205070;">stack-trace-on-error</span> nil)
-            (<span style="color: #0f2050; font-weight: bold;">defconst</span> <span style="color: #205070;">ecb-cedet-required-version-max</span> '(2 1 4 9))
-            (<span style="color: #0f2050; font-weight: bold;">let</span> ((prog-path <span style="color: #336c6c;">"~/Programs"</span>)) <span style="color: #806080;">; </span><span style="color: #806080;">set folder where you store projects, not really important</span>
+(<span style="color: #f0dfaf; font-weight: bold;">eval-after-load</span> <span style="color: #cc9393;">"ecb"</span>
+    `(<span style="color: #f0dfaf; font-weight: bold;">progn</span> (<span style="color: #f0dfaf; font-weight: bold;">defvar</span> <span style="color: #dfaf8f;">stack-trace-on-error</span> nil)
+            (<span style="color: #f0dfaf; font-weight: bold;">defconst</span> <span style="color: #dfaf8f;">ecb-cedet-required-version-max</span> '(2 1 4 9))
+            (<span style="color: #f0dfaf; font-weight: bold;">let</span> ((prog-path <span style="color: #cc9393;">"~/Programs"</span>)) <span style="color: #7f9f7f;">; </span><span style="color: #7f9f7f;">set folder where you store projects, not really important</span>
               (ecb-add-source-path prog-path prog-path t))))
 </pre>
 
@@ -1516,9 +1516,9 @@ ways to get something.  Firstly some general customization:
 
 
 <pre class="src src-emacs-lisp">(custom-set-variables
- '(c-default-style '((java-mode . <span style="color: #336c6c;">"java"</span>)
-                     (awk-mode . <span style="color: #336c6c;">"awk"</span>)
-                     (other . <span style="color: #336c6c;">"stroustrup"</span>)))
+ '(c-default-style '((java-mode . <span style="color: #cc9393;">"java"</span>)
+                     (awk-mode . <span style="color: #cc9393;">"awk"</span>)
+                     (other . <span style="color: #cc9393;">"stroustrup"</span>)))
  '(indent-tabs-mode nil)
  '(which-function-mode t))
 </pre>
@@ -1548,16 +1548,16 @@ executable:
 
 
 
-<pre class="src src-sh"><span style="color: #806080;">#</span><span style="color: #806080;">!/bin/</span><span style="color: #0f2050; font-weight: bold;">sh</span>
+<pre class="src src-sh"><span style="color: #7f9f7f;">#</span><span style="color: #7f9f7f;">!/bin/</span><span style="color: #f0dfaf; font-weight: bold;">sh</span>
 
-<span style="color: #205070;">DIR</span>=$<span style="color: #205070;">1</span>
+<span style="color: #dfaf8f;">DIR</span>=$<span style="color: #dfaf8f;">1</span>
 
-<span style="color: #0f2050; font-weight: bold;">if</span> [ <span style="color: #232333;">!</span> <span style="color: #336c6c;">"$DIR"</span> = <span style="color: #336c6c;">""</span> ]; <span style="color: #0f2050; font-weight: bold;">then</span>
-    <span style="color: #6c1f1c;">cd</span> $<span style="color: #205070;">DIR</span>
-<span style="color: #0f2050; font-weight: bold;">fi</span>
+<span style="color: #f0dfaf; font-weight: bold;">if</span> [ <span style="color: #dcdccc;">!</span> <span style="color: #cc9393;">"$DIR"</span> = <span style="color: #cc9393;">""</span> ]; <span style="color: #f0dfaf; font-weight: bold;">then</span>
+    <span style="color: #93e0e3;">cd</span> $<span style="color: #dfaf8f;">DIR</span>
+<span style="color: #f0dfaf; font-weight: bold;">fi</span>
 
-find . -regex <span style="color: #336c6c;">".*\.\(hpp\|cpp\|h\|c\)"</span> <span style="color: #336c6c;">\</span>
-    -not -regex <span style="color: #336c6c;">".*\(debug\|release\|svn\|git\).*"</span> | ebrowse
+find . -regex <span style="color: #cc9393;">".*\.\(hpp\|cpp\|h\|c\)"</span> <span style="color: #cc9393;">\</span>
+    -not -regex <span style="color: #cc9393;">".*\(debug\|release\|svn\|git\).*"</span> | ebrowse
 </pre>
 
 
@@ -1567,23 +1567,23 @@ Again it needs the GNU find program.  Now, to make use of it:
 
 
 
-<pre class="src src-emacs-lisp">(<span style="color: #0f2050; font-weight: bold;">when</span> (executable-find <span style="color: #336c6c;">"ebrowse-c++"</span>)
-  (<span style="color: #0f2050; font-weight: bold;">defun</span> <span style="color: #732f2c;">my-ebrowse-refresh</span> (arg)
-    <span style="color: #704d70;">"Refresh existing ebrowse db or if *Tree* buffer is missing \</span>
-<span style="color: #704d70;">or ARG is non nil - locate project file for current directory."</span>
-    (interactive <span style="color: #336c6c;">"P"</span>)
-    (<span style="color: #0f2050; font-weight: bold;">save-excursion</span>
-      (<span style="color: #0f2050; font-weight: bold;">if</span> (and (not arg) (<span style="color: #0f2050; font-weight: bold;">ignore-errors</span> (set-buffer <span style="color: #336c6c;">"*Tree*"</span>)))
-          (<span style="color: #0f2050; font-weight: bold;">let</span> ((ebrowse-file buffer-file-name))
-            (call-process <span style="color: #336c6c;">"ebrowse-c++"</span>)
+<pre class="src src-emacs-lisp">(<span style="color: #f0dfaf; font-weight: bold;">when</span> (executable-find <span style="color: #cc9393;">"ebrowse-c++"</span>)
+  (<span style="color: #f0dfaf; font-weight: bold;">defun</span> <span style="color: #8cd0d3;">my-ebrowse-refresh</span> (arg)
+    <span style="color: #8fb28f;">"Refresh existing ebrowse db or if *Tree* buffer is missing \</span>
+<span style="color: #8fb28f;">or ARG is non nil - locate project file for current directory."</span>
+    (interactive <span style="color: #cc9393;">"P"</span>)
+    (<span style="color: #f0dfaf; font-weight: bold;">save-excursion</span>
+      (<span style="color: #f0dfaf; font-weight: bold;">if</span> (and (not arg) (<span style="color: #f0dfaf; font-weight: bold;">ignore-errors</span> (set-buffer <span style="color: #cc9393;">"*Tree*"</span>)))
+          (<span style="color: #f0dfaf; font-weight: bold;">let</span> ((ebrowse-file buffer-file-name))
+            (call-process <span style="color: #cc9393;">"ebrowse-c++"</span>)
             (kill-buffer)
             (find-file-noselect ebrowse-file))
-        (<span style="color: #0f2050; font-weight: bold;">let</span> ((project-dir (locate-dominating-file default-directory
-                                                   <span style="color: #336c6c;">".emacs-project"</span>)))
-          (<span style="color: #0f2050; font-weight: bold;">when</span> project-dir
-            (<span style="color: #0f2050; font-weight: bold;">save-excursion</span>
-              (call-process <span style="color: #336c6c;">"ebrowse-c++"</span> nil nil nil project-dir)
-              (find-file-noselect (concat project-dir <span style="color: #336c6c;">"BROWSE"</span>)))))))))
+        (<span style="color: #f0dfaf; font-weight: bold;">let</span> ((project-dir (locate-dominating-file default-directory
+                                                   <span style="color: #cc9393;">".emacs-project"</span>)))
+          (<span style="color: #f0dfaf; font-weight: bold;">when</span> project-dir
+            (<span style="color: #f0dfaf; font-weight: bold;">save-excursion</span>
+              (call-process <span style="color: #cc9393;">"ebrowse-c++"</span> nil nil nil project-dir)
+              (find-file-noselect (concat project-dir <span style="color: #cc9393;">"BROWSE"</span>)))))))))
 </pre>
 
 
@@ -1716,11 +1716,11 @@ docstring, for example:
 
 
 
-<pre class="src src-emacs-lisp">(<span style="color: #0f2050; font-weight: bold;">defmacro</span> <span style="color: #732f2c;">define-keys</span> (mode <span style="color: #834744;">&amp;rest</span> keys)
-  <span style="color: #704d70;">"Define cascade of keys for a MODE.</span>
-<span style="color: #704d70;">KEYS is alternating key-value list."</span>
-  `(<span style="color: #0f2050; font-weight: bold;">progn</span> ,@(<span style="color: #0f2050; font-weight: bold;">let</span> ((res nil))
-              (<span style="color: #0f2050; font-weight: bold;">while</span> keys
+<pre class="src src-emacs-lisp">(<span style="color: #f0dfaf; font-weight: bold;">defmacro</span> <span style="color: #8cd0d3;">define-keys</span> (mode <span style="color: #7cb8bb;">&amp;rest</span> keys)
+  <span style="color: #8fb28f;">"Define cascade of keys for a MODE.</span>
+<span style="color: #8fb28f;">KEYS is alternating key-value list."</span>
+  `(<span style="color: #f0dfaf; font-weight: bold;">progn</span> ,@(<span style="color: #f0dfaf; font-weight: bold;">let</span> ((res nil))
+              (<span style="color: #f0dfaf; font-weight: bold;">while</span> keys
                 (push `(define-key ,mode ,(car keys) ,(cadr keys))
                       res)
                 (setq keys (cddr keys)))
@@ -1884,33 +1884,33 @@ rambling:
 
 
 
-<pre class="src src-org"><span style="color: #205070; background-color: #c0c0c0;">* This is important header</span>
+<pre class="src src-org"><span style="color: #dfaf8f; background-color: #3f3f3f;">* This is important header</span>
 
-<span style="color: #2f4070; font-weight: bold; text-decoration: underline;">./img/funny-image.jpg</span>
+<span style="color: #d0bf8f; font-weight: bold; text-decoration: underline;">./img/funny-image.jpg</span>
 
-<span style="color: #704d70; background-color: #c0c0c0;">** This is sub-header</span>
+<span style="color: #8fb28f; background-color: #3f3f3f;">** This is sub-header</span>
 
 Here's a cool report:
 
-<span style="color: #603a60;">|-------+-------------|</span>
-<span style="color: #603a60;">| month | revenue     |</span>
-<span style="color: #603a60;">|-------+-------------|</span>
-<span style="color: #603a60;">|     1 | 0           |</span>
-<span style="color: #603a60;">|     2 | 6 000       |</span>
-<span style="color: #603a60;">|     3 | - 1 000 000 |</span>
-<span style="color: #603a60;">|     4 |             |</span>
-<span style="color: #603a60;">|-------+-------------|</span>
+<span style="color: #9fc59f;">|-------+-------------|</span>
+<span style="color: #9fc59f;">| month | revenue     |</span>
+<span style="color: #9fc59f;">|-------+-------------|</span>
+<span style="color: #9fc59f;">|     1 | 0           |</span>
+<span style="color: #9fc59f;">|     2 | 6 000       |</span>
+<span style="color: #9fc59f;">|     3 | - 1 000 000 |</span>
+<span style="color: #9fc59f;">|     4 |             |</span>
+<span style="color: #9fc59f;">|-------+-------------|</span>
 
-<span style="color: #834744; background-color: #c0c0c0;">*** This is sub-sub-header (maybe even a bullet)</span>
+<span style="color: #7cb8bb; background-color: #3f3f3f;">*** This is sub-sub-header (maybe even a bullet)</span>
 
-<span style="color: #2f4070; font-weight: bold; text-decoration: underline;">Outsourcing has betrayed us link</span>
+<span style="color: #d0bf8f; font-weight: bold; text-decoration: underline;">Outsourcing has betrayed us link</span>
 
-<span style="color: #704d70; background-color: #c0c0c0;">** Another sub-header</span>
+<span style="color: #8fb28f; background-color: #3f3f3f;">** Another sub-header</span>
 
 Some rescue plan.
 
-<span style="color: #a080a0; background-color: #c0c0c0;">****** This is so low, I don't even know how will be exported</span>
-<span style="color: #a080a0; background-color: #c0c0c0;">****** At least there are two of us</span>
+<span style="color: #5f7f5f; background-color: #3f3f3f;">****** This is so low, I don't even know how will be exported</span>
+<span style="color: #5f7f5f; background-color: #3f3f3f;">****** At least there are two of us</span>
 </pre>
 
 
@@ -1946,7 +1946,7 @@ Org tables rock!  Here's how to start one:
 
 
 
-<pre class="src src-org"><span style="color: #603a60;">| heading1 | heading2 | bla |</span>
+<pre class="src src-org"><span style="color: #9fc59f;">| heading1 | heading2 | bla |</span>
 </pre>
 
 
@@ -1958,7 +1958,7 @@ somewhere.  To insert row separator enter:
 
 
 
-<pre class="src src-org"><span style="color: #603a60;">|-</span>
+<pre class="src src-org"><span style="color: #9fc59f;">|-</span>
 </pre>
 
 
@@ -2058,7 +2058,7 @@ Just google for it, or go to the trash bin of Emacs resources -
 </div>
 
 <div id="postamble">
-<p class="date">Date: 2013-02-17T13:11+0200</p>
+<p class="date">Date: 2013-02-17T15:06+0200</p>
 <p class="author">Author: Andrey Kotlarski</p>
 <p class="creator"><a href="http://orgmode.org">Org</a> version 7.9.2+ with <a href="http://www.gnu.org/software/emacs/">Emacs</a> version 24</p>
 <a href="http://validator.w3.org/check?uri=referer">Validate XHTML 1.0</a>

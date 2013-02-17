@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1"/>
 <meta name="title" content="Haskell (pure and lazy, yet functional)"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2013-02-17T13:11+0200"/>
+<meta name="generated" content="2013-02-17T15:06+0200"/>
 <meta name="author" content="Andrey Kotlarski"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
@@ -495,9 +495,9 @@ for the JavaScript code in this tag.
 
 
 
-<pre class="src src-haskell"><span style="color: #732f2c;">map</span> <span style="color: #205070;">::</span> (a <span style="color: #205070;">-&gt;</span> b) <span style="color: #205070;">-&gt;</span> [a] <span style="color: #205070;">-&gt;</span> [b]
-<span style="color: #732f2c;">map</span> <span style="color: #0f2050; font-weight: bold;">_</span> <span style="color: #834744;">[]</span> <span style="color: #205070;">=</span> <span style="color: #834744;">[]</span>
-<span style="color: #732f2c;">map</span> f (x<span style="color: #834744;">:</span>xs) <span style="color: #205070;">=</span> f x <span style="color: #834744;">:</span> map f xs
+<pre class="src src-haskell"><span style="color: #8cd0d3;">map</span> <span style="color: #dfaf8f;">::</span> (a <span style="color: #dfaf8f;">-&gt;</span> b) <span style="color: #dfaf8f;">-&gt;</span> [a] <span style="color: #dfaf8f;">-&gt;</span> [b]
+<span style="color: #8cd0d3;">map</span> <span style="color: #f0dfaf; font-weight: bold;">_</span> <span style="color: #7cb8bb;">[]</span> <span style="color: #dfaf8f;">=</span> <span style="color: #7cb8bb;">[]</span>
+<span style="color: #8cd0d3;">map</span> f (x<span style="color: #7cb8bb;">:</span>xs) <span style="color: #dfaf8f;">=</span> f x <span style="color: #7cb8bb;">:</span> map f xs
 </pre>
 
 
@@ -515,7 +515,7 @@ for the JavaScript code in this tag.
 
 
 
-<pre class="src src-haskell"><span style="color: #732f2c;">map</span> (5 <span style="color: #205070;">+</span>) [1<span style="color: #205070;">..</span>10]
+<pre class="src src-haskell"><span style="color: #8cd0d3;">map</span> (5 <span style="color: #dfaf8f;">+</span>) [1<span style="color: #dfaf8f;">..</span>10]
 </pre>
 
 
@@ -533,7 +533,7 @@ for the JavaScript code in this tag.
 
 
 
-<pre class="src src-haskell"><span style="color: #732f2c;">map</span> (negate <span style="color: #205070;">.</span> sum <span style="color: #205070;">.</span> tail) [[1<span style="color: #205070;">..</span>5],[3<span style="color: #205070;">..</span>6],[1<span style="color: #205070;">..</span>7]]
+<pre class="src src-haskell"><span style="color: #8cd0d3;">map</span> (negate <span style="color: #dfaf8f;">.</span> sum <span style="color: #dfaf8f;">.</span> tail) [[1<span style="color: #dfaf8f;">..</span>5],[3<span style="color: #dfaf8f;">..</span>6],[1<span style="color: #dfaf8f;">..</span>7]]
 </pre>
 
 
@@ -578,7 +578,7 @@ int* take(int amount, int collection[])
 
 
 
-<pre class="src src-haskell"><span style="color: #732f2c;">take</span> 10 <span style="color: #205070;">$</span> map (5 <span style="color: #205070;">+</span>) [1<span style="color: #205070;">..</span>]
+<pre class="src src-haskell"><span style="color: #8cd0d3;">take</span> 10 <span style="color: #dfaf8f;">$</span> map (5 <span style="color: #dfaf8f;">+</span>) [1<span style="color: #dfaf8f;">..</span>]
 </pre>
 
 
@@ -632,7 +632,7 @@ Prelude&gt; :t filter
 </p>
 
 
-<pre class="src src-haskell"><span style="color: #732f2c;">filter</span> <span style="color: #205070;">::</span> (a <span style="color: #205070;">-&gt;</span> <span style="color: #834744;">Bool</span>) <span style="color: #205070;">-&gt;</span> [a] <span style="color: #205070;">-&gt;</span> [a]
+<pre class="src src-haskell"><span style="color: #8cd0d3;">filter</span> <span style="color: #dfaf8f;">::</span> (a <span style="color: #dfaf8f;">-&gt;</span> <span style="color: #7cb8bb;">Bool</span>) <span style="color: #dfaf8f;">-&gt;</span> [a] <span style="color: #dfaf8f;">-&gt;</span> [a]
 </pre>
 
 
@@ -657,12 +657,12 @@ Prelude&gt; :t filter
 
 
 
-<pre class="src src-haskell"><span style="color: #0f2050; font-weight: bold;">data</span> <span style="color: #834744;">Bool</span> <span style="color: #205070;">=</span> <span style="color: #834744;">False</span> <span style="color: #205070;">|</span> <span style="color: #834744;">True</span>
+<pre class="src src-haskell"><span style="color: #f0dfaf; font-weight: bold;">data</span> <span style="color: #7cb8bb;">Bool</span> <span style="color: #dfaf8f;">=</span> <span style="color: #7cb8bb;">False</span> <span style="color: #dfaf8f;">|</span> <span style="color: #7cb8bb;">True</span>
 
-<span style="color: #0f2050; font-weight: bold;">data</span> <span style="color: #834744;">Car</span> <span style="color: #205070;">=</span> <span style="color: #834744;">Car</span> {model <span style="color: #205070;">::</span> <span style="color: #834744;">String</span>
-               , year <span style="color: #205070;">::</span> <span style="color: #834744;">Int</span>
-               , burnTime <span style="color: #205070;">::</span> <span style="color: #834744;">Int</span>
-               } <span style="color: #0f2050; font-weight: bold;">deriving</span> (<span style="color: #834744;">Show</span>)
+<span style="color: #f0dfaf; font-weight: bold;">data</span> <span style="color: #7cb8bb;">Car</span> <span style="color: #dfaf8f;">=</span> <span style="color: #7cb8bb;">Car</span> {model <span style="color: #dfaf8f;">::</span> <span style="color: #7cb8bb;">String</span>
+               , year <span style="color: #dfaf8f;">::</span> <span style="color: #7cb8bb;">Int</span>
+               , burnTime <span style="color: #dfaf8f;">::</span> <span style="color: #7cb8bb;">Int</span>
+               } <span style="color: #f0dfaf; font-weight: bold;">deriving</span> (<span style="color: #7cb8bb;">Show</span>)
 </pre>
 
 
@@ -678,11 +678,11 @@ Prelude&gt; :t filter
 
 
 
-<pre class="src src-haskell"><span style="color: #0f2050; font-weight: bold;">data</span> <span style="color: #834744;">Maybe</span> a <span style="color: #205070;">=</span> <span style="color: #834744;">Nothing</span> <span style="color: #205070;">|</span> <span style="color: #834744;">Just</span> a
+<pre class="src src-haskell"><span style="color: #f0dfaf; font-weight: bold;">data</span> <span style="color: #7cb8bb;">Maybe</span> a <span style="color: #dfaf8f;">=</span> <span style="color: #7cb8bb;">Nothing</span> <span style="color: #dfaf8f;">|</span> <span style="color: #7cb8bb;">Just</span> a
 
-<span style="color: #0f2050; font-weight: bold;">data</span> <span style="color: #834744;">Tree</span> a <span style="color: #205070;">=</span> <span style="color: #834744;">EmptyTree</span> <span style="color: #205070;">|</span> <span style="color: #834744;">Node</span> a (<span style="color: #834744;">Tree</span> a)
-                          (<span style="color: #834744;">Tree</span> a)
-            <span style="color: #0f2050; font-weight: bold;">deriving</span> (<span style="color: #834744;">Show</span>, <span style="color: #834744;">Read</span>, <span style="color: #834744;">Eq</span>)
+<span style="color: #f0dfaf; font-weight: bold;">data</span> <span style="color: #7cb8bb;">Tree</span> a <span style="color: #dfaf8f;">=</span> <span style="color: #7cb8bb;">EmptyTree</span> <span style="color: #dfaf8f;">|</span> <span style="color: #7cb8bb;">Node</span> a (<span style="color: #7cb8bb;">Tree</span> a)
+                          (<span style="color: #7cb8bb;">Tree</span> a)
+            <span style="color: #f0dfaf; font-weight: bold;">deriving</span> (<span style="color: #7cb8bb;">Show</span>, <span style="color: #7cb8bb;">Read</span>, <span style="color: #7cb8bb;">Eq</span>)
 </pre>
 
 
@@ -715,17 +715,17 @@ Prelude&gt; :t filter
 
 
 
-<pre class="src src-haskell"><span style="color: #0f2050; font-weight: bold;">class</span> <span style="color: #834744;">Eq</span> a <span style="color: #0f2050; font-weight: bold;">where</span>
-    (<span style="color: #205070;">==</span>) <span style="color: #205070;">::</span> a <span style="color: #205070;">-&gt;</span> a <span style="color: #205070;">-&gt;</span> <span style="color: #834744;">Bool</span>
-    (<span style="color: #205070;">/=</span>) <span style="color: #205070;">::</span> a <span style="color: #205070;">-&gt;</span> a <span style="color: #205070;">-&gt;</span> <span style="color: #834744;">Bool</span>
-    x <span style="color: #205070;">==</span> y <span style="color: #205070;">=</span> not (x <span style="color: #205070;">/=</span> y)
-    x <span style="color: #205070;">/=</span> y <span style="color: #205070;">=</span> not (x <span style="color: #205070;">==</span> y)
+<pre class="src src-haskell"><span style="color: #f0dfaf; font-weight: bold;">class</span> <span style="color: #7cb8bb;">Eq</span> a <span style="color: #f0dfaf; font-weight: bold;">where</span>
+    (<span style="color: #dfaf8f;">==</span>) <span style="color: #dfaf8f;">::</span> a <span style="color: #dfaf8f;">-&gt;</span> a <span style="color: #dfaf8f;">-&gt;</span> <span style="color: #7cb8bb;">Bool</span>
+    (<span style="color: #dfaf8f;">/=</span>) <span style="color: #dfaf8f;">::</span> a <span style="color: #dfaf8f;">-&gt;</span> a <span style="color: #dfaf8f;">-&gt;</span> <span style="color: #7cb8bb;">Bool</span>
+    x <span style="color: #dfaf8f;">==</span> y <span style="color: #dfaf8f;">=</span> not (x <span style="color: #dfaf8f;">/=</span> y)
+    x <span style="color: #dfaf8f;">/=</span> y <span style="color: #dfaf8f;">=</span> not (x <span style="color: #dfaf8f;">==</span> y)
 
-<span style="color: #0f2050; font-weight: bold;">instance</span> (<span style="color: #834744;">Eq</span> m) <span style="color: #205070;">=&gt;</span> <span style="color: #834744;">Eq</span> (<span style="color: #834744;">Maybe</span> m) <span style="color: #0f2050; font-weight: bold;">where</span>
+<span style="color: #f0dfaf; font-weight: bold;">instance</span> (<span style="color: #7cb8bb;">Eq</span> m) <span style="color: #dfaf8f;">=&gt;</span> <span style="color: #7cb8bb;">Eq</span> (<span style="color: #7cb8bb;">Maybe</span> m) <span style="color: #f0dfaf; font-weight: bold;">where</span>
 
-    <span style="color: #834744;">Just</span> x <span style="color: #205070;">==</span> <span style="color: #834744;">Just</span> y <span style="color: #205070;">=</span> x <span style="color: #205070;">==</span> y
-    <span style="color: #834744;">Nothing</span> <span style="color: #205070;">==</span> <span style="color: #834744;">Nothing</span> <span style="color: #205070;">=</span> <span style="color: #834744;">True</span>
-    <span style="color: #0f2050; font-weight: bold;">_</span> <span style="color: #205070;">==</span> <span style="color: #0f2050; font-weight: bold;">_</span> <span style="color: #205070;">=</span> <span style="color: #834744;">False</span>
+    <span style="color: #7cb8bb;">Just</span> x <span style="color: #dfaf8f;">==</span> <span style="color: #7cb8bb;">Just</span> y <span style="color: #dfaf8f;">=</span> x <span style="color: #dfaf8f;">==</span> y
+    <span style="color: #7cb8bb;">Nothing</span> <span style="color: #dfaf8f;">==</span> <span style="color: #7cb8bb;">Nothing</span> <span style="color: #dfaf8f;">=</span> <span style="color: #7cb8bb;">True</span>
+    <span style="color: #f0dfaf; font-weight: bold;">_</span> <span style="color: #dfaf8f;">==</span> <span style="color: #f0dfaf; font-weight: bold;">_</span> <span style="color: #dfaf8f;">=</span> <span style="color: #7cb8bb;">False</span>
 </pre>
 
 
@@ -759,16 +759,16 @@ Prelude&gt; :t filter
 
 
 
-<pre class="src src-haskell"><span style="color: #732f2c;">main</span> <span style="color: #205070;">=</span> <span style="color: #0f2050; font-weight: bold;">do</span>
-    line <span style="color: #205070;">&lt;-</span> getLine
-    <span style="color: #0f2050; font-weight: bold;">if</span> null line
-        <span style="color: #0f2050; font-weight: bold;">then</span> return <span style="color: #834744;">()</span>
-        <span style="color: #0f2050; font-weight: bold;">else</span> <span style="color: #0f2050; font-weight: bold;">do</span>
-            putStrLn <span style="color: #205070;">$</span> reverseWords line
+<pre class="src src-haskell"><span style="color: #8cd0d3;">main</span> <span style="color: #dfaf8f;">=</span> <span style="color: #f0dfaf; font-weight: bold;">do</span>
+    line <span style="color: #dfaf8f;">&lt;-</span> getLine
+    <span style="color: #f0dfaf; font-weight: bold;">if</span> null line
+        <span style="color: #f0dfaf; font-weight: bold;">then</span> return <span style="color: #7cb8bb;">()</span>
+        <span style="color: #f0dfaf; font-weight: bold;">else</span> <span style="color: #f0dfaf; font-weight: bold;">do</span>
+            putStrLn <span style="color: #dfaf8f;">$</span> reverseWords line
             main
 
-<span style="color: #732f2c;">reverseWords</span> <span style="color: #205070;">::</span> <span style="color: #834744;">String</span> <span style="color: #205070;">-&gt;</span> <span style="color: #834744;">String</span>
-<span style="color: #732f2c;">reverseWords</span> <span style="color: #205070;">=</span> unwords <span style="color: #205070;">.</span> map reverse <span style="color: #205070;">.</span> words
+<span style="color: #8cd0d3;">reverseWords</span> <span style="color: #dfaf8f;">::</span> <span style="color: #7cb8bb;">String</span> <span style="color: #dfaf8f;">-&gt;</span> <span style="color: #7cb8bb;">String</span>
+<span style="color: #8cd0d3;">reverseWords</span> <span style="color: #dfaf8f;">=</span> unwords <span style="color: #dfaf8f;">.</span> map reverse <span style="color: #dfaf8f;">.</span> words
 </pre>
 
 
@@ -784,8 +784,8 @@ Prelude&gt; :t filter
 
 
 
-<pre class="src src-haskell"><span style="color: #732f2c;">main</span> <span style="color: #205070;">=</span> interact <span style="color: #205070;">$</span> unlines <span style="color: #205070;">.</span>
-       filter ((<span style="color: #205070;">&gt;</span>200) <span style="color: #205070;">.</span> length) <span style="color: #205070;">.</span> lines
+<pre class="src src-haskell"><span style="color: #8cd0d3;">main</span> <span style="color: #dfaf8f;">=</span> interact <span style="color: #dfaf8f;">$</span> unlines <span style="color: #dfaf8f;">.</span>
+       filter ((<span style="color: #dfaf8f;">&gt;</span>200) <span style="color: #dfaf8f;">.</span> length) <span style="color: #dfaf8f;">.</span> lines
 </pre>
 
 
@@ -826,15 +826,15 @@ Prelude&gt; :t filter
 
 
 
-<pre class="src src-haskell"><span style="color: #0f2050; font-weight: bold;">class</span> <span style="color: #834744;">Functor</span> f <span style="color: #0f2050; font-weight: bold;">where</span>
-    fmap <span style="color: #205070;">::</span> (a <span style="color: #205070;">-&gt;</span> b) <span style="color: #205070;">-&gt;</span> f a <span style="color: #205070;">-&gt;</span> f b
+<pre class="src src-haskell"><span style="color: #f0dfaf; font-weight: bold;">class</span> <span style="color: #7cb8bb;">Functor</span> f <span style="color: #f0dfaf; font-weight: bold;">where</span>
+    fmap <span style="color: #dfaf8f;">::</span> (a <span style="color: #dfaf8f;">-&gt;</span> b) <span style="color: #dfaf8f;">-&gt;</span> f a <span style="color: #dfaf8f;">-&gt;</span> f b
 
-<span style="color: #0f2050; font-weight: bold;">instance</span> <span style="color: #834744;">Functor</span> <span style="color: #834744;">[]</span> <span style="color: #0f2050; font-weight: bold;">where</span>
-    fmap <span style="color: #205070;">=</span> map
+<span style="color: #f0dfaf; font-weight: bold;">instance</span> <span style="color: #7cb8bb;">Functor</span> <span style="color: #7cb8bb;">[]</span> <span style="color: #f0dfaf; font-weight: bold;">where</span>
+    fmap <span style="color: #dfaf8f;">=</span> map
 
-<span style="color: #0f2050; font-weight: bold;">instance</span> <span style="color: #834744;">Functor</span> <span style="color: #834744;">Maybe</span> <span style="color: #0f2050; font-weight: bold;">where</span>
-    fmap f (<span style="color: #834744;">Just</span> x) <span style="color: #205070;">=</span> <span style="color: #834744;">Just</span> (f x)
-    fmap f <span style="color: #834744;">Nothing</span> <span style="color: #205070;">=</span> <span style="color: #834744;">Nothing</span>
+<span style="color: #f0dfaf; font-weight: bold;">instance</span> <span style="color: #7cb8bb;">Functor</span> <span style="color: #7cb8bb;">Maybe</span> <span style="color: #f0dfaf; font-weight: bold;">where</span>
+    fmap f (<span style="color: #7cb8bb;">Just</span> x) <span style="color: #dfaf8f;">=</span> <span style="color: #7cb8bb;">Just</span> (f x)
+    fmap f <span style="color: #7cb8bb;">Nothing</span> <span style="color: #dfaf8f;">=</span> <span style="color: #7cb8bb;">Nothing</span>
 </pre>
 
 
@@ -867,14 +867,14 @@ Prelude&gt; :t filter
 
 
 
-<pre class="src src-haskell"><span style="color: #0f2050; font-weight: bold;">class</span> (<span style="color: #834744;">Functor</span> f) <span style="color: #205070;">=&gt;</span> <span style="color: #834744;">Applicative</span> f <span style="color: #0f2050; font-weight: bold;">where</span>
-    pure <span style="color: #205070;">::</span> a <span style="color: #205070;">-&gt;</span> f a
-    (<span style="color: #205070;">&lt;*&gt;</span>) <span style="color: #205070;">::</span> f (a <span style="color: #205070;">-&gt;</span> b) <span style="color: #205070;">-&gt;</span> f a <span style="color: #205070;">-&gt;</span> f b
+<pre class="src src-haskell"><span style="color: #f0dfaf; font-weight: bold;">class</span> (<span style="color: #7cb8bb;">Functor</span> f) <span style="color: #dfaf8f;">=&gt;</span> <span style="color: #7cb8bb;">Applicative</span> f <span style="color: #f0dfaf; font-weight: bold;">where</span>
+    pure <span style="color: #dfaf8f;">::</span> a <span style="color: #dfaf8f;">-&gt;</span> f a
+    (<span style="color: #dfaf8f;">&lt;*&gt;</span>) <span style="color: #dfaf8f;">::</span> f (a <span style="color: #dfaf8f;">-&gt;</span> b) <span style="color: #dfaf8f;">-&gt;</span> f a <span style="color: #dfaf8f;">-&gt;</span> f b
 
-<span style="color: #0f2050; font-weight: bold;">instance</span> <span style="color: #834744;">Applicative</span> <span style="color: #834744;">Maybe</span> <span style="color: #0f2050; font-weight: bold;">where</span>
-    pure <span style="color: #205070;">=</span> <span style="color: #834744;">Just</span>
-    <span style="color: #834744;">Nothing</span> <span style="color: #205070;">&lt;*&gt;</span> <span style="color: #0f2050; font-weight: bold;">_</span> <span style="color: #205070;">=</span> <span style="color: #834744;">Nothing</span>
-    (<span style="color: #834744;">Just</span> f) <span style="color: #205070;">&lt;*&gt;</span> something <span style="color: #205070;">=</span> fmap f something
+<span style="color: #f0dfaf; font-weight: bold;">instance</span> <span style="color: #7cb8bb;">Applicative</span> <span style="color: #7cb8bb;">Maybe</span> <span style="color: #f0dfaf; font-weight: bold;">where</span>
+    pure <span style="color: #dfaf8f;">=</span> <span style="color: #7cb8bb;">Just</span>
+    <span style="color: #7cb8bb;">Nothing</span> <span style="color: #dfaf8f;">&lt;*&gt;</span> <span style="color: #f0dfaf; font-weight: bold;">_</span> <span style="color: #dfaf8f;">=</span> <span style="color: #7cb8bb;">Nothing</span>
+    (<span style="color: #7cb8bb;">Just</span> f) <span style="color: #dfaf8f;">&lt;*&gt;</span> something <span style="color: #dfaf8f;">=</span> fmap f something
 </pre>
 
 
@@ -916,15 +916,15 @@ Prelude&gt; :t filter
 
 
 
-<pre class="src src-haskell"><span style="color: #0f2050; font-weight: bold;">class</span> <span style="color: #834744;">Monoid</span> m <span style="color: #0f2050; font-weight: bold;">where</span>
-    mempty <span style="color: #205070;">::</span> m
-    mappend <span style="color: #205070;">::</span> m <span style="color: #205070;">-&gt;</span> m <span style="color: #205070;">-&gt;</span> m
-    mconcat <span style="color: #205070;">::</span> [m] <span style="color: #205070;">-&gt;</span> m
-    mconcat <span style="color: #205070;">=</span> foldr mappend mempty
+<pre class="src src-haskell"><span style="color: #f0dfaf; font-weight: bold;">class</span> <span style="color: #7cb8bb;">Monoid</span> m <span style="color: #f0dfaf; font-weight: bold;">where</span>
+    mempty <span style="color: #dfaf8f;">::</span> m
+    mappend <span style="color: #dfaf8f;">::</span> m <span style="color: #dfaf8f;">-&gt;</span> m <span style="color: #dfaf8f;">-&gt;</span> m
+    mconcat <span style="color: #dfaf8f;">::</span> [m] <span style="color: #dfaf8f;">-&gt;</span> m
+    mconcat <span style="color: #dfaf8f;">=</span> foldr mappend mempty
 
-<span style="color: #0f2050; font-weight: bold;">instance</span> <span style="color: #834744;">Monoid</span> [a] <span style="color: #0f2050; font-weight: bold;">where</span>
-    mempty <span style="color: #205070;">=</span> <span style="color: #834744;">[]</span>
-    mappend <span style="color: #205070;">=</span> (<span style="color: #205070;">++</span>)
+<span style="color: #f0dfaf; font-weight: bold;">instance</span> <span style="color: #7cb8bb;">Monoid</span> [a] <span style="color: #f0dfaf; font-weight: bold;">where</span>
+    mempty <span style="color: #dfaf8f;">=</span> <span style="color: #7cb8bb;">[]</span>
+    mappend <span style="color: #dfaf8f;">=</span> (<span style="color: #dfaf8f;">++</span>)
 </pre>
 
 
@@ -949,21 +949,21 @@ Prelude&gt; :t filter
 
 
 
-<pre class="src src-haskell"><span style="color: #0f2050; font-weight: bold;">class</span> <span style="color: #834744;">Monad</span> m <span style="color: #0f2050; font-weight: bold;">where</span>
-    return <span style="color: #205070;">::</span> a <span style="color: #205070;">-&gt;</span> m a
-    (<span style="color: #205070;">&gt;&gt;=</span>) <span style="color: #205070;">::</span> m a <span style="color: #205070;">-&gt;</span> (a <span style="color: #205070;">-&gt;</span> m b) <span style="color: #205070;">-&gt;</span> m b
+<pre class="src src-haskell"><span style="color: #f0dfaf; font-weight: bold;">class</span> <span style="color: #7cb8bb;">Monad</span> m <span style="color: #f0dfaf; font-weight: bold;">where</span>
+    return <span style="color: #dfaf8f;">::</span> a <span style="color: #dfaf8f;">-&gt;</span> m a
+    (<span style="color: #dfaf8f;">&gt;&gt;=</span>) <span style="color: #dfaf8f;">::</span> m a <span style="color: #dfaf8f;">-&gt;</span> (a <span style="color: #dfaf8f;">-&gt;</span> m b) <span style="color: #dfaf8f;">-&gt;</span> m b
 
-    (<span style="color: #205070;">&gt;&gt;</span>) <span style="color: #205070;">::</span> m a <span style="color: #205070;">-&gt;</span> m b <span style="color: #205070;">-&gt;</span> m b
-    x <span style="color: #205070;">&gt;&gt;</span> y <span style="color: #205070;">=</span> x <span style="color: #205070;">&gt;&gt;=</span> <span style="color: #205070;">\</span><span style="color: #0f2050; font-weight: bold;">_</span> <span style="color: #205070;">-&gt;</span> y
+    (<span style="color: #dfaf8f;">&gt;&gt;</span>) <span style="color: #dfaf8f;">::</span> m a <span style="color: #dfaf8f;">-&gt;</span> m b <span style="color: #dfaf8f;">-&gt;</span> m b
+    x <span style="color: #dfaf8f;">&gt;&gt;</span> y <span style="color: #dfaf8f;">=</span> x <span style="color: #dfaf8f;">&gt;&gt;=</span> <span style="color: #dfaf8f;">\</span><span style="color: #f0dfaf; font-weight: bold;">_</span> <span style="color: #dfaf8f;">-&gt;</span> y
 
-    fail <span style="color: #205070;">::</span> <span style="color: #834744;">String</span> <span style="color: #205070;">-&gt;</span> m a
-    fail msg <span style="color: #205070;">=</span> error msg
+    fail <span style="color: #dfaf8f;">::</span> <span style="color: #7cb8bb;">String</span> <span style="color: #dfaf8f;">-&gt;</span> m a
+    fail msg <span style="color: #dfaf8f;">=</span> error msg
 
-<span style="color: #0f2050; font-weight: bold;">instance</span> <span style="color: #834744;">Monad</span> <span style="color: #834744;">Maybe</span> <span style="color: #0f2050; font-weight: bold;">where</span>
-    return x <span style="color: #205070;">=</span> <span style="color: #834744;">Just</span> x
-    <span style="color: #834744;">Nothing</span> <span style="color: #205070;">&gt;&gt;=</span> f <span style="color: #205070;">=</span> <span style="color: #834744;">Nothing</span>
-    <span style="color: #834744;">Just</span> x <span style="color: #205070;">&gt;&gt;=</span> f  <span style="color: #205070;">=</span> f x
-    fail <span style="color: #0f2050; font-weight: bold;">_</span> <span style="color: #205070;">=</span> <span style="color: #834744;">Nothing</span>
+<span style="color: #f0dfaf; font-weight: bold;">instance</span> <span style="color: #7cb8bb;">Monad</span> <span style="color: #7cb8bb;">Maybe</span> <span style="color: #f0dfaf; font-weight: bold;">where</span>
+    return x <span style="color: #dfaf8f;">=</span> <span style="color: #7cb8bb;">Just</span> x
+    <span style="color: #7cb8bb;">Nothing</span> <span style="color: #dfaf8f;">&gt;&gt;=</span> f <span style="color: #dfaf8f;">=</span> <span style="color: #7cb8bb;">Nothing</span>
+    <span style="color: #7cb8bb;">Just</span> x <span style="color: #dfaf8f;">&gt;&gt;=</span> f  <span style="color: #dfaf8f;">=</span> f x
+    fail <span style="color: #f0dfaf; font-weight: bold;">_</span> <span style="color: #dfaf8f;">=</span> <span style="color: #7cb8bb;">Nothing</span>
 </pre>
 
 
@@ -1176,7 +1176,7 @@ Prelude&gt; :t filter
 </div>
 
 <div id="postamble">
-<p class="date">Date: 2013-02-17T13:11+0200</p>
+<p class="date">Date: 2013-02-17T15:06+0200</p>
 <p class="author">Author: Andrey Kotlarski</p>
 <p class="creator"><a href="http://orgmode.org">Org</a> version 7.9.2+ with <a href="http://www.gnu.org/software/emacs/">Emacs</a> version 24</p>
 <a href="http://validator.w3.org/check?uri=referer">Validate XHTML 1.0</a>
