@@ -73,13 +73,14 @@ save me from another "Grok Monads in 2^365 easy steps" tutorial!
 Modes are sets of specific rules and key-bindings active for some
 buffer.  There is a read-only mode that forbids you editing, there are
 [[http://emacswiki.org/emacs/ProgrammingModes][language aware modes]] for (shell scripts / makefiles / python / java /
-c / scheme / clojure / haskell / agda / insert your favourite niche
+c / [[http://en.wikipedia.org/wiki/Scheme_(programming_language)][scheme]] / [[http://clojure.org][clojure]] / [[http://www.haskell.org][haskell]] / [[http://wiki.portal.chalmers.se/agda/pmwiki.php][agda]] / insert your favourite niche
 language here) that give proper colouring, automatic indentation
 rules, special key-bindings for specific niceties...  There are modes
 for [[http://www.gnus.org/][reading or composing mail]], [[http://orgmode.org][creating presentations/books]], [[http://emacswiki.org/emacs/CategoryVersionControl][version
 control]], [[http://emacswiki.org/emacs/CategoryShell][shells]], [[http://emacswiki.org/emacs/CategorySql][DB prompts]], [[http://emacswiki.org/emacs/CategoryDocumentation][composing/reading documentation]],
 [[http://www.emacswiki.org/emacs/CategoryCalendar][calendar]], [[http://www.emacswiki.org/emacs/CategoryCalculators][stack calculator]], dictionaries, agendas and organizers,
-spreadsheets, [[http://emacs-w3m.namazu.org/][browsing the internetz]], [[http://emacswiki.org/emacs/ArtistMode][ASCII drawing]], [[http://www.gnu.org/software/emms/][media collection
+spreadsheets, [[http://emacs-w3m.namazu.org/][browsing the internetz]], [[http://emacswiki.org/emacs/Rudel][collaborative editing]], [[http://www.emacswiki.org/EmacSpeak][audio
+desktop]] for visually impaired, [[http://emacswiki.org/emacs/ArtistMode][ASCII drawing]], [[http://www.gnu.org/software/emms/][media collection
 managers]] and [[http://www.emacswiki.org/emacs/MusicPlayers][players]], [[http://www.emacswiki.org/emacs/CategoryGames][games]], [[http://emacswiki.org/emacs/EmacsDoctor][psychotherapist]], [[http://youtu.be/D1sXuHnf_lo][controlling
 vibrators]]... to name a few.  Oops, overdid it somewhere.
 
@@ -166,16 +167,16 @@ emacs --daemon
 Now, to connect in graphical frame, invoke:
 
 #+BEGIN_SRC sh
-~emacsclient -c~
+emacsclient -c
 #+END_SRC
 
 and/or in terminal:
 
 #+BEGIN_SRC sh
-~emacsclient -t~
+emacsclient -t
 #+END_SRC
 
-The --daemon option is certainly available under GNU/Linux and BSDs.
+The ~--daemon~ option is certainly available under GNU/Linux and BSDs.
 It might even work for BSD rip off like MacOS but not under Windows.
 Nah.  A true programmer would "use" the latter two only under death
 threat or starvation anyway.
@@ -877,7 +878,7 @@ To see more enabled functionality:
 ~C-c C-m C-h~
 
 Unfortunately you can't use two ebrowse DB at a time.  To load another
-one (by being in another ~.emacs-project~ governed location):
+one (while being in another ~.emacs-project~ governed location):
 
 ~C-u M-x my-ebrowse-refresh~
 
@@ -1026,6 +1027,8 @@ rambling:
 #+BEGIN_SRC org
 * This is important header
 
+[[./img/funny-image.jpg]]
+
 ** This is sub-header
 
 Here's a cool report:
@@ -1041,7 +1044,7 @@ Here's a cool report:
 
 *** This is sub-sub-header (maybe even a bullet)
 
-Some specific information...
+[[http://outsource.cn][Outsourcing has betrayed us link]]
 
 ** Another sub-header
 
@@ -1055,13 +1058,14 @@ You can press:
 
 ~C-c C-e~
 
-and choose some format to export.
+and choose some format to export to.
 
 You can easily reorder headers at the same level (reordering all
 sub-headers and content as well) with ~<Alt>+<Shift>+<Up>~ and
 ~<Alt>+<Shift>+<Down>~, change nesting level of a header hierarchy
-with ~<Alt>+<Shift>+<Left>~ and ~<Alt>+<Shift>+<Right>~ and so on.
-Have a look at the site or the manuals for details.
+with ~<Alt>+<Shift>+<Left>~ and ~<Alt>+<Shift>+<Right>~, collapse/show
+different levels with ~<Shift>+<Tab>~ and so on.  Have a look at the
+site or the manuals for more.
 
 *** Tables
 
