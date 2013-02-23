@@ -282,9 +282,39 @@ variable for this mode:
 (define-key occur-mode-map "n" 'occur-next)
 #+END_SRC
 
+** Undo/redo
+
+Your last changes are rubbish?  Undo them:
+
+~C-/~
+
+Then, they were actually not that bad.  Lets redo... You are in for a
+surprise - there is no redo in Emacs.  [[http://www.youtube.com/watch?v%3DkXEgk1Hdze0][Wat]]?!  The reason is that the
+undo command is so mighty that it can undo itself (pun intended).
+After you stop a series of undos (by hitting whatever other button),
+you can start again undo-ing and it will eventually undo your previous
+undos, which is roughly equivalent to redo.  This is a very powerful
+mechanism but a brain-twister for novices.  Try out [[http://www.emacswiki.org/emacs/UndoTree][Undo Tree]][fn:1],
+it visualizes the states between series of undos and changes and can
+even allow you travel in time for your edits.
+
+** Operations on selection/region
+
+Lesser programs normally allow two actions on selection - copying and
+deletion.  Emacs is not as boring.  Beside the obvious, when a region
+is marked:
+
+- all sorts of string/regex replace work only on this region
+- undo acts only on the region
+
+The last one is an Easter Egg.  Think slowly how useful it can be,
+undoing the changes just in some selection.  [[http://www.gnu.org/software/emacs/manual/html_node/emacs/Using-Region.html][Here]] (and in the manual)
+is an overview of what more is supported.
+
 ** Work with directories
 
-[[http://emacswiki.org/emacs/DiredMode][Dired]] is the most capable file manager I've encountered.  To start it:
+[[http://emacswiki.org/emacs/DiredMode][Dired]][fn:2] is the most capable file manager I've encountered.  To
+start it:
 
 ~C-x C-f PATH-TO-SOME-DIRECTORY~
 
