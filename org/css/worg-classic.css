@@ -170,8 +170,8 @@
   /* } */
 
   pre {
-      background-color: #3f3f3f /* #c0c0c0 */;
-      color: #dcdccc /* #232333 */;
+      background-color: #242424 /* #3f3f3f #c0c0c0 */;
+      color: #f6f3e8 /* #dcdccc #232333 */;
       overflow: auto;
       padding: 1em;
   }

@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 <meta name="title" content="Andrey's Opinionated Emacs Guide"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2013-02-17T15:06+0200"/>
+<meta name="generated" content="2013-02-23T17:50+0200"/>
 <meta name="author" content="Andrey Kotlarski"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
@@ -150,15 +150,17 @@ for the JavaScript code in this tag.
 <li><a href="#sec-2-4">2.4 Additional packages</a></li>
 <li><a href="#sec-2-5">2.5 Yes-No prompts, why type so much?</a></li>
 <li><a href="#sec-2-6">2.6 Assign key bindings to commands</a></li>
-<li><a href="#sec-2-7">2.7 Work with directories</a></li>
-<li><a href="#sec-2-8">2.8 Fuzzy matching when navigating the file system</a></li>
-<li><a href="#sec-2-9">2.9 Remote network and sudo access using TRAMP</a></li>
-<li><a href="#sec-2-10">2.10 Backup and file versions</a></li>
-<li><a href="#sec-2-11">2.11 Manage GnuPG encrypted files</a></li>
-<li><a href="#sec-2-12">2.12 Don't ask for sudo or ssh passwords - authinfo</a></li>
-<li><a href="#sec-2-13">2.13 Gnus for mail and news</a></li>
-<li><a href="#sec-2-14">2.14 Shell, terminal, console, whatever you call it</a></li>
-<li><a href="#sec-2-15">2.15 Microsoft Windows (tm)</a></li>
+<li><a href="#sec-2-7">2.7 Undo/redo</a></li>
+<li><a href="#sec-2-8">2.8 Operations on selection/region</a></li>
+<li><a href="#sec-2-9">2.9 Work with directories</a></li>
+<li><a href="#sec-2-10">2.10 Fuzzy matching when navigating the file system</a></li>
+<li><a href="#sec-2-11">2.11 Remote network and sudo access</a></li>
+<li><a href="#sec-2-12">2.12 Backup and file versions</a></li>
+<li><a href="#sec-2-13">2.13 Manage GnuPG encrypted files</a></li>
+<li><a href="#sec-2-14">2.14 Don't ask for sudo or ssh passwords</a></li>
+<li><a href="#sec-2-15">2.15 Gnus for mail and news</a></li>
+<li><a href="#sec-2-16">2.16 Shell, terminal, console, whatever you call it</a></li>
+<li><a href="#sec-2-17">2.17 Microsoft Windows (tm)</a></li>
 </ul>
 </li>
 <li><a href="#sec-3">3 General programming tips and tricks</a>
@@ -168,7 +170,11 @@ for the JavaScript code in this tag.
 <li><a href="#sec-3-3">3.3 Occur</a></li>
 <li><a href="#sec-3-4">3.4 If it moves - compile</a></li>
 <li><a href="#sec-3-5">3.5 Find file in project</a></li>
-<li><a href="#sec-3-6">3.6 Source control</a></li>
+<li><a href="#sec-3-6">3.6 Source control</a>
+<ul>
+<li><a href="#sec-3-6-1">3.6.1 Magnificent git</a></li>
+</ul>
+</li>
 <li><a href="#sec-3-7">3.7 Interactive diff and merging</a></li>
 <li><a href="#sec-3-8">3.8 Regular expressions</a></li>
 <li><a href="#sec-3-9">3.9 GDB</a></li>
@@ -392,10 +398,10 @@ parenthesis like for example:
 
 
 
-<pre class="src src-emacs-lisp">(message <span style="color: #cc9393;">"Mozart is a great %s."</span>
-         (<span style="color: #f0dfaf; font-weight: bold;">if</span> (&gt; (string-to-number (emacs-uptime <span style="color: #cc9393;">"%H"</span>)) 3)
-             <span style="color: #cc9393;">"programmer"</span>
-           <span style="color: #cc9393;">"composer"</span>))
+<pre class="src src-emacs-lisp">(message <span style="color: #95e454;">"Mozart is a great %s."</span>
+         (<span style="color: #8ac6f2; font-weight: bold;">if</span> (&gt; (string-to-number (emacs-uptime <span style="color: #95e454;">"%H"</span>)) 3)
+             <span style="color: #95e454;">"programmer"</span>
+           <span style="color: #95e454;">"composer"</span>))
 </pre>
 
 
@@ -433,9 +439,9 @@ If you somehow manage to push settings that make your Emacs unusable
 
 
 <pre class="src src-emacs-lisp">(fset 'self-insert-command
-      (<span style="color: #f0dfaf; font-weight: bold;">lambda</span> () <span style="color: #8fb28f;">"Print message instead of entering characters."</span>
+      (<span style="color: #8ac6f2; font-weight: bold;">lambda</span> () <span style="color: #95e454;">"Print message instead of entering characters."</span>
         (interactive)
-        (message <span style="color: #cc9393;">"HALLO?"</span>)))
+        (message <span style="color: #95e454;">"HALLO?"</span>)))
 </pre>
 
 
@@ -603,11 +609,11 @@ others too:
 
 
 <pre class="src src-emacs-lisp">(custom-set-variables
- '(package-archives '((<span style="color: #cc9393;">"gnu"</span> . <span style="color: #cc9393;">"http://elpa.gnu.org/packages/"</span>)
-                      (<span style="color: #cc9393;">"elpa"</span> . <span style="color: #cc9393;">"http://tromey.com/elpa/"</span>)
-                      (<span style="color: #cc9393;">"melpa"</span> . <span style="color: #cc9393;">"http://melpa.milkbox.net/packages/"</span>)
-                      (<span style="color: #cc9393;">"marmalade"</span> .
-                       <span style="color: #cc9393;">"http://marmalade-repo.org/packages/"</span>))))
+ '(package-archives '((<span style="color: #95e454;">"gnu"</span> . <span style="color: #95e454;">"http://elpa.gnu.org/packages/"</span>)
+                      (<span style="color: #95e454;">"elpa"</span> . <span style="color: #95e454;">"http://tromey.com/elpa/"</span>)
+                      (<span style="color: #95e454;">"melpa"</span> . <span style="color: #95e454;">"http://melpa.milkbox.net/packages/"</span>)
+                      (<span style="color: #95e454;">"marmalade"</span> .
+                       <span style="color: #95e454;">"http://marmalade-repo.org/packages/"</span>))))
 </pre>
 
 
@@ -654,7 +660,7 @@ Here's how to assign global key-binding:
 
 
 
-<pre class="src src-emacs-lisp">(define-key global-map (kbd <span style="color: #cc9393;">"C-c z"</span>) 'BELOVED-COMMAND)
+<pre class="src src-emacs-lisp">(define-key global-map (kbd <span style="color: #95e454;">"C-c z"</span>) 'BELOVED-COMMAND)
 </pre>
 
 
@@ -677,7 +683,7 @@ variable for this mode:
 
 
 
-<pre class="src src-emacs-lisp">(define-key occur-mode-map <span style="color: #cc9393;">"n"</span> 'occur-next)
+<pre class="src src-emacs-lisp">(define-key occur-mode-map <span style="color: #95e454;">"n"</span> 'occur-next)
 </pre>
 
 
@@ -686,12 +692,66 @@ variable for this mode:
 </div>
 
 <div id="outline-container-2-7" class="outline-3">
-<h3 id="sec-2-7"><span class="section-number-3">2.7</span> Work with directories</h3>
+<h3 id="sec-2-7"><span class="section-number-3">2.7</span> Undo/redo</h3>
 <div class="outline-text-3" id="text-2-7">
 
 
 <p>
-<a href="http://emacswiki.org/emacs/DiredMode">Dired</a> is the most capable file manager I've encountered.  To start it:
+Your last changes are rubbish?  Undo them:
+</p>
+<p>
+<code>C-/</code>
+</p>
+<p>
+Then, they were actually not that bad.  Lets redo&hellip; You are in for a
+surprise - there is no redo in Emacs.  <a href="http://www.youtube.com/watch?v=kXEgk1Hdze0">Wat</a>?!  The reason is that the
+undo command is so mighty that it can undo itself (pun intended).
+After you stop a series of undos (by hitting whatever other button),
+you can start again undo-ing and it will eventually undo your previous
+undos, which is roughly equivalent to redo.  This is a very powerful
+mechanism but a brain-twister for novices.  Try out <a href="http://www.emacswiki.org/emacs/UndoTree">Undo Tree</a><sup><a class="footref" name="fnr-.1" href="#fn-.1">1</a></sup>,
+it visualizes the states between series of undos and changes and can
+even allow you travel in time for your edits.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-2-8" class="outline-3">
+<h3 id="sec-2-8"><span class="section-number-3">2.8</span> Operations on selection/region</h3>
+<div class="outline-text-3" id="text-2-8">
+
+
+<p>
+Lesser programs normally allow two actions on selection - copying and
+deletion.  Emacs is not as boring.  Beside the obvious, when a region
+is marked:
+</p>
+<ul>
+<li>all sorts of string/regex replace work only on this region
+</li>
+<li>undo acts only on the region
+</li>
+</ul>
+
+
+<p>
+The last one is an Easter Egg.  Think slowly how useful it can be,
+undoing the changes just in some selection.  <a href="http://www.gnu.org/software/emacs/manual/html_node/emacs/Using-Region.html">Here</a> (and in the manual)
+is an overview of what more is supported.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-2-9" class="outline-3">
+<h3 id="sec-2-9"><span class="section-number-3">2.9</span> Work with directories</h3>
+<div class="outline-text-3" id="text-2-9">
+
+
+<p>
+<a href="http://emacswiki.org/emacs/DiredMode">Dired</a><sup><a class="footref" name="fnr-.2" href="#fn-.2">2</a></sup> is the most capable file manager I've encountered.  To
+start it:
 </p>
 <p>
 <code>C-x C-f PATH-TO-SOME-DIRECTORY</code>
@@ -709,9 +769,9 @@ to get summary of what it can do.
 
 </div>
 
-<div id="outline-container-2-8" class="outline-3">
-<h3 id="sec-2-8"><span class="section-number-3">2.8</span> Fuzzy matching when navigating the file system</h3>
-<div class="outline-text-3" id="text-2-8">
+<div id="outline-container-2-10" class="outline-3">
+<h3 id="sec-2-10"><span class="section-number-3">2.10</span> Fuzzy matching when navigating the file system</h3>
+<div class="outline-text-3" id="text-2-10">
 
 
 <p>
@@ -736,8 +796,8 @@ If you now invoke:
 <p>
 you'll be able to navigate directories and files of the current folder
 by entering parts of their name.  To go directory up, &lt;Backspace&gt;
-would suffice.  To open currently shown directory, press &lt;C-d&gt;.  To
-create a new file, type its desired name and press &lt;C-j&gt;.
+would suffice.  To open currently shown directory, press <code>C-d</code>.  To
+create a new file, type its desired name and press <code>C-j</code>.
 </p>
 <p>
 There's more magic.  Using the traditional way to switch to a buffer:
@@ -753,9 +813,9 @@ files that have been opened in previous sessions.
 
 </div>
 
-<div id="outline-container-2-9" class="outline-3">
-<h3 id="sec-2-9"><span class="section-number-3">2.9</span> Remote network and sudo access using TRAMP</h3>
-<div class="outline-text-3" id="text-2-9">
+<div id="outline-container-2-11" class="outline-3">
+<h3 id="sec-2-11"><span class="section-number-3">2.11</span> Remote network and sudo access</h3>
+<div class="outline-text-3" id="text-2-11">
 
 
 <p>
@@ -764,7 +824,7 @@ server?  You can do it directly from Emacs:
 </p>
 <p>
 <code>C-x C-f /ssh:akotlarski@gn1:/ezsroot/current RET</code>
-(enter password when/if prompted for it)
+(enter password when/if prompted)
 </p>
 <p>
 Local servers here have some fancy colourful prompts that get in the
@@ -776,11 +836,18 @@ Paste this in your init.el:
 
 <pre class="src src-emacs-lisp">(custom-set-variables
  '(tramp-shell-prompt-pattern
-   <span style="color: #cc9393;">"</span><span style="color: #cc9393; font-weight: bold;">\\</span><span style="color: #cc9393; font-weight: bold;">(?:</span><span style="color: #cc9393;">^</span><span style="color: #cc9393; font-weight: bold;">\\</span><span style="color: #cc9393; font-weight: bold;">|</span><span style="color: #cc9393;">
-</span><span style="color: #cc9393; font-weight: bold;">\\</span><span style="color: #cc9393; font-weight: bold;">)</span><span style="color: #cc9393;">[</span><span style="color: #dcdccc;">^</span><span style="color: #cc9393;">]#$%&gt;\n]*#?[]#$%&gt;] *</span><span style="color: #cc9393; font-weight: bold;">\\</span><span style="color: #cc9393; font-weight: bold;">(</span><span style="color: #cc9393;">;?&#27;\\[[0-9;]*[a-zA-Z] *</span><span style="color: #cc9393; font-weight: bold;">\\</span><span style="color: #cc9393; font-weight: bold;">)</span><span style="color: #cc9393;">*"</span>))
+   <span style="color: #95e454;">"</span><span style="color: #95e454; font-weight: bold;">\\</span><span style="color: #95e454; font-weight: bold;">(?:</span><span style="color: #95e454;">^</span><span style="color: #95e454; font-weight: bold;">\\</span><span style="color: #95e454; font-weight: bold;">|</span><span style="color: #95e454;">
+</span><span style="color: #95e454; font-weight: bold;">\\</span><span style="color: #95e454; font-weight: bold;">)</span><span style="color: #95e454;">[</span><span style="color: #95e454;">^</span><span style="color: #95e454;">]#$%&gt;\n]*#?[]#$%&gt;] *</span><span style="color: #95e454; font-weight: bold;">\\</span><span style="color: #95e454; font-weight: bold;">(</span><span style="color: #95e454;">;?&#27;\\[[0-9;]*[a-zA-Z] *</span><span style="color: #95e454; font-weight: bold;">\\</span><span style="color: #95e454; font-weight: bold;">)</span><span style="color: #95e454;">*"</span>))
 </pre>
 
 
+<p>
+Note that there are a couple of non-printing characters in the ugly
+regular expression above.  Instead of new line, there is:
+</p>
+<p>
+<code>C-q C-m</code>
+</p>
 <p>
 Need to quickly edit some system file?  Don't touch the shell, Emacs
 started by your user is just enough:
@@ -790,8 +857,8 @@ started by your user is just enough:
 (enter password when/if prompted for it)
 </p>
 <p>
-The <a href="http://emacswiki.org/emacs/TrampMode">TRAMP</a> built-in package is a killer.  It supports plethora of
-protocols.  For more information invoke/type:
+<a href="http://emacswiki.org/emacs/TrampMode">TRAMP</a><sup><a class="footref" name="fnr-.2.2" href="#fn-.2">2</a></sup> is a killer.  It supports plethora of protocols.  For more
+information invoke/type:
 </p>
 <p>
 <code>C-h i m TRAMP</code>
@@ -800,9 +867,9 @@ protocols.  For more information invoke/type:
 
 </div>
 
-<div id="outline-container-2-10" class="outline-3">
-<h3 id="sec-2-10"><span class="section-number-3">2.10</span> Backup and file versions</h3>
-<div class="outline-text-3" id="text-2-10">
+<div id="outline-container-2-12" class="outline-3">
+<h3 id="sec-2-12"><span class="section-number-3">2.12</span> Backup and file versions</h3>
+<div class="outline-text-3" id="text-2-12">
 
 
 <p>
@@ -816,7 +883,7 @@ all backups in a single place?
 
 
 <pre class="src src-emacs-lisp">(setq backup-directory-alist
-      `((<span style="color: #cc9393;">"."</span> . ,(concat user-emacs-directory <span style="color: #cc9393;">"backup/"</span>)))
+      `((<span style="color: #95e454;">"."</span> . ,(concat user-emacs-directory <span style="color: #95e454;">"backup/"</span>)))
       tramp-backup-directory-alist backup-directory-alist)
 </pre>
 
@@ -847,9 +914,9 @@ system.  Guess what, you don't need it there anyway.
 
 </div>
 
-<div id="outline-container-2-11" class="outline-3">
-<h3 id="sec-2-11"><span class="section-number-3">2.11</span> Manage GnuPG encrypted files</h3>
-<div class="outline-text-3" id="text-2-11">
+<div id="outline-container-2-13" class="outline-3">
+<h3 id="sec-2-13"><span class="section-number-3">2.13</span> Manage GnuPG encrypted files</h3>
+<div class="outline-text-3" id="text-2-13">
 
 
 <p>
@@ -864,9 +931,9 @@ password.  Magic.
 
 </div>
 
-<div id="outline-container-2-12" class="outline-3">
-<h3 id="sec-2-12"><span class="section-number-3">2.12</span> Don't ask for sudo or ssh passwords - authinfo</h3>
-<div class="outline-text-3" id="text-2-12">
+<div id="outline-container-2-14" class="outline-3">
+<h3 id="sec-2-14"><span class="section-number-3">2.14</span> Don't ask for sudo or ssh passwords</h3>
+<div class="outline-text-3" id="text-2-14">
 
 
 <p>
@@ -883,7 +950,7 @@ machine gridnode02 port ssh login akotlarski password very-secret
 <p>
 Save this file (entering password for encryption).  Now, when you
 attempt to ssh (to gn2) or sudo directly from Emacs as explained
-above, you'll be asked for the .authinfo.gpg password once and from
+above, you'll be asked for the <code>.authinfo.gpg</code> password once and from
 there on (for this Emacs session), the passwords listed there will be
 automatically used when you try to access the respective resources.
 </p>
@@ -891,18 +958,22 @@ automatically used when you try to access the respective resources.
 
 </div>
 
-<div id="outline-container-2-13" class="outline-3">
-<h3 id="sec-2-13"><span class="section-number-3">2.13</span> Gnus for mail and news</h3>
-<div class="outline-text-3" id="text-2-13">
+<div id="outline-container-2-15" class="outline-3">
+<h3 id="sec-2-15"><span class="section-number-3">2.15</span> Gnus for mail and news</h3>
+<div class="outline-text-3" id="text-2-15">
 
 
-<p>
-<i>Every program attempts to expand until it can read mail.</i>
-                <i>&ndash; Jamie Zawinski</i>
+<blockquote>
+
+<p>Every program attempts to expand until it can read mail.
+                &ndash; Jamie Zawinski
 </p>
+</blockquote>
+
+
 <p>
 There are a lot of ways to manage mail within Emacs.  I use the
-built-in mail/news kitchen sink <a href="http://www.gnus.org/">Gnus</a>.  Here's its glory documented (it
+mail/news kitchen sink <a href="http://www.gnus.org/">Gnus</a><sup><a class="footref" name="fnr-.2.3" href="#fn-.2">2</a></sup>.  Here's its glory documented (it
 would be too much to give opinionated guide):
 </p>
 <p>
@@ -916,10 +987,9 @@ There are heuristics to guess default mail sender/server (yeah, I
 frequently send spam from both), workarounds for the flaky Vayant
 Exchange server, integration with the <a href="http://en.wikipedia.org/wiki/Fortune_%28Unix%29">fortune</a>(-mod) program (where all
 stupid quotes on the back of my mails come from), <a href="http://www.emacswiki.org/emacs/FlySpell">automatic spell-checking</a> and <a href="http://emacswiki.org/emacs/LineWrap">line wrapping</a> (don't you hate when mail text goes
-out of your wide screen?), integration with <a href="http://bbdb.sourceforge.net/">The Insidious Big Brother Database</a> (BBDB) for managing contacts, automatic checking for new
-messages for selected (mail)boxes and notifications.  For
-notifications I'm using the notify.el package which can be easily
-installed through the package manager (BBDB is also there).
+out of your wide screen?), integration with <a href="http://bbdb.sourceforge.net/">The Insidious Big Brother Database</a> (BBDB)<sup><a class="footref" name="fnr-.1.2" href="#fn-.1">1</a></sup> for managing contacts, automatic checking for
+new messages for selected (mail)boxes and notifications.  For
+notifications I'm using the notify.el<sup><a class="footref" name="fnr-.1.3" href="#fn-.1">1</a></sup>.
 </p>
 <p>
 Wouldn't want to type passwords every now and then when dealing with
@@ -937,9 +1007,9 @@ machine mail.vayant.com port 587 login akotlarski password very-very-secret
 
 </div>
 
-<div id="outline-container-2-14" class="outline-3">
-<h3 id="sec-2-14"><span class="section-number-3">2.14</span> Shell, terminal, console, whatever you call it</h3>
-<div class="outline-text-3" id="text-2-14">
+<div id="outline-container-2-16" class="outline-3">
+<h3 id="sec-2-16"><span class="section-number-3">2.16</span> Shell, terminal, console, whatever you call it</h3>
+<div class="outline-text-3" id="text-2-16">
 
 
 <p>
@@ -972,9 +1042,9 @@ more.
 
 </div>
 
-<div id="outline-container-2-15" class="outline-3">
-<h3 id="sec-2-15"><span class="section-number-3">2.15</span> Microsoft Windows (tm)</h3>
-<div class="outline-text-3" id="text-2-15">
+<div id="outline-container-2-17" class="outline-3">
+<h3 id="sec-2-17"><span class="section-number-3">2.17</span> Microsoft Windows (tm)</h3>
+<div class="outline-text-3" id="text-2-17">
 
 
 <p>
@@ -993,31 +1063,30 @@ other ported stuff.
 </p>
 <p>
 To make Emacs aware of the cygwin environment and prefer it instead of
-the crippled windows eco-system, install `cygwin-mount' from the Emacs
-package manager and then:
+the crippled windows eco-system, install cygwin-mount<sup><a class="footref" name="fnr-.1.4" href="#fn-.1">1</a></sup> and then:
 </p>
 
 
 
-<pre class="src src-emacs-lisp">(<span style="color: #f0dfaf; font-weight: bold;">defconst</span> <span style="color: #dfaf8f;">+win-path+</span> <span style="color: #cc9393;">"C:/"</span> <span style="color: #8fb28f;">"Windows root path."</span>)
+<pre class="src src-emacs-lisp">(<span style="color: #8ac6f2; font-weight: bold;">defconst</span> <span style="color: #cae682;">+win-path+</span> <span style="color: #95e454;">"C:/"</span> <span style="color: #95e454;">"Windows root path."</span>)
 
-<span style="color: #7f9f7f;">;;; </span><span style="color: #7f9f7f;">Cygwin</span>
-(<span style="color: #f0dfaf; font-weight: bold;">let</span> ((cygwin-dir (concat +win-path+ <span style="color: #cc9393;">"cygwin/bin"</span>)))
-  (<span style="color: #f0dfaf; font-weight: bold;">when</span> (file-exists-p cygwin-dir)
-    (setq shell-file-name <span style="color: #cc9393;">"bash"</span>
-          explicit-shell-file-name <span style="color: #cc9393;">"bash"</span>)
-    (setenv <span style="color: #cc9393;">"SHELL"</span> shell-file-name)
-    (setenv <span style="color: #cc9393;">"CYGWIN"</span> <span style="color: #cc9393;">"nodosfilewarning"</span>)
+<span style="color: #99968b;">;;; </span><span style="color: #99968b;">Cygwin</span>
+(<span style="color: #8ac6f2; font-weight: bold;">let</span> ((cygwin-dir (concat +win-path+ <span style="color: #95e454;">"cygwin/bin"</span>)))
+  (<span style="color: #8ac6f2; font-weight: bold;">when</span> (file-exists-p cygwin-dir)
+    (setq shell-file-name <span style="color: #95e454;">"bash"</span>
+          explicit-shell-file-name <span style="color: #95e454;">"bash"</span>)
+    (setenv <span style="color: #95e454;">"SHELL"</span> shell-file-name)
+    (setenv <span style="color: #95e454;">"CYGWIN"</span> <span style="color: #95e454;">"nodosfilewarning"</span>)
 
-    (<span style="color: #f0dfaf; font-weight: bold;">when</span> (<span style="color: #f0dfaf; font-weight: bold;">require</span> '<span style="color: #bfebbf;">cygwin-mount</span> nil t)
+    (<span style="color: #8ac6f2; font-weight: bold;">when</span> (<span style="color: #8ac6f2; font-weight: bold;">require</span> '<span style="color: #e5786d;">cygwin-mount</span> nil t)
       (cygwin-mount-activate)
       (setq w32shell-cygwin-bin cygwin-dir))))
 </pre>
 
 
 <p>
-This assumes that C:\cygwin is used for cygwin root and C:\cygwin\bin
-holds the binaries.
+This assumes that <code>C:\cygwin</code> is used for cygwin root and
+<code>C:\cygwin\bin</code> holds the binaries.
 </p>
 <p>
 Dealing with what path is taken as home directory under Windows is a
@@ -1061,7 +1130,7 @@ constrained upon.  Glob patterns are accepted like:
 </p>
 <p>
 Note that SPC invokes completion here.  To actually insert a space
-character, "quote" it with C-q
+character, "quote" it with <code>C-q</code>.
 </p>
 </div>
 
@@ -1074,14 +1143,14 @@ character, "quote" it with C-q
 
 <p>
 Jumping to result locations is not enough for you?  You, spoiled brat!
-Try wgrep (available through the package manager):
+Try wgrep<sup><a class="footref" name="fnr-.1.5" href="#fn-.1">1</a></sup>:
 </p>
 <p>
 <code>M-x wgrep-change-to-wgrep-mode</code>
 </p>
 <p>
 while in grep buffer.  Now you can edit in place result lines (regex
-replacing M-% is intelligently acting only over the actual text and
+replacing <code>M-%</code> is intelligently acting only over the actual text and
 skipping file/line information).  After you're done:
 </p>
 <p>
@@ -1089,9 +1158,9 @@ skipping file/line information).  After you're done:
 </p>
 <p>
 Now all files that have had their lines edited are opened with your
-changes there waiting to be saved.  If it happens to be a lot of
-files and you're confident that you want all these changes saved use
-the built-in IBuffer:
+changes there waiting to be saved.  If it happens to be a lot of files
+and you're confident that you want all these changes saved use
+IBuffer<sup><a class="footref" name="fnr-.2.4" href="#fn-.2">2</a></sup>:
 </p>
 <p>
 <code>M-x ibuffer</code>
@@ -1104,14 +1173,14 @@ Now all current Emacs buffer are listed.  How convenient.  Now hit:
 </p>
 <p>
 and all buffers with unsaved changes are marked.  Now press capital
-<code>&lt;S&gt;</code> to save them all.  Job done.  As all within La la land, IBuffer
-is <a href="http://www.emacswiki.org/emacs/IbufferMode">full of tricks and neat features</a>, I even have it bound to:
+&lt;S&gt; to save them all.  Job done.  As all within La la land, IBuffer is
+<a href="http://www.emacswiki.org/emacs/IbufferMode">full of tricks and neat features</a>, I even have it bound to:
 </p>
 <p>
 <code>C-x C-b</code>
 </p>
 <p>
-instead the built-in `list-buffers'.
+instead the default `list-buffers'<sup><a class="footref" name="fnr-.2.5" href="#fn-.2">2</a></sup>.
 </p>
 </div>
 
@@ -1175,13 +1244,13 @@ finished.  Within it, you can just press <code>&lt;g&gt;</code> to recompile.
 
 
 <p>
-Well, get find-file-in-project through the package manager and then
-bind the same-named command to a key like:
+Well, get <a href="http://emacswiki.org/emacs/FindFileInProject">find-file-in-project</a><sup><a class="footref" name="fnr-.1.6" href="#fn-.1">1</a></sup> and then bind the same-named
+command to a key like:
 </p>
 
 
 
-<pre class="src src-emacs-lisp">(define-key global-map <span style="color: #cc9393;">"\C-cf"</span> 'find-file-in-project)
+<pre class="src src-emacs-lisp">(define-key global-map <span style="color: #95e454;">"\C-cf"</span> 'find-file-in-project)
 </pre>
 
 
@@ -1204,24 +1273,19 @@ Here's a sample customization for C++ project:
 
 
 <pre class="src src-emacs-lisp">(setq-default
- ffip-project-file <span style="color: #cc9393;">".emacs-project"</span>
- ffip-patterns (nconc '(<span style="color: #cc9393;">"*.cpp"</span> <span style="color: #cc9393;">"*.h"</span> <span style="color: #cc9393;">"*.hpp"</span> <span style="color: #cc9393;">"*.c"</span>)
+ ffip-project-file <span style="color: #95e454;">".emacs-project"</span>
+ ffip-patterns (nconc '(<span style="color: #95e454;">"*.cpp"</span> <span style="color: #95e454;">"*.h"</span> <span style="color: #95e454;">"*.hpp"</span> <span style="color: #95e454;">"*.c"</span>)
                       ffip-patterns)
  ffip-find-options
- <span style="color: #cc9393;">"-not -regex \".*</span><span style="color: #cc9393; font-weight: bold;">\\</span><span style="color: #cc9393; font-weight: bold;">(</span><span style="color: #cc9393;">debug</span><span style="color: #cc9393; font-weight: bold;">\\</span><span style="color: #cc9393; font-weight: bold;">|</span><span style="color: #cc9393;">release</span><span style="color: #cc9393; font-weight: bold;">\\</span><span style="color: #cc9393; font-weight: bold;">|</span><span style="color: #cc9393;">svn</span><span style="color: #cc9393; font-weight: bold;">\\</span><span style="color: #cc9393; font-weight: bold;">|</span><span style="color: #cc9393;">git</span><span style="color: #cc9393; font-weight: bold;">\\</span><span style="color: #cc9393; font-weight: bold;">)</span><span style="color: #cc9393;">.*\""</span>
+ <span style="color: #95e454;">"-not -regex \".*</span><span style="color: #95e454; font-weight: bold;">\\</span><span style="color: #95e454; font-weight: bold;">(</span><span style="color: #95e454;">debug</span><span style="color: #95e454; font-weight: bold;">\\</span><span style="color: #95e454; font-weight: bold;">|</span><span style="color: #95e454;">release</span><span style="color: #95e454; font-weight: bold;">\\</span><span style="color: #95e454; font-weight: bold;">|</span><span style="color: #95e454;">svn</span><span style="color: #95e454; font-weight: bold;">\\</span><span style="color: #95e454; font-weight: bold;">|</span><span style="color: #95e454;">git</span><span style="color: #95e454; font-weight: bold;">\\</span><span style="color: #95e454; font-weight: bold;">)</span><span style="color: #95e454;">.*\""</span>
  ffip-limit 4096)
 </pre>
 
 
 <p>
-This makes directories that have file named:
-</p>
-<p>
-<code>.emacs-project</code>
-</p>
-<p>
-root project folders.  Also C-like sources are added to list of files
-to offer.  Some source control and build directories are skipped from
+This makes directories that have file named <code>.emacs-project</code> root
+project folders.  Also C-like sources are added to list of files to
+offer.  Some source control and build directories are skipped from
 indexing and maximum amount of files offered is set to 4096.
 </p>
 <p>
@@ -1232,13 +1296,13 @@ just for projects?  Lets get hands dirty then:
 
 
 
-<pre class="src src-emacs-lisp">(<span style="color: #f0dfaf; font-weight: bold;">eval-after-load</span> <span style="color: #cc9393;">"find-file-in-project"</span>
-  '(<span style="color: #f0dfaf; font-weight: bold;">progn</span>
-     (<span style="color: #f0dfaf; font-weight: bold;">defun</span> <span style="color: #8cd0d3;">my-ffip-project-root-function</span> ()
-       <span style="color: #8fb28f;">"Check for `</span><span style="color: #bfebbf;">ffip-project-file</span><span style="color: #8fb28f;">' and if no such, \</span>
-<span style="color: #8fb28f;">return current directory."</span>
-       (<span style="color: #f0dfaf; font-weight: bold;">let</span> ((project-directory
-              (<span style="color: #f0dfaf; font-weight: bold;">if</span> (listp ffip-project-file)
+<pre class="src src-emacs-lisp">(<span style="color: #8ac6f2; font-weight: bold;">eval-after-load</span> <span style="color: #95e454;">"find-file-in-project"</span>
+  '(<span style="color: #8ac6f2; font-weight: bold;">progn</span>
+     (<span style="color: #8ac6f2; font-weight: bold;">defun</span> <span style="color: #cae682;">my-ffip-project-root-function</span> ()
+       <span style="color: #95e454;">"Check for `</span><span style="color: #e5786d;">ffip-project-file</span><span style="color: #95e454;">' and if no such, \</span>
+<span style="color: #95e454;">return current directory."</span>
+       (<span style="color: #8ac6f2; font-weight: bold;">let</span> ((project-directory
+              (<span style="color: #8ac6f2; font-weight: bold;">if</span> (listp ffip-project-file)
                   (some (apply-partially 'locate-dominating-file
                                          default-directory)
                         ffip-project-file)
@@ -1293,6 +1357,22 @@ all available:
 <p>
 <code>M-x vc-&lt;TAB&gt;</code>
 </p>
+
+</div>
+
+<div id="outline-container-3-6-1" class="outline-4">
+<h4 id="sec-3-6-1"><span class="section-number-4">3.6.1</span> Magnificent git</h4>
+<div class="outline-text-4" id="text-3-6-1">
+
+
+<p>
+If you happen to use <a href="http://git-scm.com">Git</a>, check out <a href="http://magit.github.com/magit/">Magit</a><sup><a class="footref" name="fnr-.1.7" href="#fn-.1">1</a></sup>.  It's a nice
+interface to some of the most often used Git commands.  My favourite
+feature is the ability to iterate through the diff hunks and
+selectively choose which ones to stage or unstage.  Makes partial file
+commits trivial.
+</p>
+</div>
 </div>
 
 </div>
@@ -1320,10 +1400,7 @@ Could we use this to resolve conflicts under version control?  Yes!
 If a file is in conflict state, open it and:
 </p>
 <p>
-<code>M-x vc-resolve-conflicts</code>
-</p>
-<p>
-(you may need really recent version for this, like GNU Emacs 24.2)
+<code>M-x smerge-ediff</code>
 </p>
 </div>
 
@@ -1334,11 +1411,15 @@ If a file is in conflict state, open it and:
 <div class="outline-text-3" id="text-3-8">
 
 
-<p>
-<i>Some people, when confronted with a problem, think "I know, I'll use</i>
-<i>regular expressions." Now they have two problems.</i>
-                <i>&ndash; Jamie Zawinski</i>
+<blockquote>
+
+<p>Some people, when confronted with a problem, think "I know, I'll use
+regular expressions." Now they have two problems.
+                &ndash; Jamie Zawinski
 </p>
+</blockquote>
+
+
 <p>
 Not surprisingly, <a href="http://en.wikipedia.org/wiki/Regular_expressions">regexes</a> are supported all over the place.  There are
 some differences to the popular <a href="http://en.wikipedia.org/wiki/Pcre">PCRE</a> style and if you're serious about
@@ -1408,8 +1489,8 @@ highlighting current function:
 
 
 
-<pre class="src src-emacs-lisp">(<span style="color: #f0dfaf; font-weight: bold;">eval-after-load</span> <span style="color: #cc9393;">"semantic"</span>
-   '(<span style="color: #f0dfaf; font-weight: bold;">progn</span>
+<pre class="src src-emacs-lisp">(<span style="color: #8ac6f2; font-weight: bold;">eval-after-load</span> <span style="color: #95e454;">"semantic"</span>
+   '(<span style="color: #8ac6f2; font-weight: bold;">progn</span>
       (add-to-list 'semantic-default-submodes
                    'global-semantic-decoration-mode)
       (add-to-list 'semantic-default-submodes
@@ -1438,19 +1519,19 @@ To activate:
 
 <p>
 There are many packages that deal with code (and not only) completion,
-but none are particularly good at C++.  I use auto-complete (install
-through the package manager) and here is some setup:
+but none are particularly good at C++.  I use <a href="http://cx4a.org/software/auto-complete/">auto-complete</a><sup><a class="footref" name="fnr-.1.8" href="#fn-.1">1</a></sup>
+which for completion of anything.  Here is some setup:
 </p>
 
 
 
-<pre class="src src-emacs-lisp">(<span style="color: #f0dfaf; font-weight: bold;">when</span> (<span style="color: #f0dfaf; font-weight: bold;">ignore-errors</span> (<span style="color: #f0dfaf; font-weight: bold;">require</span> '<span style="color: #bfebbf;">auto-complete-config</span> nil t))
+<pre class="src src-emacs-lisp">(<span style="color: #8ac6f2; font-weight: bold;">when</span> (<span style="color: #8ac6f2; font-weight: bold;">ignore-errors</span> (<span style="color: #8ac6f2; font-weight: bold;">require</span> '<span style="color: #e5786d;">auto-complete-config</span> nil t))
   (ac-config-default)
   (ac-flyspell-workaround)
 
   (when-library
    t semantic
-   (<span style="color: #f0dfaf; font-weight: bold;">eval-after-load</span> <span style="color: #cc9393;">"semantic"</span>
+   (<span style="color: #8ac6f2; font-weight: bold;">eval-after-load</span> <span style="color: #95e454;">"semantic"</span>
      '(setq-default ac-sources
                     (cons 'ac-source-semantic ac-sources)))))
 </pre>
@@ -1472,22 +1553,22 @@ function/variable names become non issue.
 
 <p>
 I'm sure your grannies have used <a href="http://en.wikipedia.org/wiki/Integrated_development_environment">IDE</a>s all their life.  There is a
-package called Emacs Code Browser (ECB) that is available through the
-package manager and may give you a breeze of life-supporting IDE
-familiarity.  Furthermore, imagine how cool it is to have IDE working
-in terminal&hellip;yes, it does, just like rest of Emacs.  Here are some
-settings for it (some of them are necessary to get it started at all):
+package called <a href="http://emacswiki.org/emacs/EmacsCodeBrowser">Emacs Code Browser</a> (ECB)<sup><a class="footref" name="fnr-.1.9" href="#fn-.1">1</a></sup> and may give you a
+breeze of life-supporting IDE familiarity.  Furthermore, imagine how
+cool it is to have IDE working in terminal&hellip;yes, it does, just like
+rest of Emacs.  Here are some settings for it (some of them are
+necessary to get it started at all):
 </p>
 
 
 
 <pre class="src src-emacs-lisp">(custom-set-variables
- '(ecb-options-version <span style="color: #cc9393;">"2.40"</span>))
+ '(ecb-options-version <span style="color: #95e454;">"2.40"</span>))
 
-(<span style="color: #f0dfaf; font-weight: bold;">eval-after-load</span> <span style="color: #cc9393;">"ecb"</span>
-    `(<span style="color: #f0dfaf; font-weight: bold;">progn</span> (<span style="color: #f0dfaf; font-weight: bold;">defvar</span> <span style="color: #dfaf8f;">stack-trace-on-error</span> nil)
-            (<span style="color: #f0dfaf; font-weight: bold;">defconst</span> <span style="color: #dfaf8f;">ecb-cedet-required-version-max</span> '(2 1 4 9))
-            (<span style="color: #f0dfaf; font-weight: bold;">let</span> ((prog-path <span style="color: #cc9393;">"~/Programs"</span>)) <span style="color: #7f9f7f;">; </span><span style="color: #7f9f7f;">set folder where you store projects, not really important</span>
+(<span style="color: #8ac6f2; font-weight: bold;">eval-after-load</span> <span style="color: #95e454;">"ecb"</span>
+    `(<span style="color: #8ac6f2; font-weight: bold;">progn</span> (<span style="color: #8ac6f2; font-weight: bold;">defvar</span> <span style="color: #cae682;">stack-trace-on-error</span> nil)
+            (<span style="color: #8ac6f2; font-weight: bold;">defconst</span> <span style="color: #cae682;">ecb-cedet-required-version-max</span> '(2 1 4 9))
+            (<span style="color: #8ac6f2; font-weight: bold;">let</span> ((prog-path <span style="color: #95e454;">"~/Programs"</span>)) <span style="color: #99968b;">; </span><span style="color: #99968b;">set folder where you store projects, not really important</span>
               (ecb-add-source-path prog-path prog-path t))))
 </pre>
 
@@ -1516,9 +1597,9 @@ ways to get something.  Firstly some general customization:
 
 
 <pre class="src src-emacs-lisp">(custom-set-variables
- '(c-default-style '((java-mode . <span style="color: #cc9393;">"java"</span>)
-                     (awk-mode . <span style="color: #cc9393;">"awk"</span>)
-                     (other . <span style="color: #cc9393;">"stroustrup"</span>)))
+ '(c-default-style '((java-mode . <span style="color: #95e454;">"java"</span>)
+                     (awk-mode . <span style="color: #95e454;">"awk"</span>)
+                     (other . <span style="color: #95e454;">"stroustrup"</span>)))
  '(indent-tabs-mode nil)
  '(which-function-mode t))
 </pre>
@@ -1538,26 +1619,26 @@ that the cursor is currently placed in.
 
 
 <p>
-Emacs comes with a separate binary <a href="http://www.emacswiki.org/emacs/EmacsBrowse">ebrowse</a> that can annotate multiple
-C/C++ source files and create some form of DB which can be used for
-getting different kind of information for the indexed sources.  Here's
-a little wrapper shell script that should be placed somewhere on your
-PATH (<i>usr/local/bin</i> preferably), named ebrowse++ and made
-executable:
+Emacs comes with a separate binary <a href="http://www.emacswiki.org/emacs/EmacsBrowse">ebrowse</a><sup><a class="footref" name="fnr-.2.6" href="#fn-.2">2</a></sup> that can annotate
+multiple C/C++ source files and create some form of DB which can be
+used for getting different kind of information for the indexed
+sources.  Here's a little wrapper shell script that should be placed
+somewhere on your PATH (<code>/usr/local/bin/</code> preferably), named ebrowse++
+and made executable:
 </p>
 
 
 
-<pre class="src src-sh"><span style="color: #7f9f7f;">#</span><span style="color: #7f9f7f;">!/bin/</span><span style="color: #f0dfaf; font-weight: bold;">sh</span>
+<pre class="src src-sh"><span style="color: #99968b;">#</span><span style="color: #99968b;">!/bin/</span><span style="color: #8ac6f2; font-weight: bold;">sh</span>
 
-<span style="color: #dfaf8f;">DIR</span>=$<span style="color: #dfaf8f;">1</span>
+<span style="color: #cae682;">DIR</span>=$<span style="color: #cae682;">1</span>
 
-<span style="color: #f0dfaf; font-weight: bold;">if</span> [ <span style="color: #dcdccc;">!</span> <span style="color: #cc9393;">"$DIR"</span> = <span style="color: #cc9393;">""</span> ]; <span style="color: #f0dfaf; font-weight: bold;">then</span>
-    <span style="color: #93e0e3;">cd</span> $<span style="color: #dfaf8f;">DIR</span>
-<span style="color: #f0dfaf; font-weight: bold;">fi</span>
+<span style="color: #8ac6f2; font-weight: bold;">if</span> [ ! <span style="color: #95e454;">"$DIR"</span> = <span style="color: #95e454;">""</span> ]; <span style="color: #8ac6f2; font-weight: bold;">then</span>
+    <span style="color: #e5786d;">cd</span> $<span style="color: #cae682;">DIR</span>
+<span style="color: #8ac6f2; font-weight: bold;">fi</span>
 
-find . -regex <span style="color: #cc9393;">".*\.\(hpp\|cpp\|h\|c\)"</span> <span style="color: #cc9393;">\</span>
-    -not -regex <span style="color: #cc9393;">".*\(debug\|release\|svn\|git\).*"</span> | ebrowse
+find . -regex <span style="color: #95e454;">".*\.\(hpp\|cpp\|h\|c\)"</span> <span style="color: #95e454;">\</span>
+    -not -regex <span style="color: #95e454;">".*\(debug\|release\|svn\|git\).*"</span> | ebrowse
 </pre>
 
 
@@ -1567,23 +1648,24 @@ Again it needs the GNU find program.  Now, to make use of it:
 
 
 
-<pre class="src src-emacs-lisp">(<span style="color: #f0dfaf; font-weight: bold;">when</span> (executable-find <span style="color: #cc9393;">"ebrowse-c++"</span>)
-  (<span style="color: #f0dfaf; font-weight: bold;">defun</span> <span style="color: #8cd0d3;">my-ebrowse-refresh</span> (arg)
-    <span style="color: #8fb28f;">"Refresh existing ebrowse db or if *Tree* buffer is missing \</span>
-<span style="color: #8fb28f;">or ARG is non nil - locate project file for current directory."</span>
-    (interactive <span style="color: #cc9393;">"P"</span>)
-    (<span style="color: #f0dfaf; font-weight: bold;">save-excursion</span>
-      (<span style="color: #f0dfaf; font-weight: bold;">if</span> (and (not arg) (<span style="color: #f0dfaf; font-weight: bold;">ignore-errors</span> (set-buffer <span style="color: #cc9393;">"*Tree*"</span>)))
-          (<span style="color: #f0dfaf; font-weight: bold;">let</span> ((ebrowse-file buffer-file-name))
-            (call-process <span style="color: #cc9393;">"ebrowse-c++"</span>)
+<pre class="src src-emacs-lisp">(<span style="color: #8ac6f2; font-weight: bold;">when</span> (executable-find <span style="color: #95e454;">"ebrowse-c++"</span>)
+  (<span style="color: #8ac6f2; font-weight: bold;">defun</span> <span style="color: #cae682;">my-ebrowse-refresh</span> (arg)
+    <span style="color: #95e454;">"Refresh existing ebrowse db or if *Tree* buffer is missing \</span>
+<span style="color: #95e454;">or ARG is non nil - locate project file for current directory."</span>
+    (interactive <span style="color: #95e454;">"P"</span>)
+    (<span style="color: #8ac6f2; font-weight: bold;">save-excursion</span>
+      (<span style="color: #8ac6f2; font-weight: bold;">if</span> (and (not arg) (<span style="color: #8ac6f2; font-weight: bold;">ignore-errors</span> (set-buffer <span style="color: #95e454;">"*Tree*"</span>)))
+          (<span style="color: #8ac6f2; font-weight: bold;">let</span> ((ebrowse-file buffer-file-name))
+            (call-process <span style="color: #95e454;">"ebrowse-c++"</span>)
             (kill-buffer)
             (find-file-noselect ebrowse-file))
-        (<span style="color: #f0dfaf; font-weight: bold;">let</span> ((project-dir (locate-dominating-file default-directory
-                                                   <span style="color: #cc9393;">".emacs-project"</span>)))
-          (<span style="color: #f0dfaf; font-weight: bold;">when</span> project-dir
-            (<span style="color: #f0dfaf; font-weight: bold;">save-excursion</span>
-              (call-process <span style="color: #cc9393;">"ebrowse-c++"</span> nil nil nil project-dir)
-              (find-file-noselect (concat project-dir <span style="color: #cc9393;">"BROWSE"</span>)))))))))
+        (<span style="color: #8ac6f2; font-weight: bold;">let</span> ((project-dir (locate-dominating-file default-directory
+                                                   <span style="color: #95e454;">".emacs-project"</span>)))
+          (<span style="color: #8ac6f2; font-weight: bold;">if</span> project-dir
+              (<span style="color: #8ac6f2; font-weight: bold;">save-excursion</span>
+                (call-process <span style="color: #95e454;">"ebrowse-c++"</span> nil nil nil project-dir)
+                (find-file-noselect (concat project-dir
+                                            <span style="color: #95e454;">"BROWSE"</span>)))))))))
 </pre>
 
 
@@ -1632,7 +1714,7 @@ one (while being in another <code>.emacs-project</code> governed location):
 
 <p>
 Emacs documentation is the most complete and accessible set of
-resources I have ever seen (only second to Lisp Machines but they are
+resources I have ever seen (only second to <a href="http://en.wikipedia.org/wiki/Lisp_machine">Lisp Machines</a> but they are
 20 years in the past and as one may observe, technology is stubbornly
 regressing in this along other aspects since then).
 </p>
@@ -1651,7 +1733,7 @@ good.
 
 
 <p>
-To invoke the info reader:
+To invoke the info reader<sup><a class="footref" name="fnr-.2.7" href="#fn-.2">2</a></sup>:
 </p>
 <p>
 <code>C-h i</code>
@@ -1716,11 +1798,11 @@ docstring, for example:
 
 
 
-<pre class="src src-emacs-lisp">(<span style="color: #f0dfaf; font-weight: bold;">defmacro</span> <span style="color: #8cd0d3;">define-keys</span> (mode <span style="color: #7cb8bb;">&amp;rest</span> keys)
-  <span style="color: #8fb28f;">"Define cascade of keys for a MODE.</span>
-<span style="color: #8fb28f;">KEYS is alternating key-value list."</span>
-  `(<span style="color: #f0dfaf; font-weight: bold;">progn</span> ,@(<span style="color: #f0dfaf; font-weight: bold;">let</span> ((res nil))
-              (<span style="color: #f0dfaf; font-weight: bold;">while</span> keys
+<pre class="src src-emacs-lisp">(<span style="color: #8ac6f2; font-weight: bold;">defmacro</span> <span style="color: #cae682;">define-keys</span> (mode <span style="color: #92a65e; font-weight: bold;">&amp;rest</span> keys)
+  <span style="color: #95e454;">"Define cascade of keys for a MODE.</span>
+<span style="color: #95e454;">KEYS is alternating key-value list."</span>
+  `(<span style="color: #8ac6f2; font-weight: bold;">progn</span> ,@(<span style="color: #8ac6f2; font-weight: bold;">let</span> ((res nil))
+              (<span style="color: #8ac6f2; font-weight: bold;">while</span> keys
                 (push `(define-key ,mode ,(car keys) ,(cadr keys))
                       res)
                 (setq keys (cddr keys)))
@@ -1842,13 +1924,18 @@ combination.
 <div class="outline-text-3" id="text-6-1">
 
 
-<p>
-<i>I rarely write documents and presentations.  When I do, I use Org mode.</i>
-                <i>&ndash; Mahatma Gandhi</i>
+<blockquote>
+
+<p>I rarely write documents and presentations.  When I do, I use Org
+mode.
+                &ndash; Mahatma Gandhi
 </p>
+</blockquote>
+
+
 <p>
-There is another wonderful thing that comes with Emacs known as
-<a href="http://orgmode.org/">Org mode</a>.  Here's what's written on their site:
+There is another wonderful thing that comes with Emacs known as <a href="http://orgmode.org/">Org mode</a>.  It's often quoted as a prime reason for people starting to use
+Emacs, even former Vimmers.  Here's what's written on their site:
 </p>
 <p>
 "Org mode is for keeping notes, maintaining TODO lists, doing project
@@ -1884,33 +1971,33 @@ rambling:
 
 
 
-<pre class="src src-org"><span style="color: #dfaf8f; background-color: #3f3f3f;">* This is important header</span>
+<pre class="src src-org"><span style="color: #cae682;">* This is important header</span>
 
-<span style="color: #d0bf8f; font-weight: bold; text-decoration: underline;">./img/funny-image.jpg</span>
+<span style="color: #8ac6f2; text-decoration: underline;">./img/funny-image.jpg</span>
 
-<span style="color: #8fb28f; background-color: #3f3f3f;">** This is sub-header</span>
+<span style="color: #cae682;">** This is sub-header</span>
 
 Here's a cool report:
 
-<span style="color: #9fc59f;">|-------+-------------|</span>
-<span style="color: #9fc59f;">| month | revenue     |</span>
-<span style="color: #9fc59f;">|-------+-------------|</span>
-<span style="color: #9fc59f;">|     1 | 0           |</span>
-<span style="color: #9fc59f;">|     2 | 6 000       |</span>
-<span style="color: #9fc59f;">|     3 | - 1 000 000 |</span>
-<span style="color: #9fc59f;">|     4 |             |</span>
-<span style="color: #9fc59f;">|-------+-------------|</span>
+<span style="color: #87cefa;">|-------+-------------|</span>
+<span style="color: #87cefa;">| month | revenue     |</span>
+<span style="color: #87cefa;">|-------+-------------|</span>
+<span style="color: #87cefa;">|     1 | 0           |</span>
+<span style="color: #87cefa;">|     2 | 6 000       |</span>
+<span style="color: #87cefa;">|     3 | - 1 000 000 |</span>
+<span style="color: #87cefa;">|     4 |             |</span>
+<span style="color: #87cefa;">|-------+-------------|</span>
 
-<span style="color: #7cb8bb; background-color: #3f3f3f;">*** This is sub-sub-header (maybe even a bullet)</span>
+<span style="color: #8ac6f2; font-weight: bold;">*** This is sub-sub-header (maybe even a bullet)</span>
 
-<span style="color: #d0bf8f; font-weight: bold; text-decoration: underline;">Outsourcing has betrayed us link</span>
+<span style="color: #8ac6f2; text-decoration: underline;">Outsourcing has betrayed us link</span>
 
-<span style="color: #8fb28f; background-color: #3f3f3f;">** Another sub-header</span>
+<span style="color: #cae682;">** Another sub-header</span>
 
 Some rescue plan.
 
-<span style="color: #5f7f5f; background-color: #3f3f3f;">****** This is so low, I don't even know how will be exported</span>
-<span style="color: #5f7f5f; background-color: #3f3f3f;">****** At least there are two of us</span>
+<span style="color: #e5786d;">****** This is so low, I don't even know how will be exported</span>
+<span style="color: #e5786d;">****** At least there are two of us</span>
 </pre>
 
 
@@ -1946,7 +2033,7 @@ Org tables rock!  Here's how to start one:
 
 
 
-<pre class="src src-org"><span style="color: #9fc59f;">| heading1 | heading2 | bla |</span>
+<pre class="src src-org"><span style="color: #87cefa;">| heading1 | heading2 | bla |</span>
 </pre>
 
 
@@ -1958,7 +2045,7 @@ somewhere.  To insert row separator enter:
 
 
 
-<pre class="src src-org"><span style="color: #9fc59f;">|-</span>
+<pre class="src src-org"><span style="color: #87cefa;">|-</span>
 </pre>
 
 
@@ -2011,9 +2098,12 @@ want.
 Can Vim emulate Emacs?  Forget it!  But the other way works.  There
 are many packages that give some sort of <a href="http://www.emacswiki.org/emacs/CategoryEmulation">Vim emulation</a>.  If you are
 such an insert/escape addict but still want all the power of symbolic
-universe, you might try one of them.  The current poster child is Evil
-(install through the package manager) and seems praised as the most
-potent emulation not just in La la land.
+universe, you might try one of them.  The current poster child is
+<a href="http://emacswiki.org/emacs/Evil">Evil</a><sup><a class="footref" name="fnr-.1.10" href="#fn-.1">1</a></sup> and seems praised as the most potent emulation not just in
+La la land.
+</p>
+<p>
+By the way, I thought editor wars finished when <a href="http://upsilon.cc/~zack/blog/posts/2008/10/from_Vim_to_Emacs_-_part_1/">Debian's Vim maintainer switched to Emacs</a>.
 </p>
 </div>
 </div>
@@ -2052,13 +2142,28 @@ inspiration.
 <p>
 Just google for it, or go to the trash bin of Emacs resources -
 <a href="http://www.emacswiki.org/">EmacsWiki</a>.  Also <a href="http://emacsrocks.com/">here</a> are some series to blow your mind.
-</p></div>
+</p>
+<div id="footnotes">
+<h2 class="footnotes">Footnotes: </h2>
+<div id="text-footnotes">
+<p class="footnote"><sup><a class="footnum" name="fn-.1" href="#fnr-.1">1</a></sup> Available through <code>M-x list-packages</code>
+</p>
+
+
+<p class="footnote"><sup><a class="footnum" name="fn-.2" href="#fnr-.2">2</a></sup> This is a built-in extension
+</p>
+
+
+</div>
+</div>
+</div>
+
 </div>
 </div>
 </div>
 
 <div id="postamble">
-<p class="date">Date: 2013-02-17T15:06+0200</p>
+<p class="date">Date: 2013-02-23T17:50+0200</p>
 <p class="author">Author: Andrey Kotlarski</p>
 <p class="creator"><a href="http://orgmode.org">Org</a> version 7.9.2+ with <a href="http://www.gnu.org/software/emacs/">Emacs</a> version 24</p>
 <a href="http://validator.w3.org/check?uri=referer">Validate XHTML 1.0</a>
