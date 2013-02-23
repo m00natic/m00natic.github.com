@@ -294,7 +294,7 @@ undo command is so mighty that it can undo itself (pun intended).
 After you stop a series of undos (by hitting whatever other button),
 you can start again undo-ing and it will eventually undo your previous
 undos, which is roughly equivalent to redo.  This is a very powerful
-mechanism but a brain-twister for novices.  Try out [[http://www.emacswiki.org/emacs/UndoTree][Undo Tree]][fn:1],
+mechanism but a brain-twister for novices.  Try out [[http://www.emacswiki.org/emacs/UndoTree][Undo Tree]][fn:elpa],
 it visualizes the states between series of undos and changes and can
 even allow you travel in time for your edits.
 
@@ -313,7 +313,7 @@ is an overview of what more is supported.
 
 ** Work with directories
 
-[[http://emacswiki.org/emacs/DiredMode][Dired]][fn:2] is the most capable file manager I've encountered.  To
+[[http://emacswiki.org/emacs/DiredMode][Dired]][fn:built-in] is the most capable file manager I've encountered.  To
 start it:
 
 ~C-x C-f PATH-TO-SOME-DIRECTORY~
@@ -380,7 +380,7 @@ started by your user is just enough:
 ~C-x C-f /sudo:root@localhost:/etc/fstab RET~
 (enter password when/if prompted for it)
 
-[[http://emacswiki.org/emacs/TrampMode][TRAMP]][fn:2] is a killer.  It supports plethora of protocols.  For more
+[[http://emacswiki.org/emacs/TrampMode][TRAMP]][fn:built-in] is a killer.  It supports plethora of protocols.  For more
 information invoke/type:
 
 ~C-h i m TRAMP~
@@ -448,7 +448,7 @@ Every program attempts to expand until it can read mail.
 #+END_QUOTE
 
 There are a lot of ways to manage mail within Emacs.  I use the
-mail/news kitchen sink [[http://www.gnus.org/][Gnus]][fn:2].  Here's its glory documented (it
+mail/news kitchen sink [[http://www.gnus.org/][Gnus]][fn:built-in].  Here's its glory documented (it
 would be too much to give opinionated guide):
 
 ~C-h i m Gnus~
@@ -462,9 +462,9 @@ Exchange server, integration with the [[http://en.wikipedia.org/wiki/Fortune_%25
 stupid quotes on the back of my mails come from), [[http://www.emacswiki.org/emacs/FlySpell][automatic
 spell-checking]] and [[http://emacswiki.org/emacs/LineWrap][line wrapping]] (don't you hate when mail text goes
 out of your wide screen?), integration with [[http://bbdb.sourceforge.net/][The Insidious Big Brother
-Database]] (BBDB)[fn:1] for managing contacts, automatic checking for
+Database]] (BBDB)[fn:elpa] for managing contacts, automatic checking for
 new messages for selected (mail)boxes and notifications.  For
-notifications I'm using notify.el[fn:1].
+notifications I'm using notify.el[fn:elpa].
 
 Wouldn't want to type passwords every now and then when dealing with
 mail accounts?  authinfo(.gpg) to the rescue again!
@@ -509,7 +509,7 @@ you bash terminal and package manager to the ever useful GNU tools and
 other ported stuff.
 
 To make Emacs aware of the cygwin environment and prefer it instead of
-the crippled windows eco-system, install cygwin-mount[fn:1] and then:
+the crippled windows eco-system, install cygwin-mount[fn:elpa] and then:
 
 #+BEGIN_SRC emacs-lisp
 (defconst +win-path+ "C:/" "Windows root path.")
@@ -557,7 +557,7 @@ character, "quote" it with ~C-q~.
 ** Edit grep results in place
 
 Jumping to result locations is not enough for you?  You, spoiled brat!
-Try wgrep[fn:1]:
+Try wgrep[fn:elpa]:
 
 ~M-x wgrep-change-to-wgrep-mode~
 
@@ -570,7 +570,7 @@ skipping file/line information).  After you're done:
 Now all files that have had their lines edited are opened with your
 changes there waiting to be saved.  If it happens to be a lot of files
 and you're confident that you want all these changes saved use
-IBuffer[fn:2]:
+IBuffer[fn:built-in]:
 
 ~M-x ibuffer~
 
@@ -584,7 +584,7 @@ and all buffers with unsaved changes are marked.  Now press capital
 
 ~C-x C-b~
 
-instead the default `list-buffers'[fn:2].
+instead the default `list-buffers'[fn:built-in].
 
 ** Occur
 
@@ -617,7 +617,7 @@ finished.  Within it, you can just press ~<g>~ to recompile.
 
 ** Find file in project
 
-Well, get [[http://emacswiki.org/emacs/FindFileInProject][find-file-in-project]][fn:1] and then bind the same-named
+Well, get [[http://emacswiki.org/emacs/FindFileInProject][find-file-in-project]][fn:elpa] and then bind the same-named
 command to a key like:
 
 #+BEGIN_SRC emacs-lisp
@@ -703,7 +703,7 @@ all available:
 
 *** Magnificent git
 
-If you happen to use [[http://git-scm.com][Git]], check out [[http://magit.github.com/magit/][Magit]][fn:1].  It's a nice
+If you happen to use [[http://git-scm.com][Git]], check out [[http://magit.github.com/magit/][Magit]][fn:elpa].  It's a nice
 interface to some of the most often used Git commands.  My favourite
 feature is the ability to iterate through the diff hunks and
 selectively choose which ones to stage or unstage.  Makes partial file
@@ -794,7 +794,7 @@ To activate:
 ** Completion
 
 There are many packages that deal with code (and not only) completion,
-but none are particularly good at C++.  I use [[http://cx4a.org/software/auto-complete/][auto-complete]][fn:1]
+but none are particularly good at C++.  I use [[http://cx4a.org/software/auto-complete/][auto-complete]][fn:elpa]
 which for completion of anything.  Here is some setup:
 
 #+BEGIN_SRC emacs-lisp
@@ -816,7 +816,7 @@ function/variable names become non issue.
 ** General coding IDE
 
 I'm sure your grannies have used [[http://en.wikipedia.org/wiki/Integrated_development_environment][IDE]]s all their life.  There is a
-package called [[http://emacswiki.org/emacs/EmacsCodeBrowser][Emacs Code Browser]] (ECB)[fn:1] and may give you a
+package called [[http://emacswiki.org/emacs/EmacsCodeBrowser][Emacs Code Browser]] (ECB)[fn:elpa] and may give you a
 breeze of life-supporting IDE familiarity.  Furthermore, imagine how
 cool it is to have IDE working in terminal...yes, it does, just like
 rest of Emacs.  Here are some settings for it (some of them are
@@ -857,7 +857,7 @@ that the cursor is currently placed in.
 
 ** Jump to definitions
 
-Emacs comes with a separate binary [[http://www.emacswiki.org/emacs/EmacsBrowse][ebrowse]][fn:2] that can annotate
+Emacs comes with a separate binary [[http://www.emacswiki.org/emacs/EmacsBrowse][ebrowse]][fn:built-in] that can annotate
 multiple C/C++ source files and create some form of DB which can be
 used for getting different kind of information for the indexed
 sources.  Here's a little wrapper shell script that should be placed
@@ -937,7 +937,7 @@ good.
 
 ** Info
 
-To invoke the info reader[fn:2]:
+To invoke the info reader[fn:built-in]:
 
 ~C-h i~
 
@@ -1157,7 +1157,7 @@ Can Vim emulate Emacs?  Forget it!  But the other way works.  There
 are many packages that give some sort of [[http://www.emacswiki.org/emacs/CategoryEmulation][Vim emulation]].  If you are
 such an insert/escape addict but still want all the power of symbolic
 universe, you might try one of them.  The current poster child is
-[[http://emacswiki.org/emacs/Evil][Evil]][fn:1] and seems praised as the most potent emulation not just in
+[[http://emacswiki.org/emacs/Evil][Evil]][fn:elpa] and seems praised as the most potent emulation not just in
 La la land.
 
 By the way, I thought editor wars finished when [[http://upsilon.cc/~zack/blog/posts/2008/10/from_Vim_to_Emacs_-_part_1/][Debian's Vim
@@ -1179,7 +1179,6 @@ Just google for it, or go to the trash bin of Emacs resources -
 
 * Footnotes
 
-[fn:1] Available through ~M-x list-packages~
+[fn:built-in] This is a built-in extension
 
-[fn:2] This is a built-in extension
-
+[fn:elpa] Available through ~M-x list-packages~
