@@ -341,8 +341,8 @@ If you now invoke:
 
 you'll be able to navigate directories and files of the current folder
 by entering parts of their name.  To go directory up, <Backspace>
-would suffice.  To open currently shown directory, press <C-d>.  To
-create a new file, type its desired name and press <C-j>.
+would suffice.  To open currently shown directory, press ~C-d~.  To
+create a new file, type its desired name and press ~C-j~.
 
 There's more magic.  Using the traditional way to switch to a buffer:
 
@@ -351,23 +351,28 @@ There's more magic.  Using the traditional way to switch to a buffer:
 you'll get matching by parts of name and may also get suggestions for
 files that have been opened in previous sessions.
 
-** Remote network and sudo access using TRAMP
+** Remote network and sudo access
 
 Why reside to primitive shell & ssh to peek/edit a file on some remote
 server?  You can do it directly from Emacs:
 
 ~C-x C-f /ssh:akotlarski@gn1:/ezsroot/current RET~
-(enter password when/if prompted for it)
+(enter password when/if prompted)
 
 Local servers here have some fancy colourful prompts that get in the
 way of the default settings though.  Don't cry yet, I have a fix.
 Paste this in your init.el:
 
 #+BEGIN_SRC emacs-lisp
-(custom-set-variables
- '(tramp-shell-prompt-pattern
-   "\\(?:^\\|\\)[^]#$%>\n]*#?[]#$%>] *\\(;?\\[[0-9;]*[a-zA-Z] *\\)*"))
+  (custom-set-variables
+   '(tramp-shell-prompt-pattern
+     "\\(?:^\\|\\)[^]#$%>\n]*#?[]#$%>] *\\(;?\\[[0-9;]*[a-zA-Z] *\\)*"))
 #+END_SRC
+
+Note that there are a couple of non-printing characters in the ugly
+regular expression above.  Instead of new line, there is:
+
+~C-q C-m~
 
 Need to quickly edit some system file?  Don't touch the shell, Emacs
 started by your user is just enough:
@@ -375,8 +380,8 @@ started by your user is just enough:
 ~C-x C-f /sudo:root@localhost:/etc/fstab RET~
 (enter password when/if prompted for it)
 
-The [[http://emacswiki.org/emacs/TrampMode][TRAMP]] built-in package is a killer.  It supports plethora of
-protocols.  For more information invoke/type:
+[[http://emacswiki.org/emacs/TrampMode][TRAMP]][fn:2] is a killer.  It supports plethora of protocols.  For more
+information invoke/type:
 
 ~C-h i m TRAMP~
 
@@ -420,7 +425,7 @@ such, et voilà, your file is now encrypted.  When attempting to open
 encrypted file with gpg extension from Emacs, you'll be asked for
 password.  Magic.
 
-** Don't ask for sudo or ssh passwords - authinfo
+** Don't ask for sudo or ssh passwords
 
 Create a file ~/.authinfo.gpg and paste there something like:
 
@@ -431,17 +436,19 @@ machine gridnode02 port ssh login akotlarski password very-secret
 
 Save this file (entering password for encryption).  Now, when you
 attempt to ssh (to gn2) or sudo directly from Emacs as explained
-above, you'll be asked for the .authinfo.gpg password once and from
+above, you'll be asked for the ~.authinfo.gpg~ password once and from
 there on (for this Emacs session), the passwords listed there will be
 automatically used when you try to access the respective resources.
 
 ** Gnus for mail and news
 
-/Every program attempts to expand until it can read mail./
-		/-- Jamie Zawinski/
+#+BEGIN_QUOTE
+Every program attempts to expand until it can read mail.
+		-- Jamie Zawinski
+#+END_QUOTE
 
 There are a lot of ways to manage mail within Emacs.  I use the
-built-in mail/news kitchen sink [[http://www.gnus.org/][Gnus]].  Here's its glory documented (it
+mail/news kitchen sink [[http://www.gnus.org/][Gnus]][fn:2].  Here's its glory documented (it
 would be too much to give opinionated guide):
 
 ~C-h i m Gnus~
@@ -455,10 +462,9 @@ Exchange server, integration with the [[http://en.wikipedia.org/wiki/Fortune_%25
 stupid quotes on the back of my mails come from), [[http://www.emacswiki.org/emacs/FlySpell][automatic
 spell-checking]] and [[http://emacswiki.org/emacs/LineWrap][line wrapping]] (don't you hate when mail text goes
 out of your wide screen?), integration with [[http://bbdb.sourceforge.net/][The Insidious Big Brother
-Database]] (BBDB) for managing contacts, automatic checking for new
-messages for selected (mail)boxes and notifications.  For
-notifications I'm using the notify.el package which can be easily
-installed through the package manager (BBDB is also there).
+Database]] (BBDB)[fn:1] for managing contacts, automatic checking for
+new messages for selected (mail)boxes and notifications.  For
+notifications I'm using the notify.el[fn:1].
 
 Wouldn't want to type passwords every now and then when dealing with
 mail accounts?  authinfo(.gpg) to the rescue again!
@@ -503,8 +509,7 @@ you bash terminal and package manager to the ever useful GNU tools and
 other ported stuff.
 
 To make Emacs aware of the cygwin environment and prefer it instead of
-the crippled windows eco-system, install `cygwin-mount' from the Emacs
-package manager and then:
+the crippled windows eco-system, install cygwin-mount[fn:1] and then:
 
 #+BEGIN_SRC emacs-lisp
 (defconst +win-path+ "C:/" "Windows root path.")
@@ -522,8 +527,8 @@ package manager and then:
       (setq w32shell-cygwin-bin cygwin-dir))))
 #+END_SRC
 
-This assumes that C:\cygwin is used for cygwin root and C:\cygwin\bin
-holds the binaries.
+This assumes that ~C:\cygwin~ is used for cygwin root and
+~C:\cygwin\bin~ holds the binaries.
 
 Dealing with what path is taken as home directory under Windows is a
 headache.  And you need this to know where init.el should reside.  I
@@ -547,25 +552,25 @@ constrained upon.  Glob patterns are accepted like:
 ~*.cpp *.h~
 
 Note that SPC invokes completion here.  To actually insert a space
-character, "quote" it with C-q
+character, "quote" it with ~C-q~.
 
 ** Edit grep results in place
 
 Jumping to result locations is not enough for you?  You, spoiled brat!
-Try wgrep (available through the package manager):
+Try wgrep[fn:1]:
 
 ~M-x wgrep-change-to-wgrep-mode~
 
 while in grep buffer.  Now you can edit in place result lines (regex
-replacing M-% is intelligently acting only over the actual text and
+replacing ~M-%~ is intelligently acting only over the actual text and
 skipping file/line information).  After you're done:
 
 ~C-x C-s~
 
 Now all files that have had their lines edited are opened with your
-changes there waiting to be saved.  If it happens to be a lot of
-files and you're confident that you want all these changes saved use
-the built-in IBuffer:
+changes there waiting to be saved.  If it happens to be a lot of files
+and you're confident that you want all these changes saved use
+IBuffer[fn:2]:
 
 ~M-x ibuffer~
 
@@ -574,12 +579,12 @@ Now all current Emacs buffer are listed.  How convenient.  Now hit:
 ~* u~
 
 and all buffers with unsaved changes are marked.  Now press capital
-~<S>~ to save them all.  Job done.  As all within La la land, IBuffer
-is [[http://www.emacswiki.org/emacs/IbufferMode][full of tricks and neat features]], I even have it bound to:
+<S> to save them all.  Job done.  As all within La la land, IBuffer is
+[[http://www.emacswiki.org/emacs/IbufferMode][full of tricks and neat features]], I even have it bound to:
 
 ~C-x C-b~
 
-instead the built-in `list-buffers'.
+instead the default `list-buffers'[fn:2].
 
 ** Occur
 
@@ -612,8 +617,8 @@ finished.  Within it, you can just press ~<g>~ to recompile.
 
 ** Find file in project
 
-Well, get find-file-in-project through the package manager and then
-bind the same-named command to a key like:
+Well, get [[http://emacswiki.org/emacs/FindFileInProject][find-file-in-project]][fn:1] and then bind the same-named
+command to a key like:
 
 #+BEGIN_SRC emacs-lisp
 (define-key global-map "\C-cf" 'find-file-in-project)
@@ -640,12 +645,9 @@ Here's a sample customization for C++ project:
  ffip-limit 4096)
 #+END_SRC
 
-This makes directories that have file named:
-
-~.emacs-project~
-
-root project folders.  Also C-like sources are added to list of files
-to offer.  Some source control and build directories are skipped from
+This makes directories that have file named ~.emacs-project~ root
+project folders.  Also C-like sources are added to list of files to
+offer.  Some source control and build directories are skipped from
 indexing and maximum amount of files offered is set to 4096.
 
 I know this is nothing new for you, IDE cry-babies.  But can we
@@ -699,6 +701,14 @@ all available:
 
 ~M-x vc-<TAB>~
 
+*** Magnificent git
+
+If you happen to use [[http://git-scm.com][Git]], check out [[http://magit.github.com/magit/][Magit]][fn:1].  It's a nice
+interface to some of the most often used Git commands.  My favourite
+feature is the ability to iterate through the diff hunks and
+selectively choose which ones to stage or unstage.  Makes partial file
+commits trivial.
+
 ** Interactive diff and merging
 
 Have you ever had two chunks of text with rare differences that you
@@ -714,15 +724,15 @@ impromptu merging if you want.  [[http://emacswiki.org/emacs/EdiffMode][Ediff]] 
 Could we use this to resolve conflicts under version control?  Yes!
 If a file is in conflict state, open it and:
 
-~M-x vc-resolve-conflicts~
-
-(you may need really recent version for this, like GNU Emacs 24.2)
+~M-x smerge-ediff~
 
 ** Regular expressions
 
-/Some people, when confronted with a problem, think "I know, I'll use/
-/regular expressions." Now they have two problems./
-		/-- Jamie Zawinski/
+#+BEGIN_QUOTE
+Some people, when confronted with a problem, think "I know, I'll use
+regular expressions." Now they have two problems.
+		-- Jamie Zawinski
+#+END_QUOTE
 
 Not surprisingly, [[http://en.wikipedia.org/wiki/Regular_expressions][regexes]] are supported all over the place.  There are
 some differences to the popular [[http://en.wikipedia.org/wiki/Pcre][PCRE]] style and if you're serious about
@@ -784,8 +794,8 @@ To activate:
 ** Completion
 
 There are many packages that deal with code (and not only) completion,
-but none are particularly good at C++.  I use auto-complete (install
-through the package manager) and here is some setup:
+but none are particularly good at C++.  I use [[http://cx4a.org/software/auto-complete/][auto-complete]][fn:1]
+which for completion of anything.  Here is some setup:
 
 #+BEGIN_SRC emacs-lisp
 (when (ignore-errors (require 'auto-complete-config nil t))
@@ -806,11 +816,11 @@ function/variable names become non issue.
 ** General coding IDE
 
 I'm sure your grannies have used [[http://en.wikipedia.org/wiki/Integrated_development_environment][IDE]]s all their life.  There is a
-package called Emacs Code Browser (ECB) that is available through the
-package manager and may give you a breeze of life-supporting IDE
-familiarity.  Furthermore, imagine how cool it is to have IDE working
-in terminal...yes, it does, just like rest of Emacs.  Here are some
-settings for it (some of them are necessary to get it started at all):
+package called [[http://emacswiki.org/emacs/EmacsCodeBrowser][Emacs Code Browser]] (ECB)[fn:1] and may give you a
+breeze of life-supporting IDE familiarity.  Furthermore, imagine how
+cool it is to have IDE working in terminal...yes, it does, just like
+rest of Emacs.  Here are some settings for it (some of them are
+necessary to get it started at all):
 
 #+BEGIN_SRC emacs-lisp
 (custom-set-variables
@@ -847,12 +857,12 @@ that the cursor is currently placed in.
 
 ** Jump to definitions
 
-Emacs comes with a separate binary [[http://www.emacswiki.org/emacs/EmacsBrowse][ebrowse]] that can annotate multiple
-C/C++ source files and create some form of DB which can be used for
-getting different kind of information for the indexed sources.  Here's
-a little wrapper shell script that should be placed somewhere on your
-PATH (/usr/local/bin/ preferably), named ebrowse++ and made
-executable:
+Emacs comes with a separate binary [[http://www.emacswiki.org/emacs/EmacsBrowse][ebrowse]][fn:2] that can annotate
+multiple C/C++ source files and create some form of DB which can be
+used for getting different kind of information for the indexed
+sources.  Here's a little wrapper shell script that should be placed
+somewhere on your PATH (~/usr/local/bin/~ preferably), named ebrowse++
+and made executable:
 
 #+BEGIN_SRC sh
 #!/bin/sh
@@ -883,10 +893,11 @@ or ARG is non nil - locate project file for current directory."
 	    (find-file-noselect ebrowse-file))
 	(let ((project-dir (locate-dominating-file default-directory
 						   ".emacs-project")))
-	  (when project-dir
-	    (save-excursion
-	      (call-process "ebrowse-c++" nil nil nil project-dir)
-	      (find-file-noselect (concat project-dir "BROWSE")))))))))
+	  (if project-dir
+	      (save-excursion
+		(call-process "ebrowse-c++" nil nil nil project-dir)
+		(find-file-noselect (concat project-dir
+					    "BROWSE")))))))))
 #+END_SRC
 
 Now, while in some project directory (again assuming .emacs-project is
@@ -915,7 +926,7 @@ one (while being in another ~.emacs-project~ governed location):
 * Documentation
 
 Emacs documentation is the most complete and accessible set of
-resources I have ever seen (only second to Lisp Machines but they are
+resources I have ever seen (only second to [[http://en.wikipedia.org/wiki/Lisp_machine][Lisp Machines]] but they are
 20 years in the past and as one may observe, technology is stubbornly
 regressing in this along other aspects since then).
 
@@ -926,7 +937,7 @@ good.
 
 ** Info
 
-To invoke the info reader:
+To invoke the info reader[fn:2]:
 
 ~C-h i~
 
@@ -1029,11 +1040,15 @@ combination.
 
 ** Org mode
 
-/I rarely write documents and presentations.  When I do, I use Org mode./
-		/-- Mahatma Gandhi/
+#+BEGIN_QUOTE
+I rarely write documents and presentations.  When I do, I use Org
+mode.
+		-- Mahatma Gandhi
+#+END_QUOTE
 
-There is another wonderful thing that comes with Emacs known as
-[[http://orgmode.org/][Org mode]].  Here's what's written on their site:
+There is another wonderful thing that comes with Emacs known as [[http://orgmode.org/][Org
+mode]].  It's often quoted as a prime reason for people starting to use
+Emacs, even former Vimmers.  Here's what's written on their site:
 
 "Org mode is for keeping notes, maintaining TODO lists, doing project
 planning, and authoring with a fast and effective plain-text system."
@@ -1141,9 +1156,12 @@ want.
 Can Vim emulate Emacs?  Forget it!  But the other way works.  There
 are many packages that give some sort of [[http://www.emacswiki.org/emacs/CategoryEmulation][Vim emulation]].  If you are
 such an insert/escape addict but still want all the power of symbolic
-universe, you might try one of them.  The current poster child is Evil
-(install through the package manager) and seems praised as the most
-potent emulation not just in La la land.
+universe, you might try one of them.  The current poster child is
+[[http://emacswiki.org/emacs/Evil][Evil]][fn:1] and seems praised as the most potent emulation not just in
+La la land.
+
+By the way, I thought editor wars finished when [[http://upsilon.cc/~zack/blog/posts/2008/10/from_Vim_to_Emacs_-_part_1/][Debian's Vim
+maintainer switched to Emacs]].
 
 * Support
 
@@ -1158,3 +1176,10 @@ inspiration.
 
 Just google for it, or go to the trash bin of Emacs resources -
 [[http://www.emacswiki.org/][EmacsWiki]].  Also [[http://emacsrocks.com/][here]] are some series to blow your mind.
+
+* Footnotes
+
+[fn:1] Available through ~M-x list-packages~
+
+[fn:2] This is a built-in extension
+
