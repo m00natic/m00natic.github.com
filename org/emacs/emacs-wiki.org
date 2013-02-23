@@ -795,7 +795,8 @@ To activate:
 
 There are many packages that deal with code (and not only) completion,
 but none are particularly good at C++.  I use [[http://cx4a.org/software/auto-complete/][auto-complete]][fn:elpa]
-which for completion of anything.  Here is some setup:
+which is for completion of anything, not only code.  Here is some
+setup:
 
 #+BEGIN_SRC emacs-lisp
 (when (ignore-errors (require 'auto-complete-config nil t))
