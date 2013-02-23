@@ -275,7 +275,7 @@ see:
 ~C-h f edmacro-mode~
 
 What if you want to assign special key combination only for some
-specific mode?  You'll generally have to know the name key map
+specific mode?  You'll generally have to know the name of the key map
 variable for this mode:
 
 #+BEGIN_SRC emacs-lisp
@@ -464,7 +464,7 @@ spell-checking]] and [[http://emacswiki.org/emacs/LineWrap][line wrapping]] (don
 out of your wide screen?), integration with [[http://bbdb.sourceforge.net/][The Insidious Big Brother
 Database]] (BBDB)[fn:1] for managing contacts, automatic checking for
 new messages for selected (mail)boxes and notifications.  For
-notifications I'm using the notify.el[fn:1].
+notifications I'm using notify.el[fn:1].
 
 Wouldn't want to type passwords every now and then when dealing with
 mail accounts?  authinfo(.gpg) to the rescue again!
