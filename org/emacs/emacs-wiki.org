@@ -218,7 +218,7 @@ characters.
 Emacs has tons of them.  Your grandmother probably has written one or
 two too.  Until recently there was no canonical way to distribute and
 install extensions though (I'm talking about GNU Emacs specifically,
-XEmacs has had this for a decade or so).  If you are using version 24
+[[http://www.xemacs.org][XEmacs]] has had this for a decade or so).  If you are using version 24
 or above, you are one lucky bastard!  GNU Emacs is living to its
 promise to become full fledged operating system and now has a packet
 manager that you can invoke with:
@@ -244,9 +244,9 @@ others too:
 
 ** Yes-No prompts, why type so much?
 
-Often Emacs asks you something and expects you to type <yes> or <no>
+Often Emacs asks something and expects you to type <yes> or <no>
 followed by <Enter>.  Here's how to change this and when faced with
-such question to be able to just press <y> or <n> instead:
+such existential question be able to just press <y> or <n> instead:
 
 #+BEGIN_SRC emacs-lisp
 (fset 'yes-or-no-p 'y-or-n-p)
