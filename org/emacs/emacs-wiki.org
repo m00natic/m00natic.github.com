@@ -3,9 +3,9 @@
 
 * Introduction
 
-*Emacs is the red pill.*
+*Emacs is the red pill*
 
-Now that we have this out of the way, note that there are many Emacs
+Now that we got this out of the way, note that there are many Emacs
 flavours but what follows generally refers only to the eldest and most
 thriving at present - [[http://en.wikipedia.org/wiki/Emacs][GNU Emacs]].  If something below doesn't work for
 you, then you are probably using version older than 24.

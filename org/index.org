@@ -19,6 +19,8 @@ Introductions done for my coworkers.
 
 [[./presentations/haskell.pdf][Haskell]]
 
+[[https://github.com/m00natic/m00natic.github.com/tree/master/org/presentations][Here]] are the Org mode sources, minimally tweaked.
+
 * Miscellaneous
 
 [[./my-pc.org][If you happen to sit on my computer]] don't panic!
