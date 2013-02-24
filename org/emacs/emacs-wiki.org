@@ -221,7 +221,7 @@ install extensions though (I'm talking about GNU Emacs specifically,
 [[http://www.xemacs.org][XEmacs]] has had this for a decade or so).  If you are using version 24
 or above, you are one lucky bastard!  GNU Emacs is living to its
 promise to become full fledged operating system and now has a packet
-manager that you can invoke with:
+manager that can be invoked with:
 
 ~M-x list-packages~
 
@@ -436,7 +436,7 @@ machine gridnode02 port ssh login akotlarski password very-secret
 
 Save this file (entering password for encryption).  Now, when you
 attempt to ssh (to gn2) or sudo directly from Emacs as explained
-above, you'll be asked for the ~.authinfo.gpg~ password once and from
+[[Remote%20network%20and%20sudo%20access][above]], you'll be asked for the ~.authinfo.gpg~ password once and from
 there on (for this Emacs session), the passwords listed there will be
 automatically used when you try to access the respective resources.
 
@@ -631,7 +631,7 @@ Now hit:
 And you'll be able to select a file.  If you have ido-mode enabled for
 files, you'll get flex matching.  Note that the GNU find command is
 expected, which means that under Windows, you'll probably need the
-Cygwin environment with the settings given above.
+Cygwin environment with the settings given [[Microsoft%20Windows%20(tm)][above]].
 
 Here's a sample customization for C++ project:
 
@@ -681,7 +681,7 @@ there and within all sub-folders as well.  Sweet.
 ** Source control
 
 Are you tired of the different command line interfaces of the many
-version control systems that you use?  Even worse if you use GUIs.
+[[http://en.wikipedia.org/wiki/Version_control][version control systems]] that you use?  Even worse if you use GUIs.
 Emacs provides unified interface to some of the widely used VCSes (and
 of course has additional packages for more rarely used).  To see what
 I'm talking about:
@@ -750,7 +750,7 @@ buffer.  Provided the regex is somewhat correct.
 
 ** GDB
 
-Remember Visual Studio?  Aaaarrrrgh, the horror!  Well, you can get
+Remember Visual Studio?  Aaaarrrrgh, [[http://www.youtube.com/watch?v%3Dsk9zflW6dtU][the horror]]!  Well, you can get
 some of it integrating with [[http://www.gnu.org/software/gdb/][GNU Debugger]]:
 
 #+BEGIN_SRC emacs-lisp
@@ -764,7 +764,7 @@ first):
 ~M-x gdb~
 
 You'll be asked how to run it, append the path of the desired
-executable and rock!
+executable and [[http://www.youtube.com/watch?v%3DYtxEOX3WwcM][rock]]!
 
 ** Semantic
 
@@ -795,7 +795,7 @@ To activate:
 
 There are many packages that deal with code (and not only) completion,
 but none are particularly good at C++.  I use [[http://cx4a.org/software/auto-complete/][auto-complete]][fn:elpa]
-which is for completion of anything, not only code.  Here is some
+which is for completion of anything, not just code.  Here is some
 setup:
 
 #+BEGIN_SRC emacs-lisp
@@ -858,12 +858,12 @@ that the cursor is currently placed in.
 
 ** Jump to definitions
 
-Emacs comes with a separate binary [[http://www.emacswiki.org/emacs/EmacsBrowse][ebrowse]][fn:built-in] that can annotate
-multiple C/C++ source files and create some form of DB which can be
-used for getting different kind of information for the indexed
+Emacs comes with a separate binary [[http://www.emacswiki.org/emacs/EmacsBrowse][ebrowse]][fn:built-in] that can
+annotate multiple C/C++ source files and create some form of DB which
+can be used for getting different kind of information for the indexed
 sources.  Here's a little wrapper shell script that should be placed
-somewhere on your PATH (~/usr/local/bin/~ preferably), named ebrowse++
-and made executable:
+somewhere on your PATH (~/usr/local/bin/~ preferably),
+named *ebrowse++* and made executable:
 
 #+BEGIN_SRC sh
 #!/bin/sh
@@ -878,7 +878,7 @@ find . -regex ".*\.\(hpp\|cpp\|h\|c\)" \
     -not -regex ".*\(debug\|release\|svn\|git\).*" | ebrowse
 #+END_SRC
 
-Again it needs the GNU find program.  Now, to make use of it:
+Again it needs the GNU find program.  To make use of it:
 
 #+BEGIN_SRC emacs-lisp
 (when (executable-find "ebrowse-c++")
@@ -901,13 +901,13 @@ or ARG is non nil - locate project file for current directory."
 					    "BROWSE")))))))))
 #+END_SRC
 
-Now, while in some project directory (again assuming .emacs-project is
-present in the root project folder):
+Now, while in some project directory (again assuming ~.emacs-project~
+is present in the root project folder):
 
 ~M-x my-ebrowse-refresh~
 
 It loads/refreshes the DB for the current project and opens it in
-background.  Now, to jump over function/variable definition:
+background.  To jump over function/variable definition:
 
 ~C-c C-m f NAME-OF-SOME-FUNCTION-OR-METHOD-OR-MEMBER~
 
@@ -915,7 +915,7 @@ Don't worry, you'll get completion.  To jump to declaration:
 
 ~C-c C-m F NAME-OF-SOME-FUNCTION-OR-METHOD-OR-MEMBER~
 
-To see more enabled functionality:
+To see more unlocked functionality:
 
 ~C-c C-m C-h~
 
@@ -1092,6 +1092,8 @@ Here's a cool report:
 
 [[http://outsource.cn][Outsourcing has betrayed us link]]
 
+# this is a comment, won't be exported
+
 ** Another sub-header
 
 Some rescue plan.
@@ -1115,7 +1117,7 @@ site or the manuals for more.
 
 *** Tables
 
-Org tables rock!  Here's how to start one:
+Org tables [[http://www.youtube.com/watch?v%3D1BH7poMtPVU][rock]]!  Here's how to start one:
 
 #+BEGIN_SRC org
 | heading1 | heading2 | bla |
@@ -1141,7 +1143,7 @@ for quick dealing with formatted program output.
 
 *** Lightening fast documents
 
-Have to write some official document?  Wanna concentrate on content
+Have to write some official document?  Want to concentrate on content
 and structure rather than fonts, colours, headings and what not?
 Write an org-mode file and export it to PDF (through [[http://en.wikipedia.org/wiki/LaTeX][LaTeX]])!  It will
 take care of all details, add table of content even.

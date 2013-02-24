@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 <meta name="title" content="Andrey's Opinionated Emacs Guide"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2013-02-23T23:44+0200"/>
+<meta name="generated" content="2013-02-24T02:26+0200"/>
 <meta name="author" content="Andrey Kotlarski"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
@@ -590,7 +590,7 @@ install extensions though (I'm talking about GNU Emacs specifically,
 <a href="http://www.xemacs.org">XEmacs</a> has had this for a decade or so).  If you are using version 24
 or above, you are one lucky bastard!  GNU Emacs is living to its
 promise to become full fledged operating system and now has a packet
-manager that you can invoke with:
+manager that can be invoked with:
 </p>
 <p>
 <code>M-x list-packages</code>
@@ -950,7 +950,7 @@ machine gridnode02 port ssh login akotlarski password very-secret
 <p>
 Save this file (entering password for encryption).  Now, when you
 attempt to ssh (to gn2) or sudo directly from Emacs as explained
-above, you'll be asked for the <code>.authinfo.gpg</code> password once and from
+<a href="#sec-2-11">above</a>, you'll be asked for the <code>.authinfo.gpg</code> password once and from
 there on (for this Emacs session), the passwords listed there will be
 automatically used when you try to access the respective resources.
 </p>
@@ -1264,7 +1264,7 @@ Now hit:
 And you'll be able to select a file.  If you have ido-mode enabled for
 files, you'll get flex matching.  Note that the GNU find command is
 expected, which means that under Windows, you'll probably need the
-Cygwin environment with the settings given above.
+Cygwin environment with the settings given <a href="#sec-2-17">above</a>.
 </p>
 <p>
 Here's a sample customization for C++ project:
@@ -1332,7 +1332,7 @@ there and within all sub-folders as well.  Sweet.
 
 <p>
 Are you tired of the different command line interfaces of the many
-version control systems that you use?  Even worse if you use GUIs.
+<a href="http://en.wikipedia.org/wiki/Version_control">version control systems</a> that you use?  Even worse if you use GUIs.
 Emacs provides unified interface to some of the widely used VCSes (and
 of course has additional packages for more rarely used).  To see what
 I'm talking about:
@@ -1448,7 +1448,7 @@ buffer.  Provided the regex is somewhat correct.
 
 
 <p>
-Remember Visual Studio?  Aaaarrrrgh, the horror!  Well, you can get
+Remember Visual Studio?  Aaaarrrrgh, <a href="http://www.youtube.com/watch?v=sk9zflW6dtU">the horror</a>!  Well, you can get
 some of it integrating with <a href="http://www.gnu.org/software/gdb/">GNU Debugger</a>:
 </p>
 
@@ -1468,7 +1468,7 @@ first):
 </p>
 <p>
 You'll be asked how to run it, append the path of the desired
-executable and rock!
+executable and <a href="http://www.youtube.com/watch?v=YtxEOX3WwcM">rock</a>!
 </p>
 </div>
 
@@ -1520,7 +1520,7 @@ To activate:
 <p>
 There are many packages that deal with code (and not only) completion,
 but none are particularly good at C++.  I use <a href="http://cx4a.org/software/auto-complete/">auto-complete</a><sup><a class="footref" name="fnr-.1.8" href="#fn-.1">1</a></sup>
-which is for completion of anything, not only code.  Here is some
+which is for completion of anything, not just code.  Here is some
 setup:
 </p>
 
@@ -1620,12 +1620,12 @@ that the cursor is currently placed in.
 
 
 <p>
-Emacs comes with a separate binary <a href="http://www.emacswiki.org/emacs/EmacsBrowse">ebrowse</a><sup><a class="footref" name="fnr-.2.6" href="#fn-.2">2</a></sup> that can annotate
-multiple C/C++ source files and create some form of DB which can be
-used for getting different kind of information for the indexed
+Emacs comes with a separate binary <a href="http://www.emacswiki.org/emacs/EmacsBrowse">ebrowse</a><sup><a class="footref" name="fnr-.2.6" href="#fn-.2">2</a></sup> that can
+annotate multiple C/C++ source files and create some form of DB which
+can be used for getting different kind of information for the indexed
 sources.  Here's a little wrapper shell script that should be placed
-somewhere on your PATH (<code>/usr/local/bin/</code> preferably), named ebrowse++
-and made executable:
+somewhere on your PATH (<code>/usr/local/bin/</code> preferably),
+named <b>ebrowse++</b> and made executable:
 </p>
 
 
@@ -1644,7 +1644,7 @@ find . -regex <span style="color: #95e454;">".*\.\(hpp\|cpp\|h\|c\)"</span> <spa
 
 
 <p>
-Again it needs the GNU find program.  Now, to make use of it:
+Again it needs the GNU find program.  To make use of it:
 </p>
 
 
@@ -1671,15 +1671,15 @@ Again it needs the GNU find program.  Now, to make use of it:
 
 
 <p>
-Now, while in some project directory (again assuming .emacs-project is
-present in the root project folder):
+Now, while in some project directory (again assuming <code>.emacs-project</code>
+is present in the root project folder):
 </p>
 <p>
 <code>M-x my-ebrowse-refresh</code>
 </p>
 <p>
 It loads/refreshes the DB for the current project and opens it in
-background.  Now, to jump over function/variable definition:
+background.  To jump over function/variable definition:
 </p>
 <p>
 <code>C-c C-m f NAME-OF-SOME-FUNCTION-OR-METHOD-OR-MEMBER</code>
@@ -1691,7 +1691,7 @@ Don't worry, you'll get completion.  To jump to declaration:
 <code>C-c C-m F NAME-OF-SOME-FUNCTION-OR-METHOD-OR-MEMBER</code>
 </p>
 <p>
-To see more enabled functionality:
+To see more unlocked functionality:
 </p>
 <p>
 <code>C-c C-m C-h</code>
@@ -1993,6 +1993,8 @@ Here's a cool report:
 
 <span style="color: #8ac6f2; text-decoration: underline;">Outsourcing has betrayed us link</span>
 
+<span style="color: #99968b;"># this is a comment, won't be exported</span>
+
 <span style="color: #cae682;">** Another sub-header</span>
 
 Some rescue plan.
@@ -2029,7 +2031,7 @@ site or the manuals for more.
 
 
 <p>
-Org tables rock!  Here's how to start one:
+Org tables <a href="http://www.youtube.com/watch?v=1BH7poMtPVU">rock</a>!  Here's how to start one:
 </p>
 
 
@@ -2073,7 +2075,7 @@ for quick dealing with formatted program output.
 
 
 <p>
-Have to write some official document?  Wanna concentrate on content
+Have to write some official document?  Want to concentrate on content
 and structure rather than fonts, colours, headings and what not?
 Write an org-mode file and export it to PDF (through <a href="http://en.wikipedia.org/wiki/LaTeX">LaTeX</a>)!  It will
 take care of all details, add table of content even.
@@ -2164,7 +2166,7 @@ Just google for it, or go to the trash bin of Emacs resources -
 </div>
 
 <div id="postamble">
-<p class="date">Date: 2013-02-23T23:44+0200</p>
+<p class="date">Date: 2013-02-24T02:26+0200</p>
 <p class="author">Author: Andrey Kotlarski</p>
 <p class="creator"><a href="http://orgmode.org">Org</a> version 7.9.2+ with <a href="http://www.gnu.org/software/emacs/">Emacs</a> version 24</p>
 <a href="http://validator.w3.org/check?uri=referer">Validate XHTML 1.0</a>
