@@ -29,3 +29,5 @@ Introductions done for my coworkers.
 the circle is now complete.
 
 [[./andrey-kotlarski-cv.pdf][My Curriculum Vitae]] kept on [[https://gitorious.org/~m00natic][Gitorious]] for a change.
+
+You can contact me [[mailto:m00naticus@gmail.com][here]].
