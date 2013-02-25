@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 <meta name="title" content="Andrey's Opinionated Emacs Guide"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2013-02-24T02:26+0200"/>
+<meta name="generated" content="2013-02-25T02:04+0200"/>
 <meta name="author" content="Andrey Kotlarski"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
@@ -211,10 +211,20 @@ for the JavaScript code in this tag.
 <li><a href="#sec-6-2">6.2 Vim</a></li>
 </ul>
 </li>
-<li><a href="#sec-7">7 Support</a>
+<li><a href="#sec-7">7 Emacs for black belts</a>
 <ul>
-<li><a href="#sec-7-1">7.1 Andrey</a></li>
-<li><a href="#sec-7-2">7.2 Internet</a></li>
+<li><a href="#sec-7-1">7.1 Keyboard macros</a></li>
+<li><a href="#sec-7-2">7.2 Elisp</a>
+<ul>
+<li><a href="#sec-7-2-1">7.2.1 Text processing superpowers</a></li>
+<li><a href="#sec-7-2-2">7.2.2 Text processing automation for dummies</a></li>
+</ul></li>
+</ul>
+</li>
+<li><a href="#sec-8">8 Support</a>
+<ul>
+<li><a href="#sec-8-1">8.1 Andrey</a></li>
+<li><a href="#sec-8-2">8.2 Internet</a></li>
 </ul>
 </li>
 </ul>
@@ -1468,7 +1478,7 @@ first):
 </p>
 <p>
 You'll be asked how to run it, append the path of the desired
-executable and <a href="http://www.youtube.com/watch?v=YtxEOX3WwcM">rock</a>!
+executable and <a href="http://www.youtube.com/watch?v=1BH7poMtPVU">rock</a>!
 </p>
 </div>
 
@@ -2031,7 +2041,7 @@ site or the manuals for more.
 
 
 <p>
-Org tables <a href="http://www.youtube.com/watch?v=1BH7poMtPVU">rock</a>!  Here's how to start one:
+Org tables <a href="http://www.youtube.com/watch?v=YtxEOX3WwcM">rock</a>!  Here's how to start one:
 </p>
 
 
@@ -2114,19 +2124,195 @@ By the way, I thought editor wars finished when <a href="http://upsilon.cc/~zack
 </div>
 
 <div id="outline-container-7" class="outline-2">
-<h2 id="sec-7"><span class="section-number-2">7</span> Support</h2>
+<h2 id="sec-7"><span class="section-number-2">7</span> Emacs for black belts</h2>
 <div class="outline-text-2" id="text-7">
 
 
-<p>
-The excellent documentation is not enough?!
-</p>
 
 </div>
 
 <div id="outline-container-7-1" class="outline-3">
-<h3 id="sec-7-1"><span class="section-number-3">7.1</span> Andrey</h3>
+<h3 id="sec-7-1"><span class="section-number-3">7.1</span> Keyboard macros</h3>
 <div class="outline-text-3" id="text-7-1">
+
+
+<p>
+Being mainly keyboard driven, Emacs offers one simple yet extremely
+powerful facility for automation - keyboard macros.  The idea is
+capturing multiple series of keystrokes and then automatically
+executing them on demand.  Here's how to start one:
+</p>
+<p>
+<code>C-x (</code>
+</p>
+<p>
+Now do a series of actions that you'd like to automate.  Be careful,
+take your time and try to think of a clean way to achieve the first
+round of what you'd like to do.  When you are ready:
+</p>
+<p>
+<code>C-x )</code>
+</p>
+<p>
+To execute what you've just captured:
+</p>
+<p>
+<code>C-x e</code>
+</p>
+<p>
+To execute it 42 times:
+</p>
+<p>
+<code>C-u 42 C-x e</code>
+</p>
+<p>
+This <code>C-u NUMBER</code> combination known as prefix/universal argument is a
+way to pass additional argument to many commands and most often causes
+them to be executed number of times.
+</p>
+<p>
+Note that you don't have to execute the captured macro immediately.
+It stays available for execution until you define another one.  To
+cancel capture while still recording, do the usual:
+</p>
+<p>
+<code>C-g</code>
+</p>
+<p>
+It will probably take you some practice to get used to recording
+composable series of actions, see <a href="http://emacswiki.org/emacs/KeyboardMacros">here</a> for example.  Once you master
+it, you'll thank me for life.  Imagine the possibilities, jump to some
+e-mail buffer, copy something, switch a shell buffer, write some
+command, paste what you copied and execute, copy last line of the
+result, go back to the prompt, switch to some result buffer, paste
+there and add new line, then go back to the e-mail buffer and move to
+the next line.  Now execute this 100 times.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-7-2" class="outline-3">
+<h3 id="sec-7-2"><span class="section-number-3">7.2</span> Elisp</h3>
+<div class="outline-text-3" id="text-7-2">
+
+
+<blockquote>
+
+<p>I have to tell you that probably of all the languages I've used,
+definitely, Emacs Lisp has been the most fun.
+                &ndash; John Wiegley
+</p>
+</blockquote>
+
+
+<p>
+I wonder if after all this stuff, you have decided for yourself what
+Emacs actually is.  Is it an editor, an integrated development
+environment, an operating system or well, a kitchen sink?  Time has
+come to tell you the truth.  Luke, I'm your&hellip;
+</p>
+<p>
+Emacs at it essence is an interpreter for a <a href="http://en.wikipedia.org/wiki/Lisp_%28programming_language%29">Lisp</a> dialect - Emacs Lisp
+(Elisp).  All the settings and code snippets from above are actually
+Elisp program pieces.  I won't go into details how <a href="http://www.youtube.com/watch?v=HM1Zb3xmvMc">cool</a> Lisp-like
+languages are, <a href="http://www.paulgraham.com/diff.html">there</a> <a href="http://www.paulgraham.com/avg.html">is</a> a <a href="http://www.gigamonkeys.com/book/introduction-why-lisp.html">lot</a> of <a href="http://www.gigamonkeys.com/book/macros-defining-your-own.html">material</a> out <a href="http://www.defmacro.org/ramblings/lisp.html">there</a>.  I won't tell
+you much about Elisp either for the built-in manual is outstanding:
+</p>
+<p>
+<code>C-h i m Elisp</code>
+</p>
+<p>
+However, I will tell you about one of my biggest Aha moments and some
+practical consequences.
+</p>
+
+</div>
+
+<div id="outline-container-7-2-1" class="outline-4">
+<h4 id="sec-7-2-1"><span class="section-number-4">7.2.1</span> Text processing superpowers</h4>
+<div class="outline-text-4" id="text-7-2-1">
+
+
+<p>
+I've come to appreciate that Elisp is the <a href="http://ergoemacs.org/emacs/elisp_text_processing_lang.html">most convenient programming language for text processing</a>.  No joke, it's because Emacs has <span style="text-decoration:underline;">a lot</span>
+of primitives for dealing with text and buffers, after all, one of its
+specialties is text editing, doh.  There is another thing though, I
+told you that each key stroke/sequence invokes some function&hellip;
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-7-2-2" class="outline-4">
+<h4 id="sec-7-2-2"><span class="section-number-4">7.2.2</span> Text processing automation for dummies</h4>
+<div class="outline-text-4" id="text-7-2-2">
+
+
+<p>
+While combining built-in functionality with additional packages and
+especially <a href="#sec-7-1">keyboard macros</a> can get you beyond what most people would
+imagine possible for a human, sometimes you may stumble onto something
+that requires some nastier text processing and probably editing and/or
+generating hundreds of files.  A general recipe how to write such
+programs in Elisp follows.
+</p>
+<ol>
+<li>Do by hand what you'd like to do.  Probably multiple times, till
+   you extract a more or less clean general procedure.
+
+</li>
+<li>Having concrete series of actions, for each of them check what
+   function lies beneath.  This will help:
+
+<p>
+   <code>C-h k</code>
+</p>
+<p>
+   followed by key-sequence will show what command is invoked.
+</p>
+</li>
+<li>(Optional) Jump to the definitions of the above functions and have
+   a look at their code.  Not only will you see how adequate Elisp
+   looks like, but you may also detect some more primitive function
+   used that may fit your bill.
+
+</li>
+<li>Use these functions in order to form your program.
+</li>
+</ol>
+
+
+<p>
+So code literally follows the editing process, ingenious!  Step 3 is
+very educational, though with time you may need it less often.
+</p>
+<p>
+This is a start.  If you become serious practitioner, you'll randomly
+start at step 4 which is basically&hellip;programming.  But you'll
+appreciate the availability of the other steps for true Emacsers never
+cease to learn.  Happy Lisping!
+</p>
+</div>
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-8" class="outline-2">
+<h2 id="sec-8"><span class="section-number-2">8</span> Support</h2>
+<div class="outline-text-2" id="text-8">
+
+
+<p>
+The excellent <a href="#sec-5">documentation</a> is not enough?!
+</p>
+
+</div>
+
+<div id="outline-container-8-1" class="outline-3">
+<h3 id="sec-8-1"><span class="section-number-3">8.1</span> Andrey</h3>
+<div class="outline-text-3" id="text-8-1">
 
 
 <p>
@@ -2137,9 +2323,9 @@ inspiration.
 
 </div>
 
-<div id="outline-container-7-2" class="outline-3">
-<h3 id="sec-7-2"><span class="section-number-3">7.2</span> Internet</h3>
-<div class="outline-text-3" id="text-7-2">
+<div id="outline-container-8-2" class="outline-3">
+<h3 id="sec-8-2"><span class="section-number-3">8.2</span> Internet</h3>
+<div class="outline-text-3" id="text-8-2">
 
 
 <p>
@@ -2166,7 +2352,7 @@ Just google for it, or go to the trash bin of Emacs resources -
 </div>
 
 <div id="postamble">
-<p class="date">Date: 2013-02-24T02:26+0200</p>
+<p class="date">Date: 2013-02-25T02:04+0200</p>
 <p class="author">Author: Andrey Kotlarski</p>
 <p class="creator"><a href="http://orgmode.org">Org</a> version 7.9.2+ with <a href="http://www.gnu.org/software/emacs/">Emacs</a> version 24</p>
 <a href="http://validator.w3.org/check?uri=referer">Validate XHTML 1.0</a>
