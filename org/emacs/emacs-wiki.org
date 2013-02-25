@@ -1219,19 +1219,19 @@ definitely, Emacs Lisp has been the most fun.
 #+END_QUOTE
 
 I wonder if after all this stuff, you have decided for yourself what
-Emacs actually is.  Is it an editor, an integrated development
-environment, an operating system or well, a kitchen sink?  Time has
-come to tell you the truth.  Luke, I'm your...
+Emacs actually is.  Is it an advanced editor, an integrated
+development environment, an operating system or well, a kitchen sink?
+Time has come to tell you the truth.  Luke, I'm your...
 
-Emacs at it essence is an interpreter for a [[http://en.wikipedia.org/wiki/Lisp_%2528programming_language%2529][Lisp]] dialect - Emacs Lisp
+Emacs at its essence is an interpreter for a [[http://en.wikipedia.org/wiki/Lisp_%2528programming_language%2529][Lisp]] dialect - Emacs Lisp
 (Elisp).  All the settings and code snippets from above are actually
 Elisp program pieces.  I won't go into details how [[http://www.youtube.com/watch?v%3DHM1Zb3xmvMc][cool]] Lisp-like
-languages are, [[http://www.paulgraham.com/diff.html][there]] [[http://www.paulgraham.com/avg.html][is]] a [[http://www.gigamonkeys.com/book/introduction-why-lisp.html][lot]] of [[http://www.gigamonkeys.com/book/macros-defining-your-own.html][material]] out [[http://www.defmacro.org/ramblings/lisp.html][there]].  I won't tell
-you much about Elisp either for the built-in manual is outstanding:
+languages are, [[http://www.paulgraham.com/diff.html][there]] [[http://www.paulgraham.com/avg.html][is]] a [[http://www.gigamonkeys.com/book/introduction-why-lisp.html][lot]] of [[http://www.gigamonkeys.com/book/macros-defining-your-own.html][material]] out [[http://www.defmacro.org/ramblings/lisp.html][there]].  I won't tell you
+much about Elisp either for the built-in manual is outstanding:
 
 ~C-h i m Elisp~
 
-However, I will tell you about one of my biggest Aha moments and some
+However, I will tell you about one of my biggest Aha-moments and some
 practical consequences.
 
 *** Text processing superpowers
