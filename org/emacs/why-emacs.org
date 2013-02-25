@@ -1,0 +1,24 @@
+#+SETUPFILE: ~/.emacs.d/org-templates/level-1.org
+#+TITLE: Why Emacs?
+
+"Why, oh, why use an ancient 30 year old program nowadays?"
+
+* When the whole is more than its parts
+
+What's the point of using Emacs for everything - editing whatever
+code, compiling, debugging, version control, mail and news, shell and
+REPL, DB prompts, remote access, document reading and writing,
+planning, chat, even browsing?  For each of those there would be some
+specialised program that does similar or better things and even
+friendlier to users.
+
+- All-Emacs means more or less consistent interface.  No need to learn
+  another specialised program with its specific set of idioms however
+  simplified.
+
+- Integration between different modules is much easier.  Making
+  different programs even communicate would require tons of technical
+  quirks if those programs were not intended for this.  And this is
+  not in the hands of the users.
+
+* When User is king

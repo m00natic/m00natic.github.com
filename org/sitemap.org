@@ -2,6 +2,7 @@
 
    + emacs
      + [[file:emacs/emacs-wiki.org][Andrey's Opinionated Emacs Guide]]
+     + [[file:emacs/why-emacs.org][Why Emacs?]]
      + [[file:emacs/emacs-intro-bg.org][Въведение в Емакс]]
    + presentations
      + [[file:presentations/git.org][Git vs Subversion]]
