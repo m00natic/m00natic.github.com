@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 <meta name="title" content="Andrey's Opinionated Emacs Guide"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2013-02-26T22:01+0200"/>
+<meta name="generated" content="2013-02-26T23:09+0200"/>
 <meta name="author" content="Andrey Kotlarski"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
@@ -216,7 +216,7 @@ for the JavaScript code in this tag.
 <li><a href="#sec-7-1">7.1 Keyboard macros</a></li>
 <li><a href="#sec-7-2">7.2 Elisp</a>
 <ul>
-<li><a href="#sec-7-2-1">7.2.1 Text processing superpowers</a></li>
+<li><a href="#sec-7-2-1">7.2.1 Text superpowers</a></li>
 <li><a href="#sec-7-2-2">7.2.2 Text processing automation for dummies</a></li>
 </ul></li>
 </ul>
@@ -351,13 +351,15 @@ save me from another "Grok Monads in 2<sup>365</sup> easy steps" tutorial!
 <p>
 Modes are sets of specific rules and key-bindings active for some
 buffer.  There is a read-only mode that forbids you editing, there are
-<a href="http://emacswiki.org/emacs/ProgrammingModes">language aware modes</a> for (shell scripts / makefiles / python / java /
-c / <a href="http://en.wikipedia.org/wiki/Scheme_(programming_language)">scheme</a> / <a href="http://clojure.org">clojure</a> / <a href="http://www.haskell.org">haskell</a> / <a href="http://wiki.portal.chalmers.se/agda/pmwiki.php">agda</a> / insert your favourite niche
+<a href="http://emacswiki.org/emacs/ProgrammingModes">language aware modes</a> for shell scripts / makefiles / python / java / c
+/ <a href="http://en.wikipedia.org/wiki/Scheme_(programming_language)">scheme</a> / <a href="http://clojure.org">clojure</a> / <a href="http://www.haskell.org">haskell</a> / <a href="http://wiki.portal.chalmers.se/agda/pmwiki.php">agda</a> / (insert your favourite niche
 language here) that give proper colouring, automatic indentation
 rules, special key-bindings for specific niceties&hellip;  There are modes
 for <a href="http://www.gnus.org/">reading or composing mail</a>, <a href="http://orgmode.org">creating presentations/books</a>, <a href="http://emacswiki.org/emacs/CategoryVersionControl">version control</a>, <a href="http://emacswiki.org/emacs/CategoryShell">shells</a>, <a href="http://emacswiki.org/emacs/CategorySql">DB prompts</a>, <a href="http://emacswiki.org/emacs/CategoryDocumentation">composing/reading documentation</a>,
 <a href="http://www.emacswiki.org/emacs/CategoryCalendar">calendar</a>, <a href="http://www.emacswiki.org/emacs/CategoryCalculators">stack calculator</a>, dictionaries, agendas and organizers,
-spreadsheets, <a href="http://emacs-w3m.namazu.org/">browsing the internetz</a>, <a href="http://emacswiki.org/emacs/Rudel">collaborative editing</a>, <a href="http://www.emacswiki.org/EmacSpeak">audio desktop</a> for visually impaired, <a href="http://emacswiki.org/emacs/ArtistMode">ASCII drawing</a>, <a href="http://www.gnu.org/software/emms/">media collection managers</a> and <a href="http://www.emacswiki.org/emacs/MusicPlayers">players</a>, <a href="http://www.emacswiki.org/emacs/CategoryGames">games</a>, <a href="http://emacswiki.org/emacs/EmacsDoctor">psychotherapist</a>, <a href="http://youtu.be/D1sXuHnf_lo">controlling vibrators</a>&hellip; to name a few.  Oops, overdid it somewhere.
+spreadsheets, <a href="http://emacs-w3m.namazu.org/">browsing the internetz</a>, <a href="http://emacswiki.org/emacs/Rudel">collaborative editing</a>, <a href="http://www.emacswiki.org/EmacSpeak">audio desktop</a> for visually impaired, <a href="http://emacswiki.org/emacs/ArtistMode">ASCII drawing</a>, <a href="http://www.gnu.org/software/emms/">media collection managers</a> and <a href="http://www.emacswiki.org/emacs/MusicPlayers">players</a>, <a href="http://www.emacswiki.org/emacs/CategoryGames">games</a>, <a href="http://emacswiki.org/emacs/EmacsDoctor">psychotherapist</a>,
+<a href="http://youtu.be/D1sXuHnf_lo">controlling vibrators</a>&hellip; to name a
+few.  Oops, overdid it somewhere.
 </p>
 <p>
 To get description of the major mode for the current buffer:
@@ -606,7 +608,7 @@ manager that can be invoked with:
 <code>M-x list-packages</code>
 </p>
 <p>
-To install package from there, position to the line of the desired one
+To install package from there, position on the line of the desired one
 and press &lt;I&gt; (yes, capital).  You can do this several times.  When
 done shopping, press &lt;x&gt;, answer some prompts and you'll soon have
 these extensions in your ~/.emacs.d/elpa directory ready to be used.
@@ -713,15 +715,15 @@ Your last changes are rubbish?  Undo them:
 <code>C-/</code>
 </p>
 <p>
-Then, they were actually not that bad.  Lets redo&hellip; You are in for a
+Then, they were actually not that bad.  Let's redo&hellip; You are in for a
 surprise - there is no redo in Emacs.  <a href="http://www.youtube.com/watch?v=kXEgk1Hdze0">Wat</a>?!  The reason is that the
 undo command is so mighty that it can undo itself (pun intended).
 After you stop a series of undos (by hitting whatever other button),
 you can start again undo-ing and it will eventually undo your previous
-undos, which is roughly equivalent to redo.  This is a very powerful
-mechanism but a brain-twister for novices.  Try out <a href="http://www.emacswiki.org/emacs/UndoTree">Undo Tree</a><sup><a class="footref" name="fnr-.1" href="#fn-.1">1</a></sup>,
-it visualizes the states between series of undos and changes and can
-even allow you travel in time for your edits.
+undos, which is roughly equivalent to redo.  (If you made it through
+the last sentence, require your award.)  This is a very powerful
+mechanism but a brain-twister for novices.  Try out <a href="http://www.emacswiki.org/emacs/UndoTree">Undo Tree</a><sup><a class="footref" name="fnr-.1" href="#fn-.1">1</a></sup>, it visualizes the states between series of undos and
+changes and can even allow you travel in time for your edits.
 </p>
 </div>
 
@@ -1379,8 +1381,9 @@ all available:
 If you happen to use <a href="http://git-scm.com">Git</a>, check out <a href="http://magit.github.com/magit/">Magit</a><sup><a class="footref" name="fnr-.1.7" href="#fn-.1">1</a></sup>.  It's a nice
 interface to some of the most often used Git commands.  My favourite
 feature is the ability to iterate through the diff hunks and
-selectively choose which ones to stage or unstage.  Makes partial file
-commits trivial.
+selectively choose which ones to stage or unstage (works not just for
+hunks but for arbitrary marked region!).  Makes partial file commits
+trivial.
 </p>
 </div>
 </div>
@@ -1492,9 +1495,9 @@ executable and <a href="http://www.youtube.com/watch?v=1BH7poMtPVU">rock</a>!
 <p>
 Recently Emacs is acquiring infrastructure for more unified code
 awareness in the face of the <a href="http://cedet.sourceforge.net/">CEDET</a> utilities.  Here are some
-customizations that give you basic niceties like echoing information
-about object under cursor, colouring local variables instances,
-highlighting current function:
+customizations that give basic niceties like echoing information about
+object under cursor, colouring local variables instances, highlighting
+current function:
 </p>
 
 
@@ -1540,18 +1543,16 @@ setup:
   (ac-config-default)
   (ac-flyspell-workaround)
 
-  (when-library
-   t semantic
-   (<span style="color: #8ac6f2; font-weight: bold;">eval-after-load</span> <span style="color: #95e454;">"semantic"</span>
-     '(setq-default ac-sources
-                    (cons 'ac-source-semantic ac-sources)))))
+  (<span style="color: #8ac6f2; font-weight: bold;">eval-after-load</span> <span style="color: #95e454;">"semantic"</span>
+    '(setq-default ac-sources
+                   (cons 'ac-source-semantic ac-sources))))
 </pre>
 
 
 <p>
 On the pros side, you'll get particularly useful suggestions for
 symbols typed anywhere in the currently opened buffers.  Long
-function/variable names become non issue.
+function/variable names become non-issue.
 </p>
 </div>
 
@@ -1725,9 +1726,9 @@ one (while being in another <code>.emacs-project</code> governed location):
 
 <p>
 Emacs documentation is the most complete and accessible set of
-resources I have ever seen (only second to <a href="http://en.wikipedia.org/wiki/Lisp_machine">Lisp Machines</a> but they are
-20 years in the past and as one may observe, technology is stubbornly
-regressing in this along other aspects since then).
+resources I have ever seen (only second to <a href="http://en.wikipedia.org/wiki/Lisp_machine">Lisp Machines</a>'s <a href="http://en.wikipedia.org/wiki/Genera_%28operating_system%29">Genera operating systems</a> but they are 20 years in the past and as one may
+observe, technology is stubbornly regressing in this along other
+aspects since then).
 </p>
 <p>
 This is the only environment that has enabled me in a day learn a
@@ -1948,13 +1949,17 @@ mode.
 There is another wonderful thing that comes with Emacs known as <a href="http://orgmode.org/">Org mode</a>.  It's often quoted as a prime reason for people starting to use
 Emacs, even former Vimmers.  Here's what's written on their site:
 </p>
-<p>
-"Org mode is for keeping notes, maintaining TODO lists, doing project
+<blockquote>
+
+<p>"Org mode is for keeping notes, maintaining TODO lists, doing project
 planning, and authoring with a fast and effective plain-text system."
 </p>
+</blockquote>
+
+
 <p>
-This wiki entry is all done in Org Mode and then exported to HTML (one
-of many available formats).
+This guide is all done in Org mode and then exported to HTML (one of
+many available formats).
 </p>
 
 </div>
@@ -2182,7 +2187,7 @@ cancel capture while still recording, do the usual:
 It will probably take you some practice to get used to recording
 composable series of actions, see <a href="http://emacswiki.org/emacs/KeyboardMacros">here</a> for example.  Once you master
 it, you'll thank me for life.  Imagine the possibilities, jump to some
-e-mail buffer, copy something, switch a shell buffer, write some
+e-mail buffer, copy something, switch to a shell buffer, write some
 command, paste what you copied and execute, copy last line of the
 result, go back to the prompt, switch to some result buffer, paste
 there and add new line, then go back to the e-mail buffer and move to
@@ -2231,7 +2236,7 @@ really shines in&hellip;
 </div>
 
 <div id="outline-container-7-2-1" class="outline-4">
-<h4 id="sec-7-2-1"><span class="section-number-4">7.2.1</span> Text processing superpowers</h4>
+<h4 id="sec-7-2-1"><span class="section-number-4">7.2.1</span> Text superpowers</h4>
 <div class="outline-text-4" id="text-7-2-1">
 
 
@@ -2273,10 +2278,10 @@ programs in Elisp follows.
    followed by key-sequence will show what command is invoked.
 </p>
 </li>
-<li>(Optional) Jump to the definitions of the above functions and have
-   a look at their code.  Not only will you see how adequate Elisp
-   looks like, but you may also detect some more primitive function
-   used that may fit your bill.
+<li>(Optional) Jump to the definitions of the above commands and have a
+   look at their code.  Not only will you see how adequate Elisp looks
+   like, but you may also detect some more primitive function used
+   that may fit your bill.
 
 </li>
 <li>Use these functions in order to form your program.
@@ -2353,7 +2358,7 @@ Just google for it, or go to the trash bin of Emacs resources -
 </div>
 
 <div id="postamble">
-<p class="date">Date: 2013-02-26T22:01+0200</p>
+<p class="date">Date: 2013-02-26T23:09+0200</p>
 <p class="author">Author: Andrey Kotlarski</p>
 <p class="creator"><a href="http://orgmode.org">Org</a> version 7.9.2+ with <a href="http://www.gnu.org/software/emacs/">Emacs</a> version 24</p>
 <a href="http://validator.w3.org/check?uri=referer">Validate XHTML 1.0</a>

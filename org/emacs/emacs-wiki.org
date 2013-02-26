@@ -72,8 +72,8 @@ save me from another "Grok Monads in 2^365 easy steps" tutorial!
 
 Modes are sets of specific rules and key-bindings active for some
 buffer.  There is a read-only mode that forbids you editing, there are
-[[http://emacswiki.org/emacs/ProgrammingModes][language aware modes]] for (shell scripts / makefiles / python / java /
-c / [[http://en.wikipedia.org/wiki/Scheme_(programming_language)][scheme]] / [[http://clojure.org][clojure]] / [[http://www.haskell.org][haskell]] / [[http://wiki.portal.chalmers.se/agda/pmwiki.php][agda]] / insert your favourite niche
+[[http://emacswiki.org/emacs/ProgrammingModes][language aware modes]] for shell scripts / makefiles / python / java / c
+/ [[http://en.wikipedia.org/wiki/Scheme_(programming_language)][scheme]] / [[http://clojure.org][clojure]] / [[http://www.haskell.org][haskell]] / [[http://wiki.portal.chalmers.se/agda/pmwiki.php][agda]] / (insert your favourite niche
 language here) that give proper colouring, automatic indentation
 rules, special key-bindings for specific niceties...  There are modes
 for [[http://www.gnus.org/][reading or composing mail]], [[http://orgmode.org][creating presentations/books]], [[http://emacswiki.org/emacs/CategoryVersionControl][version
@@ -81,8 +81,9 @@ control]], [[http://emacswiki.org/emacs/CategoryShell][shells]], [[http://emacsw
 [[http://www.emacswiki.org/emacs/CategoryCalendar][calendar]], [[http://www.emacswiki.org/emacs/CategoryCalculators][stack calculator]], dictionaries, agendas and organizers,
 spreadsheets, [[http://emacs-w3m.namazu.org/][browsing the internetz]], [[http://emacswiki.org/emacs/Rudel][collaborative editing]], [[http://www.emacswiki.org/EmacSpeak][audio
 desktop]] for visually impaired, [[http://emacswiki.org/emacs/ArtistMode][ASCII drawing]], [[http://www.gnu.org/software/emms/][media collection
-managers]] and [[http://www.emacswiki.org/emacs/MusicPlayers][players]], [[http://www.emacswiki.org/emacs/CategoryGames][games]], [[http://emacswiki.org/emacs/EmacsDoctor][psychotherapist]], [[http://youtu.be/D1sXuHnf_lo][controlling
-vibrators]]... to name a few.  Oops, overdid it somewhere.
+managers]] and [[http://www.emacswiki.org/emacs/MusicPlayers][players]], [[http://www.emacswiki.org/emacs/CategoryGames][games]], [[http://emacswiki.org/emacs/EmacsDoctor][psychotherapist]],
+[[http://youtu.be/D1sXuHnf_lo][controlling vibrators]]... to name a
+few.  Oops, overdid it somewhere.
 
 To get description of the major mode for the current buffer:
 
@@ -225,7 +226,7 @@ manager that can be invoked with:
 
 ~M-x list-packages~
 
-To install package from there, position to the line of the desired one
+To install package from there, position on the line of the desired one
 and press <I> (yes, capital).  You can do this several times.  When
 done shopping, press <x>, answer some prompts and you'll soon have
 these extensions in your ~/.emacs.d/elpa directory ready to be used.
@@ -288,15 +289,16 @@ Your last changes are rubbish?  Undo them:
 
 ~C-/~
 
-Then, they were actually not that bad.  Lets redo... You are in for a
+Then, they were actually not that bad.  Let's redo... You are in for a
 surprise - there is no redo in Emacs.  [[http://www.youtube.com/watch?v%3DkXEgk1Hdze0][Wat]]?!  The reason is that the
 undo command is so mighty that it can undo itself (pun intended).
 After you stop a series of undos (by hitting whatever other button),
 you can start again undo-ing and it will eventually undo your previous
-undos, which is roughly equivalent to redo.  This is a very powerful
-mechanism but a brain-twister for novices.  Try out [[http://www.emacswiki.org/emacs/UndoTree][Undo Tree]][fn:elpa],
-it visualizes the states between series of undos and changes and can
-even allow you travel in time for your edits.
+undos, which is roughly equivalent to redo.  (If you made it through
+the last sentence, require your award.)  This is a very powerful
+mechanism but a brain-twister for novices.  Try out [[http://www.emacswiki.org/emacs/UndoTree][Undo
+Tree]][fn:elpa], it visualizes the states between series of undos and
+changes and can even allow you travel in time for your edits.
 
 ** Operations on selection/region
 
@@ -706,8 +708,9 @@ all available:
 If you happen to use [[http://git-scm.com][Git]], check out [[http://magit.github.com/magit/][Magit]][fn:elpa].  It's a nice
 interface to some of the most often used Git commands.  My favourite
 feature is the ability to iterate through the diff hunks and
-selectively choose which ones to stage or unstage.  Makes partial file
-commits trivial.
+selectively choose which ones to stage or unstage (works not just for
+hunks but for arbitrary marked region!).  Makes partial file commits
+trivial.
 
 ** Interactive diff and merging
 
@@ -770,9 +773,9 @@ executable and [[http://www.youtube.com/watch?v%3D1BH7poMtPVU][rock]]!
 
 Recently Emacs is acquiring infrastructure for more unified code
 awareness in the face of the [[http://cedet.sourceforge.net/][CEDET]] utilities.  Here are some
-customizations that give you basic niceties like echoing information
-about object under cursor, colouring local variables instances,
-highlighting current function:
+customizations that give basic niceties like echoing information about
+object under cursor, colouring local variables instances, highlighting
+current function:
 
 #+BEGIN_SRC emacs-lisp
 (eval-after-load "semantic"
@@ -803,16 +806,14 @@ setup:
   (ac-config-default)
   (ac-flyspell-workaround)
 
-  (when-library
-   t semantic
-   (eval-after-load "semantic"
-     '(setq-default ac-sources
-		    (cons 'ac-source-semantic ac-sources)))))
+  (eval-after-load "semantic"
+    '(setq-default ac-sources
+                   (cons 'ac-source-semantic ac-sources))))
 #+END_SRC
 
 On the pros side, you'll get particularly useful suggestions for
 symbols typed anywhere in the currently opened buffers.  Long
-function/variable names become non issue.
+function/variable names become non-issue.
 
 ** General coding IDE
 
@@ -927,9 +928,10 @@ one (while being in another ~.emacs-project~ governed location):
 * Documentation
 
 Emacs documentation is the most complete and accessible set of
-resources I have ever seen (only second to [[http://en.wikipedia.org/wiki/Lisp_machine][Lisp Machines]] but they are
-20 years in the past and as one may observe, technology is stubbornly
-regressing in this along other aspects since then).
+resources I have ever seen (only second to [[http://en.wikipedia.org/wiki/Lisp_machine][Lisp Machines]]'s [[http://en.wikipedia.org/wiki/Genera_%2528operating_system%2529][Genera
+operating systems]] but they are 20 years in the past and as one may
+observe, technology is stubbornly regressing in this along other
+aspects since then).
 
 This is the only environment that has enabled me in a day learn a
 language and easily add useful functionality without internet access.
@@ -1051,11 +1053,13 @@ There is another wonderful thing that comes with Emacs known as [[http://orgmode
 mode]].  It's often quoted as a prime reason for people starting to use
 Emacs, even former Vimmers.  Here's what's written on their site:
 
+#+BEGIN_QUOTE
 "Org mode is for keeping notes, maintaining TODO lists, doing project
 planning, and authoring with a fast and effective plain-text system."
+#+END_QUOTE
 
-This wiki entry is all done in Org Mode and then exported to HTML (one
-of many available formats).
+This guide is all done in Org mode and then exported to HTML (one of
+many available formats).
 
 *** Basic usage
 
@@ -1204,7 +1208,7 @@ cancel capture while still recording, do the usual:
 It will probably take you some practice to get used to recording
 composable series of actions, see [[http://emacswiki.org/emacs/KeyboardMacros][here]] for example.  Once you master
 it, you'll thank me for life.  Imagine the possibilities, jump to some
-e-mail buffer, copy something, switch a shell buffer, write some
+e-mail buffer, copy something, switch to a shell buffer, write some
 command, paste what you copied and execute, copy last line of the
 result, go back to the prompt, switch to some result buffer, paste
 there and add new line, then go back to the e-mail buffer and move to
@@ -1235,7 +1239,7 @@ However, I will tell you about one of my biggest aha-moments and some
 practical consequences.  While Elisp is quite an adequate lisp, it
 really shines in...
 
-*** Text processing superpowers
+*** Text superpowers
 
 I've come to appreciate that Elisp is the [[http://ergoemacs.org/emacs/elisp_text_processing_lang.html][best programming language
 for text processing]].  No joke, it's because Emacs has _a lot_ of
@@ -1262,10 +1266,10 @@ programs in Elisp follows.
 
    followed by key-sequence will show what command is invoked.
 
-3. (Optional) Jump to the definitions of the above functions and have
-   a look at their code.  Not only will you see how adequate Elisp
-   looks like, but you may also detect some more primitive function
-   used that may fit your bill.
+3. (Optional) Jump to the definitions of the above commands and have a
+   look at their code.  Not only will you see how adequate Elisp looks
+   like, but you may also detect some more primitive function used
+   that may fit your bill.
 
 4. Use these functions in order to form your program.
 
