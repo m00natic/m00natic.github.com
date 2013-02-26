@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 <meta name="title" content="Andrey's Opinionated Emacs Guide"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2013-02-25T02:13+0200"/>
+<meta name="generated" content="2013-02-26T22:01+0200"/>
 <meta name="author" content="Andrey Kotlarski"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
@@ -491,7 +491,7 @@ prefer to start it once and reuse this single instance for many tasks.
 So&hellip;
 </p>
 <p>
-Forget religious fantasies, run Emacs as daemon and connect to this
+Forget religious prejudices, run Emacs as daemon and connect to this
 hell creature in graphics mode or from terminal or&hellip;both&hellip;several
 times.  Here's how:
 </p>
@@ -833,13 +833,12 @@ Why reside to primitive shell &amp; ssh to peek/edit a file on some remote
 server?  You can do it directly from Emacs:
 </p>
 <p>
-<code>C-x C-f /ssh:akotlarski@gn1:/ezsroot/current RET</code>
+<code>C-x C-f /ssh:andrey@some-server:/ezsroot/current RET</code>
 (enter password when/if prompted)
 </p>
 <p>
-Local servers here have some fancy colourful prompts that get in the
-way of the default settings though.  Don't cry yet, I have a fix.
-Paste this in your init.el:
+Some servers may have fancy colourful prompts that get in the way of
+the default settings though.  Here's something that may work for you:
 </p>
 
 
@@ -953,16 +952,17 @@ Create a file ~/.authinfo.gpg and paste there something like:
 
 
 <pre class="src src-sh">machine localhost port sudo login root password very-very-secret
-machine gridnode02 port ssh login akotlarski password very-secret
+machine test-server port ssh login andrey password very-secret
 </pre>
 
 
 <p>
 Save this file (entering password for encryption).  Now, when you
-attempt to ssh (to gn2) or sudo directly from Emacs as explained
-<a href="#sec-2-11">above</a>, you'll be asked for the <code>.authinfo.gpg</code> password once and from
-there on (for this Emacs session), the passwords listed there will be
-automatically used when you try to access the respective resources.
+attempt to ssh (to test-server) or sudo directly from Emacs as
+explained <a href="#sec-2-11">above</a>, you'll be asked for the <code>.authinfo.gpg</code> password once
+and from there on (for this Emacs session), the passwords listed there
+will be automatically used when you try to access the respective
+resources.
 </p>
 </div>
 
@@ -1008,8 +1008,8 @@ mail accounts?  authinfo(.gpg) to the rescue again!
 
 
 
-<pre class="src src-sh">machine vayant port 993 login akotlarski password very-very-secret
-machine mail.vayant.com port 587 login akotlarski password very-very-secret
+<pre class="src src-sh">machine gmail port 993 login andrey password very-very-secret
+machine smtp.gmail.com port 587 login andrey password very-very-secret
 </pre>
 
 
@@ -2186,7 +2186,7 @@ e-mail buffer, copy something, switch a shell buffer, write some
 command, paste what you copied and execute, copy last line of the
 result, go back to the prompt, switch to some result buffer, paste
 there and add new line, then go back to the e-mail buffer and move to
-the next line.  Now execute this 100 times.
+the next line.  Now execute this automatically 100 times.
 </p>
 </div>
 
@@ -2223,8 +2223,9 @@ much about Elisp either for the built-in manual is outstanding:
 <code>C-h i m Elisp</code>
 </p>
 <p>
-However, I will tell you about one of my biggest Aha-moments and some
-practical consequences.
+However, I will tell you about one of my biggest aha-moments and some
+practical consequences.  While Elisp is quite an adequate lisp, it
+really shines in&hellip;
 </p>
 
 </div>
@@ -2235,8 +2236,8 @@ practical consequences.
 
 
 <p>
-I've come to appreciate that Elisp is the <a href="http://ergoemacs.org/emacs/elisp_text_processing_lang.html">most convenient programming language for text processing</a>.  No joke, it's because Emacs has <span style="text-decoration:underline;">a lot</span>
-of primitives for dealing with text and buffers, after all, one of its
+I've come to appreciate that Elisp is the <a href="http://ergoemacs.org/emacs/elisp_text_processing_lang.html">best programming language for text processing</a>.  No joke, it's because Emacs has <span style="text-decoration:underline;">a lot</span> of
+primitives for dealing with text and buffers, after all, one of its
 specialties is text editing, doh.  There is another thing though, I
 told you that each key stroke/sequence invokes some function&hellip;
 </p>
@@ -2291,7 +2292,7 @@ very educational, though with time you may need it less often.
 This is a start.  If you become serious practitioner, you'll randomly
 start at step 4 which is basically&hellip;programming.  But you'll
 appreciate the availability of the other steps for true Emacsers never
-cease to learn.  Happy Lisping!
+cease to learn.  Happy lisping!
 </p>
 </div>
 </div>
@@ -2352,7 +2353,7 @@ Just google for it, or go to the trash bin of Emacs resources -
 </div>
 
 <div id="postamble">
-<p class="date">Date: 2013-02-25T02:13+0200</p>
+<p class="date">Date: 2013-02-26T22:01+0200</p>
 <p class="author">Author: Andrey Kotlarski</p>
 <p class="creator"><a href="http://orgmode.org">Org</a> version 7.9.2+ with <a href="http://www.gnu.org/software/emacs/">Emacs</a> version 24</p>
 <a href="http://validator.w3.org/check?uri=referer">Validate XHTML 1.0</a>
