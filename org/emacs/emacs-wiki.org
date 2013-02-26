@@ -156,7 +156,7 @@ kill it.  However, Emacs is so much more useful that many emacsers
 prefer to start it once and reuse this single instance for many tasks.
 So...
 
-Forget religious fantasies, run Emacs as daemon and connect to this
+Forget religious prejudices, run Emacs as daemon and connect to this
 hell creature in graphics mode or from terminal or...both...several
 times.  Here's how:
 
@@ -356,12 +356,11 @@ files that have been opened in previous sessions.
 Why reside to primitive shell & ssh to peek/edit a file on some remote
 server?  You can do it directly from Emacs:
 
-~C-x C-f /ssh:akotlarski@gn1:/ezsroot/current RET~
+~C-x C-f /ssh:andrey@some-server:/ezsroot/current RET~
 (enter password when/if prompted)
 
-Local servers here have some fancy colourful prompts that get in the
-way of the default settings though.  Don't cry yet, I have a fix.
-Paste this in your init.el:
+Some servers may have fancy colourful prompts that get in the way of
+the default settings though.  Here's something that may work for you:
 
 #+BEGIN_SRC emacs-lisp
   (custom-set-variables
@@ -431,14 +430,15 @@ Create a file ~/.authinfo.gpg and paste there something like:
 
 #+BEGIN_SRC sh
 machine localhost port sudo login root password very-very-secret
-machine gridnode02 port ssh login akotlarski password very-secret
+machine test-server port ssh login andrey password very-secret
 #+END_SRC
 
 Save this file (entering password for encryption).  Now, when you
-attempt to ssh (to gn2) or sudo directly from Emacs as explained
-[[Remote%20network%20and%20sudo%20access][above]], you'll be asked for the ~.authinfo.gpg~ password once and from
-there on (for this Emacs session), the passwords listed there will be
-automatically used when you try to access the respective resources.
+attempt to ssh (to test-server) or sudo directly from Emacs as
+explained [[Remote%20network%20and%20sudo%20access][above]], you'll be asked for the ~.authinfo.gpg~ password once
+and from there on (for this Emacs session), the passwords listed there
+will be automatically used when you try to access the respective
+resources.
 
 ** Gnus for mail and news
 
@@ -470,8 +470,8 @@ Wouldn't want to type passwords every now and then when dealing with
 mail accounts?  authinfo(.gpg) to the rescue again!
 
 #+BEGIN_SRC sh
-machine vayant port 993 login akotlarski password very-very-secret
-machine mail.vayant.com port 587 login akotlarski password very-very-secret
+machine gmail port 993 login andrey password very-very-secret
+machine smtp.gmail.com port 587 login andrey password very-very-secret
 #+END_SRC
 
 ** Shell, terminal, console, whatever you call it
@@ -1208,7 +1208,7 @@ e-mail buffer, copy something, switch a shell buffer, write some
 command, paste what you copied and execute, copy last line of the
 result, go back to the prompt, switch to some result buffer, paste
 there and add new line, then go back to the e-mail buffer and move to
-the next line.  Now execute this 100 times.
+the next line.  Now execute this automatically 100 times.
 
 ** Elisp
 
@@ -1231,14 +1231,15 @@ much about Elisp either for the built-in manual is outstanding:
 
 ~C-h i m Elisp~
 
-However, I will tell you about one of my biggest Aha-moments and some
-practical consequences.
+However, I will tell you about one of my biggest aha-moments and some
+practical consequences.  While Elisp is quite an adequate lisp, it
+really shines in...
 
 *** Text processing superpowers
 
-I've come to appreciate that Elisp is the [[http://ergoemacs.org/emacs/elisp_text_processing_lang.html][most convenient programming
-language for text processing]].  No joke, it's because Emacs has _a lot_
-of primitives for dealing with text and buffers, after all, one of its
+I've come to appreciate that Elisp is the [[http://ergoemacs.org/emacs/elisp_text_processing_lang.html][best programming language
+for text processing]].  No joke, it's because Emacs has _a lot_ of
+primitives for dealing with text and buffers, after all, one of its
 specialties is text editing, doh.  There is another thing though, I
 told you that each key stroke/sequence invokes some function...
 
@@ -1274,7 +1275,7 @@ very educational, though with time you may need it less often.
 This is a start.  If you become serious practitioner, you'll randomly
 start at step 4 which is basically...programming.  But you'll
 appreciate the availability of the other steps for true Emacsers never
-cease to learn.  Happy Lisping!
+cease to learn.  Happy lisping!
 
 * Support
 
