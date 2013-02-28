@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 <meta name="title" content="Andrey's Opinionated Emacs Guide"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2013-02-26T23:09+0200"/>
+<meta name="generated" content="2013-02-28T20:47+0200"/>
 <meta name="author" content="Andrey Kotlarski"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
@@ -66,7 +66,7 @@
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012  Free Software Foundation, Inc.
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -221,10 +221,9 @@ for the JavaScript code in this tag.
 </ul></li>
 </ul>
 </li>
-<li><a href="#sec-8">8 Support</a>
+<li><a href="#sec-8">8 Where to go next?</a>
 <ul>
-<li><a href="#sec-8-1">8.1 Andrey</a></li>
-<li><a href="#sec-8-2">8.2 Internet</a></li>
+<li><a href="#sec-8-1">8.1 Random resources</a></li>
 </ul>
 </li>
 </ul>
@@ -355,11 +354,12 @@ buffer.  There is a read-only mode that forbids you editing, there are
 / <a href="http://en.wikipedia.org/wiki/Scheme_(programming_language)">scheme</a> / <a href="http://clojure.org">clojure</a> / <a href="http://www.haskell.org">haskell</a> / <a href="http://wiki.portal.chalmers.se/agda/pmwiki.php">agda</a> / (insert your favourite niche
 language here) that give proper colouring, automatic indentation
 rules, special key-bindings for specific niceties&hellip;  There are modes
-for <a href="http://www.gnus.org/">reading or composing mail</a>, <a href="http://orgmode.org">creating presentations/books</a>, <a href="http://emacswiki.org/emacs/CategoryVersionControl">version control</a>, <a href="http://emacswiki.org/emacs/CategoryShell">shells</a>, <a href="http://emacswiki.org/emacs/CategorySql">DB prompts</a>, <a href="http://emacswiki.org/emacs/CategoryDocumentation">composing/reading documentation</a>,
-<a href="http://www.emacswiki.org/emacs/CategoryCalendar">calendar</a>, <a href="http://www.emacswiki.org/emacs/CategoryCalculators">stack calculator</a>, dictionaries, agendas and organizers,
-spreadsheets, <a href="http://emacs-w3m.namazu.org/">browsing the internetz</a>, <a href="http://emacswiki.org/emacs/Rudel">collaborative editing</a>, <a href="http://www.emacswiki.org/EmacSpeak">audio desktop</a> for visually impaired, <a href="http://emacswiki.org/emacs/ArtistMode">ASCII drawing</a>, <a href="http://www.gnu.org/software/emms/">media collection managers</a> and <a href="http://www.emacswiki.org/emacs/MusicPlayers">players</a>, <a href="http://www.emacswiki.org/emacs/CategoryGames">games</a>, <a href="http://emacswiki.org/emacs/EmacsDoctor">psychotherapist</a>,
-<a href="http://youtu.be/D1sXuHnf_lo">controlling vibrators</a>&hellip; to name a
-few.  Oops, overdid it somewhere.
+that grow in packages for <a href="http://www.gnus.org/">reading or composing mail</a>, <a href="http://orgmode.org">creating presentations/books</a>, <a href="http://emacswiki.org/emacs/CategoryVersionControl">version control</a>, <a href="http://emacswiki.org/emacs/CategoryShell">shells</a>, <a href="http://emacswiki.org/emacs/CategorySql">DB prompts</a>,
+<a href="http://emacswiki.org/emacs/CategoryDocumentation">composing/reading documentation</a>, <a href="http://www.emacswiki.org/emacs/CategoryCalendar">calendar</a>, <a href="http://www.emacswiki.org/emacs/CategoryCalculators">stack calculator</a>,
+dictionaries, agendas and organizers, spreadsheets, <a href="http://emacs-w3m.namazu.org/">browsing the internetz</a>, <a href="http://emacswiki.org/emacs/Rudel">collaborative editing</a>, <a href="http://www.emacswiki.org/EmacSpeak">audio desktop</a> for visually impaired,
+<a href="http://emacswiki.org/emacs/ArtistMode">ASCII drawing</a>, <a href="http://www.gnu.org/software/emms/">media collection managers</a> and <a href="http://www.emacswiki.org/emacs/MusicPlayers">players</a>, <a href="http://www.emacswiki.org/emacs/CategoryGames">games</a>,
+<a href="http://emacswiki.org/emacs/EmacsDoctor">psychotherapist</a>, <a href="http://youtu.be/D1sXuHnf_lo">controlling vibrators</a>&hellip; to name a few.  Oops,
+overdid it somewhere.
 </p>
 <p>
 To get description of the major mode for the current buffer:
@@ -527,8 +527,8 @@ and/or in terminal:
 <p>
 The <code>--daemon</code> option is certainly available under GNU/Linux and BSDs.
 It might even work for BSD rip off like MacOS but not under Windows.
-Nah.  A true programmer would "use" the latter two only under death
-threat or starvation anyway.
+Nah.  A trve programmer should resort to the latter two only under
+death threat or starvation anyway.
 </p>
 </div>
 
@@ -720,9 +720,8 @@ surprise - there is no redo in Emacs.  <a href="http://www.youtube.com/watch?v=k
 undo command is so mighty that it can undo itself (pun intended).
 After you stop a series of undos (by hitting whatever other button),
 you can start again undo-ing and it will eventually undo your previous
-undos, which is roughly equivalent to redo.  (If you made it through
-the last sentence, require your award.)  This is a very powerful
-mechanism but a brain-twister for novices.  Try out <a href="http://www.emacswiki.org/emacs/UndoTree">Undo Tree</a><sup><a class="footref" name="fnr-.1" href="#fn-.1">1</a></sup>, it visualizes the states between series of undos and
+undos, which is roughly equivalent to redo<sup><a class="footref" name="fnr-.1" href="#fn-.1">1</a></sup>.  This is a very
+powerful mechanism but a brain-twister for novices.  Try out <a href="http://www.emacswiki.org/emacs/UndoTree">Undo Tree</a><sup><a class="footref" name="fnr-.2" href="#fn-.2">2</a></sup>, it visualizes the states between series of undos and
 changes and can even allow you travel in time for your edits.
 </p>
 </div>
@@ -762,7 +761,7 @@ is an overview of what more is supported.
 
 
 <p>
-<a href="http://emacswiki.org/emacs/DiredMode">Dired</a><sup><a class="footref" name="fnr-.2" href="#fn-.2">2</a></sup> is the most capable file manager I've encountered.  To
+<a href="http://emacswiki.org/emacs/DiredMode">Dired</a><sup><a class="footref" name="fnr-.3" href="#fn-.3">3</a></sup> is the most capable file manager I've encountered.  To
 start it:
 </p>
 <p>
@@ -868,7 +867,7 @@ started by your user is just enough:
 (enter password when/if prompted for it)
 </p>
 <p>
-<a href="http://emacswiki.org/emacs/TrampMode">TRAMP</a><sup><a class="footref" name="fnr-.2.2" href="#fn-.2">2</a></sup> is a killer.  It supports plethora of protocols.  For more
+<a href="http://emacswiki.org/emacs/TrampMode">TRAMP</a><sup><a class="footref" name="fnr-.3.2" href="#fn-.3">3</a></sup> is a killer.  It supports plethora of protocols.  For more
 information invoke/type:
 </p>
 <p>
@@ -985,7 +984,7 @@ resources.
 
 <p>
 There are a lot of ways to manage mail within Emacs.  I use the
-mail/news kitchen sink <a href="http://www.gnus.org/">Gnus</a><sup><a class="footref" name="fnr-.2.3" href="#fn-.2">2</a></sup>.  Here's its glory documented (it
+mail/news kitchen sink <a href="http://www.gnus.org/">Gnus</a><sup><a class="footref" name="fnr-.3.3" href="#fn-.3">3</a></sup>.  Here's its glory documented (it
 would be too much to give opinionated guide):
 </p>
 <p>
@@ -999,9 +998,9 @@ There are heuristics to guess default mail sender/server (yeah, I
 frequently send spam from both), workarounds for the flaky Vayant
 Exchange server, integration with the <a href="http://en.wikipedia.org/wiki/Fortune_%28Unix%29">fortune</a>(-mod) program (where all
 stupid quotes on the back of my mails come from), <a href="http://www.emacswiki.org/emacs/FlySpell">automatic spell-checking</a> and <a href="http://emacswiki.org/emacs/LineWrap">line wrapping</a> (don't you hate when mail text goes
-out of your wide screen?), integration with <a href="http://bbdb.sourceforge.net/">The Insidious Big Brother Database</a> (BBDB)<sup><a class="footref" name="fnr-.1.2" href="#fn-.1">1</a></sup> for managing contacts, automatic checking for
+out of your wide screen?), integration with <a href="http://bbdb.sourceforge.net/">The Insidious Big Brother Database</a> (BBDB)<sup><a class="footref" name="fnr-.2.2" href="#fn-.2">2</a></sup> for managing contacts, automatic checking for
 new messages for selected (mail)boxes and notifications.  For
-notifications I'm using notify.el<sup><a class="footref" name="fnr-.1.3" href="#fn-.1">1</a></sup>.
+notifications I'm using notify.el<sup><a class="footref" name="fnr-.2.3" href="#fn-.2">2</a></sup>.
 </p>
 <p>
 Wouldn't want to type passwords every now and then when dealing with
@@ -1075,7 +1074,7 @@ other ported stuff.
 </p>
 <p>
 To make Emacs aware of the cygwin environment and prefer it instead of
-the crippled windows eco-system, install cygwin-mount<sup><a class="footref" name="fnr-.1.4" href="#fn-.1">1</a></sup> and then:
+the crippled windows eco-system, install cygwin-mount<sup><a class="footref" name="fnr-.2.4" href="#fn-.2">2</a></sup> and then:
 </p>
 
 
@@ -1155,7 +1154,7 @@ character, "quote" it with <code>C-q</code>.
 
 <p>
 Jumping to result locations is not enough for you?  You, spoiled brat!
-Try wgrep<sup><a class="footref" name="fnr-.1.5" href="#fn-.1">1</a></sup>:
+Try wgrep<sup><a class="footref" name="fnr-.2.5" href="#fn-.2">2</a></sup>:
 </p>
 <p>
 <code>M-x wgrep-change-to-wgrep-mode</code>
@@ -1172,7 +1171,7 @@ skipping file/line information).  After you're done:
 Now all files that have had their lines edited are opened with your
 changes there waiting to be saved.  If it happens to be a lot of files
 and you're confident that you want all these changes saved use
-IBuffer<sup><a class="footref" name="fnr-.2.4" href="#fn-.2">2</a></sup>:
+IBuffer<sup><a class="footref" name="fnr-.3.4" href="#fn-.3">3</a></sup>:
 </p>
 <p>
 <code>M-x ibuffer</code>
@@ -1192,7 +1191,7 @@ and all buffers with unsaved changes are marked.  Now press capital
 <code>C-x C-b</code>
 </p>
 <p>
-instead the default `list-buffers'<sup><a class="footref" name="fnr-.2.5" href="#fn-.2">2</a></sup>.
+instead the default `list-buffers'<sup><a class="footref" name="fnr-.3.5" href="#fn-.3">3</a></sup>.
 </p>
 </div>
 
@@ -1256,7 +1255,7 @@ finished.  Within it, you can just press <code>&lt;g&gt;</code> to recompile.
 
 
 <p>
-Well, get <a href="http://emacswiki.org/emacs/FindFileInProject">find-file-in-project</a><sup><a class="footref" name="fnr-.1.6" href="#fn-.1">1</a></sup> and then bind the same-named
+Well, get <a href="http://emacswiki.org/emacs/FindFileInProject">find-file-in-project</a><sup><a class="footref" name="fnr-.2.6" href="#fn-.2">2</a></sup> and then bind the same-named
 command to a key like:
 </p>
 
@@ -1303,7 +1302,7 @@ indexing and maximum amount of files offered is set to 4096.
 <p>
 I know this is nothing new for you, IDE cry-babies.  But can we
 generalize a bit?  I like this recursive locating of files, why do it
-just for projects?  Lets get hands dirty then:
+just for projects?  Let's get hands dirty then:
 </p>
 
 
@@ -1378,7 +1377,7 @@ all available:
 
 
 <p>
-If you happen to use <a href="http://git-scm.com">Git</a>, check out <a href="http://magit.github.com/magit/">Magit</a><sup><a class="footref" name="fnr-.1.7" href="#fn-.1">1</a></sup>.  It's a nice
+If you happen to use <a href="http://git-scm.com">Git</a>, check out <a href="http://magit.github.com/magit/">Magit</a><sup><a class="footref" name="fnr-.2.7" href="#fn-.2">2</a></sup>.  It's a nice
 interface to some of the most often used Git commands.  My favourite
 feature is the ability to iterate through the diff hunks and
 selectively choose which ones to stage or unstage (works not just for
@@ -1532,7 +1531,7 @@ To activate:
 
 <p>
 There are many packages that deal with code (and not only) completion,
-but none are particularly good at C++.  I use <a href="http://cx4a.org/software/auto-complete/">auto-complete</a><sup><a class="footref" name="fnr-.1.8" href="#fn-.1">1</a></sup>
+but none are particularly good at C++.  I use <a href="http://cx4a.org/software/auto-complete/">auto-complete</a><sup><a class="footref" name="fnr-.2.8" href="#fn-.2">2</a></sup>
 which is for completion of anything, not just code.  Here is some
 setup:
 </p>
@@ -1565,7 +1564,7 @@ function/variable names become non-issue.
 
 <p>
 I'm sure your grannies have used <a href="http://en.wikipedia.org/wiki/Integrated_development_environment">IDE</a>s all their life.  There is a
-package called <a href="http://emacswiki.org/emacs/EmacsCodeBrowser">Emacs Code Browser</a> (ECB)<sup><a class="footref" name="fnr-.1.9" href="#fn-.1">1</a></sup> and may give you a
+package called <a href="http://emacswiki.org/emacs/EmacsCodeBrowser">Emacs Code Browser</a> (ECB)<sup><a class="footref" name="fnr-.2.9" href="#fn-.2">2</a></sup> and may give you a
 breeze of life-supporting IDE familiarity.  Furthermore, imagine how
 cool it is to have IDE working in terminal&hellip;yes, it does, just like
 rest of Emacs.  Here are some settings for it (some of them are
@@ -1631,7 +1630,7 @@ that the cursor is currently placed in.
 
 
 <p>
-Emacs comes with a separate binary <a href="http://www.emacswiki.org/emacs/EmacsBrowse">ebrowse</a><sup><a class="footref" name="fnr-.2.6" href="#fn-.2">2</a></sup> that can
+Emacs comes with a separate binary <a href="http://www.emacswiki.org/emacs/EmacsBrowse">ebrowse</a><sup><a class="footref" name="fnr-.3.6" href="#fn-.3">3</a></sup> that can
 annotate multiple C/C++ source files and create some form of DB which
 can be used for getting different kind of information for the indexed
 sources.  Here's a little wrapper shell script that should be placed
@@ -1745,7 +1744,7 @@ good.
 
 
 <p>
-To invoke the info reader<sup><a class="footref" name="fnr-.2.7" href="#fn-.2">2</a></sup>:
+To invoke the info reader<sup><a class="footref" name="fnr-.3.7" href="#fn-.3">3</a></sup>:
 </p>
 <p>
 <code>C-h i</code>
@@ -1810,7 +1809,7 @@ docstring, for example:
 
 
 
-<pre class="src src-emacs-lisp">(<span style="color: #8ac6f2; font-weight: bold;">defmacro</span> <span style="color: #cae682;">define-keys</span> (mode <span style="color: #92a65e; font-weight: bold;">&amp;rest</span> keys)
+<pre class="src src-emacs-lisp">(<span style="color: #8ac6f2; font-weight: bold;">defmacro</span> <span style="color: #cae682;">define-keys</span> (mode &amp;rest keys)
   <span style="color: #95e454;">"Define cascade of keys for a MODE.</span>
 <span style="color: #95e454;">KEYS is alternating key-value list."</span>
   `(<span style="color: #8ac6f2; font-weight: bold;">progn</span> ,@(<span style="color: #8ac6f2; font-weight: bold;">let</span> ((res nil))
@@ -2117,7 +2116,7 @@ Can Vim emulate Emacs?  Forget it!  But the other way works.  There
 are many packages that give some sort of <a href="http://www.emacswiki.org/emacs/CategoryEmulation">Vim emulation</a>.  If you are
 such an insert/escape addict but still want all the power of symbolic
 universe, you might try one of them.  The current poster child is
-<a href="http://emacswiki.org/emacs/Evil">Evil</a><sup><a class="footref" name="fnr-.1.10" href="#fn-.1">1</a></sup> and seems praised as the most potent emulation not just in
+<a href="http://emacswiki.org/emacs/Evil">Evil</a><sup><a class="footref" name="fnr-.2.10" href="#fn-.2">2</a></sup> and seems praised as the most potent emulation not just in
 La la land.
 </p>
 <p>
@@ -2214,23 +2213,24 @@ definitely, Emacs Lisp has been the most fun.
 <p>
 I wonder if after all this stuff, you have decided for yourself what
 Emacs actually is.  Is it an advanced editor, an integrated
-development environment, an operating system or well, a kitchen sink?
-Time has come to tell you the truth.  Luke, I'm your&hellip;
+development environment, an operating system, a kitchen sink or maybe
+a Death Star?  Time has come to tell you the truth.  Luke, I'm your&hellip;
 </p>
 <p>
 Emacs at its essence is an interpreter for a <a href="http://en.wikipedia.org/wiki/Lisp_%28programming_language%29">Lisp</a> dialect - Emacs Lisp
-(Elisp).  All the settings and code snippets from above are actually
-Elisp program pieces.  I won't go into details how <a href="http://www.youtube.com/watch?v=HM1Zb3xmvMc">cool</a> Lisp-like
-languages are, <a href="http://www.paulgraham.com/diff.html">there</a> <a href="http://www.paulgraham.com/avg.html">is</a> a <a href="http://www.gigamonkeys.com/book/introduction-why-lisp.html">lot</a> of <a href="http://www.gigamonkeys.com/book/macros-defining-your-own.html">material</a> out <a href="http://www.defmacro.org/ramblings/lisp.html">there</a>.  I won't tell you
-much about Elisp either for the built-in manual is outstanding:
+(Elisp).  All magic interactivity is a byproduct of this.  All
+parenthesized settings and code snippets from above are actually Elisp
+program pieces.  I won't go into details how <a href="http://www.youtube.com/watch?v=HM1Zb3xmvMc">cool</a> Lisp-like languages
+are, <a href="http://www.paulgraham.com/diff.html">there</a> <a href="http://www.paulgraham.com/avg.html">is</a> a <a href="http://www.gigamonkeys.com/book/introduction-why-lisp.html">lot</a> of <a href="http://www.gigamonkeys.com/book/macros-defining-your-own.html">material</a> out <a href="http://www.defmacro.org/ramblings/lisp.html">there</a>.  I won't tell you much
+about Elisp either for the built-in manual is outstanding:
 </p>
 <p>
 <code>C-h i m Elisp</code>
 </p>
 <p>
 However, I will tell you about one of my biggest aha-moments and some
-practical consequences.  While Elisp is quite an adequate lisp, it
-really shines in&hellip;
+practical consequences.  While Elisp is becoming quite an adequate
+lisp<sup><a class="footref" name="fnr-.4" href="#fn-.4">4</a></sup>, it really shines at&hellip;
 </p>
 
 </div>
@@ -2306,46 +2306,60 @@ cease to learn.  Happy lisping!
 </div>
 
 <div id="outline-container-8" class="outline-2">
-<h2 id="sec-8"><span class="section-number-2">8</span> Support</h2>
+<h2 id="sec-8"><span class="section-number-2">8</span> Where to go next?</h2>
 <div class="outline-text-2" id="text-8">
 
 
 <p>
-The excellent <a href="#sec-5">documentation</a> is not enough?!
+Emacs is what you make of it.  I don't know of other environment as
+malleable as it is.  Play with it, make it comfortable.  It's defaults
+are not set in stones, make them powerful for your tasks.  Unlike most
+other tools, learning Emacs<sup><a class="footref" name="fnr-.5" href="#fn-.5">5</a></sup> can pay off spectacularly,
+especially in terms of productivity.  As with most other quality
+things in life, if you persist, it will deliver.
 </p>
 
 </div>
 
 <div id="outline-container-8-1" class="outline-3">
-<h3 id="sec-8-1"><span class="section-number-3">8.1</span> Andrey</h3>
+<h3 id="sec-8-1"><span class="section-number-3">8.1</span> Random resources</h3>
 <div class="outline-text-3" id="text-8-1">
 
 
 <p>
-You can always peek at <a href="https://github.com/m00natic/dot-emacs/">my personal settings</a> as a source of mastery and
-inspiration.
+The trash bin of Emacs resources - <a href="http://www.emacswiki.org/">EmacsWiki</a>.
 </p>
-</div>
-
-</div>
-
-<div id="outline-container-8-2" class="outline-3">
-<h3 id="sec-8-2"><span class="section-number-3">8.2</span> Internet</h3>
-<div class="outline-text-3" id="text-8-2">
-
-
 <p>
-Just google for it, or go to the trash bin of Emacs resources -
-<a href="http://www.emacswiki.org/">EmacsWiki</a>.  Also <a href="http://emacsrocks.com/">here</a> are some series to blow your mind.
+<a href="http://emacsrocks.com/">Emacs rocks</a>, literally.
+</p>
+<p>
+<a href="http://planet.emacsen.org/">Planet Emacsen</a> is an aggregator of many related blogs.
+</p>
+<p>
+Looking at other people settings is traditional for novices (and not
+only).  You can always peek at <a href="https://github.com/m00natic/dot-emacs/">mine</a> as a source of mastery and
+inspiration.
 </p>
 <div id="footnotes">
 <h2 class="footnotes">Footnotes: </h2>
 <div id="text-footnotes">
-<p class="footnote"><sup><a class="footnum" name="fn-.1" href="#fnr-.1">1</a></sup> Available through <code>M-x list-packages</code>
+<p class="footnote"><sup><a class="footnum" name="fn-.1" href="#fnr-.1">1</a></sup> If you made it through the last sentence, require your award
 </p>
 
 
-<p class="footnote"><sup><a class="footnum" name="fn-.2" href="#fnr-.2">2</a></sup> This is a built-in extension
+<p class="footnote"><sup><a class="footnum" name="fn-.2" href="#fnr-.2">2</a></sup> Available through <code>M-x list-packages</code>
+</p>
+
+
+<p class="footnote"><sup><a class="footnum" name="fn-.3" href="#fnr-.3">3</a></sup> This is a built-in extension
+</p>
+
+
+<p class="footnote"><sup><a class="footnum" name="fn-.4" href="#fnr-.4">4</a></sup> Some people write even <a href="http://elnode.org/">web servers</a> nowadays
+</p>
+
+
+<p class="footnote"><sup><a class="footnum" name="fn-.5" href="#fnr-.5">5</a></sup> Realistically, no mortal can learn Emacs in its entirety
 </p>
 
 
@@ -2358,9 +2372,9 @@ Just google for it, or go to the trash bin of Emacs resources -
 </div>
 
 <div id="postamble">
-<p class="date">Date: 2013-02-26T23:09+0200</p>
+<p class="date">Date: 2013-02-28T20:47+0200</p>
 <p class="author">Author: Andrey Kotlarski</p>
-<p class="creator"><a href="http://orgmode.org">Org</a> version 7.9.2+ with <a href="http://www.gnu.org/software/emacs/">Emacs</a> version 24</p>
+<p class="creator"><a href="http://orgmode.org">Org</a> version 7.9.3e with <a href="http://www.gnu.org/software/emacs/">Emacs</a> version 24</p>
 <a href="http://validator.w3.org/check?uri=referer">Validate XHTML 1.0</a>
 
 </div>

@@ -1284,8 +1284,8 @@ cease to learn.  Happy lisping!
 * Where to go next?
 
 Emacs is what you make of it.  I don't know of other environment as
-malleable as it.  Play with it, make it comfortable.  It's defaults
-are not set in stones, make it powerful for your tasks.  Unlike most
+malleable as it is.  Play with it, make it comfortable.  It's defaults
+are not set in stones, make them powerful for your tasks.  Unlike most
 other tools, learning Emacs[fn:3] can pay off spectacularly,
 especially in terms of productivity.  As with most other quality
 things in life, if you persist, it will deliver.
@@ -1310,6 +1310,6 @@ inspiration.
 
 [fn:1] If you made it through the last sentence, require your award
 
-[fn:2] Some people write even [[http://elnode.org/][web servers]]
+[fn:2] Some people write even [[http://elnode.org/][web servers]] nowadays
 
 [fn:3] Realistically, no mortal can learn Emacs in its entirety
