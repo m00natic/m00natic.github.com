@@ -76,14 +76,14 @@ buffer.  There is a read-only mode that forbids you editing, there are
 / [[http://en.wikipedia.org/wiki/Scheme_(programming_language)][scheme]] / [[http://clojure.org][clojure]] / [[http://www.haskell.org][haskell]] / [[http://wiki.portal.chalmers.se/agda/pmwiki.php][agda]] / (insert your favourite niche
 language here) that give proper colouring, automatic indentation
 rules, special key-bindings for specific niceties...  There are modes
-for [[http://www.gnus.org/][reading or composing mail]], [[http://orgmode.org][creating presentations/books]], [[http://emacswiki.org/emacs/CategoryVersionControl][version
-control]], [[http://emacswiki.org/emacs/CategoryShell][shells]], [[http://emacswiki.org/emacs/CategorySql][DB prompts]], [[http://emacswiki.org/emacs/CategoryDocumentation][composing/reading documentation]],
-[[http://www.emacswiki.org/emacs/CategoryCalendar][calendar]], [[http://www.emacswiki.org/emacs/CategoryCalculators][stack calculator]], dictionaries, agendas and organizers,
-spreadsheets, [[http://emacs-w3m.namazu.org/][browsing the internetz]], [[http://emacswiki.org/emacs/Rudel][collaborative editing]], [[http://www.emacswiki.org/EmacSpeak][audio
-desktop]] for visually impaired, [[http://emacswiki.org/emacs/ArtistMode][ASCII drawing]], [[http://www.gnu.org/software/emms/][media collection
-managers]] and [[http://www.emacswiki.org/emacs/MusicPlayers][players]], [[http://www.emacswiki.org/emacs/CategoryGames][games]], [[http://emacswiki.org/emacs/EmacsDoctor][psychotherapist]],
-[[http://youtu.be/D1sXuHnf_lo][controlling vibrators]]... to name a
-few.  Oops, overdid it somewhere.
+that grow in packages for [[http://www.gnus.org/][reading or composing mail]], [[http://orgmode.org][creating
+presentations/books]], [[http://emacswiki.org/emacs/CategoryVersionControl][version control]], [[http://emacswiki.org/emacs/CategoryShell][shells]], [[http://emacswiki.org/emacs/CategorySql][DB prompts]],
+[[http://emacswiki.org/emacs/CategoryDocumentation][composing/reading documentation]], [[http://www.emacswiki.org/emacs/CategoryCalendar][calendar]], [[http://www.emacswiki.org/emacs/CategoryCalculators][stack calculator]],
+dictionaries, agendas and organizers, spreadsheets, [[http://emacs-w3m.namazu.org/][browsing the
+internetz]], [[http://emacswiki.org/emacs/Rudel][collaborative editing]], [[http://www.emacswiki.org/EmacSpeak][audio desktop]] for visually impaired,
+[[http://emacswiki.org/emacs/ArtistMode][ASCII drawing]], [[http://www.gnu.org/software/emms/][media collection managers]] and [[http://www.emacswiki.org/emacs/MusicPlayers][players]], [[http://www.emacswiki.org/emacs/CategoryGames][games]],
+[[http://emacswiki.org/emacs/EmacsDoctor][psychotherapist]], [[http://youtu.be/D1sXuHnf_lo][controlling vibrators]]... to name a few.  Oops,
+overdid it somewhere.
 
 To get description of the major mode for the current buffer:
 
@@ -179,8 +179,8 @@ emacsclient -t
 
 The ~--daemon~ option is certainly available under GNU/Linux and BSDs.
 It might even work for BSD rip off like MacOS but not under Windows.
-Nah.  A true programmer would "use" the latter two only under death
-threat or starvation anyway.
+Nah.  A trve programmer should resort to the latter two only under
+death threat or starvation anyway.
 
 ** Cancel current action
 
@@ -237,10 +237,10 @@ others too:
 #+BEGIN_SRC emacs-lisp
 (custom-set-variables
  '(package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
-		      ("elpa" . "http://tromey.com/elpa/")
-		      ("melpa" . "http://melpa.milkbox.net/packages/")
-		      ("marmalade" .
-		       "http://marmalade-repo.org/packages/"))))
+                      ("elpa" . "http://tromey.com/elpa/")
+                      ("melpa" . "http://melpa.milkbox.net/packages/")
+                      ("marmalade" .
+                       "http://marmalade-repo.org/packages/"))))
 #+END_SRC
 
 ** Yes-No prompts, why type so much?
@@ -294,9 +294,8 @@ surprise - there is no redo in Emacs.  [[http://www.youtube.com/watch?v%3DkXEgk1
 undo command is so mighty that it can undo itself (pun intended).
 After you stop a series of undos (by hitting whatever other button),
 you can start again undo-ing and it will eventually undo your previous
-undos, which is roughly equivalent to redo.  (If you made it through
-the last sentence, require your award.)  This is a very powerful
-mechanism but a brain-twister for novices.  Try out [[http://www.emacswiki.org/emacs/UndoTree][Undo
+undos, which is roughly equivalent to redo[fn:1].  This is a very
+powerful mechanism but a brain-twister for novices.  Try out [[http://www.emacswiki.org/emacs/UndoTree][Undo
 Tree]][fn:elpa], it visualizes the states between series of undos and
 changes and can even allow you travel in time for your edits.
 
@@ -446,7 +445,7 @@ resources.
 
 #+BEGIN_QUOTE
 Every program attempts to expand until it can read mail.
-		-- Jamie Zawinski
+                -- Jamie Zawinski
 #+END_QUOTE
 
 There are a lot of ways to manage mail within Emacs.  I use the
@@ -520,7 +519,7 @@ the crippled windows eco-system, install cygwin-mount[fn:elpa] and then:
 (let ((cygwin-dir (concat +win-path+ "cygwin/bin")))
   (when (file-exists-p cygwin-dir)
     (setq shell-file-name "bash"
-	  explicit-shell-file-name "bash")
+          explicit-shell-file-name "bash")
     (setenv "SHELL" shell-file-name)
     (setenv "CYGWIN" "nodosfilewarning")
 
@@ -654,7 +653,7 @@ indexing and maximum amount of files offered is set to 4096.
 
 I know this is nothing new for you, IDE cry-babies.  But can we
 generalize a bit?  I like this recursive locating of files, why do it
-just for projects?  Lets get hands dirty then:
+just for projects?  Let's get hands dirty then:
 
 #+BEGIN_SRC emacs-lisp
 (eval-after-load "find-file-in-project"
@@ -734,7 +733,7 @@ If a file is in conflict state, open it and:
 #+BEGIN_QUOTE
 Some people, when confronted with a problem, think "I know, I'll use
 regular expressions." Now they have two problems.
-		-- Jamie Zawinski
+                -- Jamie Zawinski
 #+END_QUOTE
 
 Not surprisingly, [[http://en.wikipedia.org/wiki/Regular_expressions][regexes]] are supported all over the place.  There are
@@ -781,13 +780,13 @@ current function:
 (eval-after-load "semantic"
    '(progn
       (add-to-list 'semantic-default-submodes
-		   'global-semantic-decoration-mode)
+                   'global-semantic-decoration-mode)
       (add-to-list 'semantic-default-submodes
-		   'global-semantic-idle-summary-mode)
+                   'global-semantic-idle-summary-mode)
       (add-to-list 'semantic-default-submodes
-		   'global-semantic-idle-local-symbol-highlight-mode)
+                   'global-semantic-idle-local-symbol-highlight-mode)
       (add-to-list 'semantic-default-submodes
-		   'global-semantic-mru-bookmark-mode)))
+                   'global-semantic-mru-bookmark-mode)))
 #+END_SRC
 
 To activate:
@@ -830,9 +829,9 @@ necessary to get it started at all):
 
 (eval-after-load "ecb"
     `(progn (defvar stack-trace-on-error nil)
-	    (defconst ecb-cedet-required-version-max '(2 1 4 9))
-	    (let ((prog-path "~/Programs")) ; set folder where you store projects, not really important
-	      (ecb-add-source-path prog-path prog-path t))))
+            (defconst ecb-cedet-required-version-max '(2 1 4 9))
+            (let ((prog-path "~/Programs")) ; set folder where you store projects, not really important
+              (ecb-add-source-path prog-path prog-path t))))
 #+END_SRC
 
 Now fire it:
@@ -847,8 +846,8 @@ ways to get something.  Firstly some general customization:
 #+BEGIN_SRC emacs-lisp
 (custom-set-variables
  '(c-default-style '((java-mode . "java")
-		     (awk-mode . "awk")
-		     (other . "stroustrup")))
+                     (awk-mode . "awk")
+                     (other . "stroustrup")))
  '(indent-tabs-mode nil)
  '(which-function-mode t))
 #+END_SRC
@@ -889,17 +888,17 @@ or ARG is non nil - locate project file for current directory."
     (interactive "P")
     (save-excursion
       (if (and (not arg) (ignore-errors (set-buffer "*Tree*")))
-	  (let ((ebrowse-file buffer-file-name))
-	    (call-process "ebrowse-c++")
-	    (kill-buffer)
-	    (find-file-noselect ebrowse-file))
-	(let ((project-dir (locate-dominating-file default-directory
-						   ".emacs-project")))
-	  (if project-dir
-	      (save-excursion
-		(call-process "ebrowse-c++" nil nil nil project-dir)
-		(find-file-noselect (concat project-dir
-					    "BROWSE")))))))))
+          (let ((ebrowse-file buffer-file-name))
+            (call-process "ebrowse-c++")
+            (kill-buffer)
+            (find-file-noselect ebrowse-file))
+        (let ((project-dir (locate-dominating-file default-directory
+                                                   ".emacs-project")))
+          (if project-dir
+              (save-excursion
+                (call-process "ebrowse-c++" nil nil nil project-dir)
+                (find-file-noselect (concat project-dir
+                                            "BROWSE")))))))))
 #+END_SRC
 
 Now, while in some project directory (again assuming ~.emacs-project~
@@ -981,11 +980,11 @@ docstring, for example:
   "Define cascade of keys for a MODE.
 KEYS is alternating key-value list."
   `(progn ,@(let ((res nil))
-	      (while keys
-		(push `(define-key ,mode ,(car keys) ,(cadr keys))
-		      res)
-		(setq keys (cddr keys)))
-	      (nreverse res))))
+              (while keys
+                (push `(define-key ,mode ,(car keys) ,(cadr keys))
+                      res)
+                (setq keys (cddr keys)))
+              (nreverse res))))
 #+END_SRC
 
 The documentation becomes immediately available to the doc system for
@@ -1046,7 +1045,7 @@ combination.
 #+BEGIN_QUOTE
 I rarely write documents and presentations.  When I do, I use Org
 mode.
-		-- Mahatma Gandhi
+                -- Mahatma Gandhi
 #+END_QUOTE
 
 There is another wonderful thing that comes with Emacs known as [[http://orgmode.org/][Org
@@ -1219,25 +1218,26 @@ the next line.  Now execute this automatically 100 times.
 #+BEGIN_QUOTE
 I have to tell you that probably of all the languages I've used,
 definitely, Emacs Lisp has been the most fun.
-		-- John Wiegley
+                -- John Wiegley
 #+END_QUOTE
 
 I wonder if after all this stuff, you have decided for yourself what
 Emacs actually is.  Is it an advanced editor, an integrated
-development environment, an operating system or well, a kitchen sink?
-Time has come to tell you the truth.  Luke, I'm your...
+development environment, an operating system, a kitchen sink or maybe
+a Death Star?  Time has come to tell you the truth.  Luke, I'm your...
 
 Emacs at its essence is an interpreter for a [[http://en.wikipedia.org/wiki/Lisp_%2528programming_language%2529][Lisp]] dialect - Emacs Lisp
-(Elisp).  All the settings and code snippets from above are actually
-Elisp program pieces.  I won't go into details how [[http://www.youtube.com/watch?v%3DHM1Zb3xmvMc][cool]] Lisp-like
-languages are, [[http://www.paulgraham.com/diff.html][there]] [[http://www.paulgraham.com/avg.html][is]] a [[http://www.gigamonkeys.com/book/introduction-why-lisp.html][lot]] of [[http://www.gigamonkeys.com/book/macros-defining-your-own.html][material]] out [[http://www.defmacro.org/ramblings/lisp.html][there]].  I won't tell you
-much about Elisp either for the built-in manual is outstanding:
+(Elisp).  All magic interactivity is a byproduct of this.  All
+parenthesized settings and code snippets from above are actually Elisp
+program pieces.  I won't go into details how [[http://www.youtube.com/watch?v%3DHM1Zb3xmvMc][cool]] Lisp-like languages
+are, [[http://www.paulgraham.com/diff.html][there]] [[http://www.paulgraham.com/avg.html][is]] a [[http://www.gigamonkeys.com/book/introduction-why-lisp.html][lot]] of [[http://www.gigamonkeys.com/book/macros-defining-your-own.html][material]] out [[http://www.defmacro.org/ramblings/lisp.html][there]].  I won't tell you much
+about Elisp either for the built-in manual is outstanding:
 
 ~C-h i m Elisp~
 
 However, I will tell you about one of my biggest aha-moments and some
-practical consequences.  While Elisp is quite an adequate lisp, it
-really shines in...
+practical consequences.  While Elisp is becoming quite an adequate
+lisp[fn:2], it really shines at...
 
 *** Text superpowers
 
@@ -1281,22 +1281,35 @@ start at step 4 which is basically...programming.  But you'll
 appreciate the availability of the other steps for true Emacsers never
 cease to learn.  Happy lisping!
 
-* Support
+* Where to go next?
 
-The excellent [[Documentation][documentation]] is not enough?!
+Emacs is what you make of it.  I don't know of other environment as
+malleable as it.  Play with it, make it comfortable.  It's defaults
+are not set in stones, make it powerful for your tasks.  Unlike most
+other tools, learning Emacs[fn:3] can pay off spectacularly,
+especially in terms of productivity.  As with most other quality
+things in life, if you persist, it will deliver.
 
-** Andrey
+** Random resources
 
-You can always peek at [[https://github.com/m00natic/dot-emacs/][my personal settings]] as a source of mastery and
+The trash bin of Emacs resources - [[http://www.emacswiki.org/][EmacsWiki]].
+
+[[http://emacsrocks.com/][Emacs rocks]], literally.
+
+[[http://planet.emacsen.org/][Planet Emacsen]] is an aggregator of many related blogs.
+
+Looking at other people settings is traditional for novices (and not
+only).  You can always peek at [[https://github.com/m00natic/dot-emacs/][mine]] as a source of mastery and
 inspiration.
-
-** Internet
-
-Just google for it, or go to the trash bin of Emacs resources -
-[[http://www.emacswiki.org/][EmacsWiki]].  Also [[http://emacsrocks.com/][here]] are some series to blow your mind.
 
 * Footnotes
 
 [fn:built-in] This is a built-in extension
 
 [fn:elpa] Available through ~M-x list-packages~
+
+[fn:1] If you made it through the last sentence, require your award
+
+[fn:2] Some people write even [[http://elnode.org/][web servers]]
+
+[fn:3] Realistically, no mortal can learn Emacs in its entirety
