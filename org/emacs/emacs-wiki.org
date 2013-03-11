@@ -147,7 +147,7 @@ just fix it with [[http://www.vim.org/][Vim]].  Got the joke?  Nah, run Emacs li
 and it will skip loading the init.el file giving you a chance to clean
 the mess.
 
-* General tips and tricks
+* Practical essentials
 
 ** Run Emacs as daemon
 
@@ -185,7 +185,7 @@ death threat or starvation anyway.
 ** Cancel current action
 
 Sometimes you start some action, Emacs asks you questions, or you're
-in a middle of [[http://emacswiki.org/emacs/IncrementalSearch][incremental search]] or whatever.  Suddenly you come to
+in a middle of [[Search%20for%20great%20good][incremental search]] or whatever.  Suddenly you come to
 realize that you don't want to continue and stop immediately:
 
 ~C-g~
@@ -243,16 +243,6 @@ others too:
                        "http://marmalade-repo.org/packages/"))))
 #+END_SRC
 
-** Yes-No prompts, why type so much?
-
-Often Emacs asks something and expects you to type <yes> or <no>
-followed by <Enter>.  Here's how to change this and when faced with
-such existential question be able to just press <y> or <n> instead:
-
-#+BEGIN_SRC emacs-lisp
-(fset 'yes-or-no-p 'y-or-n-p)
-#+END_SRC
-
 ** Assign key bindings to commands
 
 You're in love with some command but there is no key sequence to
@@ -299,6 +289,28 @@ powerful mechanism but a brain-twister for novices.  Try out [[http://www.emacsw
 Tree]][fn:elpa], it visualizes the states between series of undos and
 changes and can even allow you travel in time for your edits.
 
+** Search for great good
+
+[[http://emacswiki.org/emacs/IncrementalSearch][Searching]] is nice and unobtrusive, just:
+
+~C-s~
+
+and start typing something.  Press ~C-s~ again to iterate matches
+forward or ~C-r~ to do it backward.  This is traditional way of just
+moving around text too.  More precise and reliable than even a mouse!
+
+* General tips and tricks
+
+** Yes-No prompts, why type so much?
+
+Often Emacs asks something and expects you to type <yes> or <no>
+followed by <Enter>.  Here's how to change this and when faced with
+such existential question be able to just press <y> or <n> instead:
+
+#+BEGIN_SRC emacs-lisp
+(fset 'yes-or-no-p 'y-or-n-p)
+#+END_SRC
+
 ** Operations on selection/region
 
 Lesser programs normally allow two actions on selection - copying and
@@ -306,7 +318,7 @@ deletion.  Emacs is not as boring.  Beside the obvious, when a region
 is marked:
 
 - all sorts of string/regex replace work only on this region
-- undo acts only on the region
+- [[Undo/redo][undo]] acts only on the region
 
 The last one is an Easter Egg.  Think slowly how useful it can be,
 undoing the changes just in some selection.  [[http://www.gnu.org/software/emacs/manual/html_node/emacs/Using-Region.html][Here]] (and in the manual)
@@ -536,7 +548,7 @@ headache.  And you need this to know where init.el should reside.  I
 remotely remember [[http://www.emacswiki.org/emacs/MsWindowsInstallation][setting HOME variable]] in some MyComputer settings
 (also modifying the PATH one to prefer cygwin's paths).
 
-* General programming tips and tricks
+* Programming tips and tricks
 
 ** Grep on steroids
 
@@ -838,7 +850,7 @@ Now fire it:
 
 ~M-x ecb-activate~
 
-* C++
+** C++
 
 Emacs doesn't come with shining C/C++ support, sorry.  Here are a few
 ways to get something.  Firstly some general customization:
@@ -856,7 +868,7 @@ It sets some automatic indent styles for C-like languages.  Uses
 spaces instead of tabs and shows in the mode-line the name of function
 that the cursor is currently placed in.
 
-** Jump to definitions
+*** Jump to definitions
 
 Emacs comes with a separate binary [[http://www.emacswiki.org/emacs/EmacsBrowse][ebrowse]][fn:built-in] that can
 annotate multiple C/C++ source files and create some form of DB which

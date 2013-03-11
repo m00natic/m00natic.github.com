@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 <meta name="title" content="Andrey's Opinionated Emacs Guide"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2013-02-28T20:47+0200"/>
+<meta name="generated" content="2013-03-12T01:07+0200"/>
 <meta name="author" content="Andrey Kotlarski"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
@@ -142,50 +142,54 @@ for the JavaScript code in this tag.
 <li><a href="#sec-1-4">1.4 Settings</a></li>
 </ul>
 </li>
-<li><a href="#sec-2">2 General tips and tricks</a>
+<li><a href="#sec-2">2 Practical essentials</a>
 <ul>
 <li><a href="#sec-2-1">2.1 Run Emacs as daemon</a></li>
 <li><a href="#sec-2-2">2.2 Cancel current action</a></li>
 <li><a href="#sec-2-3">2.3 Commands, completion and hints</a></li>
 <li><a href="#sec-2-4">2.4 Additional packages</a></li>
-<li><a href="#sec-2-5">2.5 Yes-No prompts, why type so much?</a></li>
-<li><a href="#sec-2-6">2.6 Assign key bindings to commands</a></li>
-<li><a href="#sec-2-7">2.7 Undo/redo</a></li>
-<li><a href="#sec-2-8">2.8 Operations on selection/region</a></li>
-<li><a href="#sec-2-9">2.9 Work with directories</a></li>
-<li><a href="#sec-2-10">2.10 Fuzzy matching when navigating the file system</a></li>
-<li><a href="#sec-2-11">2.11 Remote network and sudo access</a></li>
-<li><a href="#sec-2-12">2.12 Backup and file versions</a></li>
-<li><a href="#sec-2-13">2.13 Manage GnuPG encrypted files</a></li>
-<li><a href="#sec-2-14">2.14 Don't ask for sudo or ssh passwords</a></li>
-<li><a href="#sec-2-15">2.15 Gnus for mail and news</a></li>
-<li><a href="#sec-2-16">2.16 Shell, terminal, console, whatever you call it</a></li>
-<li><a href="#sec-2-17">2.17 Microsoft Windows (tm)</a></li>
+<li><a href="#sec-2-5">2.5 Assign key bindings to commands</a></li>
+<li><a href="#sec-2-6">2.6 Undo/redo</a></li>
+<li><a href="#sec-2-7">2.7 Search for great good</a></li>
 </ul>
 </li>
-<li><a href="#sec-3">3 General programming tips and tricks</a>
+<li><a href="#sec-3">3 General tips and tricks</a>
 <ul>
-<li><a href="#sec-3-1">3.1 Grep on steroids</a></li>
-<li><a href="#sec-3-2">3.2 Edit grep results in place</a></li>
-<li><a href="#sec-3-3">3.3 Occur</a></li>
-<li><a href="#sec-3-4">3.4 If it moves - compile</a></li>
-<li><a href="#sec-3-5">3.5 Find file in project</a></li>
-<li><a href="#sec-3-6">3.6 Source control</a>
-<ul>
-<li><a href="#sec-3-6-1">3.6.1 Magnificent git</a></li>
+<li><a href="#sec-3-1">3.1 Yes-No prompts, why type so much?</a></li>
+<li><a href="#sec-3-2">3.2 Operations on selection/region</a></li>
+<li><a href="#sec-3-3">3.3 Work with directories</a></li>
+<li><a href="#sec-3-4">3.4 Fuzzy matching when navigating the file system</a></li>
+<li><a href="#sec-3-5">3.5 Remote network and sudo access</a></li>
+<li><a href="#sec-3-6">3.6 Backup and file versions</a></li>
+<li><a href="#sec-3-7">3.7 Manage GnuPG encrypted files</a></li>
+<li><a href="#sec-3-8">3.8 Don't ask for sudo or ssh passwords</a></li>
+<li><a href="#sec-3-9">3.9 Gnus for mail and news</a></li>
+<li><a href="#sec-3-10">3.10 Shell, terminal, console, whatever you call it</a></li>
+<li><a href="#sec-3-11">3.11 Microsoft Windows (tm)</a></li>
 </ul>
 </li>
-<li><a href="#sec-3-7">3.7 Interactive diff and merging</a></li>
-<li><a href="#sec-3-8">3.8 Regular expressions</a></li>
-<li><a href="#sec-3-9">3.9 GDB</a></li>
-<li><a href="#sec-3-10">3.10 Semantic</a></li>
-<li><a href="#sec-3-11">3.11 Completion</a></li>
-<li><a href="#sec-3-12">3.12 General coding IDE</a></li>
+<li><a href="#sec-4">4 Programming tips and tricks</a>
+<ul>
+<li><a href="#sec-4-1">4.1 Grep on steroids</a></li>
+<li><a href="#sec-4-2">4.2 Edit grep results in place</a></li>
+<li><a href="#sec-4-3">4.3 Occur</a></li>
+<li><a href="#sec-4-4">4.4 If it moves - compile</a></li>
+<li><a href="#sec-4-5">4.5 Find file in project</a></li>
+<li><a href="#sec-4-6">4.6 Source control</a>
+<ul>
+<li><a href="#sec-4-6-1">4.6.1 Magnificent git</a></li>
 </ul>
 </li>
-<li><a href="#sec-4">4 C++</a>
+<li><a href="#sec-4-7">4.7 Interactive diff and merging</a></li>
+<li><a href="#sec-4-8">4.8 Regular expressions</a></li>
+<li><a href="#sec-4-9">4.9 GDB</a></li>
+<li><a href="#sec-4-10">4.10 Semantic</a></li>
+<li><a href="#sec-4-11">4.11 Completion</a></li>
+<li><a href="#sec-4-12">4.12 General coding IDE</a></li>
+<li><a href="#sec-4-13">4.13 C++</a>
 <ul>
-<li><a href="#sec-4-1">4.1 Jump to definitions</a></li>
+<li><a href="#sec-4-13-1">4.13.1 Jump to definitions</a></li>
+</ul></li>
 </ul>
 </li>
 <li><a href="#sec-5">5 Documentation</a>
@@ -473,7 +477,7 @@ the mess.
 </div>
 
 <div id="outline-container-2" class="outline-2">
-<h2 id="sec-2"><span class="section-number-2">2</span> General tips and tricks</h2>
+<h2 id="sec-2"><span class="section-number-2">2</span> Practical essentials</h2>
 <div class="outline-text-2" id="text-2">
 
 
@@ -541,7 +545,7 @@ death threat or starvation anyway.
 
 <p>
 Sometimes you start some action, Emacs asks you questions, or you're
-in a middle of <a href="http://emacswiki.org/emacs/IncrementalSearch">incremental search</a> or whatever.  Suddenly you come to
+in a middle of <a href="#sec-2-7">incremental search</a> or whatever.  Suddenly you come to
 realize that you don't want to continue and stop immediately:
 </p>
 <p>
@@ -634,29 +638,8 @@ others too:
 </div>
 
 <div id="outline-container-2-5" class="outline-3">
-<h3 id="sec-2-5"><span class="section-number-3">2.5</span> Yes-No prompts, why type so much?</h3>
+<h3 id="sec-2-5"><span class="section-number-3">2.5</span> Assign key bindings to commands</h3>
 <div class="outline-text-3" id="text-2-5">
-
-
-<p>
-Often Emacs asks something and expects you to type &lt;yes&gt; or &lt;no&gt;
-followed by &lt;Enter&gt;.  Here's how to change this and when faced with
-such existential question be able to just press &lt;y&gt; or &lt;n&gt; instead:
-</p>
-
-
-
-<pre class="src src-emacs-lisp">(fset 'yes-or-no-p 'y-or-n-p)
-</pre>
-
-
-</div>
-
-</div>
-
-<div id="outline-container-2-6" class="outline-3">
-<h3 id="sec-2-6"><span class="section-number-3">2.6</span> Assign key bindings to commands</h3>
-<div class="outline-text-3" id="text-2-6">
 
 
 <p>
@@ -703,9 +686,9 @@ variable for this mode:
 
 </div>
 
-<div id="outline-container-2-7" class="outline-3">
-<h3 id="sec-2-7"><span class="section-number-3">2.7</span> Undo/redo</h3>
-<div class="outline-text-3" id="text-2-7">
+<div id="outline-container-2-6" class="outline-3">
+<h3 id="sec-2-6"><span class="section-number-3">2.6</span> Undo/redo</h3>
+<div class="outline-text-3" id="text-2-6">
 
 
 <p>
@@ -728,9 +711,59 @@ changes and can even allow you travel in time for your edits.
 
 </div>
 
-<div id="outline-container-2-8" class="outline-3">
-<h3 id="sec-2-8"><span class="section-number-3">2.8</span> Operations on selection/region</h3>
-<div class="outline-text-3" id="text-2-8">
+<div id="outline-container-2-7" class="outline-3">
+<h3 id="sec-2-7"><span class="section-number-3">2.7</span> Search for great good</h3>
+<div class="outline-text-3" id="text-2-7">
+
+
+<p>
+<a href="http://emacswiki.org/emacs/IncrementalSearch">Searching</a> is nice and unobtrusive, just:
+</p>
+<p>
+<code>C-s</code>
+</p>
+<p>
+and start typing something.  Press <code>C-s</code> again to iterate matches
+forward or <code>C-r</code> to do it backward.  This is traditional way of just
+moving around text too.  More precise and reliable than even a mouse!
+</p>
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> General tips and tricks</h2>
+<div class="outline-text-2" id="text-3">
+
+
+
+</div>
+
+<div id="outline-container-3-1" class="outline-3">
+<h3 id="sec-3-1"><span class="section-number-3">3.1</span> Yes-No prompts, why type so much?</h3>
+<div class="outline-text-3" id="text-3-1">
+
+
+<p>
+Often Emacs asks something and expects you to type &lt;yes&gt; or &lt;no&gt;
+followed by &lt;Enter&gt;.  Here's how to change this and when faced with
+such existential question be able to just press &lt;y&gt; or &lt;n&gt; instead:
+</p>
+
+
+
+<pre class="src src-emacs-lisp">(fset 'yes-or-no-p 'y-or-n-p)
+</pre>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-3-2" class="outline-3">
+<h3 id="sec-3-2"><span class="section-number-3">3.2</span> Operations on selection/region</h3>
+<div class="outline-text-3" id="text-3-2">
 
 
 <p>
@@ -741,7 +774,7 @@ is marked:
 <ul>
 <li>all sorts of string/regex replace work only on this region
 </li>
-<li>undo acts only on the region
+<li><a href="#sec-2-6">undo</a> acts only on the region
 </li>
 </ul>
 
@@ -755,9 +788,9 @@ is an overview of what more is supported.
 
 </div>
 
-<div id="outline-container-2-9" class="outline-3">
-<h3 id="sec-2-9"><span class="section-number-3">2.9</span> Work with directories</h3>
-<div class="outline-text-3" id="text-2-9">
+<div id="outline-container-3-3" class="outline-3">
+<h3 id="sec-3-3"><span class="section-number-3">3.3</span> Work with directories</h3>
+<div class="outline-text-3" id="text-3-3">
 
 
 <p>
@@ -780,9 +813,9 @@ to get summary of what it can do.
 
 </div>
 
-<div id="outline-container-2-10" class="outline-3">
-<h3 id="sec-2-10"><span class="section-number-3">2.10</span> Fuzzy matching when navigating the file system</h3>
-<div class="outline-text-3" id="text-2-10">
+<div id="outline-container-3-4" class="outline-3">
+<h3 id="sec-3-4"><span class="section-number-3">3.4</span> Fuzzy matching when navigating the file system</h3>
+<div class="outline-text-3" id="text-3-4">
 
 
 <p>
@@ -824,9 +857,9 @@ files that have been opened in previous sessions.
 
 </div>
 
-<div id="outline-container-2-11" class="outline-3">
-<h3 id="sec-2-11"><span class="section-number-3">2.11</span> Remote network and sudo access</h3>
-<div class="outline-text-3" id="text-2-11">
+<div id="outline-container-3-5" class="outline-3">
+<h3 id="sec-3-5"><span class="section-number-3">3.5</span> Remote network and sudo access</h3>
+<div class="outline-text-3" id="text-3-5">
 
 
 <p>
@@ -877,9 +910,9 @@ information invoke/type:
 
 </div>
 
-<div id="outline-container-2-12" class="outline-3">
-<h3 id="sec-2-12"><span class="section-number-3">2.12</span> Backup and file versions</h3>
-<div class="outline-text-3" id="text-2-12">
+<div id="outline-container-3-6" class="outline-3">
+<h3 id="sec-3-6"><span class="section-number-3">3.6</span> Backup and file versions</h3>
+<div class="outline-text-3" id="text-3-6">
 
 
 <p>
@@ -924,9 +957,9 @@ system.  Guess what, you don't need it there anyway.
 
 </div>
 
-<div id="outline-container-2-13" class="outline-3">
-<h3 id="sec-2-13"><span class="section-number-3">2.13</span> Manage GnuPG encrypted files</h3>
-<div class="outline-text-3" id="text-2-13">
+<div id="outline-container-3-7" class="outline-3">
+<h3 id="sec-3-7"><span class="section-number-3">3.7</span> Manage GnuPG encrypted files</h3>
+<div class="outline-text-3" id="text-3-7">
 
 
 <p>
@@ -941,9 +974,9 @@ password.  Magic.
 
 </div>
 
-<div id="outline-container-2-14" class="outline-3">
-<h3 id="sec-2-14"><span class="section-number-3">2.14</span> Don't ask for sudo or ssh passwords</h3>
-<div class="outline-text-3" id="text-2-14">
+<div id="outline-container-3-8" class="outline-3">
+<h3 id="sec-3-8"><span class="section-number-3">3.8</span> Don't ask for sudo or ssh passwords</h3>
+<div class="outline-text-3" id="text-3-8">
 
 
 <p>
@@ -960,7 +993,7 @@ machine test-server port ssh login andrey password very-secret
 <p>
 Save this file (entering password for encryption).  Now, when you
 attempt to ssh (to test-server) or sudo directly from Emacs as
-explained <a href="#sec-2-11">above</a>, you'll be asked for the <code>.authinfo.gpg</code> password once
+explained <a href="#sec-3-5">above</a>, you'll be asked for the <code>.authinfo.gpg</code> password once
 and from there on (for this Emacs session), the passwords listed there
 will be automatically used when you try to access the respective
 resources.
@@ -969,9 +1002,9 @@ resources.
 
 </div>
 
-<div id="outline-container-2-15" class="outline-3">
-<h3 id="sec-2-15"><span class="section-number-3">2.15</span> Gnus for mail and news</h3>
-<div class="outline-text-3" id="text-2-15">
+<div id="outline-container-3-9" class="outline-3">
+<h3 id="sec-3-9"><span class="section-number-3">3.9</span> Gnus for mail and news</h3>
+<div class="outline-text-3" id="text-3-9">
 
 
 <blockquote>
@@ -1018,9 +1051,9 @@ machine smtp.gmail.com port 587 login andrey password very-very-secret
 
 </div>
 
-<div id="outline-container-2-16" class="outline-3">
-<h3 id="sec-2-16"><span class="section-number-3">2.16</span> Shell, terminal, console, whatever you call it</h3>
-<div class="outline-text-3" id="text-2-16">
+<div id="outline-container-3-10" class="outline-3">
+<h3 id="sec-3-10"><span class="section-number-3">3.10</span> Shell, terminal, console, whatever you call it</h3>
+<div class="outline-text-3" id="text-3-10">
 
 
 <p>
@@ -1053,9 +1086,9 @@ more.
 
 </div>
 
-<div id="outline-container-2-17" class="outline-3">
-<h3 id="sec-2-17"><span class="section-number-3">2.17</span> Microsoft Windows (tm)</h3>
-<div class="outline-text-3" id="text-2-17">
+<div id="outline-container-3-11" class="outline-3">
+<h3 id="sec-3-11"><span class="section-number-3">3.11</span> Microsoft Windows (tm)</h3>
+<div class="outline-text-3" id="text-3-11">
 
 
 <p>
@@ -1110,17 +1143,17 @@ remotely remember <a href="http://www.emacswiki.org/emacs/MsWindowsInstallation"
 
 </div>
 
-<div id="outline-container-3" class="outline-2">
-<h2 id="sec-3"><span class="section-number-2">3</span> General programming tips and tricks</h2>
-<div class="outline-text-2" id="text-3">
+<div id="outline-container-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> Programming tips and tricks</h2>
+<div class="outline-text-2" id="text-4">
 
 
 
 </div>
 
-<div id="outline-container-3-1" class="outline-3">
-<h3 id="sec-3-1"><span class="section-number-3">3.1</span> Grep on steroids</h3>
-<div class="outline-text-3" id="text-3-1">
+<div id="outline-container-4-1" class="outline-3">
+<h3 id="sec-4-1"><span class="section-number-3">4.1</span> Grep on steroids</h3>
+<div class="outline-text-3" id="text-4-1">
 
 
 <p>
@@ -1147,9 +1180,9 @@ character, "quote" it with <code>C-q</code>.
 
 </div>
 
-<div id="outline-container-3-2" class="outline-3">
-<h3 id="sec-3-2"><span class="section-number-3">3.2</span> Edit grep results in place</h3>
-<div class="outline-text-3" id="text-3-2">
+<div id="outline-container-4-2" class="outline-3">
+<h3 id="sec-4-2"><span class="section-number-3">4.2</span> Edit grep results in place</h3>
+<div class="outline-text-3" id="text-4-2">
 
 
 <p>
@@ -1197,9 +1230,9 @@ instead the default `list-buffers'<sup><a class="footref" name="fnr-.3.5" href="
 
 </div>
 
-<div id="outline-container-3-3" class="outline-3">
-<h3 id="sec-3-3"><span class="section-number-3">3.3</span> Occur</h3>
-<div class="outline-text-3" id="text-3-3">
+<div id="outline-container-4-3" class="outline-3">
+<h3 id="sec-4-3"><span class="section-number-3">4.3</span> Occur</h3>
+<div class="outline-text-3" id="text-4-3">
 
 
 <p>
@@ -1218,9 +1251,9 @@ version of GNU Emacs, you can edit results in place pressing <code>&lt;e&gt;</co
 
 </div>
 
-<div id="outline-container-3-4" class="outline-3">
-<h3 id="sec-3-4"><span class="section-number-3">3.4</span> If it moves - compile</h3>
-<div class="outline-text-3" id="text-3-4">
+<div id="outline-container-4-4" class="outline-3">
+<h3 id="sec-4-4"><span class="section-number-3">4.4</span> If it moves - compile</h3>
+<div class="outline-text-3" id="text-4-4">
 
 
 <p>
@@ -1249,9 +1282,9 @@ finished.  Within it, you can just press <code>&lt;g&gt;</code> to recompile.
 
 </div>
 
-<div id="outline-container-3-5" class="outline-3">
-<h3 id="sec-3-5"><span class="section-number-3">3.5</span> Find file in project</h3>
-<div class="outline-text-3" id="text-3-5">
+<div id="outline-container-4-5" class="outline-3">
+<h3 id="sec-4-5"><span class="section-number-3">4.5</span> Find file in project</h3>
+<div class="outline-text-3" id="text-4-5">
 
 
 <p>
@@ -1275,7 +1308,7 @@ Now hit:
 And you'll be able to select a file.  If you have ido-mode enabled for
 files, you'll get flex matching.  Note that the GNU find command is
 expected, which means that under Windows, you'll probably need the
-Cygwin environment with the settings given <a href="#sec-2-17">above</a>.
+Cygwin environment with the settings given <a href="#sec-3-11">above</a>.
 </p>
 <p>
 Here's a sample customization for C++ project:
@@ -1336,9 +1369,9 @@ there and within all sub-folders as well.  Sweet.
 
 </div>
 
-<div id="outline-container-3-6" class="outline-3">
-<h3 id="sec-3-6"><span class="section-number-3">3.6</span> Source control</h3>
-<div class="outline-text-3" id="text-3-6">
+<div id="outline-container-4-6" class="outline-3">
+<h3 id="sec-4-6"><span class="section-number-3">4.6</span> Source control</h3>
+<div class="outline-text-3" id="text-4-6">
 
 
 <p>
@@ -1371,9 +1404,9 @@ all available:
 
 </div>
 
-<div id="outline-container-3-6-1" class="outline-4">
-<h4 id="sec-3-6-1"><span class="section-number-4">3.6.1</span> Magnificent git</h4>
-<div class="outline-text-4" id="text-3-6-1">
+<div id="outline-container-4-6-1" class="outline-4">
+<h4 id="sec-4-6-1"><span class="section-number-4">4.6.1</span> Magnificent git</h4>
+<div class="outline-text-4" id="text-4-6-1">
 
 
 <p>
@@ -1389,9 +1422,9 @@ trivial.
 
 </div>
 
-<div id="outline-container-3-7" class="outline-3">
-<h3 id="sec-3-7"><span class="section-number-3">3.7</span> Interactive diff and merging</h3>
-<div class="outline-text-3" id="text-3-7">
+<div id="outline-container-4-7" class="outline-3">
+<h3 id="sec-4-7"><span class="section-number-3">4.7</span> Interactive diff and merging</h3>
+<div class="outline-text-3" id="text-4-7">
 
 
 <p>
@@ -1418,9 +1451,9 @@ If a file is in conflict state, open it and:
 
 </div>
 
-<div id="outline-container-3-8" class="outline-3">
-<h3 id="sec-3-8"><span class="section-number-3">3.8</span> Regular expressions</h3>
-<div class="outline-text-3" id="text-3-8">
+<div id="outline-container-4-8" class="outline-3">
+<h3 id="sec-4-8"><span class="section-number-3">4.8</span> Regular expressions</h3>
+<div class="outline-text-3" id="text-4-8">
 
 
 <blockquote>
@@ -1454,9 +1487,9 @@ buffer.  Provided the regex is somewhat correct.
 
 </div>
 
-<div id="outline-container-3-9" class="outline-3">
-<h3 id="sec-3-9"><span class="section-number-3">3.9</span> GDB</h3>
-<div class="outline-text-3" id="text-3-9">
+<div id="outline-container-4-9" class="outline-3">
+<h3 id="sec-4-9"><span class="section-number-3">4.9</span> GDB</h3>
+<div class="outline-text-3" id="text-4-9">
 
 
 <p>
@@ -1486,9 +1519,9 @@ executable and <a href="http://www.youtube.com/watch?v=1BH7poMtPVU">rock</a>!
 
 </div>
 
-<div id="outline-container-3-10" class="outline-3">
-<h3 id="sec-3-10"><span class="section-number-3">3.10</span> Semantic</h3>
-<div class="outline-text-3" id="text-3-10">
+<div id="outline-container-4-10" class="outline-3">
+<h3 id="sec-4-10"><span class="section-number-3">4.10</span> Semantic</h3>
+<div class="outline-text-3" id="text-4-10">
 
 
 <p>
@@ -1524,9 +1557,9 @@ To activate:
 
 </div>
 
-<div id="outline-container-3-11" class="outline-3">
-<h3 id="sec-3-11"><span class="section-number-3">3.11</span> Completion</h3>
-<div class="outline-text-3" id="text-3-11">
+<div id="outline-container-4-11" class="outline-3">
+<h3 id="sec-4-11"><span class="section-number-3">4.11</span> Completion</h3>
+<div class="outline-text-3" id="text-4-11">
 
 
 <p>
@@ -1557,9 +1590,9 @@ function/variable names become non-issue.
 
 </div>
 
-<div id="outline-container-3-12" class="outline-3">
-<h3 id="sec-3-12"><span class="section-number-3">3.12</span> General coding IDE</h3>
-<div class="outline-text-3" id="text-3-12">
+<div id="outline-container-4-12" class="outline-3">
+<h3 id="sec-4-12"><span class="section-number-3">4.12</span> General coding IDE</h3>
+<div class="outline-text-3" id="text-4-12">
 
 
 <p>
@@ -1591,13 +1624,12 @@ Now fire it:
 <code>M-x ecb-activate</code>
 </p>
 </div>
-</div>
 
 </div>
 
-<div id="outline-container-4" class="outline-2">
-<h2 id="sec-4"><span class="section-number-2">4</span> C++</h2>
-<div class="outline-text-2" id="text-4">
+<div id="outline-container-4-13" class="outline-3">
+<h3 id="sec-4-13"><span class="section-number-3">4.13</span> C++</h3>
+<div class="outline-text-3" id="text-4-13">
 
 
 <p>
@@ -1624,9 +1656,9 @@ that the cursor is currently placed in.
 
 </div>
 
-<div id="outline-container-4-1" class="outline-3">
-<h3 id="sec-4-1"><span class="section-number-3">4.1</span> Jump to definitions</h3>
-<div class="outline-text-3" id="text-4-1">
+<div id="outline-container-4-13-1" class="outline-4">
+<h4 id="sec-4-13-1"><span class="section-number-4">4.13.1</span> Jump to definitions</h4>
+<div class="outline-text-4" id="text-4-13-1">
 
 
 <p>
@@ -1713,6 +1745,7 @@ one (while being in another <code>.emacs-project</code> governed location):
 <p>
 <code>C-u M-x my-ebrowse-refresh</code>
 </p>
+</div>
 </div>
 </div>
 
@@ -1809,7 +1842,7 @@ docstring, for example:
 
 
 
-<pre class="src src-emacs-lisp">(<span style="color: #8ac6f2; font-weight: bold;">defmacro</span> <span style="color: #cae682;">define-keys</span> (mode &amp;rest keys)
+<pre class="src src-emacs-lisp">(<span style="color: #8ac6f2; font-weight: bold;">defmacro</span> <span style="color: #cae682;">define-keys</span> (mode <span style="color: #92a65e; font-weight: bold;">&amp;rest</span> keys)
   <span style="color: #95e454;">"Define cascade of keys for a MODE.</span>
 <span style="color: #95e454;">KEYS is alternating key-value list."</span>
   `(<span style="color: #8ac6f2; font-weight: bold;">progn</span> ,@(<span style="color: #8ac6f2; font-weight: bold;">let</span> ((res nil))
@@ -2372,9 +2405,9 @@ inspiration.
 </div>
 
 <div id="postamble">
-<p class="date">Date: 2013-02-28T20:47+0200</p>
+<p class="date">Date: 2013-03-12T01:07+0200</p>
 <p class="author">Author: Andrey Kotlarski</p>
-<p class="creator"><a href="http://orgmode.org">Org</a> version 7.9.3e with <a href="http://www.gnu.org/software/emacs/">Emacs</a> version 24</p>
+<p class="creator"><a href="http://orgmode.org">Org</a> version 7.9.3f with <a href="http://www.gnu.org/software/emacs/">Emacs</a> version 24</p>
 <a href="http://validator.w3.org/check?uri=referer">Validate XHTML 1.0</a>
 
 </div>
