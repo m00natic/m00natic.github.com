@@ -1,6 +1,8 @@
 @media all
 {
   body {
+    color: black;
+    background: #FAF0E6;
     margin: 10px 8% 10px 8%;
     font-family: Verdana;
     text-align: justify;
@@ -11,7 +13,7 @@
 
   #table-of-contents {
     color: black;
-    background: #FFF;
+    background: #FFF8DC;
     font-size: 80%;
     padding: .5em;
     margin: 1em -2em 1em 1em;

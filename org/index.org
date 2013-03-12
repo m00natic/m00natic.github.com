@@ -23,9 +23,9 @@ Introductions done for my coworkers.
 
 * Miscellaneous
 
-[[./my-pc.org][If you happen to sit on my computer]] don't panic!
+[[./my-pc.org][If you happen to sit on my computer]], don't panic!
 
-[[https://github.com/m00natic][Here]] I'm on github.  Considering that this site is a project there -
+[[https://github.com/m00natic][Here]] I am on github.  Considering that this site is a project there -
 the circle is now complete.
 
 [[./andrey-kotlarski-cv.pdf][My Curriculum Vitae]] kept on [[https://gitorious.org/~m00natic][Gitorious]] for a change.
