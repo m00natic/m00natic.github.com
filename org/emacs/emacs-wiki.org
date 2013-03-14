@@ -369,7 +369,7 @@ files that have been opened in previous sessions.
 Why reside to primitive shell & ssh to peek/edit a file on some remote
 server?  You can do it directly from Emacs:
 
-~C-x C-f /ssh:andrey@some-server:/ezsroot/current RET~
+~C-x C-f /ssh:andrey@some-server:/path/to/some/file/or/folder RET~
 (enter password when/if prompted)
 
 Some servers may have fancy colourful prompts that get in the way of
