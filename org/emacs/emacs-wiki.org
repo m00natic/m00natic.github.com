@@ -28,10 +28,15 @@ the basics:
 | *Emacs land (I'll call it La la land below)* | *Rest of the world*                                |
 |----------------------------------------------+----------------------------------------------------|
 | frame                                        | program window                                     |
+|----------------------------------------------+----------------------------------------------------|
 | window                                       | sub window (may take the whole program window too) |
+|----------------------------------------------+----------------------------------------------------|
 | buffer                                       | file or something that may have text in it         |
+|----------------------------------------------+----------------------------------------------------|
 | kill                                         | cut                                                |
+|----------------------------------------------+----------------------------------------------------|
 | yank                                         | paste                                              |
+|----------------------------------------------+----------------------------------------------------|
 | region                                       | selection                                          |
 |----------------------------------------------+----------------------------------------------------|
 
@@ -1078,7 +1083,7 @@ To launch Org mode either:
 
 ~M-x org-mode~
 
-for existing buffer, or name your file with an ~.org~ extension.
+for existing buffer, or name your file with an *.org* extension.
 
 You'll go a long way even with the minimum - number of stars at the
 beginning of line signifies heading in the document hierarchy.  The
@@ -1268,13 +1273,14 @@ that requires some nastier text processing and probably editing and/or
 generating hundreds of files.  A general recipe how to write such
 programs in Elisp follows.
 
+#+BEGIN_EXAMPLE
 1. Do by hand what you'd like to do.  Probably multiple times, till
    you extract a more or less clean general procedure.
 
 2. Having concrete series of actions, for each of them check what
    function lies beneath.  This will help:
 
-   ~C-h k~
+   C-h k
 
    followed by key-sequence will show what command is invoked.
 
@@ -1284,6 +1290,7 @@ programs in Elisp follows.
    that may fit your bill.
 
 4. Use these functions in order to form your program.
+#+END_EXAMPLE
 
 So code literally follows the editing process, ingenious!  Step 3 is
 very educational, though with time you may need it less often.

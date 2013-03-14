@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 <meta name="title" content="Andrey's Opinionated Emacs Guide"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2013-03-14T20:08+0200"/>
+<meta name="generated" content="2013-03-15T00:17+0200"/>
 <meta name="author" content="Andrey Kotlarski"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
@@ -284,10 +284,20 @@ the basics:
 </thead>
 <tbody>
 <tr><td class="left">frame</td><td class="left">program window</td></tr>
+</tbody>
+<tbody>
 <tr><td class="left">window</td><td class="left">sub window (may take the whole program window too)</td></tr>
+</tbody>
+<tbody>
 <tr><td class="left">buffer</td><td class="left">file or something that may have text in it</td></tr>
+</tbody>
+<tbody>
 <tr><td class="left">kill</td><td class="left">cut</td></tr>
+</tbody>
+<tbody>
 <tr><td class="left">yank</td><td class="left">paste</td></tr>
+</tbody>
+<tbody>
 <tr><td class="left">region</td><td class="left">selection</td></tr>
 </tbody>
 </table>
@@ -2008,7 +2018,7 @@ To launch Org mode either:
 <code>M-x org-mode</code>
 </p>
 <p>
-for existing buffer, or name your file with an <code>.org</code> extension.
+for existing buffer, or name your file with an <b>.org</b> extension.
 </p>
 <p>
 You'll go a long way even with the minimum - number of stars at the
@@ -2296,30 +2306,26 @@ that requires some nastier text processing and probably editing and/or
 generating hundreds of files.  A general recipe how to write such
 programs in Elisp follows.
 </p>
-<ol>
-<li>Do by hand what you'd like to do.  Probably multiple times, till
+
+
+
+<pre class="example">1. Do by hand what you'd like to do.  Probably multiple times, till
    you extract a more or less clean general procedure.
 
-</li>
-<li>Having concrete series of actions, for each of them check what
+2. Having concrete series of actions, for each of them check what
    function lies beneath.  This will help:
 
-<p>
-   <code>C-h k</code>
-</p>
-<p>
+   C-h k
+
    followed by key-sequence will show what command is invoked.
-</p>
-</li>
-<li>(Optional) Jump to the definitions of the above commands and have a
+
+3. (Optional) Jump to the definitions of the above commands and have a
    look at their code.  Not only will you see how adequate Elisp looks
    like, but you may also detect some more primitive function used
    that may fit your bill.
 
-</li>
-<li>Use these functions in order to form your program.
-</li>
-</ol>
+4. Use these functions in order to form your program.
+</pre>
 
 
 <p>
@@ -2405,7 +2411,7 @@ inspiration.
 </div>
 
 <div id="postamble">
-<p class="date">Date: 2013-03-14T20:08+0200</p>
+<p class="date">Date: 2013-03-15T00:17+0200</p>
 <p class="author">Author: Andrey Kotlarski</p>
 <p class="creator"><a href="http://orgmode.org">Org</a> version 7.9.3f with <a href="http://www.gnu.org/software/emacs/">Emacs</a> version 24</p>
 <a href="http://validator.w3.org/check?uri=referer">Validate XHTML 1.0</a>
