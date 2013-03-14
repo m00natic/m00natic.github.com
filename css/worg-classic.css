@@ -1,7 +1,7 @@
 @media all
 {
     body {
-        background: #c0c0c0;
+        background: #FAF0E6;
         color: black;
         margin: 10px 8% 10px 8%;
         font-family: Verdana;
@@ -39,6 +39,10 @@
     }
 
     #content {
+        background: #c0c0c0;
+        border: 1px solid gray;
+        padding-left: 3em;
+        padding-right: 3em;
         max-width: 800px;
         text-align: left;
         margin: 0 auto;
