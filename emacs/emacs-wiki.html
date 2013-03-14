@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 <meta name="title" content="Andrey's Opinionated Emacs Guide"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2013-03-15T00:17+0200"/>
+<meta name="generated" content="2013-03-15T00:54+0200"/>
 <meta name="author" content="Andrey Kotlarski"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
@@ -325,27 +325,27 @@ Emacsers like keyboard shortcuts so much that they often sequence
 several in a row.  Here's how to read some examples:
 </p>
 <p>
-<code>M-x tetris</code>
+<b>M-x tetris</b>
 </p>
 <p>
-(M stands for &lt;Alt&gt;, so invoke &lt;Alt&gt;+&lt;x&gt;, release these keys, type
-&lt;tetris&gt; and press &lt;Enter&gt; &hellip;by the way this is a real command, try
-it!)
+(<b>M</b> stands for <b>&lt;Alt&gt;</b>, so invoke <b>&lt;Alt&gt;+&lt;x&gt;</b>, release these keys,
+type <b>tetris</b> and press <b>&lt;Enter&gt;</b> &hellip;by the way this is a real
+command, try it!)
 </p>
 <p>
-<code>C-x C-f PATH-TO-SOME-FILE</code>
+<b>C-x C-f PATH-TO-SOME-FILE</b>
 </p>
 <p>
-(C stands for &lt;Ctrl&gt;, so invoke &lt;Ctrl&gt;+&lt;x&gt;, release these keys, invoke
-&lt;Ctrl&gt;+&lt;f&gt;, release these keys, type path to some file or directory
-and then press &lt;Enter&gt;)
+(<b>C</b> stands for <b>&lt;Ctrl&gt;</b>, so invoke <b>&lt;Ctrl&gt;+&lt;x&gt;</b>, release these keys,
+invoke <b>&lt;Ctrl&gt;+&lt;f&gt;</b>, release these keys, type path to some file or
+directory and then press <b>&lt;Enter&gt;</b>)
 </p>
 <p>
-<code>C-x v d PATH-TO-SOME-VERSION-CONTROLLED-FOLDER</code>
+<b>C-x v d PATH-TO-VERSION-CONTROLLED-FOLDER</b>
 </p>
 <p>
-(invoke &lt;Ctrl&gt;+&lt;x&gt;, relese these keys, press &lt;v&gt;, release, press &lt;d&gt;,
-release, type path to some directory and then hit &lt;Enter&gt;)
+(invoke <b>&lt;Ctrl&gt;+&lt;x&gt;</b>, relese these keys, press <b>&lt;v&gt;</b>, release, press
+<b>&lt;d&gt;</b>, release, type path to some directory and then hit &lt;Enter&gt;)
 </p>
 </div>
 
@@ -379,13 +379,13 @@ overdid it somewhere.
 To get description of the major mode for the current buffer:
 </p>
 <p>
-<code>C-h m</code>
+<b>C-h m</b>
 </p>
 <p>
 To get all currently available key-bindings grouped by modes:
 </p>
 <p>
-<code>C-h b</code>
+<b>C-h b</b>
 </p>
 </div>
 </div>
@@ -401,7 +401,7 @@ To get all currently available key-bindings grouped by modes:
 If you are new to Emacs, invoke:
 </p>
 <p>
-<code>C-h t</code>
+<b>C-h t</b>
 </p>
 <p>
 to get the intro tutorial.  It's really good and will save you
@@ -436,7 +436,7 @@ it can be immediately executed by placing the cursor just after the
 last closing paren and pressing:
 </p>
 <p>
-<code>C-x C-e</code>
+<b>C-x C-e</b>
 </p>
 <p>
 You can (re)set/(re)define functions, variables, whatever this way and
@@ -453,7 +453,7 @@ below.
 
 
 <p>
-Settings usually reside in ~/.emacs.d/init.el
+Settings usually reside in <b>~/.emacs.d/init.el</b>
 This is where you can paste the tips from below and expect to be in
 effect on each Emacs invocation.
 </p>
@@ -475,7 +475,7 @@ If you somehow manage to push settings that make your Emacs unusable
 just fix it with <a href="http://www.vim.org/">Vim</a>.  Got the joke?  Nah, run Emacs like this:
 </p>
 <p>
-<code>emacs -Q</code>
+<b>emacs -Q</b>
 </p>
 <p>
 and it will skip loading the init.el file giving you a chance to clean
@@ -539,7 +539,7 @@ and/or in terminal:
 
 
 <p>
-The <code>--daemon</code> option is certainly available under GNU/Linux and BSDs.
+The <b>&ndash;daemon</b> option is certainly available under GNU/Linux and BSDs.
 It might even work for BSD rip off like MacOS but not under Windows.
 Nah.  A trve programmer should resort to the latter two only under
 death threat or starvation anyway.
@@ -559,7 +559,7 @@ in a middle of <a href="#sec-2-7">incremental search</a> or whatever.  Suddenly 
 realize that you don't want to continue and stop immediately:
 </p>
 <p>
-<code>C-g</code>
+<b>C-g</b>
 </p>
 <p>
 This is the universal cancel/quit command.  If one press doesn't end
@@ -583,10 +583,10 @@ you use menus like in other programs?  Possible, but what kind of menu
 would hold 3 000+ commands in coherent way&hellip; Call the Devil by name:
 </p>
 <p>
-<code>M-x SOME-COMMAND-NAME</code>
+<b>M-x SOME-COMMAND-NAME</b>
 </p>
 <p>
-&lt;TAB&gt; can be used for completion.  Furthermore, you can do:
+<b>&lt;Tab&gt;</b> can be used for completion.  Furthermore, you can do:
 </p>
 
 
@@ -619,13 +619,13 @@ promise to become full fledged operating system and now has a packet
 manager that can be invoked with:
 </p>
 <p>
-<code>M-x list-packages</code>
+<b>M-x list-packages</b>
 </p>
 <p>
 To install package from there, position on the line of the desired one
-and press &lt;I&gt; (yes, capital).  You can do this several times.  When
-done shopping, press &lt;x&gt;, answer some prompts and you'll soon have
-these extensions in your ~/.emacs.d/elpa directory ready to be used.
+and press <b>&lt;I&gt;</b> (yes, capital).  You can do this several times.  When
+done shopping, press <b>&lt;x&gt;</b>, answer some prompts and you'll soon have
+these extensions in your <b>~/.emacs.d/elpa</b> directory ready to be used.
 </p>
 <p>
 By default only the GNU package repository is used but you can add
@@ -657,7 +657,7 @@ You're in love with some command but there is no key sequence to
 invoke it and you have to resort to:
 </p>
 <p>
-<code>M-x BELOVED-COMMAND</code>
+<b>M-x BELOVED-COMMAND</b>
 </p>
 <p>
 Here's how to assign global key-binding:
@@ -671,14 +671,14 @@ Here's how to assign global key-binding:
 
 <p>
 Et voilà.  Now you'll have your beloved command available anywhere
-through &lt;Ctrl&gt;-c + z.  Some mode may override this very binding
+through <b>&lt;Ctrl&gt;-&lt;c&gt; + &lt;z&gt;</b>.  Some mode may override this very binding
 though.  It is recommended that user defined combinations should be
-&lt;Ctrl&gt;-c followed by single letter (may be capital too).  To see what
-is the key combination sequence syntax accepted by the `kbd' function
-see:
+<b>&lt;Ctrl&gt;-&lt;c&gt;</b> followed by single letter (may be capital too).  To see
+what is the key combination sequence syntax accepted by the `kbd'
+function see:
 </p>
 <p>
-<code>C-h f edmacro-mode</code>
+<b>C-h f edmacro-mode</b>
 </p>
 <p>
 What if you want to assign special key combination only for some
@@ -705,7 +705,7 @@ variable for this mode:
 Your last changes are rubbish?  Undo them:
 </p>
 <p>
-<code>C-/</code>
+<b>C-/</b>
 </p>
 <p>
 Then, they were actually not that bad.  Let's redo&hellip; You are in for a
@@ -730,11 +730,11 @@ changes and can even allow you travel in time for your edits.
 <a href="http://emacswiki.org/emacs/IncrementalSearch">Searching</a> is nice and unobtrusive, just:
 </p>
 <p>
-<code>C-s</code>
+<b>C-s</b>
 </p>
 <p>
-and start typing something.  Press <code>C-s</code> again to iterate matches
-forward or <code>C-r</code> to do it backward.  This is traditional way of just
+and start typing something.  Press <b>C-s</b> again to iterate matches
+forward or <b>C-r</b> to do it backward.  This is traditional way of just
 moving around text too.  More precise and reliable than even a mouse!
 </p>
 </div>
@@ -756,9 +756,10 @@ moving around text too.  More precise and reliable than even a mouse!
 
 
 <p>
-Often Emacs asks something and expects you to type &lt;yes&gt; or &lt;no&gt;
-followed by &lt;Enter&gt;.  Here's how to change this and when faced with
-such existential question be able to just press &lt;y&gt; or &lt;n&gt; instead:
+Often Emacs asks something and expects you to type <b>yes</b> or <b>no</b>
+followed by <b>&lt;Enter&gt;</b>.  Here's how to change this and when faced with
+such existential question be able to just press <b>&lt;y&gt;</b> or <b>&lt;n&gt;</b>
+instead:
 </p>
 
 
@@ -808,13 +809,13 @@ is an overview of what more is supported.
 start it:
 </p>
 <p>
-<code>C-x C-f PATH-TO-SOME-DIRECTORY</code>
+<b>C-x C-f PATH-TO-SOME-DIRECTORY</b>
 </p>
 <p>
 Now hit:
 </p>
 <p>
-<code>C-h m</code>
+<b>C-h m</b>
 </p>
 <p>
 to get summary of what it can do.
@@ -845,19 +846,19 @@ Sounds nice?  Add this to init.el:
 If you now invoke:
 </p>
 <p>
-<code>C-x C-f</code>
+<b>C-x C-f</b>
 </p>
 <p>
 you'll be able to navigate directories and files of the current folder
-by entering parts of their name.  To go directory up, &lt;Backspace&gt;
-would suffice.  To open currently shown directory, press <code>C-d</code>.  To
-create a new file, type its desired name and press <code>C-j</code>.
+by entering parts of their name.  To go directory up, <b>&lt;Backspace&gt;</b>
+would suffice.  To open currently shown directory, press <b>C-d</b>.  To
+create a new file, type its desired name and press <b>C-j</b>.
 </p>
 <p>
 There's more magic.  Using the traditional way to switch to a buffer:
 </p>
 <p>
-<code>C-x b</code>
+<b>C-x b</b>
 </p>
 <p>
 you'll get matching by parts of name and may also get suggestions for
@@ -877,7 +878,7 @@ Why reside to primitive shell &amp; ssh to peek/edit a file on some remote
 server?  You can do it directly from Emacs:
 </p>
 <p>
-<code>C-x C-f /ssh:andrey@some-server:/path/to/some/file/or/folder RET</code>
+<b>C-x C-f /ssh:andrey@some-server:/path/to/some/file/or/folder RET</b>
 (enter password when/if prompted)
 </p>
 <p>
@@ -899,22 +900,22 @@ Note that there are a couple of non-printing characters in the ugly
 regular expression above.  Instead of new line, there is:
 </p>
 <p>
-<code>C-q C-m</code>
+<b>C-q C-m</b>
 </p>
 <p>
 Need to quickly edit some system file?  Don't touch the shell, Emacs
 started by your user is just enough:
 </p>
 <p>
-<code>C-x C-f /sudo:root@localhost:/etc/fstab RET</code>
-(enter password when/if prompted for it)
+<b>C-x C-f /sudo:root@localhost:/etc/fstab RET</b>
+(enter password when/if prompted)
 </p>
 <p>
 <a href="http://emacswiki.org/emacs/TrampMode">TRAMP</a><sup><a class="footref" name="fnr-.3.2" href="#fn-.3">3</a></sup> is a killer.  It supports plethora of protocols.  For more
 information invoke/type:
 </p>
 <p>
-<code>C-h i m TRAMP</code>
+<b>C-h i m TRAMP</b>
 </p>
 </div>
 
@@ -955,9 +956,9 @@ file you edit with Emacs?
 
 <p>
 With the two above spells, all backup files are collected to
-~/.emacs.d/backup/ and some number of old versions is kept.  Borked
+<b>~/.emacs.d/backup/</b> and some number of old versions is kept.  Borked
 some critical file somewhere and regret it?  Do not panic!  Go to the
-backup folder (it may be in <code>/root/.emacs.d/backup/</code> if edited as
+backup folder (it may be in <b>/root/.emacs.d/backup/</b> if edited as
 root, including through TRAMP) and find some stable older version.
 This has saved my ass not once or twice.  This backup/version scheme
 doesn't apply to files that are under "official" version control
@@ -990,7 +991,7 @@ password.  Magic.
 
 
 <p>
-Create a file ~/.authinfo.gpg and paste there something like:
+Create a file <b>~/.authinfo.gpg</b> and paste there something like:
 </p>
 
 
@@ -1003,7 +1004,7 @@ machine test-server port ssh login andrey password very-secret
 <p>
 Save this file (entering password for encryption).  Now, when you
 attempt to ssh (to test-server) or sudo directly from Emacs as
-explained <a href="#sec-3-5">above</a>, you'll be asked for the <code>.authinfo.gpg</code> password once
+explained <a href="#sec-3-5">above</a>, you'll be asked for the <b>.authinfo.gpg</b> password once
 and from there on (for this Emacs session), the passwords listed there
 will be automatically used when you try to access the respective
 resources.
@@ -1019,8 +1020,7 @@ resources.
 
 <blockquote>
 
-<p>Every program attempts to expand until it can read mail.
-                &ndash; Jamie Zawinski
+<p><i>Every program attempts to expand until it can read mail.                 &ndash; Jamie Zawinski</i>
 </p>
 </blockquote>
 
@@ -1031,7 +1031,7 @@ mail/news kitchen sink <a href="http://www.gnus.org/">Gnus</a><sup><a class="foo
 would be too much to give opinionated guide):
 </p>
 <p>
-<code>C-h i m Gnus</code>
+<b>C-h i m Gnus</b>
 </p>
 <p>
 <a href="https://github.com/m00natic/dot-emacs/blob/master/conf/my-mail.el">Here</a> are my current mail settings.  To summarize, it attaches to my
@@ -1073,19 +1073,19 @@ that have tons of them and at least 3 somewhat differing are available
 by default. The first one integrates nicely with <a href="http://en.wikipedia.org/wiki/Elisp">Elisp</a>:
 </p>
 <p>
-<code>M-x eshell</code>
+<b>M-x eshell</b>
 </p>
 <p>
 This one is an almost 1:1 wrapper for systems that provide bash:
 </p>
 <p>
-<code>M-x ansi-term</code>
+<b>M-x ansi-term</b>
 </p>
 <p>
 This one is good for systems with somewhat dumb command line:
 </p>
 <p>
-<code>M-x shell</code>
+<b>M-x shell</b>
 </p>
 <p>
 All of them have advantages and disadvantages to one another but it
@@ -1106,7 +1106,7 @@ Death threat?  Starvation?  Feel for you, sis.  Here is something to
 ease your pain:
 </p>
 <p>
-<code>M-x doctor</code>
+<b>M-x doctor</b>
 </p>
 <p>
 Emacs is generally good enough to make you forget what iron you are
@@ -1139,8 +1139,8 @@ the crippled windows eco-system, install cygwin-mount<sup><a class="footref" nam
 
 
 <p>
-This assumes that <code>C:\cygwin</code> is used for cygwin root and
-<code>C:\cygwin\bin</code> holds the binaries.
+This assumes that <b>C:\cygwin</b> is used for cygwin root and
+<b>C:\cygwin\bin</b> holds the binaries.
 </p>
 <p>
 Dealing with what path is taken as home directory under Windows is a
@@ -1173,7 +1173,7 @@ sub-directories.  Here's how to do it and get hyperlinks to the
 results:
 </p>
 <p>
-<code>M-x rgrep</code>
+<b>M-x rgrep</b>
 </p>
 <p>
 On the second step you'll be asked what files the search should be
@@ -1184,7 +1184,7 @@ constrained upon.  Glob patterns are accepted like:
 </p>
 <p>
 Note that SPC invokes completion here.  To actually insert a space
-character, "quote" it with <code>C-q</code>.
+character, "quote" it with <b>C-q</b>.
 </p>
 </div>
 
@@ -1200,15 +1200,15 @@ Jumping to result locations is not enough for you?  You, spoiled brat!
 Try wgrep<sup><a class="footref" name="fnr-.2.5" href="#fn-.2">2</a></sup>:
 </p>
 <p>
-<code>M-x wgrep-change-to-wgrep-mode</code>
+<b>M-x wgrep-change-to-wgrep-mode</b>
 </p>
 <p>
 while in grep buffer.  Now you can edit in place result lines (regex
-replacing <code>M-%</code> is intelligently acting only over the actual text and
+replacing <b>M-%</b> is intelligently acting only over the actual text and
 skipping file/line information).  After you're done:
 </p>
 <p>
-<code>C-x C-s</code>
+<b>C-x C-s</b>
 </p>
 <p>
 Now all files that have had their lines edited are opened with your
@@ -1217,7 +1217,7 @@ and you're confident that you want all these changes saved use
 IBuffer<sup><a class="footref" name="fnr-.3.4" href="#fn-.3">3</a></sup>:
 </p>
 <p>
-<code>M-x ibuffer</code>
+<b>M-x ibuffer</b>
 </p>
 <p>
 Now all current Emacs buffer are listed.  How convenient.  Now hit:
@@ -1227,11 +1227,11 @@ Now all current Emacs buffer are listed.  How convenient.  Now hit:
 </p>
 <p>
 and all buffers with unsaved changes are marked.  Now press capital
-&lt;S&gt; to save them all.  Job done.  As all within La la land, IBuffer is
-<a href="http://www.emacswiki.org/emacs/IbufferMode">full of tricks and neat features</a>, I even have it bound to:
+<b>&lt;S&gt;</b> to save them all.  Job done.  As all within La la land, IBuffer
+is <a href="http://www.emacswiki.org/emacs/IbufferMode">full of tricks and neat features</a>, I even have it bound to:
 </p>
 <p>
-<code>C-x C-b</code>
+<b>C-x C-b</b>
 </p>
 <p>
 instead the default `list-buffers'<sup><a class="footref" name="fnr-.3.5" href="#fn-.3">3</a></sup>.
@@ -1250,12 +1250,12 @@ Wanna grep something within the current buffer?  It may not be a file
 but even then, why bother with grep? Try:
 </p>
 <p>
-<code>M-x occur</code>
+<b>M-x occur</b>
 </p>
 <p>
 You'll again get a list of results and can jump between locations.
 Handy for quick indexes of whatever search pattern.  If using recent
-version of GNU Emacs, you can edit results in place pressing <code>&lt;e&gt;</code>.
+version of GNU Emacs, you can edit results in place pressing <b>&lt;e&gt;</b>.
 </p>
 </div>
 
@@ -1271,13 +1271,13 @@ Welcome 20 years back!  You can compile through Emacs and get
 errors/warnings as hyperlinks to the offending locations:
 </p>
 <p>
-<code>M-x compile</code>
+<b>M-x compile</b>
 </p>
 <p>
 You're asked for a compile command, WTF?!  Here's what I usually type:
 </p>
 <p>
-<code>cd ~/branches/trunk/release &amp;&amp; make -j4</code>
+<b>cd ~/branches/trunk/release &amp;&amp; make -j4</b>
 </p>
 <p>
 &hellip;now get a cup of tea.  Or if you're a minimalist like me and use
@@ -1286,7 +1286,7 @@ responsive as an idle machine of your colleagues.
 </p>
 <p>
 You may keep the compilation buffer around even after compilation has
-finished.  Within it, you can just press <code>&lt;g&gt;</code> to recompile.
+finished.  Within it, you can just press <b>&lt;g&gt;</b> to recompile.
 </p>
 </div>
 
@@ -1312,7 +1312,7 @@ command to a key like:
 Now hit:
 </p>
 <p>
-<code>C-c f</code>
+<b>C-c f</b>
 </p>
 <p>
 And you'll be able to select a file.  If you have ido-mode enabled for
@@ -1337,7 +1337,7 @@ Here's a sample customization for C++ project:
 
 
 <p>
-This makes directories that have file named <code>.emacs-project</code> root
+This makes directories that have file named <b>.emacs-project</b> root
 project folders.  Also C-like sources are added to list of files to
 offer.  Some source control and build directories are skipped from
 indexing and maximum amount of files offered is set to 4096.
@@ -1392,7 +1392,7 @@ of course has additional packages for more rarely used).  To see what
 I'm talking about:
 </p>
 <p>
-<code>C-x v d PATH-TO-FOLDER-UNDER-VERSION-CONTROL</code>
+<b>C-x v d PATH-TO-FOLDER-UNDER-VERSION-CONTROL</b>
 </p>
 <p>
 Emacs also automatically detects if a file that you've opened is under
@@ -1402,14 +1402,14 @@ individual diff), blame (annotate) and travel in time for lines
 functionality and more.  To see what is available:
 </p>
 <p>
-<code>C-x v C-h</code>
+<b>C-x v C-h</b>
 </p>
 <p>
 And these are commands that by default have been given keys.  To see
 all available:
 </p>
 <p>
-<code>M-x vc-&lt;TAB&gt;</code>
+<b>M-x vc-&lt;Tab&gt;</b>
 </p>
 
 </div>
@@ -1443,7 +1443,7 @@ need to find, needle in a haystack?  In La la land you would yank
 each text in separate buffer and invoke:
 </p>
 <p>
-<code>M-x ediff-buffers</code>
+<b>M-x ediff-buffers</b>
 </p>
 <p>
 selecting names of the buffers to compare.  Now you can jump
@@ -1455,7 +1455,7 @@ Could we use this to resolve conflicts under version control?  Yes!
 If a file is in conflict state, open it and:
 </p>
 <p>
-<code>M-x smerge-ediff</code>
+<b>M-x smerge-ediff</b>
 </p>
 </div>
 
@@ -1468,9 +1468,8 @@ If a file is in conflict state, open it and:
 
 <blockquote>
 
-<p>Some people, when confronted with a problem, think "I know, I'll use
-regular expressions." Now they have two problems.
-                &ndash; Jamie Zawinski
+<p><i>Some people, when confronted with a problem, think "I know, I'll use regular expressions." Now they have two problems.</i>
+                <i>&ndash; Jamie Zawinski</i>
 </p>
 </blockquote>
 
@@ -1486,7 +1485,7 @@ I would like to open your eyes about some gem however.  If you invoke
 this in some buffer:
 </p>
 <p>
-<code>M-x regexp-builder</code>
+<b>M-x regexp-builder</b>
 </p>
 <p>
 you'll be able to interactively build regular expression and on each
@@ -1519,7 +1518,7 @@ Now invoke (it will be nice if you open the destination directory
 first):
 </p>
 <p>
-<code>M-x gdb</code>
+<b>M-x gdb</b>
 </p>
 <p>
 You'll be asked how to run it, append the path of the desired
@@ -1561,7 +1560,7 @@ current function:
 To activate:
 </p>
 <p>
-<code>M-x semantic</code>
+<b>M-x semantic</b>
 </p>
 </div>
 
@@ -1631,7 +1630,7 @@ necessary to get it started at all):
 Now fire it:
 </p>
 <p>
-<code>M-x ecb-activate</code>
+<b>M-x ecb-activate</b>
 </p>
 </div>
 
@@ -1676,7 +1675,7 @@ Emacs comes with a separate binary <a href="http://www.emacswiki.org/emacs/Emacs
 annotate multiple C/C++ source files and create some form of DB which
 can be used for getting different kind of information for the indexed
 sources.  Here's a little wrapper shell script that should be placed
-somewhere on your PATH (<code>/usr/local/bin/</code> preferably),
+somewhere on your PATH (<b>/usr/local/bin/</b> preferably),
 named <b>ebrowse++</b> and made executable:
 </p>
 
@@ -1723,37 +1722,37 @@ Again it needs the GNU find program.  To make use of it:
 
 
 <p>
-Now, while in some project directory (again assuming <code>.emacs-project</code>
+Now, while in some project directory (again assuming <b>.emacs-project</b>
 is present in the root project folder):
 </p>
 <p>
-<code>M-x my-ebrowse-refresh</code>
+<b>M-x my-ebrowse-refresh</b>
 </p>
 <p>
 It loads/refreshes the DB for the current project and opens it in
 background.  To jump over function/variable definition:
 </p>
 <p>
-<code>C-c C-m f NAME-OF-SOME-FUNCTION-OR-METHOD-OR-MEMBER</code>
+<b>C-c C-m f NAME-OF-SOME-FUNCTION-OR-METHOD-OR-MEMBER</b>
 </p>
 <p>
 Don't worry, you'll get completion.  To jump to declaration:
 </p>
 <p>
-<code>C-c C-m F NAME-OF-SOME-FUNCTION-OR-METHOD-OR-MEMBER</code>
+<b>C-c C-m F NAME-OF-SOME-FUNCTION-OR-METHOD-OR-MEMBER</b>
 </p>
 <p>
 To see more unlocked functionality:
 </p>
 <p>
-<code>C-c C-m C-h</code>
+<b>C-c C-m C-h</b>
 </p>
 <p>
 Unfortunately you can't use two ebrowse DB at a time.  To load another
-one (while being in another <code>.emacs-project</code> governed location):
+one (while being in another <b>.emacs-project</b> governed location):
 </p>
 <p>
-<code>C-u M-x my-ebrowse-refresh</code>
+<b>C-u M-x my-ebrowse-refresh</b>
 </p>
 </div>
 </div>
@@ -1790,23 +1789,23 @@ good.
 To invoke the info reader<sup><a class="footref" name="fnr-.3.7" href="#fn-.3">3</a></sup>:
 </p>
 <p>
-<code>C-h i</code>
+<b>C-h i</b>
 </p>
 <p>
 Here's access to the info manuals on your system.  Within it, you can
 jump to the Emacs documentation:
 </p>
 <p>
-<code>m Emacs</code>
+<b>m Emacs</b>
 </p>
 <p>
 the Elisp documentation is top notch too:
 </p>
 <p>
-<code>m Elisp</code>
+<b>m Elisp</b>
 </p>
 <p>
-Mostly <a href="http://en.wikipedia.org/wiki/Richard_M_Stallman">Dick Stallman</a> has done exceptional job, enjoy!
+Mostly <a href="http://en.wikipedia.org/wiki/Richard_M_Stallman">Dick Stallman</a> has initiated exceptional job, enjoy!
 </p>
 </div>
 
@@ -1821,7 +1820,7 @@ Mostly <a href="http://en.wikipedia.org/wiki/Richard_M_Stallman">Dick Stallman</
 You can read system's man pages within Emacs too:
 </p>
 <p>
-<code>M-x woman</code>
+<b>M-x woman</b>
 </p>
 <p>
 Now choose with completion the desired manual.
@@ -1832,7 +1831,7 @@ Sometimes they can not read manuals and randomly crash upon, blaming
 you for whatever.  Screw these bitches:
 </p>
 <p>
-<code>M-x man</code>
+<b>M-x man</b>
 </p>
 </div>
 
@@ -1869,13 +1868,13 @@ The documentation becomes immediately available to the doc system for
 retrieval:
 </p>
 <p>
-<code>C-h f define-keys</code>
+<b>C-h f define-keys</b>
 </p>
 <p>
 This is for functions, macros and modes.  For variables use:
 </p>
 <p>
-<code>C-h v SOME-VARIABLE-NAME</code>
+<b>C-h v SOME-VARIABLE-NAME</b>
 </p>
 <p>
 Completion should ease you in both cases.
@@ -1900,7 +1899,7 @@ which normally denote package.  If this is not the case, there is even
 better search for random Emacs objects:
 </p>
 <p>
-<code>M-x apropos</code>
+<b>M-x apropos</b>
 </p>
 </div>
 
@@ -1916,14 +1915,14 @@ I always have problems remembering what kind of register commands
 there are.  But I remember they start with:
 </p>
 <p>
-<code>C-x r</code>
+<b>C-x r</b>
 </p>
 <p>
 Can Emacs help me?  Rhetorical!  Add C-h to the end of some sequence
 and you'll get all command bindings starting this way:
 </p>
 <p>
-<code>C-x r C-h</code>
+<b>C-x r C-h</b>
 </p>
 </div>
 
@@ -1935,14 +1934,14 @@ and you'll get all command bindings starting this way:
 
 
 <p>
-<code>C-x b</code>
+<b>C-x b</b>
 </p>
 <p>
 lists you all available key-bindings for the current buffer.  If you
 are lazy to invoke a search there to find some elusive command:
 </p>
 <p>
-<code>C-h w SOME-COMMAND-NAME</code>
+<b>C-h w SOME-COMMAND-NAME</b>
 </p>
 <p>
 to see if SOME-COMMAND-NAME is currently available through some key
@@ -1958,7 +1957,7 @@ combination.
 
 
 <p>
-<code>C-h C-h</code>
+<b>C-h C-h</b>
 </p>
 </div>
 </div>
@@ -1980,9 +1979,8 @@ combination.
 
 <blockquote>
 
-<p>I rarely write documents and presentations.  When I do, I use Org
-mode.
-                &ndash; Mahatma Gandhi
+<p><i>I rarely write documents and presentations.  When I do, I use Org mode.</i>
+                <i>&ndash; Mahatma Gandhi</i>
 </p>
 </blockquote>
 
@@ -2015,7 +2013,7 @@ many available formats).
 To launch Org mode either:
 </p>
 <p>
-<code>M-x org-mode</code>
+<b>M-x org-mode</b>
 </p>
 <p>
 for existing buffer, or name your file with an <b>.org</b> extension.
@@ -2065,17 +2063,17 @@ Some rescue plan.
 You can press:
 </p>
 <p>
-<code>C-c C-e</code>
+<b>C-c C-e</b>
 </p>
 <p>
 and choose some format to export to.
 </p>
 <p>
 You can easily reorder headers at the same level (reordering all
-sub-headers and content as well) with <code>&lt;Alt&gt;+&lt;Shift&gt;+&lt;Up&gt;</code> and
-<code>&lt;Alt&gt;+&lt;Shift&gt;+&lt;Down&gt;</code>, change nesting level of a header hierarchy
-with <code>&lt;Alt&gt;+&lt;Shift&gt;+&lt;Left&gt;</code> and <code>&lt;Alt&gt;+&lt;Shift&gt;+&lt;Right&gt;</code>, collapse/show
-different levels with <code>&lt;Shift&gt;+&lt;Tab&gt;</code> and so on.  Have a look at the
+sub-headers and content as well) with <b>&lt;Alt&gt;+&lt;Shift&gt;+&lt;Up&gt;</b> and
+<b>&lt;Alt&gt;+&lt;Shift&gt;+&lt;Down&gt;</b>, change nesting level of a header hierarchy
+with <b>&lt;Alt&gt;+&lt;Shift&gt;+&lt;Left&gt;</b> and <b>&lt;Alt&gt;+&lt;Shift&gt;+&lt;Right&gt;</b>, collapse/show
+different levels with <b>&lt;Shift&gt;+&lt;Tab&gt;</b> and so on.  Have a look at the
 site or the manuals for more.
 </p>
 </div>
@@ -2098,9 +2096,9 @@ Org tables <a href="http://www.youtube.com/watch?v=YtxEOX3WwcM">rock</a>!  Here'
 
 
 <p>
-Now press &lt;Tab&gt; and new row will be added.  &lt;Tab&gt; now moves over the
-fields and automatically resizes the table if longer text is entered
-somewhere.  To insert row separator enter:
+Now press <b>&lt;Tab&gt;</b> and new row will be added.  <b>&lt;Tab&gt;</b> now moves over
+the fields and automatically resizes the table if longer text is
+entered somewhere.  To insert row separator enter:
 </p>
 
 
@@ -2110,12 +2108,12 @@ somewhere.  To insert row separator enter:
 
 
 <p>
-and press &lt;Tab&gt;, it will expand as much as necessary.  You can create
-tables from blocks of text that look like one (like coma or whitespace
-separated rows of values) with
+and press <b>&lt;Tab&gt;</b>, it will expand as much as necessary.  You can
+create tables from blocks of text that look like one (like coma or
+whitespace separated rows of values) with
 </p>
 <p>
-<code>M-x org-table-create-or-convert-from-region</code>
+<b>M-x org-table-create-or-convert-from-region</b>
 </p>
 <p>
 You can do sorting on columns, calculations on rows or columns or
@@ -2190,7 +2188,7 @@ capturing multiple series of keystrokes and then automatically
 executing them on demand.  Here's how to start one:
 </p>
 <p>
-<code>C-x (</code>
+<b>C-x (</b>
 </p>
 <p>
 Now do a series of actions that you'd like to automate.  Be careful,
@@ -2198,22 +2196,22 @@ take your time and try to think of a clean way to achieve the first
 round of what you'd like to do.  When you are ready:
 </p>
 <p>
-<code>C-x )</code>
+<b>C-x )</b>
 </p>
 <p>
 To execute what you've just captured:
 </p>
 <p>
-<code>C-x e</code>
+<b>C-x e</b>
 </p>
 <p>
 To execute it 42 times:
 </p>
 <p>
-<code>C-u 42 C-x e</code>
+<b>C-u 42 C-x e</b>
 </p>
 <p>
-This <code>C-u NUMBER</code> combination known as prefix/universal argument is a
+This <b>C-u NUMBER</b> combination known as prefix/universal argument is a
 way to pass additional argument to many commands and most often causes
 them to be executed number of times.
 </p>
@@ -2223,7 +2221,7 @@ It stays available for execution until you define another one.  To
 cancel capture while still recording, do the usual:
 </p>
 <p>
-<code>C-g</code>
+<b>C-g</b>
 </p>
 <p>
 It will probably take you some practice to get used to recording
@@ -2246,9 +2244,8 @@ the next line.  Now execute this automatically 100 times.
 
 <blockquote>
 
-<p>I have to tell you that probably of all the languages I've used,
-definitely, Emacs Lisp has been the most fun.
-                &ndash; John Wiegley
+<p><i>I have to tell you that probably of all the languages I've used, definitely, Emacs Lisp has been the most fun.</i>
+                <i>&ndash; John Wiegley</i>
 </p>
 </blockquote>
 
@@ -2268,7 +2265,7 @@ are, <a href="http://www.paulgraham.com/diff.html">there</a> <a href="http://www
 about Elisp either for the built-in manual is outstanding:
 </p>
 <p>
-<code>C-h i m Elisp</code>
+<b>C-h i m Elisp</b>
 </p>
 <p>
 However, I will tell you about one of my biggest aha-moments and some
@@ -2386,7 +2383,7 @@ inspiration.
 </p>
 
 
-<p class="footnote"><sup><a class="footnum" name="fn-.2" href="#fnr-.2">2</a></sup> Available through <code>M-x list-packages</code>
+<p class="footnote"><sup><a class="footnum" name="fn-.2" href="#fnr-.2">2</a></sup> Available through <b>M-x list-packages</b>
 </p>
 
 
@@ -2411,7 +2408,7 @@ inspiration.
 </div>
 
 <div id="postamble">
-<p class="date">Date: 2013-03-15T00:17+0200</p>
+<p class="date">Date: 2013-03-15T00:54+0200</p>
 <p class="author">Author: Andrey Kotlarski</p>
 <p class="creator"><a href="http://orgmode.org">Org</a> version 7.9.3f with <a href="http://www.gnu.org/software/emacs/">Emacs</a> version 24</p>
 <a href="http://validator.w3.org/check?uri=referer">Validate XHTML 1.0</a>

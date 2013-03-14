@@ -52,22 +52,22 @@ mercy and stop here.
 Emacsers like keyboard shortcuts so much that they often sequence
 several in a row.  Here's how to read some examples:
 
-~M-x tetris~
+*M-x tetris*
 
-(M stands for <Alt>, so invoke <Alt>+<x>, release these keys, type
-<tetris> and press <Enter> ...by the way this is a real command, try
-it!)
+(*M* stands for *<Alt>*, so invoke *<Alt>+<x>*, release these keys,
+type *tetris* and press *<Enter>* ...by the way this is a real
+command, try it!)
 
-~C-x C-f PATH-TO-SOME-FILE~
+*C-x C-f PATH-TO-SOME-FILE*
 
-(C stands for <Ctrl>, so invoke <Ctrl>+<x>, release these keys, invoke
-<Ctrl>+<f>, release these keys, type path to some file or directory
-and then press <Enter>)
+(*C* stands for *<Ctrl>*, so invoke *<Ctrl>+<x>*, release these keys,
+invoke *<Ctrl>+<f>*, release these keys, type path to some file or
+directory and then press *<Enter>*)
 
-~C-x v d PATH-TO-SOME-VERSION-CONTROLLED-FOLDER~
+*C-x v d PATH-TO-VERSION-CONTROLLED-FOLDER*
 
-(invoke <Ctrl>+<x>, relese these keys, press <v>, release, press <d>,
-release, type path to some directory and then hit <Enter>)
+(invoke *<Ctrl>+<x>*, relese these keys, press *<v>*, release, press
+*<d>*, release, type path to some directory and then hit <Enter>)
 
 *** Modes
 
@@ -92,17 +92,17 @@ overdid it somewhere.
 
 To get description of the major mode for the current buffer:
 
-~C-h m~
+*C-h m*
 
 To get all currently available key-bindings grouped by modes:
 
-~C-h b~
+*C-h b*
 
 ** First steps
 
 If you are new to Emacs, invoke:
 
-~C-h t~
+*C-h t*
 
 to get the intro tutorial.  It's really good and will save you
 headbanging.  Unless you are a metal-head \m/
@@ -123,7 +123,7 @@ parenthesis like for example:
 it can be immediately executed by placing the cursor just after the
 last closing paren and pressing:
 
-~C-x C-e~
+*C-x C-e*
 
 You can (re)set/(re)define functions, variables, whatever this way and
 it immediately comes into effect.  This holds for everything you see
@@ -131,7 +131,7 @@ below.
 
 ** Settings
 
-Settings usually reside in ~/.emacs.d/init.el
+Settings usually reside in *~/.emacs.d/init.el*
 This is where you can paste the tips from below and expect to be in
 effect on each Emacs invocation.
 
@@ -147,7 +147,7 @@ If you somehow manage to push settings that make your Emacs unusable
 
 just fix it with [[http://www.vim.org/][Vim]].  Got the joke?  Nah, run Emacs like this:
 
-~emacs -Q~
+*emacs -Q*
 
 and it will skip loading the init.el file giving you a chance to clean
 the mess.
@@ -182,7 +182,7 @@ and/or in terminal:
 emacsclient -t
 #+END_SRC
 
-The ~--daemon~ option is certainly available under GNU/Linux and BSDs.
+The *--daemon* option is certainly available under GNU/Linux and BSDs.
 It might even work for BSD rip off like MacOS but not under Windows.
 Nah.  A trve programmer should resort to the latter two only under
 death threat or starvation anyway.
@@ -193,7 +193,7 @@ Sometimes you start some action, Emacs asks you questions, or you're
 in a middle of [[Search%20for%20great%20good][incremental search]] or whatever.  Suddenly you come to
 realize that you don't want to continue and stop immediately:
 
-~C-g~
+*C-g*
 
 This is the universal cancel/quit command.  If one press doesn't end
 it, press it again.  Normally 2-3 invocations are enough to take you
@@ -207,9 +207,9 @@ percent of what there is.  So how to find something useful?  Should
 you use menus like in other programs?  Possible, but what kind of menu
 would hold 3 000+ commands in coherent way... Call the Devil by name:
 
-~M-x SOME-COMMAND-NAME~
+*M-x SOME-COMMAND-NAME*
 
-<TAB> can be used for completion.  Furthermore, you can do:
+*<Tab>* can be used for completion.  Furthermore, you can do:
 
 #+BEGIN_SRC emacs-lisp
 (custom-set-variables
@@ -229,12 +229,12 @@ or above, you are one lucky bastard!  GNU Emacs is living to its
 promise to become full fledged operating system and now has a packet
 manager that can be invoked with:
 
-~M-x list-packages~
+*M-x list-packages*
 
 To install package from there, position on the line of the desired one
-and press <I> (yes, capital).  You can do this several times.  When
-done shopping, press <x>, answer some prompts and you'll soon have
-these extensions in your ~/.emacs.d/elpa directory ready to be used.
+and press *<I>* (yes, capital).  You can do this several times.  When
+done shopping, press *<x>*, answer some prompts and you'll soon have
+these extensions in your *~/.emacs.d/elpa* directory ready to be used.
 
 By default only the GNU package repository is used but you can add
 others too:
@@ -253,7 +253,7 @@ others too:
 You're in love with some command but there is no key sequence to
 invoke it and you have to resort to:
 
-~M-x BELOVED-COMMAND~
+*M-x BELOVED-COMMAND*
 
 Here's how to assign global key-binding:
 
@@ -262,13 +262,13 @@ Here's how to assign global key-binding:
 #+END_SRC
 
 Et voilà.  Now you'll have your beloved command available anywhere
-through <Ctrl>-c + z.  Some mode may override this very binding
+through *<Ctrl>-<c> + <z>*.  Some mode may override this very binding
 though.  It is recommended that user defined combinations should be
-<Ctrl>-c followed by single letter (may be capital too).  To see what
-is the key combination sequence syntax accepted by the `kbd' function
-see:
+*<Ctrl>-<c>* followed by single letter (may be capital too).  To see
+what is the key combination sequence syntax accepted by the `kbd'
+function see:
 
-~C-h f edmacro-mode~
+*C-h f edmacro-mode*
 
 What if you want to assign special key combination only for some
 specific mode?  You'll generally have to know the name of the key map
@@ -282,7 +282,7 @@ variable for this mode:
 
 Your last changes are rubbish?  Undo them:
 
-~C-/~
+*C-/*
 
 Then, they were actually not that bad.  Let's redo... You are in for a
 surprise - there is no redo in Emacs.  [[http://www.youtube.com/watch?v%3DkXEgk1Hdze0][Wat]]?!  The reason is that the
@@ -298,19 +298,20 @@ changes and can even allow you travel in time for your edits.
 
 [[http://emacswiki.org/emacs/IncrementalSearch][Searching]] is nice and unobtrusive, just:
 
-~C-s~
+*C-s*
 
-and start typing something.  Press ~C-s~ again to iterate matches
-forward or ~C-r~ to do it backward.  This is traditional way of just
+and start typing something.  Press *C-s* again to iterate matches
+forward or *C-r* to do it backward.  This is traditional way of just
 moving around text too.  More precise and reliable than even a mouse!
 
 * General tips and tricks
 
 ** Yes-No prompts, why type so much?
 
-Often Emacs asks something and expects you to type <yes> or <no>
-followed by <Enter>.  Here's how to change this and when faced with
-such existential question be able to just press <y> or <n> instead:
+Often Emacs asks something and expects you to type *yes* or *no*
+followed by *<Enter>*.  Here's how to change this and when faced with
+such existential question be able to just press *<y>* or *<n>*
+instead:
 
 #+BEGIN_SRC emacs-lisp
 (fset 'yes-or-no-p 'y-or-n-p)
@@ -334,11 +335,11 @@ is an overview of what more is supported.
 [[http://emacswiki.org/emacs/DiredMode][Dired]][fn:built-in] is the most capable file manager I've encountered.  To
 start it:
 
-~C-x C-f PATH-TO-SOME-DIRECTORY~
+*C-x C-f PATH-TO-SOME-DIRECTORY*
 
 Now hit:
 
-~C-h m~
+*C-h m*
 
 to get summary of what it can do.
 
@@ -355,16 +356,16 @@ Sounds nice?  Add this to init.el:
 
 If you now invoke:
 
-~C-x C-f~
+*C-x C-f*
 
 you'll be able to navigate directories and files of the current folder
-by entering parts of their name.  To go directory up, <Backspace>
-would suffice.  To open currently shown directory, press ~C-d~.  To
-create a new file, type its desired name and press ~C-j~.
+by entering parts of their name.  To go directory up, *<Backspace>*
+would suffice.  To open currently shown directory, press *C-d*.  To
+create a new file, type its desired name and press *C-j*.
 
 There's more magic.  Using the traditional way to switch to a buffer:
 
-~C-x b~
+*C-x b*
 
 you'll get matching by parts of name and may also get suggestions for
 files that have been opened in previous sessions.
@@ -374,7 +375,7 @@ files that have been opened in previous sessions.
 Why reside to primitive shell & ssh to peek/edit a file on some remote
 server?  You can do it directly from Emacs:
 
-~C-x C-f /ssh:andrey@some-server:/path/to/some/file/or/folder RET~
+*C-x C-f /ssh:andrey@some-server:/path/to/some/file/or/folder RET*
 (enter password when/if prompted)
 
 Some servers may have fancy colourful prompts that get in the way of
@@ -389,18 +390,18 @@ the default settings though.  Here's something that may work for you:
 Note that there are a couple of non-printing characters in the ugly
 regular expression above.  Instead of new line, there is:
 
-~C-q C-m~
+*C-q C-m*
 
 Need to quickly edit some system file?  Don't touch the shell, Emacs
 started by your user is just enough:
 
-~C-x C-f /sudo:root@localhost:/etc/fstab RET~
-(enter password when/if prompted for it)
+*C-x C-f /sudo:root@localhost:/etc/fstab RET*
+(enter password when/if prompted)
 
 [[http://emacswiki.org/emacs/TrampMode][TRAMP]][fn:built-in] is a killer.  It supports plethora of protocols.  For more
 information invoke/type:
 
-~C-h i m TRAMP~
+*C-h i m TRAMP*
 
 ** Backup and file versions
 
@@ -425,9 +426,9 @@ file you edit with Emacs?
 #+END_SRC
 
 With the two above spells, all backup files are collected to
-~/.emacs.d/backup/ and some number of old versions is kept.  Borked
+*~/.emacs.d/backup/* and some number of old versions is kept.  Borked
 some critical file somewhere and regret it?  Do not panic!  Go to the
-backup folder (it may be in ~/root/.emacs.d/backup/~ if edited as
+backup folder (it may be in */root/.emacs.d/backup/* if edited as
 root, including through TRAMP) and find some stable older version.
 This has saved my ass not once or twice.  This backup/version scheme
 doesn't apply to files that are under "official" version control
@@ -444,7 +445,7 @@ password.  Magic.
 
 ** Don't ask for sudo or ssh passwords
 
-Create a file ~/.authinfo.gpg and paste there something like:
+Create a file *~/.authinfo.gpg* and paste there something like:
 
 #+BEGIN_SRC sh
 machine localhost port sudo login root password very-very-secret
@@ -453,7 +454,7 @@ machine test-server port ssh login andrey password very-secret
 
 Save this file (entering password for encryption).  Now, when you
 attempt to ssh (to test-server) or sudo directly from Emacs as
-explained [[Remote%20network%20and%20sudo%20access][above]], you'll be asked for the ~.authinfo.gpg~ password once
+explained [[Remote%20network%20and%20sudo%20access][above]], you'll be asked for the *.authinfo.gpg* password once
 and from there on (for this Emacs session), the passwords listed there
 will be automatically used when you try to access the respective
 resources.
@@ -461,15 +462,15 @@ resources.
 ** Gnus for mail and news
 
 #+BEGIN_QUOTE
-Every program attempts to expand until it can read mail.
-                -- Jamie Zawinski
+/Every program attempts to expand until it can read mail.
+                -- Jamie Zawinski/
 #+END_QUOTE
 
 There are a lot of ways to manage mail within Emacs.  I use the
 mail/news kitchen sink [[http://www.gnus.org/][Gnus]][fn:built-in].  Here's its glory documented (it
 would be too much to give opinionated guide):
 
-~C-h i m Gnus~
+*C-h i m Gnus*
 
 [[https://github.com/m00natic/dot-emacs/blob/master/conf/my-mail.el][Here]] are my current mail settings.  To summarize, it attaches to my
 gmail, vayant mail accounts (through imap) and also to the gmane/gwene
@@ -499,15 +500,15 @@ program?  Emacsers like shells (and don't start them on [[http://en.wikipedia.or
 that have tons of them and at least 3 somewhat differing are available
 by default. The first one integrates nicely with [[http://en.wikipedia.org/wiki/Elisp][Elisp]]:
 
-~M-x eshell~
+*M-x eshell*
 
 This one is an almost 1:1 wrapper for systems that provide bash:
 
-~M-x ansi-term~
+*M-x ansi-term*
 
 This one is good for systems with somewhat dumb command line:
 
-~M-x shell~
+*M-x shell*
 
 All of them have advantages and disadvantages to one another but it
 will be too much to go into details.  The package manager offers some
@@ -518,7 +519,7 @@ more.
 Death threat?  Starvation?  Feel for you, sis.  Here is something to
 ease your pain:
 
-~M-x doctor~
+*M-x doctor*
 
 Emacs is generally good enough to make you forget what iron you are
 running upon.  Until you reach for outside programs.  To make your
@@ -545,8 +546,8 @@ the crippled windows eco-system, install cygwin-mount[fn:elpa] and then:
       (setq w32shell-cygwin-bin cygwin-dir))))
 #+END_SRC
 
-This assumes that ~C:\cygwin~ is used for cygwin root and
-~C:\cygwin\bin~ holds the binaries.
+This assumes that *C:\cygwin* is used for cygwin root and
+*C:\cygwin\bin* holds the binaries.
 
 Dealing with what path is taken as home directory under Windows is a
 headache.  And you need this to know where init.el should reside.  I
@@ -562,7 +563,7 @@ frequently need recursive searching within some directory and its
 sub-directories.  Here's how to do it and get hyperlinks to the
 results:
 
-~M-x rgrep~
+*M-x rgrep*
 
 On the second step you'll be asked what files the search should be
 constrained upon.  Glob patterns are accepted like:
@@ -570,37 +571,37 @@ constrained upon.  Glob patterns are accepted like:
 ~*.cpp *.h~
 
 Note that SPC invokes completion here.  To actually insert a space
-character, "quote" it with ~C-q~.
+character, "quote" it with *C-q*.
 
 ** Edit grep results in place
 
 Jumping to result locations is not enough for you?  You, spoiled brat!
 Try wgrep[fn:elpa]:
 
-~M-x wgrep-change-to-wgrep-mode~
+*M-x wgrep-change-to-wgrep-mode*
 
 while in grep buffer.  Now you can edit in place result lines (regex
-replacing ~M-%~ is intelligently acting only over the actual text and
+replacing *M-%* is intelligently acting only over the actual text and
 skipping file/line information).  After you're done:
 
-~C-x C-s~
+*C-x C-s*
 
 Now all files that have had their lines edited are opened with your
 changes there waiting to be saved.  If it happens to be a lot of files
 and you're confident that you want all these changes saved use
 IBuffer[fn:built-in]:
 
-~M-x ibuffer~
+*M-x ibuffer*
 
 Now all current Emacs buffer are listed.  How convenient.  Now hit:
 
 ~* u~
 
 and all buffers with unsaved changes are marked.  Now press capital
-<S> to save them all.  Job done.  As all within La la land, IBuffer is
-[[http://www.emacswiki.org/emacs/IbufferMode][full of tricks and neat features]], I even have it bound to:
+*<S>* to save them all.  Job done.  As all within La la land, IBuffer
+is [[http://www.emacswiki.org/emacs/IbufferMode][full of tricks and neat features]], I even have it bound to:
 
-~C-x C-b~
+*C-x C-b*
 
 instead the default `list-buffers'[fn:built-in].
 
@@ -609,29 +610,29 @@ instead the default `list-buffers'[fn:built-in].
 Wanna grep something within the current buffer?  It may not be a file
 but even then, why bother with grep? Try:
 
-~M-x occur~
+*M-x occur*
 
 You'll again get a list of results and can jump between locations.
 Handy for quick indexes of whatever search pattern.  If using recent
-version of GNU Emacs, you can edit results in place pressing ~<e>~.
+version of GNU Emacs, you can edit results in place pressing *<e>*.
 
 ** If it moves - compile
 
 Welcome 20 years back!  You can compile through Emacs and get
 errors/warnings as hyperlinks to the offending locations:
 
-~M-x compile~
+*M-x compile*
 
 You're asked for a compile command, WTF?!  Here's what I usually type:
 
-~cd ~/branches/trunk/release && make -j4~
+*cd ~/branches/trunk/release && make -j4*
 
 ...now get a cup of tea.  Or if you're a minimalist like me and use
 Emacs as an OS - do whatever you like because your computer is as
 responsive as an idle machine of your colleagues.
 
 You may keep the compilation buffer around even after compilation has
-finished.  Within it, you can just press ~<g>~ to recompile.
+finished.  Within it, you can just press *<g>* to recompile.
 
 ** Find file in project
 
@@ -644,7 +645,7 @@ command to a key like:
 
 Now hit:
 
-~C-c f~
+*C-c f*
 
 And you'll be able to select a file.  If you have ido-mode enabled for
 files, you'll get flex matching.  Note that the GNU find command is
@@ -663,7 +664,7 @@ Here's a sample customization for C++ project:
  ffip-limit 4096)
 #+END_SRC
 
-This makes directories that have file named ~.emacs-project~ root
+This makes directories that have file named *.emacs-project* root
 project folders.  Also C-like sources are added to list of files to
 offer.  Some source control and build directories are skipped from
 indexing and maximum amount of files offered is set to 4096.
@@ -704,7 +705,7 @@ Emacs provides unified interface to some of the widely used VCSes (and
 of course has additional packages for more rarely used).  To see what
 I'm talking about:
 
-~C-x v d PATH-TO-FOLDER-UNDER-VERSION-CONTROL~
+*C-x v d PATH-TO-FOLDER-UNDER-VERSION-CONTROL*
 
 Emacs also automatically detects if a file that you've opened is under
 some version control and gives you key-bindings to view diff of
@@ -712,12 +713,12 @@ uncommitted changes, history of the file (and you can look at each
 individual diff), blame (annotate) and travel in time for lines
 functionality and more.  To see what is available:
 
-~C-x v C-h~
+*C-x v C-h*
 
 And these are commands that by default have been given keys.  To see
 all available:
 
-~M-x vc-<TAB>~
+*M-x vc-<Tab>*
 
 *** Magnificent git
 
@@ -734,7 +735,7 @@ Have you ever had two chunks of text with rare differences that you
 need to find, needle in a haystack?  In La la land you would yank
 each text in separate buffer and invoke:
 
-~M-x ediff-buffers~
+*M-x ediff-buffers*
 
 selecting names of the buffers to compare.  Now you can jump
 difference by difference and throw them between buffers doing
@@ -743,14 +744,14 @@ impromptu merging if you want.  [[http://emacswiki.org/emacs/EdiffMode][Ediff]] 
 Could we use this to resolve conflicts under version control?  Yes!
 If a file is in conflict state, open it and:
 
-~M-x smerge-ediff~
+*M-x smerge-ediff*
 
 ** Regular expressions
 
 #+BEGIN_QUOTE
-Some people, when confronted with a problem, think "I know, I'll use
-regular expressions." Now they have two problems.
-                -- Jamie Zawinski
+/Some people, when confronted with a problem, think "I know, I'll use
+regular expressions." Now they have two problems./
+                /-- Jamie Zawinski/
 #+END_QUOTE
 
 Not surprisingly, [[http://en.wikipedia.org/wiki/Regular_expressions][regexes]] are supported all over the place.  There are
@@ -761,7 +762,7 @@ Elisp info pages.
 I would like to open your eyes about some gem however.  If you invoke
 this in some buffer:
 
-~M-x regexp-builder~
+*M-x regexp-builder*
 
 you'll be able to interactively build regular expression and on each
 character entered, matching terms will be highlighted in the initial
@@ -780,7 +781,7 @@ some of it integrating with [[http://www.gnu.org/software/gdb/][GNU Debugger]]:
 Now invoke (it will be nice if you open the destination directory
 first):
 
-~M-x gdb~
+*M-x gdb*
 
 You'll be asked how to run it, append the path of the desired
 executable and [[http://www.youtube.com/watch?v%3D1BH7poMtPVU][rock]]!
@@ -808,7 +809,7 @@ current function:
 
 To activate:
 
-~M-x semantic~
+*M-x semantic*
 
 ** Completion
 
@@ -853,7 +854,7 @@ necessary to get it started at all):
 
 Now fire it:
 
-~M-x ecb-activate~
+*M-x ecb-activate*
 
 ** C++
 
@@ -879,7 +880,7 @@ Emacs comes with a separate binary [[http://www.emacswiki.org/emacs/EmacsBrowse]
 annotate multiple C/C++ source files and create some form of DB which
 can be used for getting different kind of information for the indexed
 sources.  Here's a little wrapper shell script that should be placed
-somewhere on your PATH (~/usr/local/bin/~ preferably),
+somewhere on your PATH (*/usr/local/bin/* preferably),
 named *ebrowse++* and made executable:
 
 #+BEGIN_SRC sh
@@ -918,28 +919,28 @@ or ARG is non nil - locate project file for current directory."
                                             "BROWSE")))))))))
 #+END_SRC
 
-Now, while in some project directory (again assuming ~.emacs-project~
+Now, while in some project directory (again assuming *.emacs-project*
 is present in the root project folder):
 
-~M-x my-ebrowse-refresh~
+*M-x my-ebrowse-refresh*
 
 It loads/refreshes the DB for the current project and opens it in
 background.  To jump over function/variable definition:
 
-~C-c C-m f NAME-OF-SOME-FUNCTION-OR-METHOD-OR-MEMBER~
+*C-c C-m f NAME-OF-SOME-FUNCTION-OR-METHOD-OR-MEMBER*
 
 Don't worry, you'll get completion.  To jump to declaration:
 
-~C-c C-m F NAME-OF-SOME-FUNCTION-OR-METHOD-OR-MEMBER~
+*C-c C-m F NAME-OF-SOME-FUNCTION-OR-METHOD-OR-MEMBER*
 
 To see more unlocked functionality:
 
-~C-c C-m C-h~
+*C-c C-m C-h*
 
 Unfortunately you can't use two ebrowse DB at a time.  To load another
-one (while being in another ~.emacs-project~ governed location):
+one (while being in another *.emacs-project* governed location):
 
-~C-u M-x my-ebrowse-refresh~
+*C-u M-x my-ebrowse-refresh*
 
 * Documentation
 
@@ -958,24 +959,24 @@ good.
 
 To invoke the info reader[fn:built-in]:
 
-~C-h i~
+*C-h i*
 
 Here's access to the info manuals on your system.  Within it, you can
 jump to the Emacs documentation:
 
-~m Emacs~
+*m Emacs*
 
 the Elisp documentation is top notch too:
 
-~m Elisp~
+*m Elisp*
 
-Mostly [[http://en.wikipedia.org/wiki/Richard_M_Stallman][Dick Stallman]] has done exceptional job, enjoy!
+Mostly [[http://en.wikipedia.org/wiki/Richard_M_Stallman][Dick Stallman]] has initiated exceptional job, enjoy!
 
 ** Woman is better than man
 
 You can read system's man pages within Emacs too:
 
-~M-x woman~
+*M-x woman*
 
 Now choose with completion the desired manual.
 
@@ -983,7 +984,7 @@ You know, women are not the most reliable thing in the world.
 Sometimes they can not read manuals and randomly crash upon, blaming
 you for whatever.  Screw these bitches:
 
-~M-x man~
+*M-x man*
 
 ** Elisp live documentation
 
@@ -1007,11 +1008,11 @@ KEYS is alternating key-value list."
 The documentation becomes immediately available to the doc system for
 retrieval:
 
-~C-h f define-keys~
+*C-h f define-keys*
 
 This is for functions, macros and modes.  For variables use:
 
-~C-h v SOME-VARIABLE-NAME~
+*C-h v SOME-VARIABLE-NAME*
 
 Completion should ease you in both cases.
 
@@ -1025,44 +1026,44 @@ The above is useful when you have vague idea about the first symbols,
 which normally denote package.  If this is not the case, there is even
 better search for random Emacs objects:
 
-~M-x apropos~
+*M-x apropos*
 
 ** Discover available long key-binding sequences by their first part
 
 I always have problems remembering what kind of register commands
 there are.  But I remember they start with:
 
-~C-x r~
+*C-x r*
 
 Can Emacs help me?  Rhetorical!  Add C-h to the end of some sequence
 and you'll get all command bindings starting this way:
 
-~C-x r C-h~
+*C-x r C-h*
 
 ** Where is some command?
 
-~C-x b~
+*C-x b*
 
 lists you all available key-bindings for the current buffer.  If you
 are lazy to invoke a search there to find some elusive command:
 
-~C-h w SOME-COMMAND-NAME~
+*C-h w SOME-COMMAND-NAME*
 
 to see if SOME-COMMAND-NAME is currently available through some key
 combination.
 
 ** In short
 
-~C-h C-h~
+*C-h C-h*
 
 * Random
 
 ** Org mode
 
 #+BEGIN_QUOTE
-I rarely write documents and presentations.  When I do, I use Org
-mode.
-                -- Mahatma Gandhi
+/I rarely write documents and presentations.  When I do, I use Org
+mode./
+                /-- Mahatma Gandhi/
 #+END_QUOTE
 
 There is another wonderful thing that comes with Emacs known as [[http://orgmode.org/][Org
@@ -1081,7 +1082,7 @@ many available formats).
 
 To launch Org mode either:
 
-~M-x org-mode~
+*M-x org-mode*
 
 for existing buffer, or name your file with an *.org* extension.
 
@@ -1124,15 +1125,15 @@ Some rescue plan.
 
 You can press:
 
-~C-c C-e~
+*C-c C-e*
 
 and choose some format to export to.
 
 You can easily reorder headers at the same level (reordering all
-sub-headers and content as well) with ~<Alt>+<Shift>+<Up>~ and
-~<Alt>+<Shift>+<Down>~, change nesting level of a header hierarchy
-with ~<Alt>+<Shift>+<Left>~ and ~<Alt>+<Shift>+<Right>~, collapse/show
-different levels with ~<Shift>+<Tab>~ and so on.  Have a look at the
+sub-headers and content as well) with *<Alt>+<Shift>+<Up>* and
+*<Alt>+<Shift>+<Down>*, change nesting level of a header hierarchy
+with *<Alt>+<Shift>+<Left>* and *<Alt>+<Shift>+<Right>*, collapse/show
+different levels with *<Shift>+<Tab>* and so on.  Have a look at the
 site or the manuals for more.
 
 *** Tables
@@ -1143,19 +1144,19 @@ Org tables [[http://www.youtube.com/watch?v%3DYtxEOX3WwcM][rock]]!  Here's how t
 | heading1 | heading2 | bla |
 #+END_SRC
 
-Now press <Tab> and new row will be added.  <Tab> now moves over the
-fields and automatically resizes the table if longer text is entered
-somewhere.  To insert row separator enter:
+Now press *<Tab>* and new row will be added.  *<Tab>* now moves over
+the fields and automatically resizes the table if longer text is
+entered somewhere.  To insert row separator enter:
 
 #+BEGIN_SRC org
 |-
 #+END_SRC
 
-and press <Tab>, it will expand as much as necessary.  You can create
-tables from blocks of text that look like one (like coma or whitespace
-separated rows of values) with
+and press *<Tab>*, it will expand as much as necessary.  You can
+create tables from blocks of text that look like one (like coma or
+whitespace separated rows of values) with
 
-~M-x org-table-create-or-convert-from-region~
+*M-x org-table-create-or-convert-from-region*
 
 You can do sorting on columns, calculations on rows or columns or
 parts of them and more - it has spreadsheet functionality.  Very handy
@@ -1195,23 +1196,23 @@ powerful facility for automation - keyboard macros.  The idea is
 capturing multiple series of keystrokes and then automatically
 executing them on demand.  Here's how to start one:
 
-~C-x (~
+*C-x (*
 
 Now do a series of actions that you'd like to automate.  Be careful,
 take your time and try to think of a clean way to achieve the first
 round of what you'd like to do.  When you are ready:
 
-~C-x )~
+*C-x )*
 
 To execute what you've just captured:
 
-~C-x e~
+*C-x e*
 
 To execute it 42 times:
 
-~C-u 42 C-x e~
+*C-u 42 C-x e*
 
-This ~C-u NUMBER~ combination known as prefix/universal argument is a
+This *C-u NUMBER* combination known as prefix/universal argument is a
 way to pass additional argument to many commands and most often causes
 them to be executed number of times.
 
@@ -1219,7 +1220,7 @@ Note that you don't have to execute the captured macro immediately.
 It stays available for execution until you define another one.  To
 cancel capture while still recording, do the usual:
 
-~C-g~
+*C-g*
 
 It will probably take you some practice to get used to recording
 composable series of actions, see [[http://emacswiki.org/emacs/KeyboardMacros][here]] for example.  Once you master
@@ -1233,9 +1234,9 @@ the next line.  Now execute this automatically 100 times.
 ** Elisp
 
 #+BEGIN_QUOTE
-I have to tell you that probably of all the languages I've used,
-definitely, Emacs Lisp has been the most fun.
-                -- John Wiegley
+/I have to tell you that probably of all the languages I've used,
+definitely, Emacs Lisp has been the most fun./
+                /-- John Wiegley/
 #+END_QUOTE
 
 I wonder if after all this stuff, you have decided for yourself what
@@ -1250,7 +1251,7 @@ program pieces.  I won't go into details how [[http://www.youtube.com/watch?v%3D
 are, [[http://www.paulgraham.com/diff.html][there]] [[http://www.paulgraham.com/avg.html][is]] a [[http://www.gigamonkeys.com/book/introduction-why-lisp.html][lot]] of [[http://www.gigamonkeys.com/book/macros-defining-your-own.html][material]] out [[http://www.defmacro.org/ramblings/lisp.html][there]].  I won't tell you much
 about Elisp either for the built-in manual is outstanding:
 
-~C-h i m Elisp~
+*C-h i m Elisp*
 
 However, I will tell you about one of my biggest aha-moments and some
 practical consequences.  While Elisp is becoming quite an adequate
@@ -1325,7 +1326,7 @@ inspiration.
 
 [fn:built-in] This is a built-in extension
 
-[fn:elpa] Available through ~M-x list-packages~
+[fn:elpa] Available through *M-x list-packages*
 
 [fn:1] If you made it through the last sentence, require your award
 
