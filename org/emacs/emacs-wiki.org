@@ -944,16 +944,16 @@ one (while being in another *.emacs-project* governed location):
 
 * Documentation
 
-Emacs documentation is the most complete and accessible set of
-resources I have ever seen (only second to [[http://en.wikipedia.org/wiki/Lisp_machine][Lisp Machines]]'s [[http://en.wikipedia.org/wiki/Genera_%2528operating_system%2529][Genera
-operating systems]] but they are 20 years in the past and as one may
-observe, technology is stubbornly regressing in this along other
-aspects since then).
+Emacs documentation is the most complete and easily accessible set of
+resources I have seen (only second to [[http://en.wikipedia.org/wiki/Lisp_machine][Lisp Machines]]'s [[http://en.wikipedia.org/wiki/Genera_%2528operating_system%2529][Genera operating
+systems]] but they are 20 years in the past and as one may observe,
+technology is [[http://www.loper-os.org/?p%3D300][stubbornly regressing]] in this along other aspects since
+then).
 
-This is the only environment that has enabled me in a day learn a
-language and easily add useful functionality without internet access.
-And do this with pleasure and still have hair on my head.  It's that
-good.
+This is the only environment that has enabled me in a day learn
+relevant chunk of language and easily add useful functionality without
+internet access.  And do this with pleasure and still have hair on my
+head.  It's that good.
 
 ** Info
 
@@ -1247,13 +1247,17 @@ a Death Star?  Time has come to tell you the truth.  Luke, I'm your...
 Emacs at its essence is an interpreter for a [[http://en.wikipedia.org/wiki/Lisp_%2528programming_language%2529][Lisp]] dialect - Emacs Lisp
 (Elisp).  All magic interactivity is a byproduct of this.  All
 parenthesized settings and code snippets from above are actually Elisp
-program pieces.  I won't go into details how [[http://www.youtube.com/watch?v%3DHM1Zb3xmvMc][cool]] Lisp-like languages
-are, [[http://www.paulgraham.com/diff.html][there]] [[http://www.paulgraham.com/avg.html][is]] a [[http://www.gigamonkeys.com/book/introduction-why-lisp.html][lot]] of [[http://www.gigamonkeys.com/book/macros-defining-your-own.html][material]] out [[http://www.defmacro.org/ramblings/lisp.html][there]].  I won't tell you much
-about Elisp either for the built-in manual is outstanding:
+program pieces.  Here's a nice built-in introduction:
+
+*C-h i m Emacs Lisp Intro*
+
+I won't go into details how [[http://www.youtube.com/watch?v%3DHM1Zb3xmvMc][cool]] Lisp-like languages are, [[http://www.paulgraham.com/diff.html][there]] [[http://www.paulgraham.com/avg.html][is]] a
+[[http://www.gigamonkeys.com/book/introduction-why-lisp.html][lot]] of [[http://www.gigamonkeys.com/book/macros-defining-your-own.html][material]] out [[http://www.defmacro.org/ramblings/lisp.html][there]].  I won't tell you much about Elisp either
+for the built-in reference is outstanding:
 
 *C-h i m Elisp*
 
-However, I will tell you about one of my biggest aha-moments and some
+However, I will tell you about one of my aha-moments and some
 practical consequences.  While Elisp is becoming quite an adequate
 lisp[fn:2], it really shines at...
 
@@ -1286,15 +1290,16 @@ programs in Elisp follows.
    followed by key-sequence will show what command is invoked.
 
 3. (Optional) Jump to the definitions of the above commands and have a
-   look at their code.  Not only will you see how adequate Elisp looks
-   like, but you may also detect some more primitive function used
-   that may fit your bill.
+   look at their code.  Not only will you see how idiomatic Elisp
+   looks like, but you may also detect some more primitive function
+   used that may fit your bill.
 
 4. Use these functions in order to form your program.
 #+END_EXAMPLE
 
 So code literally follows the editing process, ingenious!  Step 3 is
-very educational, though with time you may need it less often.
+very educational, manifest of free (as in speech) software, though
+with time you may need it less often.
 
 This is a start.  If you become serious practitioner, you'll randomly
 start at step 4 which is basically...programming.  But you'll
