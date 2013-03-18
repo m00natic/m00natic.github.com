@@ -974,7 +974,7 @@ the Elisp documentation is top notch too:
 
 Mostly [[http://en.wikipedia.org/wiki/Richard_M_Stallman][Dick Stallman]] has initiated exceptional job, enjoy!
 
-** Woman is better than man
+** Browse system manuals
 
 You can read system's man pages within Emacs too:
 
