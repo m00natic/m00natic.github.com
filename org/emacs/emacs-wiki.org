@@ -559,8 +559,8 @@ remotely remember [[http://www.emacswiki.org/emacs/MsWindowsInstallation][settin
 
 ** Grep on steroids
 
-Like other [[http://www.gnu.org/][GNU tools]], grep has nice integration within Emacs.  I most
-frequently need recursive searching within some directory and its
+Like other [[http://www.gnu.org/][GNU tools]], *grep* has nice integration within Emacs.  I
+most frequently need recursive searching within some directory and its
 sub-directories.  Here's how to do it and get hyperlinks to the
 results:
 
@@ -589,7 +589,7 @@ skipping file/line information).  After you're done:
 
 Now all files that have had their lines edited are opened with your
 changes there waiting to be saved.  If it happens to be a lot of files
-and you're confident that you want all these changes saved use
+and you're confident that you want all these changes saved, use
 IBuffer[fn:built-in]:
 
 *M-x ibuffer*
@@ -648,8 +648,8 @@ Now hit:
 
 *C-c f*
 
-And you'll be able to select a file.  If you have ido-mode enabled for
-files, you'll get flex matching.  Note that the GNU find command is
+And you'll be able to select a file.  If you have [[Fuzzy%20matching%20when%20navigating%20the%20file%20system][ido-mode]] enabled for
+files, you'll get flex matching.  Note that the *GNU find* command is
 expected, which means that under Windows, you'll probably need the
 Cygwin environment with the settings given [[Microsoft%20Windows%20(tm)][above]].
 
@@ -726,9 +726,9 @@ all available:
 If you happen to use [[http://git-scm.com][Git]], check out [[http://magit.github.com/magit/][Magit]][fn:elpa].  It's a nice
 interface to some of the most often used Git commands.  My favourite
 feature is the ability to iterate through the diff hunks and
-selectively choose which ones to stage or unstage (works not just for
-hunks but for arbitrary marked region!).  Makes partial file commits
-trivial.
+selectively choose which ones to stage, unstage or revert (works not
+just for hunks but for arbitrary marked region!).  Makes partial file
+commits trivial.
 
 ** Interactive diff and merging
 
@@ -836,7 +836,7 @@ function/variable names become non-issue.
 ** General coding IDE
 
 I'm sure your grannies have used [[http://en.wikipedia.org/wiki/Integrated_development_environment][IDE]]s all their life.  There is a
-package called [[http://emacswiki.org/emacs/EmacsCodeBrowser][Emacs Code Browser]] (ECB)[fn:elpa] and may give you a
+package called [[http://emacswiki.org/emacs/EmacsCodeBrowser][Emacs Code Browser]] (ECB)[fn:elpa] that may give you a
 breeze of life-supporting IDE familiarity.  Furthermore, imagine how
 cool it is to have IDE working in terminal...yes, it does, just like
 rest of Emacs.  Here are some settings for it (some of them are
@@ -872,8 +872,8 @@ ways to get something.  Firstly some general customization:
 #+END_SRC
 
 It sets some automatic indent styles for C-like languages.  Uses
-spaces instead of tabs and shows in the mode-line the name of function
-that the cursor is currently placed in.
+spaces instead of tabs and shows the name of function that the cursor
+is currently placed in the mode-line.
 
 *** Jump to definitions
 
@@ -897,7 +897,7 @@ find . -regex ".*\.\(hpp\|cpp\|h\|c\)" \
     -not -regex ".*\(debug\|release\|svn\|git\).*" | ebrowse
 #+END_SRC
 
-Again it needs the GNU find program.  To make use of it:
+Again it needs the *GNU find* program.  To make use of it:
 
 #+BEGIN_SRC emacs-lisp
 (when (executable-find "ebrowse-c++")
@@ -938,8 +938,9 @@ To see more unlocked functionality:
 
 *C-c C-m C-h*
 
-Unfortunately you can't use two ebrowse DB at a time.  To load another
-one (while being in another *.emacs-project* governed location):
+Unfortunately you can't use two ebrowse DBs at a time.  To load
+another one (while being in another *.emacs-project* governed
+location):
 
 *C-u M-x my-ebrowse-refresh*
 
@@ -979,11 +980,8 @@ You can read system's man pages within Emacs too:
 
 *M-x woman*
 
-Now choose with completion the desired manual.
-
-You know, women are not the most reliable thing in the world.
-Sometimes they can not read manuals and randomly crash upon, blaming
-you for whatever.  Screw these bitches:
+now choose with completion the desired manual.  Woman is not always
+reliable though.  In case it doesn't work, non-imaginatively try:
 
 *M-x man*
 
@@ -1031,19 +1029,19 @@ better search for random Emacs objects:
 
 ** Discover available long key-binding sequences by their first part
 
-I always have problems remembering what kind of register commands
-there are.  But I remember they start with:
+I always have problems recalling what register commands there are.
+But I remember they start with:
 
 *C-x r*
 
-Can Emacs help me?  Rhetorical!  Add C-h to the end of some sequence
+Can Emacs help me?  Rhetorical!  Add *C-h* to the end of some sequence
 and you'll get all command bindings starting this way:
 
 *C-x r C-h*
 
 ** Where is some command?
 
-*C-x b*
+*C-h b*
 
 lists you all available key-bindings for the current buffer.  If you
 are lazy to invoke a search there to find some elusive command:
@@ -1153,9 +1151,9 @@ entered somewhere.  To insert row separator enter:
 |-
 #+END_SRC
 
-and press *<Tab>*, it will expand as much as necessary.  You can
-create tables from blocks of text that look like one (like coma or
-whitespace separated rows of values) with
+in the beginning of line and press *<Tab>*, it will expand as much as
+necessary.  You can create tables from blocks of text that look like
+one (like coma or whitespace separated rows of values) with
 
 *M-x org-table-create-or-convert-from-region*
 
@@ -1167,7 +1165,7 @@ for quick dealing with formatted program output.
 
 Have to write some official document?  Want to concentrate on content
 and structure rather than fonts, colours, headings and what not?
-Write an org-mode file and export it to PDF (through [[http://en.wikipedia.org/wiki/LaTeX][LaTeX]])!  It will
+Write an Org mode file and export it to PDF (through [[http://en.wikipedia.org/wiki/LaTeX][LaTeX]])!  It will
 take care of all details, add table of content even.
 
 Setting up a header page is a little work though.  Here's a little
@@ -1213,9 +1211,9 @@ To execute it 42 times:
 
 *C-u 42 C-x e*
 
-This *C-u NUMBER* combination known as prefix/universal argument is a
-way to pass additional argument to many commands and most often causes
-them to be executed number of times.
+This *C-u NUMBER* combination, known as prefix/universal argument, is
+a way to pass additional argument to many commands and most often
+causes them to be executed number of times.
 
 Note that you don't have to execute the captured macro immediately.
 It stays available for execution until you define another one.  To
@@ -1311,10 +1309,10 @@ cease to learn.  Happy lisping!
 
 Emacs is what you make of it.  I don't know of other environment as
 malleable as it is.  Play with it, make it comfortable.  It's defaults
-are not set in stones, make them powerful for your tasks.  Unlike most
-other tools, learning Emacs[fn:3] can pay off spectacularly,
-especially in terms of productivity.  As with most other quality
-things in life, if you persist, it will deliver.
+are not set in stones, make them suit your tasks.  Unlike most other
+tools, learning Emacs[fn:3] can pay off spectacularly, especially in
+terms of productivity.  As with most other quality things in life, if
+you persist, it will deliver.
 
 ** Random resources
 
@@ -1336,6 +1334,6 @@ inspiration.
 
 [fn:1] If you made it through the last sentence, require your award
 
-[fn:2] Some people write even [[http://elnode.org/][web servers]] nowadays
+[fn:2] Some people even write [[http://elnode.org/][web servers]] nowadays
 
 [fn:3] Realistically, no mortal can learn Emacs in its entirety
