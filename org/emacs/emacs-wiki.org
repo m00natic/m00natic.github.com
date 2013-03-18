@@ -437,11 +437,11 @@ system.  Guess what, you don't need it there anyway.
 ** Manage GnuPG encrypted files
 
 For this you'll need the [[http://www.gnupg.org/][GNU Privacy Guard]] program.  Open new file
-like example.gpg (note the file extension).  Write something there and
-save it.  You'll be asked for symmetrical encryption password.  Enter
-such, et voilà, your file is now encrypted.  When attempting to open
-encrypted file with gpg extension from Emacs, you'll be asked for
-password.  Magic.
+like *example.gpg* (note the file extension).  Write something there
+and save it.  You'll be asked for symmetrical encryption password.
+Enter such, et voilà, your file is now encrypted.  When attempting to
+open encrypted file with *.gpg* extension from Emacs, you'll be asked
+for password.  Magic.
 
 ** Don't ask for sudo or ssh passwords
 
@@ -486,7 +486,7 @@ new messages for selected (mail)boxes and notifications.  For
 notifications I'm using notify.el[fn:elpa].
 
 Wouldn't want to type passwords every now and then when dealing with
-mail accounts?  authinfo(.gpg) to the rescue again!
+mail accounts?  [[Don't%20ask%20for%20sudo%20or%20ssh%20passwords][authinfo]](.gpg) to the rescue again!
 
 #+BEGIN_SRC sh
 machine gmail port 993 login andrey password very-very-secret
@@ -502,7 +502,8 @@ by default. The first one integrates nicely with [[http://en.wikipedia.org/wiki/
 
 *M-x eshell*
 
-This one is an almost 1:1 wrapper for systems that provide bash:
+This one is an almost 1:1 wrapper for systems that provide Unix like
+terminals:
 
 *M-x ansi-term*
 
