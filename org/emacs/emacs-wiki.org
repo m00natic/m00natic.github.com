@@ -1066,7 +1066,7 @@ mode./
 #+END_QUOTE
 
 There is another wonderful thing that comes with Emacs known as [[http://orgmode.org/][Org
-mode]].  It's often quoted as a prime reason for people starting to use
+mode]].  It's often quoted as prime reason for people starting to use
 Emacs, even former Vimmers.  Here's what's written on their site:
 
 #+BEGIN_QUOTE
@@ -1168,11 +1168,10 @@ and structure rather than fonts, colours, headings and what not?
 Write an Org mode file and export it to PDF (through [[http://en.wikipedia.org/wiki/LaTeX][LaTeX]])!  It will
 take care of all details, add table of content even.
 
-Setting up a header page is a little work though.  Here's a little
-[[https://gist.github.com/m00natic/15410be25f7475984a71][example]] how to make header page with some picture logo and integrate
-it within an Org document.  I have added some optional information
-like author, title and export type as well.  Tweak it however you
-want.
+Setting up fancy header page may be a little work though.  Here's a
+little [[https://gist.github.com/m00natic/15410be25f7475984a71][example]] how to make one with some picture logo and integrate it
+within an Org document.  I have added some optional information like
+author, title and export type as well.  Tweak it however you want.
 
 ** Vim
 
