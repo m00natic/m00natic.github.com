@@ -617,8 +617,9 @@ but even then, why bother with grep? Try:
 *M-x occur*
 
 You'll again get a list of results and can jump between locations.
-Handy for quick indexes of whatever search pattern.  If using recent
-version of GNU Emacs, you can edit results in place pressing *<e>*.
+Handy for quick indexes of whatever search pattern.  You can even
+invoke *occur* over *occur* buffer!  If using recent version of GNU
+Emacs, you can edit results in place pressing *<e>*.
 
 ** If it moves - compile
 
