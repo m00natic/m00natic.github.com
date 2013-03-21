@@ -25,7 +25,7 @@ contemporary users.  Here's a little correspondence table for some of
 the basics:
 
 |----------------------------------------------+----------------------------------------------------|
-| *Emacs land (I'll call it La la land below)* | *Rest of the world*                                |
+| *Emacs land (I'll call it Lala land below)* | *Rest of the world*                                |
 |----------------------------------------------+----------------------------------------------------|
 | frame                                        | program window                                     |
 |----------------------------------------------+----------------------------------------------------|
@@ -111,7 +111,8 @@ headbanging.  Unless you are a metal-head \m/
 
 Unlike other environments and programs that pretend to be interactive,
 Emacs actually is.  When you see a code snippet closed between
-parenthesis like for example:
+parenthesis (well, it needs to be somewhat valid [[http://en.wikipedia.org/wiki/Elisp][Elisp]]) like for
+example:
 
 #+BEGIN_SRC emacs-lisp
 (message "Mozart is a great %s."
@@ -149,22 +150,22 @@ just fix it with [[http://www.vim.org/][Vim]].  Got the joke?  Nah, run Emacs li
 
 *emacs -Q*
 
-and it will skip loading the init.el file giving you a chance to clean
-the mess.
+and it will skip loading the *init.el* file, giving you a chance to
+clean the mess.
 
 * Practical essentials
 
 ** Run Emacs as daemon
 
 Stock Emacs is quick and nimble (extensions are loaded only when/if
-demanded), you can use it just like Vim, start it to edit a file then
+demanded), you can use it just like [[Vim]], start it to edit a file then
 kill it.  However, Emacs is so much more useful that many emacsers
 prefer to start it once and reuse this single instance for many tasks.
 So...
 
 Forget religious prejudices, run Emacs as daemon and connect to this
-hell creature in graphics mode or from terminal or...both...several
-times.  Here's how:
+hell of a creature in graphics mode or from terminal
+or...both...several times.  Here's how:
 
 #+BEGIN_SRC sh
 emacs --daemon
@@ -205,7 +206,7 @@ Emacs is all running on commands.  Press whatever button, bam, some
 command is invoked.  There are so many that one can remember just a
 percent of what there is.  So how to find something useful?  Should
 you use menus like in other programs?  Possible, but what kind of menu
-would hold 3 000+ commands in coherent way... Call the Devil by name:
+would hold 3 000+ commands in coherent way... Call the devil by name:
 
 *M-x SOME-COMMAND-NAME*
 
@@ -234,7 +235,8 @@ manager that can be invoked with:
 To install package from there, position on the line of the desired one
 and press *<I>* (yes, capital).  You can do this several times.  When
 done shopping, press *<x>*, answer some prompts and you'll soon have
-these extensions in your *~/.emacs.d/elpa* directory ready to be used.
+these extensions in your *~/.emacs.d/elpa/* directory ready to be
+used.
 
 By default only the GNU package repository is used but you can add
 others too:
@@ -326,16 +328,16 @@ is marked:
 - all sorts of string/regex replace work only on this region
 - [[Undo/redo][undo]] acts only on the region
 
-The last one is an Easter Egg.  Think slowly how useful it can be,
-undoing the changes just in some selection.  [[http://www.gnu.org/software/emacs/manual/html_node/emacs/Using-Region.html][Here]] (and in the manual)
-is an overview of what more is supported.
+The last one is an Easter Egg.  Think how useful it can be, undoing
+the changes just in some selection.  [[http://www.gnu.org/software/emacs/manual/html_node/emacs/Using-Region.html][Here]] (and in the manual) is an
+overview of what more is supported.
 
 ** Work with directories
 
 [[http://emacswiki.org/emacs/DiredMode][Dired]][fn:built-in] is the most capable file manager I've encountered.  To
 start it:
 
-*C-x C-f PATH-TO-SOME-DIRECTORY*
+*C-x d PATH-TO-SOME-DIRECTORY*
 
 Now hit:
 
@@ -345,7 +347,7 @@ to get summary of what it can do.
 
 ** Fuzzy matching when navigating the file system
 
-Sounds nice?  Add this to init.el:
+Sounds nice?  Add this to [[Settings][init.el]]:
 
 #+BEGIN_SRC emacs-lisp
 (custom-set-variables
@@ -498,16 +500,16 @@ machine smtp.gmail.com port 587 login andrey password very-very-secret
 Tired of unable to search or copy properly inside the terminal
 program?  Emacsers like shells (and don't start them on [[http://en.wikipedia.org/wiki/REPL][REPL]]s) so much
 that have tons of them and at least 3 somewhat differing are available
-by default. The first one integrates nicely with [[http://en.wikipedia.org/wiki/Elisp][Elisp]]:
+by default. The first one integrates nicely with [[Elisp]]:
 
 *M-x eshell*
 
-This one is an almost 1:1 wrapper for systems that provide Unix like
-terminals:
+The next one is an almost 1:1 wrapper for systems that provide Unix
+like terminals:
 
 *M-x ansi-term*
 
-This one is good for systems with somewhat dumb command line:
+Lastly, this is good for systems with somewhat dumb command line:
 
 *M-x shell*
 
@@ -525,11 +527,12 @@ ease your pain:
 Emacs is generally good enough to make you forget what iron you are
 running upon.  Until you reach for outside programs.  To make your
 windows experience in general more acceptable, use [[http://www.cygwin.com][Cygwin]].  It gives
-you bash terminal and package manager to the ever useful GNU tools and
+you bash terminal and package manager to the ever useful [[http://www.gnu.org/][GNU tools]] and
 other ported stuff.
 
 To make Emacs aware of the cygwin environment and prefer it instead of
-the crippled windows eco-system, install cygwin-mount[fn:elpa] and then:
+the crippled windows ecosystem, install cygwin-mount[fn:elpa] and
+then:
 
 #+BEGIN_SRC emacs-lisp
 (defconst +win-path+ "C:/" "Windows root path.")
@@ -551,7 +554,7 @@ This assumes that *C:\cygwin* is used for cygwin root and
 *C:\cygwin\bin* holds the binaries.
 
 Dealing with what path is taken as home directory under Windows is a
-headache.  And you need this to know where init.el should reside.  I
+headache.  And you need this to know where [[Settings][init.el]] should reside.  I
 remotely remember [[http://www.emacswiki.org/emacs/MsWindowsInstallation][setting HOME variable]] in some MyComputer settings
 (also modifying the PATH one to prefer cygwin's paths).
 
@@ -559,8 +562,8 @@ remotely remember [[http://www.emacswiki.org/emacs/MsWindowsInstallation][settin
 
 ** Grep on steroids
 
-Like other [[http://www.gnu.org/][GNU tools]], *grep* has nice integration within Emacs.  I
-most frequently need recursive searching within some directory and its
+Like other GNU tools, [[http://en.wikipedia.org/wiki/Grep][grep]] has nice integration within Emacs.  I most
+frequently need recursive searching within some directory and its
 sub-directories.  Here's how to do it and get hyperlinks to the
 results:
 
@@ -599,7 +602,7 @@ Now all current Emacs buffer are listed.  How convenient.  Now hit:
 ~* u~
 
 and all buffers with unsaved changes are marked.  Now press capital
-*<S>* to save them all.  Job done.  As all within La la land, IBuffer
+*<S>* to save them all.  Job done.  As all within Lala land, IBuffer
 is [[http://www.emacswiki.org/emacs/IbufferMode][full of tricks and neat features]], I even have it bound to:
 
 *C-x C-b*
@@ -649,7 +652,7 @@ Now hit:
 *C-c f*
 
 And you'll be able to select a file.  If you have [[Fuzzy%20matching%20when%20navigating%20the%20file%20system][ido-mode]] enabled for
-files, you'll get flex matching.  Note that the *GNU find* command is
+files, you'll get flex matching.  Note that the [[http://en.wikipedia.org/wiki/Find][GNU find]] command is
 expected, which means that under Windows, you'll probably need the
 Cygwin environment with the settings given [[Microsoft%20Windows%20(tm)][above]].
 
@@ -733,8 +736,8 @@ commits trivial.
 ** Interactive diff and merging
 
 Have you ever had two chunks of text with rare differences that you
-need to find, needle in a haystack?  In La la land you would yank
-each text in separate buffer and invoke:
+need to find, needle in a haystack?  In Lala land you would yank each
+text in separate buffer and invoke:
 
 *M-x ediff-buffers*
 
@@ -758,7 +761,7 @@ regular expressions." Now they have two problems./
 Not surprisingly, [[http://en.wikipedia.org/wiki/Regular_expressions][regexes]] are supported all over the place.  There are
 some differences to the popular [[http://en.wikipedia.org/wiki/Pcre][PCRE]] style and if you're serious about
 it, you should read the appropriate sections in the great Emacs and
-Elisp info pages.
+Elisp [[Info][info pages]].
 
 I would like to open your eyes about some gem however.  If you invoke
 this in some buffer:
@@ -1180,7 +1183,7 @@ are many packages that give some sort of [[http://www.emacswiki.org/emacs/Catego
 such an insert/escape addict but still want all the power of symbolic
 universe, you might try one of them.  The current poster child is
 [[http://emacswiki.org/emacs/Evil][Evil]][fn:elpa] and seems praised as the most potent emulation not just in
-La la land.
+Lala land.
 
 By the way, I thought editor wars finished when [[http://upsilon.cc/~zack/blog/posts/2008/10/from_Vim_to_Emacs_-_part_1/][Debian's Vim
 maintainer switched to Emacs]].

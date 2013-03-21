@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 <meta name="title" content="Andrey's Opinionated Emacs Guide"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2013-03-19T01:04+0200"/>
+<meta name="generated" content="2013-03-21T01:50+0200"/>
 <meta name="author" content="Andrey Kotlarski"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
@@ -280,7 +280,7 @@ the basics:
 <colgroup><col class="left" /><col class="left" />
 </colgroup>
 <thead>
-<tr><th scope="col" class="left"><b>Emacs land (I'll call it La la land below)</b></th><th scope="col" class="left"><b>Rest of the world</b></th></tr>
+<tr><th scope="col" class="left"><b>Emacs land (I'll call it Lala land below)</b></th><th scope="col" class="left"><b>Rest of the world</b></th></tr>
 </thead>
 <tbody>
 <tr><td class="left">frame</td><td class="left">program window</td></tr>
@@ -419,7 +419,8 @@ headbanging.  Unless you are a metal-head \m/
 <p>
 Unlike other environments and programs that pretend to be interactive,
 Emacs actually is.  When you see a code snippet closed between
-parenthesis like for example:
+parenthesis (well, it needs to be somewhat valid <a href="http://en.wikipedia.org/wiki/Elisp">Elisp</a>) like for
+example:
 </p>
 
 
@@ -478,8 +479,8 @@ just fix it with <a href="http://www.vim.org/">Vim</a>.  Got the joke?  Nah, run
 <b>emacs -Q</b>
 </p>
 <p>
-and it will skip loading the init.el file giving you a chance to clean
-the mess.
+and it will skip loading the <b>init.el</b> file, giving you a chance to
+clean the mess.
 </p>
 </div>
 </div>
@@ -501,15 +502,15 @@ the mess.
 
 <p>
 Stock Emacs is quick and nimble (extensions are loaded only when/if
-demanded), you can use it just like Vim, start it to edit a file then
+demanded), you can use it just like <a href="#sec-6-2">Vim</a>, start it to edit a file then
 kill it.  However, Emacs is so much more useful that many emacsers
 prefer to start it once and reuse this single instance for many tasks.
 So&hellip;
 </p>
 <p>
 Forget religious prejudices, run Emacs as daemon and connect to this
-hell creature in graphics mode or from terminal or&hellip;both&hellip;several
-times.  Here's how:
+hell of a creature in graphics mode or from terminal
+or&hellip;both&hellip;several times.  Here's how:
 </p>
 
 
@@ -580,7 +581,7 @@ Emacs is all running on commands.  Press whatever button, bam, some
 command is invoked.  There are so many that one can remember just a
 percent of what there is.  So how to find something useful?  Should
 you use menus like in other programs?  Possible, but what kind of menu
-would hold 3 000+ commands in coherent way&hellip; Call the Devil by name:
+would hold 3 000+ commands in coherent way&hellip; Call the devil by name:
 </p>
 <p>
 <b>M-x SOME-COMMAND-NAME</b>
@@ -625,7 +626,8 @@ manager that can be invoked with:
 To install package from there, position on the line of the desired one
 and press <b>&lt;I&gt;</b> (yes, capital).  You can do this several times.  When
 done shopping, press <b>&lt;x&gt;</b>, answer some prompts and you'll soon have
-these extensions in your <b>~/.emacs.d/elpa</b> directory ready to be used.
+these extensions in your <b>~/.emacs.d/elpa/</b> directory ready to be
+used.
 </p>
 <p>
 By default only the GNU package repository is used but you can add
@@ -791,9 +793,9 @@ is marked:
 
 
 <p>
-The last one is an Easter Egg.  Think slowly how useful it can be,
-undoing the changes just in some selection.  <a href="http://www.gnu.org/software/emacs/manual/html_node/emacs/Using-Region.html">Here</a> (and in the manual)
-is an overview of what more is supported.
+The last one is an Easter Egg.  Think how useful it can be, undoing
+the changes just in some selection.  <a href="http://www.gnu.org/software/emacs/manual/html_node/emacs/Using-Region.html">Here</a> (and in the manual) is an
+overview of what more is supported.
 </p>
 </div>
 
@@ -809,7 +811,7 @@ is an overview of what more is supported.
 start it:
 </p>
 <p>
-<b>C-x C-f PATH-TO-SOME-DIRECTORY</b>
+<b>C-x d PATH-TO-SOME-DIRECTORY</b>
 </p>
 <p>
 Now hit:
@@ -830,7 +832,7 @@ to get summary of what it can do.
 
 
 <p>
-Sounds nice?  Add this to init.el:
+Sounds nice?  Add this to <a href="#sec-1-4">init.el</a>:
 </p>
 
 
@@ -1070,20 +1072,20 @@ machine smtp.gmail.com port 587 login andrey password very-very-secret
 Tired of unable to search or copy properly inside the terminal
 program?  Emacsers like shells (and don't start them on <a href="http://en.wikipedia.org/wiki/REPL">REPL</a>s) so much
 that have tons of them and at least 3 somewhat differing are available
-by default. The first one integrates nicely with <a href="http://en.wikipedia.org/wiki/Elisp">Elisp</a>:
+by default. The first one integrates nicely with <a href="#sec-7-2">Elisp</a>:
 </p>
 <p>
 <b>M-x eshell</b>
 </p>
 <p>
-This one is an almost 1:1 wrapper for systems that provide Unix like
-terminals:
+The next one is an almost 1:1 wrapper for systems that provide Unix
+like terminals:
 </p>
 <p>
 <b>M-x ansi-term</b>
 </p>
 <p>
-This one is good for systems with somewhat dumb command line:
+Lastly, this is good for systems with somewhat dumb command line:
 </p>
 <p>
 <b>M-x shell</b>
@@ -1113,12 +1115,13 @@ ease your pain:
 Emacs is generally good enough to make you forget what iron you are
 running upon.  Until you reach for outside programs.  To make your
 windows experience in general more acceptable, use <a href="http://www.cygwin.com">Cygwin</a>.  It gives
-you bash terminal and package manager to the ever useful GNU tools and
+you bash terminal and package manager to the ever useful <a href="http://www.gnu.org/">GNU tools</a> and
 other ported stuff.
 </p>
 <p>
 To make Emacs aware of the cygwin environment and prefer it instead of
-the crippled windows eco-system, install cygwin-mount<sup><a class="footref" name="fnr-.2.4" href="#fn-.2">2</a></sup> and then:
+the crippled windows ecosystem, install cygwin-mount<sup><a class="footref" name="fnr-.2.4" href="#fn-.2">2</a></sup> and
+then:
 </p>
 
 
@@ -1145,7 +1148,7 @@ This assumes that <b>C:\cygwin</b> is used for cygwin root and
 </p>
 <p>
 Dealing with what path is taken as home directory under Windows is a
-headache.  And you need this to know where init.el should reside.  I
+headache.  And you need this to know where <a href="#sec-1-4">init.el</a> should reside.  I
 remotely remember <a href="http://www.emacswiki.org/emacs/MsWindowsInstallation">setting HOME variable</a> in some MyComputer settings
 (also modifying the PATH one to prefer cygwin's paths).
 </p>
@@ -1168,8 +1171,8 @@ remotely remember <a href="http://www.emacswiki.org/emacs/MsWindowsInstallation"
 
 
 <p>
-Like other <a href="http://www.gnu.org/">GNU tools</a>, <b>grep</b> has nice integration within Emacs.  I
-most frequently need recursive searching within some directory and its
+Like other GNU tools, <a href="http://en.wikipedia.org/wiki/Grep">grep</a> has nice integration within Emacs.  I most
+frequently need recursive searching within some directory and its
 sub-directories.  Here's how to do it and get hyperlinks to the
 results:
 </p>
@@ -1228,7 +1231,7 @@ Now all current Emacs buffer are listed.  How convenient.  Now hit:
 </p>
 <p>
 and all buffers with unsaved changes are marked.  Now press capital
-<b>&lt;S&gt;</b> to save them all.  Job done.  As all within La la land, IBuffer
+<b>&lt;S&gt;</b> to save them all.  Job done.  As all within Lala land, IBuffer
 is <a href="http://www.emacswiki.org/emacs/IbufferMode">full of tricks and neat features</a>, I even have it bound to:
 </p>
 <p>
@@ -1317,7 +1320,7 @@ Now hit:
 </p>
 <p>
 And you'll be able to select a file.  If you have <a href="#sec-3-4">ido-mode</a> enabled for
-files, you'll get flex matching.  Note that the <b>GNU find</b> command is
+files, you'll get flex matching.  Note that the <a href="http://en.wikipedia.org/wiki/Find">GNU find</a> command is
 expected, which means that under Windows, you'll probably need the
 Cygwin environment with the settings given <a href="#sec-3-11">above</a>.
 </p>
@@ -1440,8 +1443,8 @@ commits trivial.
 
 <p>
 Have you ever had two chunks of text with rare differences that you
-need to find, needle in a haystack?  In La la land you would yank
-each text in separate buffer and invoke:
+need to find, needle in a haystack?  In Lala land you would yank each
+text in separate buffer and invoke:
 </p>
 <p>
 <b>M-x ediff-buffers</b>
@@ -1479,7 +1482,7 @@ If a file is in conflict state, open it and:
 Not surprisingly, <a href="http://en.wikipedia.org/wiki/Regular_expressions">regexes</a> are supported all over the place.  There are
 some differences to the popular <a href="http://en.wikipedia.org/wiki/Pcre">PCRE</a> style and if you're serious about
 it, you should read the appropriate sections in the great Emacs and
-Elisp info pages.
+Elisp <a href="#sec-5-1">info pages</a>.
 </p>
 <p>
 I would like to open your eyes about some gem however.  If you invoke
@@ -2155,7 +2158,7 @@ are many packages that give some sort of <a href="http://www.emacswiki.org/emacs
 such an insert/escape addict but still want all the power of symbolic
 universe, you might try one of them.  The current poster child is
 <a href="http://emacswiki.org/emacs/Evil">Evil</a><sup><a class="footref" name="fnr-.2.10" href="#fn-.2">2</a></sup> and seems praised as the most potent emulation not just in
-La la land.
+Lala land.
 </p>
 <p>
 By the way, I thought editor wars finished when <a href="http://upsilon.cc/~zack/blog/posts/2008/10/from_Vim_to_Emacs_-_part_1/">Debian's Vim maintainer switched to Emacs</a>.
@@ -2412,7 +2415,7 @@ inspiration.
 </div>
 
 <div id="postamble">
-<p class="date">Date: 2013-03-19T01:04+0200</p>
+<p class="date">Date: 2013-03-21T01:50+0200</p>
 <p class="author">Author: Andrey Kotlarski</p>
 <p class="creator"><a href="http://orgmode.org">Org</a> version 7.9.3f with <a href="http://www.gnu.org/software/emacs/">Emacs</a> version 24</p>
 <a href="http://validator.w3.org/check?uri=referer">Validate XHTML 1.0</a>
