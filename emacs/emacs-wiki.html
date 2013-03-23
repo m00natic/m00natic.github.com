@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 <meta name="title" content="Andrey's Opinionated Emacs Guide"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2013-03-22T00:26+0200"/>
+<meta name="generated" content="2013-03-23T02:06+0200"/>
 <meta name="author" content="Andrey Kotlarski"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
@@ -156,16 +156,18 @@ for the JavaScript code in this tag.
 <li><a href="#sec-3">3 General tips and tricks</a>
 <ul>
 <li><a href="#sec-3-1">3.1 Yes-No prompts, why type so much?</a></li>
-<li><a href="#sec-3-2">3.2 Operations on selection/region</a></li>
-<li><a href="#sec-3-3">3.3 Work with directories</a></li>
-<li><a href="#sec-3-4">3.4 Fuzzy matching when navigating the file system</a></li>
-<li><a href="#sec-3-5">3.5 Remote network and sudo access</a></li>
-<li><a href="#sec-3-6">3.6 Backup and file versions</a></li>
-<li><a href="#sec-3-7">3.7 Manage GnuPG encrypted files</a></li>
-<li><a href="#sec-3-8">3.8 Don't ask for sudo or ssh passwords</a></li>
-<li><a href="#sec-3-9">3.9 Gnus for mail and news</a></li>
-<li><a href="#sec-3-10">3.10 Shell, terminal, console, whatever you call it</a></li>
-<li><a href="#sec-3-11">3.11 Microsoft Windows (tm)</a></li>
+<li><a href="#sec-3-2">3.2 Region</a></li>
+<li><a href="#sec-3-3">3.3 Markers</a></li>
+<li><a href="#sec-3-4">3.4 Operations on selection/region</a></li>
+<li><a href="#sec-3-5">3.5 Work with directories</a></li>
+<li><a href="#sec-3-6">3.6 Fuzzy matching when navigating the file system</a></li>
+<li><a href="#sec-3-7">3.7 Remote network and sudo access</a></li>
+<li><a href="#sec-3-8">3.8 Backup and file versions</a></li>
+<li><a href="#sec-3-9">3.9 Manage GnuPG encrypted files</a></li>
+<li><a href="#sec-3-10">3.10 Don't ask for sudo or ssh passwords</a></li>
+<li><a href="#sec-3-11">3.11 Gnus for mail and news</a></li>
+<li><a href="#sec-3-12">3.12 Shell, terminal, console, whatever you call it</a></li>
+<li><a href="#sec-3-13">3.13 Microsoft Windows (tm)</a></li>
 </ul>
 </li>
 <li><a href="#sec-4">4 Programming tips and tricks</a>
@@ -218,7 +220,7 @@ for the JavaScript code in this tag.
 <li><a href="#sec-7">7 Emacs for black belts</a>
 <ul>
 <li><a href="#sec-7-1">7.1 Keyboard macros</a></li>
-<li><a href="#sec-7-2">7.2 Elisp</a>
+<li><a href="#sec-7-2">7.2 Emacs Lisp</a>
 <ul>
 <li><a href="#sec-7-2-1">7.2.1 Text superpowers</a></li>
 <li><a href="#sec-7-2-2">7.2.2 Text processing automation for dummies</a></li>
@@ -345,7 +347,7 @@ directory and then press <b>&lt;Enter&gt;</b>)
 </p>
 <p>
 (invoke <b>&lt;Ctrl&gt;+&lt;x&gt;</b>, relese these keys, press <b>&lt;v&gt;</b>, release, press
-<b>&lt;d&gt;</b>, release, type path to some directory and then hit &lt;Enter&gt;)
+<b>&lt;d&gt;</b>, release, type path to some directory and then hit <b>&lt;Enter&gt;</b>)
 </p>
 </div>
 
@@ -502,7 +504,7 @@ clean the mess.
 
 <p>
 Stock Emacs is quick and nimble (extensions are loaded only when/if
-demanded), you can use it just like <a href="#sec-6-2">Vim</a>, start it to edit a file then
+demanded), you can use it just like <a href="#sec-6-2">Vim</a>, start it to edit a file, then
 kill it.  However, Emacs is so much more useful that many emacsers
 prefer to start it once and reuse this single instance for many tasks.
 So&hellip;
@@ -556,7 +558,7 @@ death threat or starvation anyway.
 
 <p>
 Sometimes you start some action, Emacs asks you questions, or you're
-in a middle of <a href="#sec-2-7">incremental search</a> or whatever.  Suddenly you come to
+in a middle of <a href="#sec-2-7">incremental search</a> or whatever.  Suddenly, you come to
 realize that you don't want to continue and stop immediately:
 </p>
 <p>
@@ -736,8 +738,15 @@ changes and can even allow you travel in time for your edits.
 </p>
 <p>
 and start typing something.  Press <b>C-s</b> again to iterate matches
-forward or <b>C-r</b> to do it backward.  This is traditional way of just
-moving around text too.  More precise and reliable than even a mouse!
+forward or <b>C-r</b> to do it backward.  Press <b>&lt;Enter&gt;</b> when you've found
+what you need or <b>C-g</b> to cancel search and return to where it
+started.  This is traditional way of just moving around text too.
+More precise and reliable than even a mouse!
+</p>
+<p>
+If search was successful (ending with <b>&lt;Enter&gt;</b>), <a href="#sec-3-3">mark</a> has been
+established on the point where the search was invoked.  So if you feel
+like going back, just press <b>C-u C-&lt;SPC&gt;</b>.
 </p>
 </div>
 </div>
@@ -775,14 +784,77 @@ instead:
 </div>
 
 <div id="outline-container-3-2" class="outline-3">
-<h3 id="sec-3-2"><span class="section-number-3">3.2</span> Operations on selection/region</h3>
+<h3 id="sec-3-2"><span class="section-number-3">3.2</span> Region</h3>
 <div class="outline-text-3" id="text-3-2">
+
+
+<p>
+While you can do selection with mouse (and <b>&lt;Shift&gt;</b> in combination
+with the arrows) as years of brainwashing have taught us, Emacs allows
+some more.  Press:
+</p>
+<p>
+<b>C-&lt;SPC&gt;</b>
+</p>
+<p>
+where you'd like to start a selection and then move around to where
+selection should end.  <a href="#sec-2-7">Incremental search</a> is allowed!  Not only this,
+if you think that the initial point of selection needs to change,
+invoke:
+</p>
+<p>
+<b>C-x C-x</b>
+</p>
+<p>
+and cursor will move to the initial selection point, allowing you to
+refine it (again, searching is OK), while selection region is still
+active.  In fact, you can jump like this between the selection ends
+and refine them as many times as you want.  Neat.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-3-3" class="outline-3">
+<h3 id="sec-3-3"><span class="section-number-3">3.3</span> Markers</h3>
+<div class="outline-text-3" id="text-3-3">
+
+
+<p>
+Moving around selection ends is dandy and is result of a more general
+mechanism.  Enter marks.  Pressing:
+</p>
+<p>
+<b>C-&lt;SPC&gt; C-&lt;SPC&gt;</b>
+</p>
+<p>
+marks current cursor position as special.  If you now move around the
+buffer, pressing:
+</p>
+<p>
+<b>C-u C-&lt;SPC&gt;</b>
+</p>
+<p>
+will move you back to the special position.  You can keep
+pressing <b>C-u C-&lt;SPC&gt;</b> and it will cycle through all such special
+positions that have been marked at some point in the buffer<sup><a class="footref" name="fnr-.3" href="#fn-.3">3</a></sup>.
+Some commands automatically mark current position so don't be
+surprised if such cycling brings you to places where search or
+selection has been invoked.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-3-4" class="outline-3">
+<h3 id="sec-3-4"><span class="section-number-3">3.4</span> Operations on selection/region</h3>
+<div class="outline-text-3" id="text-3-4">
 
 
 <p>
 Lesser programs normally allow two actions on selection - copying and
 deletion.  Emacs is not as boring.  Beside the obvious, when a region
-is marked:
+is selected:
 </p>
 <ul>
 <li>all sorts of string/regex replace work only on this region
@@ -794,20 +866,20 @@ is marked:
 
 <p>
 The last one is an Easter Egg.  Think how useful it can be, undoing
-the changes just in some selection.  <a href="http://www.gnu.org/software/emacs/manual/html_node/emacs/Using-Region.html">Here</a> (and in the manual) is an
+changes just in some selection.  <a href="http://www.gnu.org/software/emacs/manual/html_node/emacs/Using-Region.html">Here</a> (and in the manual) is an
 overview of what more is supported.
 </p>
 </div>
 
 </div>
 
-<div id="outline-container-3-3" class="outline-3">
-<h3 id="sec-3-3"><span class="section-number-3">3.3</span> Work with directories</h3>
-<div class="outline-text-3" id="text-3-3">
+<div id="outline-container-3-5" class="outline-3">
+<h3 id="sec-3-5"><span class="section-number-3">3.5</span> Work with directories</h3>
+<div class="outline-text-3" id="text-3-5">
 
 
 <p>
-<a href="http://emacswiki.org/emacs/DiredMode">Dired</a><sup><a class="footref" name="fnr-.3" href="#fn-.3">3</a></sup> is the most capable file manager I've encountered.  To
+<a href="http://emacswiki.org/emacs/DiredMode">Dired</a><sup><a class="footref" name="fnr-.4" href="#fn-.4">4</a></sup> is the most capable file manager I've encountered.  To
 start it:
 </p>
 <p>
@@ -826,9 +898,9 @@ to get summary of what it can do.
 
 </div>
 
-<div id="outline-container-3-4" class="outline-3">
-<h3 id="sec-3-4"><span class="section-number-3">3.4</span> Fuzzy matching when navigating the file system</h3>
-<div class="outline-text-3" id="text-3-4">
+<div id="outline-container-3-6" class="outline-3">
+<h3 id="sec-3-6"><span class="section-number-3">3.6</span> Fuzzy matching when navigating the file system</h3>
+<div class="outline-text-3" id="text-3-6">
 
 
 <p>
@@ -870,9 +942,9 @@ files that have been opened in previous sessions.
 
 </div>
 
-<div id="outline-container-3-5" class="outline-3">
-<h3 id="sec-3-5"><span class="section-number-3">3.5</span> Remote network and sudo access</h3>
-<div class="outline-text-3" id="text-3-5">
+<div id="outline-container-3-7" class="outline-3">
+<h3 id="sec-3-7"><span class="section-number-3">3.7</span> Remote network and sudo access</h3>
+<div class="outline-text-3" id="text-3-7">
 
 
 <p>
@@ -880,7 +952,7 @@ Why reside to primitive shell &amp; ssh to peek/edit a file on some remote
 server?  You can do it directly from Emacs:
 </p>
 <p>
-<b>C-x C-f /ssh:andrey@some-server:/path/to/some/file/or/folder RET</b>
+<b>C-x C-f /ssh:andrey@some-server:/path/to/some/file/or/folder &lt;Enter&gt;</b>
 (enter password when/if prompted)
 </p>
 <p>
@@ -909,11 +981,11 @@ Need to quickly edit some system file?  Don't touch the shell, Emacs
 started by your user is just enough:
 </p>
 <p>
-<b>C-x C-f /sudo:root@localhost:/etc/fstab RET</b>
+<b>C-x C-f /sudo:root@localhost:/etc/fstab &lt;Enter&gt;</b>
 (enter password when/if prompted)
 </p>
 <p>
-<a href="http://emacswiki.org/emacs/TrampMode">TRAMP</a><sup><a class="footref" name="fnr-.3.2" href="#fn-.3">3</a></sup> is a killer.  It supports plethora of protocols.  For more
+<a href="http://emacswiki.org/emacs/TrampMode">TRAMP</a><sup><a class="footref" name="fnr-.4.2" href="#fn-.4">4</a></sup> is a killer.  It supports plethora of protocols.  For more
 information invoke/type:
 </p>
 <p>
@@ -923,9 +995,9 @@ information invoke/type:
 
 </div>
 
-<div id="outline-container-3-6" class="outline-3">
-<h3 id="sec-3-6"><span class="section-number-3">3.6</span> Backup and file versions</h3>
-<div class="outline-text-3" id="text-3-6">
+<div id="outline-container-3-8" class="outline-3">
+<h3 id="sec-3-8"><span class="section-number-3">3.8</span> Backup and file versions</h3>
+<div class="outline-text-3" id="text-3-8">
 
 
 <p>
@@ -970,9 +1042,9 @@ system.  Guess what, you don't need it there anyway.
 
 </div>
 
-<div id="outline-container-3-7" class="outline-3">
-<h3 id="sec-3-7"><span class="section-number-3">3.7</span> Manage GnuPG encrypted files</h3>
-<div class="outline-text-3" id="text-3-7">
+<div id="outline-container-3-9" class="outline-3">
+<h3 id="sec-3-9"><span class="section-number-3">3.9</span> Manage GnuPG encrypted files</h3>
+<div class="outline-text-3" id="text-3-9">
 
 
 <p>
@@ -987,9 +1059,9 @@ for password.  Magic.
 
 </div>
 
-<div id="outline-container-3-8" class="outline-3">
-<h3 id="sec-3-8"><span class="section-number-3">3.8</span> Don't ask for sudo or ssh passwords</h3>
-<div class="outline-text-3" id="text-3-8">
+<div id="outline-container-3-10" class="outline-3">
+<h3 id="sec-3-10"><span class="section-number-3">3.10</span> Don't ask for sudo or ssh passwords</h3>
+<div class="outline-text-3" id="text-3-10">
 
 
 <p>
@@ -1006,7 +1078,7 @@ machine test-server port ssh login andrey password very-secret
 <p>
 Save this file (entering password for encryption).  Now, when you
 attempt to ssh (to test-server) or sudo directly from Emacs as
-explained <a href="#sec-3-5">above</a>, you'll be asked for the <b>.authinfo.gpg</b> password once
+explained <a href="#sec-3-7">above</a>, you'll be asked for the <b>.authinfo.gpg</b> password once
 and from there on (for this Emacs session), the passwords listed there
 will be automatically used when you try to access the respective
 resources.
@@ -1015,9 +1087,9 @@ resources.
 
 </div>
 
-<div id="outline-container-3-9" class="outline-3">
-<h3 id="sec-3-9"><span class="section-number-3">3.9</span> Gnus for mail and news</h3>
-<div class="outline-text-3" id="text-3-9">
+<div id="outline-container-3-11" class="outline-3">
+<h3 id="sec-3-11"><span class="section-number-3">3.11</span> Gnus for mail and news</h3>
+<div class="outline-text-3" id="text-3-11">
 
 
 <blockquote>
@@ -1029,7 +1101,7 @@ resources.
 
 <p>
 There are a lot of ways to manage mail within Emacs.  I use the
-mail/news kitchen sink <a href="http://www.gnus.org/">Gnus</a><sup><a class="footref" name="fnr-.3.3" href="#fn-.3">3</a></sup>.  Here's its glory documented (it
+mail/news kitchen sink <a href="http://www.gnus.org/">Gnus</a><sup><a class="footref" name="fnr-.4.3" href="#fn-.4">4</a></sup>.  Here's its glory documented (it
 would be too much to give opinionated guide):
 </p>
 <p>
@@ -1049,7 +1121,7 @@ notifications I'm using notify.el<sup><a class="footref" name="fnr-.2.3" href="#
 </p>
 <p>
 Wouldn't want to type passwords every now and then when dealing with
-mail accounts?  <a href="#sec-3-8">authinfo</a>(.gpg) to the rescue again!
+mail accounts?  <a href="#sec-3-10">authinfo</a>(.gpg) to the rescue again!
 </p>
 
 
@@ -1063,9 +1135,9 @@ machine smtp.gmail.com port 587 login andrey password very-very-secret
 
 </div>
 
-<div id="outline-container-3-10" class="outline-3">
-<h3 id="sec-3-10"><span class="section-number-3">3.10</span> Shell, terminal, console, whatever you call it</h3>
-<div class="outline-text-3" id="text-3-10">
+<div id="outline-container-3-12" class="outline-3">
+<h3 id="sec-3-12"><span class="section-number-3">3.12</span> Shell, terminal, console, whatever you call it</h3>
+<div class="outline-text-3" id="text-3-12">
 
 
 <p>
@@ -1099,9 +1171,9 @@ more.
 
 </div>
 
-<div id="outline-container-3-11" class="outline-3">
-<h3 id="sec-3-11"><span class="section-number-3">3.11</span> Microsoft Windows (tm)</h3>
-<div class="outline-text-3" id="text-3-11">
+<div id="outline-container-3-13" class="outline-3">
+<h3 id="sec-3-13"><span class="section-number-3">3.13</span> Microsoft Windows (tm)</h3>
+<div class="outline-text-3" id="text-3-13">
 
 
 <p>
@@ -1187,7 +1259,7 @@ constrained upon.  Glob patterns are accepted like:
 <code>*.cpp *.h</code>
 </p>
 <p>
-Note that SPC invokes completion here.  To actually insert a space
+Note that <b>&lt;SPC&gt;</b> invokes completion here.  To actually insert a space
 character, "quote" it with <b>C-q</b>.
 </p>
 </div>
@@ -1218,7 +1290,7 @@ skipping file/line information).  After you're done:
 Now all files that have had their lines edited are opened with your
 changes there waiting to be saved.  If it happens to be a lot of files
 and you're confident that you want all these changes saved, use
-IBuffer<sup><a class="footref" name="fnr-.3.4" href="#fn-.3">3</a></sup>:
+IBuffer<sup><a class="footref" name="fnr-.4.4" href="#fn-.4">4</a></sup>:
 </p>
 <p>
 <b>M-x ibuffer</b>
@@ -1238,7 +1310,7 @@ is <a href="http://www.emacswiki.org/emacs/IbufferMode">full of tricks and neat 
 <b>C-x C-b</b>
 </p>
 <p>
-instead the default `list-buffers'<sup><a class="footref" name="fnr-.3.5" href="#fn-.3">3</a></sup>.
+instead the default `list-buffers'<sup><a class="footref" name="fnr-.4.5" href="#fn-.4">4</a></sup>.
 </p>
 </div>
 
@@ -1320,10 +1392,10 @@ Now hit:
 <b>C-c f</b>
 </p>
 <p>
-And you'll be able to select a file.  If you have <a href="#sec-3-4">ido-mode</a> enabled for
+And you'll be able to select a file.  If you have <a href="#sec-3-6">ido-mode</a> enabled for
 files, you'll get flex matching.  Note that the <a href="http://en.wikipedia.org/wiki/Find">GNU find</a> command is
 expected, which means that under Windows, you'll probably need the
-Cygwin environment with the settings given <a href="#sec-3-11">above</a>.
+Cygwin environment with the settings given <a href="#sec-3-13">above</a>.
 </p>
 <p>
 Here's a sample customization for C++ project:
@@ -1676,7 +1748,7 @@ is currently placed in the mode-line.
 
 
 <p>
-Emacs comes with a separate binary <a href="http://www.emacswiki.org/emacs/EmacsBrowse">ebrowse</a><sup><a class="footref" name="fnr-.3.6" href="#fn-.3">3</a></sup> that can
+Emacs comes with a separate binary <a href="http://www.emacswiki.org/emacs/EmacsBrowse">ebrowse</a><sup><a class="footref" name="fnr-.4.6" href="#fn-.4">4</a></sup> that can
 annotate multiple C/C++ source files and create some form of DB which
 can be used for getting different kind of information for the indexed
 sources.  Here's a little wrapper shell script that should be placed
@@ -1792,7 +1864,7 @@ head.  It's that good.
 
 
 <p>
-To invoke the info reader<sup><a class="footref" name="fnr-.3.7" href="#fn-.3">3</a></sup>:
+To invoke the info reader<sup><a class="footref" name="fnr-.4.7" href="#fn-.4">4</a></sup>:
 </p>
 <p>
 <b>C-h i</b>
@@ -2000,7 +2072,7 @@ planning, and authoring with a fast and effective plain-text system."
 
 
 <p>
-This guide is all done in Org mode and then exported to HTML (one of
+This guide is all <a href="https://github.com/m00natic/m00natic.github.com/blob/master/org/emacs/emacs-wiki.org">done in Org mode</a> and then exported to HTML (one of
 many available formats).
 </p>
 
@@ -2239,7 +2311,7 @@ the next line.  Now execute this automatically 100 times.
 </div>
 
 <div id="outline-container-7-2" class="outline-3">
-<h3 id="sec-7-2"><span class="section-number-3">7.2</span> Elisp</h3>
+<h3 id="sec-7-2"><span class="section-number-3">7.2</span> Emacs Lisp</h3>
 <div class="outline-text-3" id="text-7-2">
 
 
@@ -2259,9 +2331,9 @@ a Death Star?  Time has come to tell you the truth.  Luke, I'm your&hellip;
 </p>
 <p>
 Emacs at its essence is an interpreter for a <a href="http://en.wikipedia.org/wiki/Lisp_%28programming_language%29">Lisp</a> dialect - Emacs Lisp
-(Elisp).  All magic interactivity is a byproduct of this.  All
-parenthesized settings and code snippets from above are actually Elisp
-program pieces.  Here's a nice built-in introduction:
+(Elisp).  All magic interactivity and extensibility is a byproduct of
+this.  All parenthesized settings and code snippets from above are
+actually Elisp program pieces.  Here's a nice built-in introduction:
 </p>
 <p>
 <b>C-h i m Emacs Lisp Intro</b>
@@ -2277,7 +2349,7 @@ for the built-in reference is outstanding:
 <p>
 However, I will tell you about one of my aha-moments and some
 practical consequences.  While Elisp is becoming quite an adequate
-lisp<sup><a class="footref" name="fnr-.4" href="#fn-.4">4</a></sup>, it really shines at&hellip;
+lisp<sup><a class="footref" name="fnr-.5" href="#fn-.5">5</a></sup>, it really shines at&hellip;
 </p>
 
 </div>
@@ -2358,7 +2430,7 @@ cease to learn.  Happy lisping!
 Emacs is what you make of it.  I don't know of other environment as
 malleable as it is.  Play with it, make it comfortable.  It's defaults
 are not set in stones, make them suit your tasks.  Unlike most other
-tools, learning Emacs<sup><a class="footref" name="fnr-.5" href="#fn-.5">5</a></sup> can pay off spectacularly, especially in
+tools, learning Emacs<sup><a class="footref" name="fnr-.6" href="#fn-.6">6</a></sup> can pay off spectacularly, especially in
 terms of productivity.  As with most other quality things in life, if
 you persist, it will deliver.
 </p>
@@ -2395,15 +2467,21 @@ inspiration.
 </p>
 
 
-<p class="footnote"><sup><a class="footnum" name="fn-.3" href="#fnr-.3">3</a></sup> This is a built-in extension
+<p class="footnote"><sup><a class="footnum" name="fn-.3" href="#fnr-.3">3</a></sup> Well, there is a maximum number of marks that can be remembered
+for a buffer at time (16 by default).  More general mechanism is
+offered by <a href="http://www.gnu.org/software/emacs/manual/html_node/emacs/Position-Registers.html">registers</a>.
 </p>
 
 
-<p class="footnote"><sup><a class="footnum" name="fn-.4" href="#fnr-.4">4</a></sup> Some people even write <a href="http://elnode.org/">web servers</a> nowadays
+<p class="footnote"><sup><a class="footnum" name="fn-.4" href="#fnr-.4">4</a></sup> This is a built-in extension
 </p>
 
 
-<p class="footnote"><sup><a class="footnum" name="fn-.5" href="#fnr-.5">5</a></sup> Realistically, no mortal can learn Emacs in its entirety
+<p class="footnote"><sup><a class="footnum" name="fn-.5" href="#fnr-.5">5</a></sup> Some people even write <a href="http://elnode.org/">web servers</a> nowadays
+</p>
+
+
+<p class="footnote"><sup><a class="footnum" name="fn-.6" href="#fnr-.6">6</a></sup> Realistically, no mortal can learn Emacs in its entirety
 </p>
 
 
@@ -2416,7 +2494,7 @@ inspiration.
 </div>
 
 <div id="postamble">
-<p class="date">Date: 2013-03-22T00:26+0200</p>
+<p class="date">Date: 2013-03-23T02:06+0200</p>
 <p class="author">Author: Andrey Kotlarski</p>
 <p class="creator"><a href="http://orgmode.org">Org</a> version 7.9.3f with <a href="http://www.gnu.org/software/emacs/">Emacs</a> version 24</p>
 <a href="http://validator.w3.org/check?uri=referer">Validate XHTML 1.0</a>

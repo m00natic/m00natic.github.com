@@ -67,7 +67,7 @@ directory and then press *<Enter>*)
 *C-x v d PATH-TO-VERSION-CONTROLLED-FOLDER*
 
 (invoke *<Ctrl>+<x>*, relese these keys, press *<v>*, release, press
-*<d>*, release, type path to some directory and then hit <Enter>)
+*<d>*, release, type path to some directory and then hit *<Enter>*)
 
 *** Modes
 
@@ -158,7 +158,7 @@ clean the mess.
 ** Run Emacs as daemon
 
 Stock Emacs is quick and nimble (extensions are loaded only when/if
-demanded), you can use it just like [[Vim]], start it to edit a file then
+demanded), you can use it just like [[Vim]], start it to edit a file, then
 kill it.  However, Emacs is so much more useful that many emacsers
 prefer to start it once and reuse this single instance for many tasks.
 So...
@@ -191,7 +191,7 @@ death threat or starvation anyway.
 ** Cancel current action
 
 Sometimes you start some action, Emacs asks you questions, or you're
-in a middle of [[Search%20for%20great%20good][incremental search]] or whatever.  Suddenly you come to
+in a middle of [[Search%20for%20great%20good][incremental search]] or whatever.  Suddenly, you come to
 realize that you don't want to continue and stop immediately:
 
 *C-g*
@@ -303,8 +303,14 @@ changes and can even allow you travel in time for your edits.
 *C-s*
 
 and start typing something.  Press *C-s* again to iterate matches
-forward or *C-r* to do it backward.  This is traditional way of just
-moving around text too.  More precise and reliable than even a mouse!
+forward or *C-r* to do it backward.  Press *<Enter>* when you've found
+what you need or *C-g* to cancel search and return to where it
+started.  This is traditional way of just moving around text too.
+More precise and reliable than even a mouse!
+
+If search was successful (ending with *<Enter>*), [[Markers][mark]] has been
+established on the point where the search was invoked.  So if you feel
+like going back, just press *C-u C-<SPC>*.
 
 * General tips and tricks
 
@@ -319,17 +325,56 @@ instead:
 (fset 'yes-or-no-p 'y-or-n-p)
 #+END_SRC
 
+** Region
+
+While you can do selection with mouse (and *<Shift>* in combination
+with the arrows) as years of brainwashing have taught us, Emacs allows
+some more.  Press:
+
+*C-<SPC>*
+
+where you'd like to start a selection and then move around to where
+selection should end.  [[Search%20for%20great%20good][Incremental search]] is allowed!  Not only this,
+if you think that the initial point of selection needs to change,
+invoke:
+
+*C-x C-x*
+
+and cursor will move to the initial selection point, allowing you to
+refine it (again, searching is OK), while selection region is still
+active.  In fact, you can jump like this between the selection ends
+and refine them as many times as you want.  Neat.
+
+** Markers
+
+Moving around selection ends is dandy and is result of a more general
+mechanism.  Enter marks.  Pressing:
+
+*C-<SPC> C-<SPC>*
+
+marks current cursor position as special.  If you now move around the
+buffer, pressing:
+
+*C-u C-<SPC>*
+
+will move you back to the special position.  You can keep
+pressing *C-u C-<SPC>* and it will cycle through all such special
+positions that have been marked at some point in the buffer[fn:2].
+Some commands automatically mark current position so don't be
+surprised if such cycling brings you to places where search or
+selection has been invoked.
+
 ** Operations on selection/region
 
 Lesser programs normally allow two actions on selection - copying and
 deletion.  Emacs is not as boring.  Beside the obvious, when a region
-is marked:
+is selected:
 
 - all sorts of string/regex replace work only on this region
 - [[Undo/redo][undo]] acts only on the region
 
 The last one is an Easter Egg.  Think how useful it can be, undoing
-the changes just in some selection.  [[http://www.gnu.org/software/emacs/manual/html_node/emacs/Using-Region.html][Here]] (and in the manual) is an
+changes just in some selection.  [[http://www.gnu.org/software/emacs/manual/html_node/emacs/Using-Region.html][Here]] (and in the manual) is an
 overview of what more is supported.
 
 ** Work with directories
@@ -377,7 +422,7 @@ files that have been opened in previous sessions.
 Why reside to primitive shell & ssh to peek/edit a file on some remote
 server?  You can do it directly from Emacs:
 
-*C-x C-f /ssh:andrey@some-server:/path/to/some/file/or/folder RET*
+*C-x C-f /ssh:andrey@some-server:/path/to/some/file/or/folder <Enter>*
 (enter password when/if prompted)
 
 Some servers may have fancy colourful prompts that get in the way of
@@ -397,7 +442,7 @@ regular expression above.  Instead of new line, there is:
 Need to quickly edit some system file?  Don't touch the shell, Emacs
 started by your user is just enough:
 
-*C-x C-f /sudo:root@localhost:/etc/fstab RET*
+*C-x C-f /sudo:root@localhost:/etc/fstab <Enter>*
 (enter password when/if prompted)
 
 [[http://emacswiki.org/emacs/TrampMode][TRAMP]][fn:built-in] is a killer.  It supports plethora of protocols.  For more
@@ -500,7 +545,7 @@ machine smtp.gmail.com port 587 login andrey password very-very-secret
 Tired of unable to search or copy properly inside the terminal
 program?  Emacsers like shells (and don't start them on [[http://en.wikipedia.org/wiki/REPL][REPL]]s) so much
 that have tons of them and at least 3 somewhat differing are available
-by default. The first one integrates nicely with [[Elisp]]:
+by default. The first one integrates nicely with [[Emacs%20Lisp][Elisp]]:
 
 *M-x eshell*
 
@@ -574,7 +619,7 @@ constrained upon.  Glob patterns are accepted like:
 
 ~*.cpp *.h~
 
-Note that SPC invokes completion here.  To actually insert a space
+Note that *<SPC>* invokes completion here.  To actually insert a space
 character, "quote" it with *C-q*.
 
 ** Edit grep results in place
@@ -1078,7 +1123,7 @@ Emacs, even former Vimmers.  Here's what's written on their site:
 planning, and authoring with a fast and effective plain-text system."
 #+END_QUOTE
 
-This guide is all done in Org mode and then exported to HTML (one of
+This guide is all [[https://github.com/m00natic/m00natic.github.com/blob/master/org/emacs/emacs-wiki.org][done in Org mode]] and then exported to HTML (one of
 many available formats).
 
 *** Basic usage
@@ -1233,7 +1278,7 @@ result, go back to the prompt, switch to some result buffer, paste
 there and add new line, then go back to the e-mail buffer and move to
 the next line.  Now execute this automatically 100 times.
 
-** Elisp
+** Emacs Lisp
 
 #+BEGIN_QUOTE
 /I have to tell you that probably of all the languages I've used,
@@ -1247,9 +1292,9 @@ development environment, an operating system, a kitchen sink or maybe
 a Death Star?  Time has come to tell you the truth.  Luke, I'm your...
 
 Emacs at its essence is an interpreter for a [[http://en.wikipedia.org/wiki/Lisp_%2528programming_language%2529][Lisp]] dialect - Emacs Lisp
-(Elisp).  All magic interactivity is a byproduct of this.  All
-parenthesized settings and code snippets from above are actually Elisp
-program pieces.  Here's a nice built-in introduction:
+(Elisp).  All magic interactivity and extensibility is a byproduct of
+this.  All parenthesized settings and code snippets from above are
+actually Elisp program pieces.  Here's a nice built-in introduction:
 
 *C-h i m Emacs Lisp Intro*
 
@@ -1261,7 +1306,7 @@ for the built-in reference is outstanding:
 
 However, I will tell you about one of my aha-moments and some
 practical consequences.  While Elisp is becoming quite an adequate
-lisp[fn:2], it really shines at...
+lisp[fn:3], it really shines at...
 
 *** Text superpowers
 
@@ -1313,7 +1358,7 @@ cease to learn.  Happy lisping!
 Emacs is what you make of it.  I don't know of other environment as
 malleable as it is.  Play with it, make it comfortable.  It's defaults
 are not set in stones, make them suit your tasks.  Unlike most other
-tools, learning Emacs[fn:3] can pay off spectacularly, especially in
+tools, learning Emacs[fn:4] can pay off spectacularly, especially in
 terms of productivity.  As with most other quality things in life, if
 you persist, it will deliver.
 
@@ -1337,6 +1382,10 @@ inspiration.
 
 [fn:1] If you made it through the last sentence, require your award
 
-[fn:2] Some people even write [[http://elnode.org/][web servers]] nowadays
+[fn:2] Well, there is a maximum number of marks that can be remembered
+for a buffer at time (16 by default).  More general mechanism is
+offered by [[http://www.gnu.org/software/emacs/manual/html_node/emacs/Position-Registers.html][registers]].
 
-[fn:3] Realistically, no mortal can learn Emacs in its entirety
+[fn:3] Some people even write [[http://elnode.org/][web servers]] nowadays
+
+[fn:4] Realistically, no mortal can learn Emacs in its entirety
