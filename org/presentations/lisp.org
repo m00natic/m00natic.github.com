@@ -1,5 +1,7 @@
 #+SETUPFILE: ~/.emacs.d/org-templates/level-1.org
 #+TITLE:     Lisp (what ITA might have that we don't)
+#+KEYWORDS: common lisp,lisp,scheme
+#+DESCRIPTION: (Common) Lisp presentation
 
 #+LaTeX_CLASS: beamer
 #+LaTeX_CLASS_OPTIONS: [presentation]

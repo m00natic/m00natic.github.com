@@ -1,6 +1,8 @@
 #+SETUPFILE: ~/.emacs.d/org-templates/level-1.org
 #+LANGUAGE:  bg
 #+TITLE: Въведение в Емакс
+#+KEYWORDS: emacs,емакс,въведение
+#+DESCRIPTION: Кратко въведение в Емакс
 
 * Въведение
 

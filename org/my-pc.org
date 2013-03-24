@@ -1,5 +1,7 @@
 #+SETUPFILE: ~/.emacs.d/org-templates/level-0.org
 #+TITLE: If you happen to sit on my computer...
+#+KEYWORDS: colemak,xmonad,emacs
+#+DESCRIPTION: Andrey Kotlarski's computer environment eccentricities
 
 * Ahtung, Ahtung - a very customized environment may be in front of you!
 

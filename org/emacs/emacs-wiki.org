@@ -1,5 +1,7 @@
 #+SETUPFILE: ~/.emacs.d/org-templates/level-1.org
 #+TITLE: Andrey's Opinionated Emacs Guide
+#+KEYWORDS: gnu,emacs,elisp,guide,tutorial,intro,crash course
+#+DESCRIPTION: Quick and general up to the point guide to GNU Emacs
 
 * Introduction
 
@@ -184,7 +186,7 @@ emacsclient -t
 #+END_SRC
 
 The *--daemon* option is certainly available under GNU/Linux and BSDs.
-It might even work for BSD rip off like MacOS but not under Windows.
+It might even work for BSD rip-off like MacOS but not under Windows.
 Nah.  A trve programmer should resort to the latter two only under
 death threat or starvation anyway.
 
@@ -700,7 +702,7 @@ Now hit:
 And you'll be able to select a file.  If you have [[Fuzzy%20matching%20when%20navigating%20the%20file%20system][ido-mode]] enabled for
 files, you'll get flex matching.  Note that the [[http://en.wikipedia.org/wiki/Find][GNU find]] command is
 expected, which means that under Windows, you'll probably need the
-Cygwin environment with the settings given [[Microsoft%20Windows%20(tm)][above]].
+Cygwin environment with the settings mentioned [[Microsoft%20Windows%20(tm)][above]].
 
 Here's a sample customization for C++ project:
 
@@ -752,7 +754,7 @@ there and within all sub-folders as well.  Sweet.
 Are you tired of the different command line interfaces of the many
 [[http://en.wikipedia.org/wiki/Version_control][version control systems]] that you use?  Even worse if you use GUIs.
 Emacs provides unified interface to some of the widely used VCSes (and
-of course has additional packages for more rarely used).  To see what
+of course has additional packages for less popular ones).  To see what
 I'm talking about:
 
 *C-x v d PATH-TO-FOLDER-UNDER-VERSION-CONTROL*
@@ -1226,10 +1228,10 @@ author, title and export type as well.  Tweak it however you want.
 
 Can Vim emulate Emacs?  Forget it!  But the other way works.  There
 are many packages that give some sort of [[http://www.emacswiki.org/emacs/CategoryEmulation][Vim emulation]].  If you are
-such an insert/escape addict but still want all the power of symbolic
+such an insert/escape addict but still want the power of symbolic
 universe, you might try one of them.  The current poster child is
-[[http://emacswiki.org/emacs/Evil][Evil]][fn:elpa] and seems praised as the most potent emulation not just in
-Lala land.
+[[http://emacswiki.org/emacs/Evil][Evil]][fn:elpa] and seems praised as the most potent emulation not just
+in Lala land.
 
 By the way, I thought editor wars finished when [[http://upsilon.cc/~zack/blog/posts/2008/10/from_Vim_to_Emacs_-_part_1/][Debian's Vim
 maintainer switched to Emacs]].

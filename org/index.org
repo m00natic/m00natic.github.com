@@ -1,5 +1,7 @@
 #+SETUPFILE: ~/.emacs.d/org-templates/level-0.org
 #+TITLE: Home
+#+KEYWORDS:  андрей котларски,andrey kotlarski,емакс,emacs,guide,lisp,git,haskell,org-mode,presentation,cv
+#+DESCRIPTION: List of resources by Andrey Kotlarski
 
 * Emacs
 
