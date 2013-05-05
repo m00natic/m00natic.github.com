@@ -2,4 +2,4 @@ This is a collection of arbitrary and less so articles and
 presentations that I've done at some point.  The ~org~ directory
 contains [[http://orgmode.org/][Org mode]] sources which generate the site located at
 
-http://m00natic.github.com
+http://m00natic.github.io
