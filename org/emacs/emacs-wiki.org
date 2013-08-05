@@ -933,7 +933,7 @@ annotate multiple C/C++ source files and create some form of DB which
 can be used for getting different kind of information for the indexed
 sources.  Here's a little wrapper shell script that should be placed
 somewhere on your PATH (*/usr/local/bin/* preferably),
-named *ebrowse++* and made executable:
+named *ebrowse-c++* and made executable:
 
 #+BEGIN_SRC sh
 #!/bin/sh
