@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 <meta name="title" content="Andrey's Opinionated Emacs Guide"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2013-08-06T16:08+0300"/>
+<meta name="generated" content="2013-09-28T17:02+0300"/>
 <meta name="author" content="Andrey Kotlarski"/>
 <meta name="description" content="Quick and general up to the point guide to GNU Emacs"/>
 <meta name="keywords" content="gnu,emacs,elisp,guide,tutorial,intro,crash course"/>
@@ -288,7 +288,7 @@ the basics:
 <tr><td class="left">frame</td><td class="left">program window</td></tr>
 </tbody>
 <tbody>
-<tr><td class="left">window</td><td class="left">sub window (may take the whole program window too)</td></tr>
+<tr><td class="left">window</td><td class="left">pane</td></tr>
 </tbody>
 <tbody>
 <tr><td class="left">buffer</td><td class="left">file or something that may have text in it</td></tr>
@@ -330,23 +330,25 @@ several in a row.  Here's how to read some examples:
 <b>M-x tetris</b>
 </p>
 <p>
-(<b>M</b> stands for <b>&lt;Alt&gt;</b>, so invoke <b>&lt;Alt&gt;+&lt;x&gt;</b>, release these keys,
-type <b>tetris</b> and press <b>&lt;Enter&gt;</b> &hellip;by the way this is a real
-command, try it!)
+(<b>M</b> stands for <b>&lt;Alt&gt;</b>, so press and hold <b>&lt;Alt&gt;</b>, press <b>&lt;x&gt;</b>,
+release these keys, type <b>tetris</b> and press <b>&lt;Enter&gt;</b> &hellip;by the way
+this is a real command, try it!)
 </p>
 <p>
 <b>C-x C-f PATH-TO-SOME-FILE</b>
 </p>
 <p>
-(<b>C</b> stands for <b>&lt;Ctrl&gt;</b>, so invoke <b>&lt;Ctrl&gt;+&lt;x&gt;</b>, release these keys,
-invoke <b>&lt;Ctrl&gt;+&lt;f&gt;</b>, release these keys, type path to some file or
-directory and then press <b>&lt;Enter&gt;</b>)
+(<b>C</b> stands for <b>&lt;Ctrl&gt;</b>, so press and hold <b>&lt;Ctrl&gt;</b>, press <b>&lt;x&gt;</b>,
+release these keys, press and hold <b>&lt;Ctrl&gt;</b>, press <b>&lt;f&gt;</b>, release
+these keys, type path to some file or directory and then
+press <b>&lt;Enter&gt;</b>)
 </p>
 <p>
 <b>C-x v d PATH-TO-VERSION-CONTROLLED-FOLDER</b>
 </p>
 <p>
-(invoke <b>&lt;Ctrl&gt;+&lt;x&gt;</b>, relese these keys, press <b>&lt;v&gt;</b>, release, press
+(press and hold <b>&lt;Ctrl&gt;</b>, press <b>&lt;x&gt;</b>, relese these keys, press <b>&lt;v&gt;</b>,
+release, press
 <b>&lt;d&gt;</b>, release, type path to some directory and then hit <b>&lt;Enter&gt;</b>)
 </p>
 </div>
@@ -1193,7 +1195,7 @@ other ported stuff.
 <p>
 To make Emacs aware of the cygwin environment and prefer it instead of
 the crippled windows ecosystem, install cygwin-mount<sup><a class="footref" name="fnr-.2.4" href="#fn-.2">2</a></sup> and
-then:
+then put this in your <a href="#sec-1-4">init.el</a>:
 </p>
 
 
@@ -1696,10 +1698,8 @@ necessary to get it started at all):
  '(ecb-options-version <span style="color: #95e454;">"2.40"</span>))
 
 (<span style="color: #8ac6f2; font-weight: bold;">eval-after-load</span> <span style="color: #95e454;">"ecb"</span>
-    `(<span style="color: #8ac6f2; font-weight: bold;">progn</span> (<span style="color: #8ac6f2; font-weight: bold;">defvar</span> <span style="color: #cae682;">stack-trace-on-error</span> nil)
-            (<span style="color: #8ac6f2; font-weight: bold;">defconst</span> <span style="color: #cae682;">ecb-cedet-required-version-max</span> '(2 1 4 9))
-            (<span style="color: #8ac6f2; font-weight: bold;">let</span> ((prog-path <span style="color: #95e454;">"~/Programs"</span>)) <span style="color: #99968b;">; </span><span style="color: #99968b;">set folder where you store projects, not really important</span>
-              (ecb-add-source-path prog-path prog-path t))))
+  `(<span style="color: #8ac6f2; font-weight: bold;">let</span> ((prog-path ,(concat +home-path+ <span style="color: #95e454;">"Programs"</span>))) <span style="color: #99968b;">; </span><span style="color: #99968b;">set folder where you store projects</span>
+     (ecb-add-source-path prog-path prog-path t))) <span style="color: #99968b;">; </span><span style="color: #99968b;">not really important</span>
 </pre>
 
 
@@ -2494,7 +2494,7 @@ offered by <a href="http://www.gnu.org/software/emacs/manual/html_node/emacs/Pos
 </div>
 
 <div id="postamble">
-<p class="date">Date: 2013-08-06T16:08+0300</p>
+<p class="date">Date: 2013-09-28T17:02+0300</p>
 <p class="author">Author: Andrey Kotlarski</p>
 <p class="creator"><a href="http://orgmode.org">Org</a> version 7.9.3f with <a href="http://www.gnu.org/software/emacs/">Emacs</a> version 24</p>
 <a href="http://validator.w3.org/check?uri=referer">Validate XHTML 1.0</a>

@@ -26,21 +26,21 @@ layouts.  As such, it has terminology that may seem odd to poor
 contemporary users.  Here's a little correspondence table for some of
 the basics:
 
-|----------------------------------------------+----------------------------------------------------|
-| *Emacs land (I'll call it Lala land below)* | *Rest of the world*                                |
-|----------------------------------------------+----------------------------------------------------|
-| frame                                        | program window                                     |
-|----------------------------------------------+----------------------------------------------------|
-| window                                       | sub window (may take the whole program window too) |
-|----------------------------------------------+----------------------------------------------------|
-| buffer                                       | file or something that may have text in it         |
-|----------------------------------------------+----------------------------------------------------|
-| kill                                         | cut                                                |
-|----------------------------------------------+----------------------------------------------------|
-| yank                                         | paste                                              |
-|----------------------------------------------+----------------------------------------------------|
-| region                                       | selection                                          |
-|----------------------------------------------+----------------------------------------------------|
+|---------------------------------------------+--------------------------------------------|
+| *Emacs land (I'll call it Lala land below)* | *Rest of the world*                        |
+|---------------------------------------------+--------------------------------------------|
+| frame                                       | program window                             |
+|---------------------------------------------+--------------------------------------------|
+| window                                      | pane                                       |
+|---------------------------------------------+--------------------------------------------|
+| buffer                                      | file or something that may have text in it |
+|---------------------------------------------+--------------------------------------------|
+| kill                                        | cut                                        |
+|---------------------------------------------+--------------------------------------------|
+| yank                                        | paste                                      |
+|---------------------------------------------+--------------------------------------------|
+| region                                      | selection                                  |
+|---------------------------------------------+--------------------------------------------|
 
 Buffer may not be associated to file?!  What is this planet, [[http://en.wikipedia.org/wiki/Kin-dza-dza][Pluke]]?
 Furthermore buffers may be currently hidden.  You can also have same
@@ -56,19 +56,21 @@ several in a row.  Here's how to read some examples:
 
 *M-x tetris*
 
-(*M* stands for *<Alt>*, so invoke *<Alt>+<x>*, release these keys,
-type *tetris* and press *<Enter>* ...by the way this is a real
-command, try it!)
+(*M* stands for *<Alt>*, so press and hold *<Alt>*, press *<x>*,
+release these keys, type *tetris* and press *<Enter>* ...by the way
+this is a real command, try it!)
 
 *C-x C-f PATH-TO-SOME-FILE*
 
-(*C* stands for *<Ctrl>*, so invoke *<Ctrl>+<x>*, release these keys,
-invoke *<Ctrl>+<f>*, release these keys, type path to some file or
-directory and then press *<Enter>*)
+(*C* stands for *<Ctrl>*, so press and hold *<Ctrl>*, press *<x>*,
+release these keys, press and hold *<Ctrl>*, press *<f>*, release
+these keys, type path to some file or directory and then
+press *<Enter>*)
 
 *C-x v d PATH-TO-VERSION-CONTROLLED-FOLDER*
 
-(invoke *<Ctrl>+<x>*, relese these keys, press *<v>*, release, press
+(press and hold *<Ctrl>*, press *<x>*, relese these keys, press *<v>*,
+release, press
 *<d>*, release, type path to some directory and then hit *<Enter>*)
 
 *** Modes
@@ -579,7 +581,7 @@ other ported stuff.
 
 To make Emacs aware of the cygwin environment and prefer it instead of
 the crippled windows ecosystem, install cygwin-mount[fn:elpa] and
-then:
+then put this in your [[Settings][init.el]]:
 
 #+BEGIN_SRC emacs-lisp
 (defconst +win-path+ "C:/" "Windows root path.")
@@ -898,10 +900,8 @@ necessary to get it started at all):
  '(ecb-options-version "2.40"))
 
 (eval-after-load "ecb"
-    `(progn (defvar stack-trace-on-error nil)
-            (defconst ecb-cedet-required-version-max '(2 1 4 9))
-            (let ((prog-path "~/Programs")) ; set folder where you store projects, not really important
-              (ecb-add-source-path prog-path prog-path t))))
+  `(let ((prog-path ,(concat +home-path+ "Programs"))) ; set folder where you store projects
+     (ecb-add-source-path prog-path prog-path t))) ; not really important
 #+END_SRC
 
 Now fire it:
