@@ -1,0 +1,35 @@
+#+SETUPFILE: ~/.emacs.d/org-templates/level-0.org
+#+TITLE: TODO
+#+KEYWORDS:  andrey kotlarski,floss,emacs,computer chess,neurostock,stockfish,vlf
+#+DESCRIPTION: Andrey Kotlarski's near future FLOSS todo
+
+* Emacs
+
+** inumber
+
+- port [[https://github.com/emacsmirror/w3m/blob/master/w3m-lnum.el][w3m-lnum.el]] to [[http://www.emacswiki.org/emacs/eww][eww]]
+
+- abstract common machinery and make it reusable
+
+- make a little screencast for w3m-lnum
+
+** [[http://www.emacswiki.org/emacs/IncrementalSearch][Isearch]]
+
+Enumerate multiple matches and allow direct jumps.
+
+** [[https://github.com/m00natic/vlfi][VLF]]
+
+- research encoding/decoding problems in trunk Emacs, possibly
+  optimize detection of right decoding
+
+- re-use [[http://www.emacswiki.org/emacs/GrepMode][grep]] or [[http://www.emacswiki.org/emacs/OccurMode][occur]] for indexing if possible
+
+- re-use isearch if possible
+
+- add [[http://www.emacswiki.org/emacs/EdiffMode][ediff]] support
+
+- figure out edit + batch movement integration
+
+* Computer chess
+
+** Rebase [[https://github.com/m00natic/neuroStock][neuroStock]] to latest [[https://github.com/mcostalba/Stockfish][Stockfish]]

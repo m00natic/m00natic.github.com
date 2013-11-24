@@ -3,14 +3,14 @@
                "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<title>Why Emacs?</title>
+<title>TODO</title>
 <meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1"/>
-<meta name="title" content="Why Emacs?"/>
+<meta name="title" content="TODO"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2013-02-25T02:04+0200"/>
+<meta name="generated" content="2013-11-24T18:59+0200"/>
 <meta name="author" content="Andrey Kotlarski"/>
-<meta name="description" content=""/>
-<meta name="keywords" content=""/>
+<meta name="description" content="Andrey Kotlarski's near future FLOSS todo"/>
+<meta name="keywords" content="andrey kotlarski,floss,emacs,computer chess,neurostock,stockfish,vlf"/>
 <style type="text/css">
  <!--/*--><![CDATA[/*><!--*/
   html { font-family: Times, serif; font-size: 12pt; }
@@ -60,7 +60,7 @@
                                  font-weight:bold; }
   /*]]>*/-->
 </style>
-<link rel="stylesheet" type="text/css" href="../css/worg-classic.css" />
+<link rel="stylesheet" type="text/css" href="css/worg-classic.css" />
 <script type="text/javascript">
 /*
 @licstart  The following is the entire license notice for the
@@ -111,9 +111,9 @@ for the JavaScript code in this tag.
 </head>
 <body>
 <div id="org-div-home-and-up" style="text-align:right;font-size:70%;white-space:nowrap;">
- <a accesskey="h" href="../sitemap.html"> UP </a>
+ <a accesskey="h" href="sitemap.html"> UP </a>
  |
- <a accesskey="H" href="../index.html"> HOME </a>
+ <a accesskey="H" href="index.html"> HOME </a>
 </div>
 
 <div id="preamble">
@@ -121,44 +121,50 @@ for the JavaScript code in this tag.
 </div>
 
 <div id="content">
-<h1 class="title">Why Emacs?</h1>
+<h1 class="title">TODO</h1>
 
-<p>"Why, oh, why use an ancient 30 year old program nowadays?"
-</p>
 
 <div id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#sec-1">1 When the whole is more than its parts</a></li>
-<li><a href="#sec-2">2 When User is king</a></li>
+<li><a href="#sec-1">1 Emacs</a>
+<ul>
+<li><a href="#sec-1-1">1.1 inumber</a></li>
+<li><a href="#sec-1-2">1.2 Isearch</a></li>
+<li><a href="#sec-1-3">1.3 VLF</a></li>
+</ul>
+</li>
+<li><a href="#sec-2">2 Computer chess</a>
+<ul>
+<li><a href="#sec-2-1">2.1 Rebase neuroStock to latest Stockfish</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
 
 <div id="outline-container-1" class="outline-2">
-<h2 id="sec-1"><span class="section-number-2">1</span> When the whole is more than its parts</h2>
+<h2 id="sec-1"><span class="section-number-2">1</span> Emacs</h2>
 <div class="outline-text-2" id="text-1">
 
 
-<p>
-What's the point of using Emacs for everything - editing whatever
-code, compiling, debugging, version control, mail and news, shell and
-REPL, DB prompts, remote access, document reading and writing,
-planning, chat, even browsing?  For each of those there would be some
-specialised program that does similar or better things and even
-friendlier to users.
-</p>
+
+</div>
+
+<div id="outline-container-1-1" class="outline-3">
+<h3 id="sec-1-1"><span class="section-number-3">1.1</span> inumber</h3>
+<div class="outline-text-3" id="text-1-1">
+
+
 <ul>
-<li>All-Emacs means more or less consistent interface.  No need to learn
-  another specialised program with its specific set of idioms however
-  simplified.
+<li>port <a href="https://github.com/emacsmirror/w3m/blob/master/w3m-lnum.el">w3m-lnum.el</a> to <a href="http://www.emacswiki.org/emacs/eww">eww</a>
 
 </li>
-<li>Integration between different modules is much easier.  Making
-  different programs even communicate would require tons of technical
-  quirks if those programs were not intended for this.  And this is
-  not in the hands of the users.
+<li>abstract common machinery and make it reusable
+
+</li>
+<li>make a little screencast for w3m-lnum
 </li>
 </ul>
 
@@ -167,10 +173,60 @@ friendlier to users.
 
 </div>
 
+<div id="outline-container-1-2" class="outline-3">
+<h3 id="sec-1-2"><span class="section-number-3">1.2</span> <a href="http://www.emacswiki.org/emacs/IncrementalSearch">Isearch</a></h3>
+<div class="outline-text-3" id="text-1-2">
+
+
+<p>
+Enumerate multiple matches and allow direct jumps.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-1-3" class="outline-3">
+<h3 id="sec-1-3"><span class="section-number-3">1.3</span> <a href="https://github.com/m00natic/vlfi">VLF</a></h3>
+<div class="outline-text-3" id="text-1-3">
+
+
+<ul>
+<li>research encoding/decoding problems in trunk Emacs, possibly
+  optimize detection of right decoding
+
+</li>
+<li>re-use <a href="http://www.emacswiki.org/emacs/GrepMode">grep</a> or <a href="http://www.emacswiki.org/emacs/OccurMode">occur</a> for indexing if possible
+
+</li>
+<li>re-use isearch if possible
+
+</li>
+<li>add <a href="http://www.emacswiki.org/emacs/EdiffMode">ediff</a> support
+
+</li>
+<li>figure out edit + batch movement integration
+</li>
+</ul>
+
+
+</div>
+</div>
+
+</div>
+
 <div id="outline-container-2" class="outline-2">
-<h2 id="sec-2"><span class="section-number-2">2</span> When User is king</h2>
+<h2 id="sec-2"><span class="section-number-2">2</span> Computer chess</h2>
 <div class="outline-text-2" id="text-2">
 
+
+
+</div>
+
+<div id="outline-container-2-1" class="outline-3">
+<h3 id="sec-2-1"><span class="section-number-3">2.1</span> Rebase <a href="https://github.com/m00natic/neuroStock">neuroStock</a> to latest <a href="https://github.com/mcostalba/Stockfish">Stockfish</a></h3>
+<div class="outline-text-3" id="text-2-1">
+
+</div>
 </div>
 </div>
 </div>
