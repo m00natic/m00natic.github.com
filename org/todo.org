@@ -22,6 +22,9 @@ Enumerate multiple matches and allow direct jumps.
 - research encoding/decoding problems in trunk Emacs, possibly
   optimize detection of right decoding
 
+- turn/add VLF into minor mode so it's functionality can be used along
+  other modes
+
 - re-use [[http://www.emacswiki.org/emacs/GrepMode][grep]] or [[http://www.emacswiki.org/emacs/OccurMode][occur]] for indexing if possible
 
 - re-use isearch if possible
