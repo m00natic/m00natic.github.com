@@ -19,19 +19,7 @@ Enumerate multiple matches and allow direct jumps.
 
 ** [[https://github.com/m00natic/vlfi][VLF]]
 
-- research encoding/decoding problems in trunk Emacs, possibly
-  optimize detection of right decoding
-
-- turn/add VLF into minor mode so it's functionality can be used along
-  other modes
-
-- re-use [[http://www.emacswiki.org/emacs/GrepMode][grep]] or [[http://www.emacswiki.org/emacs/OccurMode][occur]] for indexing if possible
-
-- re-use isearch if possible
-
-- add [[http://www.emacswiki.org/emacs/EdiffMode][ediff]] support
-
-- figure out edit + batch movement integration
+[[https://github.com/m00natic/vlfi/issues][issues and enhancenements]]
 
 * Computer chess
 
