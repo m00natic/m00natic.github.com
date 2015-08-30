@@ -30,6 +30,6 @@ Introductions done for my coworkers.
 [[https://github.com/m00natic][Here]] I am on github.  Considering that this site is a project there -
 the circle is now complete.
 
-[[./andrey-kotlarski-cv.pdf][My Curriculum Vitae]] kept on [[https://gitorious.org/~m00natic][Gitorious]] for a change.
+[[./andrey-kotlarski-cv.pdf][My Curriculum Vitae]] kept on +[[https://gitorious.org/~m00natic][Gitorious]]+ [[https://gitlab.com/m00natic/cv][GitLab]] for a change.
 
 You can contact me [[mailto:m00naticus@gmail.com][here]].
