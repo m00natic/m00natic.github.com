@@ -1,63 +1,94 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-               "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
 <title>Git vs Subversion</title>
-<meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1"/>
-<meta name="title" content="Git vs Subversion"/>
-<meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2013-03-25T01:07+0200"/>
-<meta name="author" content="Andrey Kotlarski"/>
-<meta name="description" content="Git presentation"/>
-<meta name="keywords" content="git,svn,subversion,workflow,presentation,source control"/>
+<!-- 2015-08-30 нд 17:28 -->
+<meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta  name="generator" content="Org-mode" />
+<meta  name="author" content="Andrey Kotlarski" />
+<meta  name="description" content="Git presentation"
+ />
+<meta  name="keywords" content="git,svn,subversion,workflow,presentation,source control" />
 <style type="text/css">
  <!--/*--><![CDATA[/*><!--*/
-  html { font-family: Times, serif; font-size: 12pt; }
   .title  { text-align: center; }
-  .todo   { color: red; }
+  .todo   { font-family: monospace; color: red; }
   .done   { color: green; }
-  .tag    { background-color: #add8e6; font-weight:normal }
-  .target { }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
   .timestamp { color: #bebebe; }
   .timestamp-kwd { color: #5f9ea0; }
-  .right  {margin-left:auto; margin-right:0px;  text-align:right;}
-  .left   {margin-left:0px;  margin-right:auto; text-align:left;}
-  .center {margin-left:auto; margin-right:auto; text-align:center;}
-  p.verse { margin-left: 3% }
+  .right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
   pre {
-	border: 1pt solid #AEBDCC;
-	background-color: #F3F5F7;
-	padding: 5pt;
-	font-family: courier, monospace;
-        font-size: 90%;
-        overflow:auto;
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
   }
-  table { border-collapse: collapse; }
-  td, th { vertical-align: top;  }
-  th.right  { text-align:center;  }
-  th.left   { text-align:center;   }
-  th.center { text-align:center; }
-  td.right  { text-align:right;  }
-  td.left   { text-align:left;   }
-  td.center { text-align:center; }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  pre.src-sh:before    { content: 'sh'; }
+  pre.src-bash:before  { content: 'sh'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-R:before     { content: 'R'; }
+  pre.src-perl:before  { content: 'Perl'; }
+  pre.src-java:before  { content: 'Java'; }
+  pre.src-sql:before   { content: 'SQL'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.right  { text-align: center;  }
+  th.left   { text-align: center;   }
+  th.center { text-align: center; }
+  td.right  { text-align: right;  }
+  td.left   { text-align: left;   }
+  td.center { text-align: center; }
   dt { font-weight: bold; }
-  div.figure { padding: 0.5em; }
-  div.figure p { text-align: center; }
-  div.inlinetask {
-    padding:10px;
-    border:2px solid gray;
-    margin:10px;
+  .footpara:nth-child(2) { display: inline; }
+  .footpara { display: block; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
     background: #ffffcc;
   }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
   textarea { overflow-x: auto; }
-  .linenr { font-size:smaller }
-  .code-highlighted {background-color:#ffff00;}
-  .org-info-js_info-navigation { border-style:none; }
-  #org-info-js_console-label { font-size:10px; font-weight:bold;
-                               white-space:nowrap; }
-  .org-info-js_search-highlight {background-color:#ffff00; color:#000000;
-                                 font-weight:bold; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
   /*]]>*/-->
 </style>
 <link rel="stylesheet" type="text/css" href="../css/worg-classic.css" />
@@ -107,127 +138,161 @@ for the JavaScript code in this tag.
  }
 /*]]>*///-->
 </script>
+<script type="text/javascript" src="http://orgmode.org/mathjax/MathJax.js"></script>
+<script type="text/javascript">
+<!--/*--><![CDATA[/*><!--*/
+    MathJax.Hub.Config({
+        // Only one of the two following lines, depending on user settings
+        // First allows browser-native MathML display, second forces HTML/CSS
+        //  config: ["MMLorHTML.js"], jax: ["input/TeX"],
+            jax: ["input/TeX", "output/HTML-CSS"],
+        extensions: ["tex2jax.js","TeX/AMSmath.js","TeX/AMSsymbols.js",
+                     "TeX/noUndefined.js"],
+        tex2jax: {
+            inlineMath: [ ["\\(","\\)"] ],
+            displayMath: [ ['$$','$$'], ["\\[","\\]"], ["\\begin{displaymath}","\\end{displaymath}"] ],
+            skipTags: ["script","noscript","style","textarea","pre","code"],
+            ignoreClass: "tex2jax_ignore",
+            processEscapes: false,
+            processEnvironments: true,
+            preview: "TeX"
+        },
+        showProcessingMessages: true,
+        displayAlign: "center",
+        displayIndent: "2em",
 
+        "HTML-CSS": {
+             scale: 100,
+             availableFonts: ["STIX","TeX"],
+             preferredFont: "TeX",
+             webFont: "TeX",
+             imageFont: "TeX",
+             showMathMenu: true,
+        },
+        MMLorHTML: {
+             prefer: {
+                 MSIE:    "MML",
+                 Firefox: "MML",
+                 Opera:   "HTML",
+                 other:   "HTML"
+             }
+        }
+    });
+/*]]>*///-->
+</script>
 </head>
 <body>
-<div id="org-div-home-and-up" style="text-align:right;font-size:70%;white-space:nowrap;">
+<div id="org-div-home-and-up">
  <a accesskey="h" href="../sitemap.html"> UP </a>
  |
  <a accesskey="H" href="../index.html"> HOME </a>
-</div>
-
-<div id="preamble">
-
-</div>
-
-<div id="content">
+</div><div id="content">
 <h1 class="title">Git vs Subversion</h1>
-
-
-
-
 <div id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#sec-1">1 Annoyances with our current source control</a>
+<li><a href="#sec-1">1. Annoyances with our current source control</a>
 <ul>
-<li><a href="#sec-1-1">1.1 Rant</a>
+<li><a href="#sec-1-1">1.1. Rant</a>
 <ul>
-<li><a href="#sec-1-1-1">1.1.1 Network traffic</a></li>
-<li><a href="#sec-1-1-2">1.1.2 Hopefully we have good repository backup</a></li>
-<li><a href="#sec-1-1-3">1.1.3 Clunky branch operations</a></li>
-<li><a href="#sec-1-1-4">1.1.4 Merging to trunk?</a></li>
-</ul></li>
+<li><a href="#sec-1-1-1">1.1.1. Network traffic</a></li>
+<li><a href="#sec-1-1-2">1.1.2. Hopefully we have good repository backup</a></li>
+<li><a href="#sec-1-1-3">1.1.3. Clunky branch operations</a></li>
+<li><a href="#sec-1-1-4">1.1.4. Merging to trunk?</a></li>
 </ul>
 </li>
-<li><a href="#sec-2">2 Can it get more comfortable?</a>
-<ul>
-<li><a href="#sec-2-1">2.1 Distributed version control systems</a>
-<ul>
-<li><a href="#sec-2-1-1">2.1.1 No central repository</a></li>
-<li><a href="#sec-2-1-2">2.1.2 Each node is a repo on its own</a></li>
-<li><a href="#sec-2-1-3">2.1.3 Network traffic only when interacting with remote repos</a></li>
-<li><a href="#sec-2-1-4">2.1.4 Most operations happen within own repo and are often instantaneous</a></li>
-<li><a href="#sec-2-1-5">2.1.5 Allows alternative work-flows</a></li>
-</ul></li>
 </ul>
 </li>
-<li><a href="#sec-3">3 Git</a>
+<li><a href="#sec-2">2. Can it get more comfortable?</a>
 <ul>
-<li><a href="#sec-3-1">3.1 bla bla</a>
+<li><a href="#sec-2-1">2.1. Distributed version control systems</a>
 <ul>
-<li><a href="#sec-3-1-1">3.1.1 That kernel git, Linus</a></li>
-<li><a href="#sec-3-1-2">3.1.2 Known as (one of) the fastest</a></li>
-<li><a href="#sec-3-1-3">3.1.3 Seems to scale well for big code bases</a></li>
+<li><a href="#sec-2-1-1">2.1.1. No central repository</a></li>
+<li><a href="#sec-2-1-2">2.1.2. Each node is a repo on its own</a></li>
+<li><a href="#sec-2-1-3">2.1.3. Network traffic only when interacting with remote repos</a></li>
+<li><a href="#sec-2-1-4">2.1.4. Most operations happen within own repo and are often instantaneous</a></li>
+<li><a href="#sec-2-1-5">2.1.5. Allows alternative work-flows</a></li>
 </ul>
 </li>
-<li><a href="#sec-3-2">3.2 Virtues</a>
-<ul>
-<li><a href="#sec-3-2-1">3.2.1 A lot of advanced commands</a></li>
-<li><a href="#sec-3-2-2">3.2.2 (local) Branches are really, really cheap</a></li>
-<li><a href="#sec-3-2-3">3.2.3 <span style="text-decoration:underline;">Allows</span> the central repository model as well</a></li>
 </ul>
 </li>
-<li><a href="#sec-3-3">3.3 Quick start</a>
+<li><a href="#sec-3">3. Git</a>
 <ul>
-<li><a href="#sec-3-3-1">3.3.1 Please introduce yourself</a></li>
-<li><a href="#sec-3-3-2">3.3.2 initialize repository</a></li>
-<li><a href="#sec-3-3-3">3.3.3 &hellip;or clone existing one</a></li>
+<li><a href="#sec-3-1">3.1. bla bla</a>
+<ul>
+<li><a href="#sec-3-1-1">3.1.1. That kernel git, Linus</a></li>
+<li><a href="#sec-3-1-2">3.1.2. Known as (one of) the fastest</a></li>
+<li><a href="#sec-3-1-3">3.1.3. Seems to scale well for big code bases</a></li>
 </ul>
 </li>
-<li><a href="#sec-3-4">3.4 Revisions</a>
+<li><a href="#sec-3-2">3.2. Virtues</a>
 <ul>
-<li><a href="#sec-3-4-1">3.4.1 unique SHA1s, not numbers</a></li>
-<li><a href="#sec-3-4-2">3.4.2 only initial characters can be used as long as uniquely identifiable</a></li>
-<li><a href="#sec-3-4-3">3.4.3 HEAD, HEAD\textasciicircum , HEAD\textasciitilde 5</a></li>
+<li><a href="#sec-3-2-1">3.2.1. A lot of advanced commands</a></li>
+<li><a href="#sec-3-2-2">3.2.2. (local) Branches are really, really cheap</a></li>
+<li><a href="#sec-3-2-3">3.2.3. <span class="underline">Allows</span> the central repository model as well</a></li>
 </ul>
 </li>
-<li><a href="#sec-3-5">3.5 Branches and tags</a>
+<li><a href="#sec-3-3">3.3. Quick start</a>
 <ul>
-<li><a href="#sec-3-5-1">3.5.1 git branch NAME</a></li>
-<li><a href="#sec-3-5-2">3.5.2 git checkout BRANCH/REV/FILE</a></li>
-<li><a href="#sec-3-5-3">3.5.3 git tag -a TAG</a></li>
-<li><a href="#sec-3-5-4">3.5.4 git tag -l</a></li>
+<li><a href="#sec-3-3-1">3.3.1. Please introduce yourself</a></li>
+<li><a href="#sec-3-3-2">3.3.2. initialize repository</a></li>
+<li><a href="#sec-3-3-3">3.3.3. &#x2026;or clone existing one</a></li>
 </ul>
 </li>
-<li><a href="#sec-3-6">3.6 Remote repos, branches and sharing</a>
+<li><a href="#sec-3-4">3.4. Revisions</a>
 <ul>
-<li><a href="#sec-3-6-1">3.6.1 git checkout &ndash;track -b BRANCH</a></li>
-<li><a href="#sec-3-6-2">3.6.2 git remote add URL</a></li>
-<li><a href="#sec-3-6-3">3.6.3 git pull</a></li>
-<li><a href="#sec-3-6-4">3.6.4 git push origin</a></li>
+<li><a href="#sec-3-4-1">3.4.1. unique SHA1s, not numbers</a></li>
+<li><a href="#sec-3-4-2">3.4.2. only initial characters can be used as long as uniquely identifiable</a></li>
+<li><a href="#sec-3-4-3">3.4.3. HEAD, HEAD\textasciicircum , HEAD\textasciitilde 5</a></li>
 </ul>
 </li>
-<li><a href="#sec-3-7">3.7 Merging</a>
+<li><a href="#sec-3-5">3.5. Branches and tags</a>
 <ul>
-<li><a href="#sec-3-7-1">3.7.1 git merge BRANCH</a></li>
-<li><a href="#sec-3-7-2">3.7.2 git rebase</a></li>
-<li><a href="#sec-3-7-3">3.7.3 git cherry-pick REV</a></li>
+<li><a href="#sec-3-5-1">3.5.1. git branch NAME</a></li>
+<li><a href="#sec-3-5-2">3.5.2. git checkout BRANCH/REV/FILE</a></li>
+<li><a href="#sec-3-5-3">3.5.3. git tag -a TAG</a></li>
+<li><a href="#sec-3-5-4">3.5.4. git tag -l</a></li>
 </ul>
 </li>
-<li><a href="#sec-3-8">3.8 Get information</a>
+<li><a href="#sec-3-6">3.6. Remote repos, branches and sharing</a>
 <ul>
-<li><a href="#sec-3-8-1">3.8.1 git log</a></li>
-<li><a href="#sec-3-8-2">3.8.2 git status</a></li>
-<li><a href="#sec-3-8-3">3.8.3 git show REV/TAG/REV:PATH-TO-FILE-OR-DIR</a></li>
+<li><a href="#sec-3-6-1">3.6.1. git checkout &#x2013;track -b BRANCH</a></li>
+<li><a href="#sec-3-6-2">3.6.2. git remote add URL</a></li>
+<li><a href="#sec-3-6-3">3.6.3. git pull</a></li>
+<li><a href="#sec-3-6-4">3.6.4. git push origin</a></li>
 </ul>
 </li>
-<li><a href="#sec-3-9">3.9 Recommendations</a>
+<li><a href="#sec-3-7">3.7. Merging</a>
 <ul>
-<li><a href="#sec-3-9-1">3.9.1 avoid working in master</a></li>
-<li><a href="#sec-3-9-2">3.9.2 use branches for whatever little or big changes</a></li>
-</ul></li>
+<li><a href="#sec-3-7-1">3.7.1. git merge BRANCH</a></li>
+<li><a href="#sec-3-7-2">3.7.2. git rebase</a></li>
+<li><a href="#sec-3-7-3">3.7.3. git cherry-pick REV</a></li>
 </ul>
 </li>
-<li><a href="#sec-4">4 Appendix</a>
+<li><a href="#sec-3-8">3.8. Get information</a>
 <ul>
-<li><a href="#sec-4-1">4.1 Links</a>
+<li><a href="#sec-3-8-1">3.8.1. git log</a></li>
+<li><a href="#sec-3-8-2">3.8.2. git status</a></li>
+<li><a href="#sec-3-8-3">3.8.3. git show REV/TAG/REV:PATH-TO-FILE-OR-DIR</a></li>
+</ul>
+</li>
+<li><a href="#sec-3-9">3.9. Recommendations</a>
 <ul>
-<li><a href="#sec-4-1-1">4.1.1 man git-*</a></li>
-<li><a href="#sec-4-1-2">4.1.2 official site</a></li>
-<li><a href="#sec-4-1-3">4.1.3 Git - SVN crash course</a></li>
-<li><a href="#sec-4-1-4">4.1.4 Successful git branching model</a></li>
+<li><a href="#sec-3-9-1">3.9.1. avoid working in master</a></li>
+<li><a href="#sec-3-9-2">3.9.2. use branches for whatever little or big changes</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#sec-4">4. Appendix</a>
+<ul>
+<li><a href="#sec-4-1">4.1. Links</a>
+<ul>
+<li><a href="#sec-4-1-1">4.1.1. man git-*</a></li>
+<li><a href="#sec-4-1-2">4.1.2. official site</a></li>
+<li><a href="#sec-4-1-3">4.1.3. Git - SVN crash course</a></li>
+<li><a href="#sec-4-1-4">4.1.4. Successful git branching model</a></li>
 </ul>
 </li>
 </ul>
@@ -236,629 +301,272 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-1" class="outline-2">
+<div id="outline-container-sec-1" class="outline-2">
 <h2 id="sec-1"><span class="section-number-2">1</span> Annoyances with our current source control</h2>
 <div class="outline-text-2" id="text-1">
-
-
-
-</div>
-
-<div id="outline-container-1-1" class="outline-3">
+</div><div id="outline-container-sec-1-1" class="outline-3">
 <h3 id="sec-1-1"><span class="section-number-3">1.1</span> Rant</h3>
 <div class="outline-text-3" id="text-1-1">
-
-
-
-</div>
-
-<div id="outline-container-1-1-1" class="outline-4">
+</div><div id="outline-container-sec-1-1-1" class="outline-4">
 <h4 id="sec-1-1-1"><span class="section-number-4">1.1.1</span> Network traffic</h4>
-<div class="outline-text-4" id="text-1-1-1">
-
-
 </div>
 
-</div>
-
-<div id="outline-container-1-1-2" class="outline-4">
+<div id="outline-container-sec-1-1-2" class="outline-4">
 <h4 id="sec-1-1-2"><span class="section-number-4">1.1.2</span> Hopefully we have good repository backup</h4>
-<div class="outline-text-4" id="text-1-1-2">
-
-
 </div>
 
-</div>
-
-<div id="outline-container-1-1-3" class="outline-4">
+<div id="outline-container-sec-1-1-3" class="outline-4">
 <h4 id="sec-1-1-3"><span class="section-number-4">1.1.3</span> Clunky branch operations</h4>
 <div class="outline-text-4" id="text-1-1-3">
-
-<ul>
-<li id="sec-1-1-3-1">svn copy URL1 URL2<br/>
-</li>
-</ul>
-<ul>
-<li id="sec-1-1-3-2">svn checkout/switch URL2 (tea time)<br/>
-</li>
-</ul>
-<ul>
-<li id="sec-1-1-3-3">uncomfortable for doing more than one quick fixes that need separate testing<br/>
-
-</li>
-</ul>
+</div><ol class="org-ol"><li><a id="sec-1-1-3-1" name="sec-1-1-3-1"></a>svn copy URL1 URL2<br  /></li>
+<li><a id="sec-1-1-3-2" name="sec-1-1-3-2"></a>svn checkout/switch URL2 (tea time)<br  /></li>
+<li><a id="sec-1-1-3-3" name="sec-1-1-3-3"></a>uncomfortable for doing more than one quick fixes that need separate testing<br  /></li></ol>
 </div>
 
-</div>
-
-<div id="outline-container-1-1-4" class="outline-4">
+<div id="outline-container-sec-1-1-4" class="outline-4">
 <h4 id="sec-1-1-4"><span class="section-number-4">1.1.4</span> Merging to trunk?</h4>
 <div class="outline-text-4" id="text-1-1-4">
-
-<ul>
-<li id="sec-1-1-4-1">conflicts for files we haven't touched<br/>
-</li>
-</ul>
-<ul>
-<li id="sec-1-1-4-2">diff + clean up conflicts + patch<br/>
-</li>
-</ul>
-<ul>
-<li id="sec-1-1-4-3">single commit, bye-bye branch history<br/>
-</li>
-</ul>
-<ul>
-<li id="sec-1-1-4-4">branch is unusable afterwards, refinements go directly to trunk<br/>
-
-</li>
-</ul>
+</div><ol class="org-ol"><li><a id="sec-1-1-4-1" name="sec-1-1-4-1"></a>conflicts for files we haven't touched<br  /></li>
+<li><a id="sec-1-1-4-2" name="sec-1-1-4-2"></a>diff + clean up conflicts + patch<br  /></li>
+<li><a id="sec-1-1-4-3" name="sec-1-1-4-3"></a>single commit, bye-bye branch history<br  /></li>
+<li><a id="sec-1-1-4-4" name="sec-1-1-4-4"></a>branch is unusable afterwards, refinements go directly to trunk<br  /></li></ol>
 </div>
 </div>
 </div>
 
-</div>
-
-<div id="outline-container-2" class="outline-2">
+<div id="outline-container-sec-2" class="outline-2">
 <h2 id="sec-2"><span class="section-number-2">2</span> Can it get more comfortable?</h2>
 <div class="outline-text-2" id="text-2">
-
-
-
-</div>
-
-<div id="outline-container-2-1" class="outline-3">
+</div><div id="outline-container-sec-2-1" class="outline-3">
 <h3 id="sec-2-1"><span class="section-number-3">2.1</span> Distributed version control systems</h3>
 <div class="outline-text-3" id="text-2-1">
-
-
-
-</div>
-
-<div id="outline-container-2-1-1" class="outline-4">
+</div><div id="outline-container-sec-2-1-1" class="outline-4">
 <h4 id="sec-2-1-1"><span class="section-number-4">2.1.1</span> No central repository</h4>
 <div class="outline-text-4" id="text-2-1-1">
-
-<ul>
-<li id="sec-2-1-1-1">No, this is not a limitation<br/>
-
-</li>
-</ul>
+</div><ol class="org-ol"><li><a id="sec-2-1-1-1" name="sec-2-1-1-1"></a>No, this is not a limitation<br  /></li></ol>
 </div>
 
-</div>
-
-<div id="outline-container-2-1-2" class="outline-4">
+<div id="outline-container-sec-2-1-2" class="outline-4">
 <h4 id="sec-2-1-2"><span class="section-number-4">2.1.2</span> Each node is a repo on its own</h4>
 <div class="outline-text-4" id="text-2-1-2">
-
-<ul>
-<li id="sec-2-1-2-1">no real need for backup<br/>
-
-</li>
-</ul>
+</div><ol class="org-ol"><li><a id="sec-2-1-2-1" name="sec-2-1-2-1"></a>no real need for backup<br  /></li></ol>
 </div>
 
-</div>
-
-<div id="outline-container-2-1-3" class="outline-4">
+<div id="outline-container-sec-2-1-3" class="outline-4">
 <h4 id="sec-2-1-3"><span class="section-number-4">2.1.3</span> Network traffic only when interacting with remote repos</h4>
-<div class="outline-text-4" id="text-2-1-3">
-
-
 </div>
 
-</div>
-
-<div id="outline-container-2-1-4" class="outline-4">
+<div id="outline-container-sec-2-1-4" class="outline-4">
 <h4 id="sec-2-1-4"><span class="section-number-4">2.1.4</span> Most operations happen within own repo and are often instantaneous</h4>
-<div class="outline-text-4" id="text-2-1-4">
-
-
 </div>
 
-</div>
-
-<div id="outline-container-2-1-5" class="outline-4">
+<div id="outline-container-sec-2-1-5" class="outline-4">
 <h4 id="sec-2-1-5"><span class="section-number-4">2.1.5</span> Allows alternative work-flows</h4>
-<div class="outline-text-4" id="text-2-1-5">
-
-
 </div>
 </div>
 </div>
 
-</div>
-
-<div id="outline-container-3" class="outline-2">
+<div id="outline-container-sec-3" class="outline-2">
 <h2 id="sec-3"><span class="section-number-2">3</span> Git</h2>
 <div class="outline-text-2" id="text-3">
-
-
-
-</div>
-
-<div id="outline-container-3-1" class="outline-3">
+</div><div id="outline-container-sec-3-1" class="outline-3">
 <h3 id="sec-3-1"><span class="section-number-3">3.1</span> bla bla</h3>
 <div class="outline-text-3" id="text-3-1">
-
-
-
-</div>
-
-<div id="outline-container-3-1-1" class="outline-4">
+</div><div id="outline-container-sec-3-1-1" class="outline-4">
 <h4 id="sec-3-1-1"><span class="section-number-4">3.1.1</span> That kernel git, Linus</h4>
-<div class="outline-text-4" id="text-3-1-1">
-
 </div>
-
-</div>
-
-<div id="outline-container-3-1-2" class="outline-4">
+<div id="outline-container-sec-3-1-2" class="outline-4">
 <h4 id="sec-3-1-2"><span class="section-number-4">3.1.2</span> Known as (one of) the fastest</h4>
-<div class="outline-text-4" id="text-3-1-2">
-
 </div>
-
-</div>
-
-<div id="outline-container-3-1-3" class="outline-4">
+<div id="outline-container-sec-3-1-3" class="outline-4">
 <h4 id="sec-3-1-3"><span class="section-number-4">3.1.3</span> Seems to scale well for big code bases</h4>
-<div class="outline-text-4" id="text-3-1-3">
-
-
 </div>
 </div>
 
-</div>
-
-<div id="outline-container-3-2" class="outline-3">
+<div id="outline-container-sec-3-2" class="outline-3">
 <h3 id="sec-3-2"><span class="section-number-3">3.2</span> Virtues</h3>
 <div class="outline-text-3" id="text-3-2">
-
-
-
-</div>
-
-<div id="outline-container-3-2-1" class="outline-4">
+</div><div id="outline-container-sec-3-2-1" class="outline-4">
 <h4 id="sec-3-2-1"><span class="section-number-4">3.2.1</span> A lot of advanced commands</h4>
 <div class="outline-text-4" id="text-3-2-1">
-
-<ul>
-<li id="sec-3-2-1-1">maybe too many for a novice, but hey, you don't need to know them to boot<br/>
-</li>
-</ul>
-<ul>
-<li id="sec-3-2-1-2">fine-grained control<br/>
-</li>
-</ul>
-<ul>
-<li id="sec-3-2-1-3">of course you may shoot yourself in the foot<br/>
-<ul>
-<li id="sec-3-2-1-3-1">however, most things are re-fixable<br/>
-
-</li>
-</ul>
-</li>
-</ul>
+</div><ol class="org-ol"><li><a id="sec-3-2-1-1" name="sec-3-2-1-1"></a>maybe too many for a novice, but hey, you don't need to know them to boot<br  /></li>
+<li><a id="sec-3-2-1-2" name="sec-3-2-1-2"></a>fine-grained control<br  /></li>
+<li><a id="sec-3-2-1-3" name="sec-3-2-1-3"></a>of course you may shoot yourself in the foot<br  /><ol class="org-ol"><li><a id="sec-3-2-1-3-1" name="sec-3-2-1-3-1"></a>however, most things are re-fixable<br  /></li></ol>
+</li></ol>
 </div>
 
-</div>
-
-<div id="outline-container-3-2-2" class="outline-4">
+<div id="outline-container-sec-3-2-2" class="outline-4">
 <h4 id="sec-3-2-2"><span class="section-number-4">3.2.2</span> (local) Branches are really, really cheap</h4>
 <div class="outline-text-4" id="text-3-2-2">
-
-<ul>
-<li id="sec-3-2-2-1">this is what version control is mainly after, right<br/>
-
-</li>
-</ul>
+</div><ol class="org-ol"><li><a id="sec-3-2-2-1" name="sec-3-2-2-1"></a>this is what version control is mainly after, right<br  /></li></ol>
 </div>
 
-</div>
-
-<div id="outline-container-3-2-3" class="outline-4">
-<h4 id="sec-3-2-3"><span class="section-number-4">3.2.3</span> <span style="text-decoration:underline;">Allows</span> the central repository model as well</h4>
-<div class="outline-text-4" id="text-3-2-3">
-
-
+<div id="outline-container-sec-3-2-3" class="outline-4">
+<h4 id="sec-3-2-3"><span class="section-number-4">3.2.3</span> <span class="underline">Allows</span> the central repository model as well</h4>
 </div>
 </div>
 
-</div>
-
-<div id="outline-container-3-3" class="outline-3">
+<div id="outline-container-sec-3-3" class="outline-3">
 <h3 id="sec-3-3"><span class="section-number-3">3.3</span> Quick start</h3>
 <div class="outline-text-3" id="text-3-3">
-
-
-
-</div>
-
-<div id="outline-container-3-3-1" class="outline-4">
+</div><div id="outline-container-sec-3-3-1" class="outline-4">
 <h4 id="sec-3-3-1"><span class="section-number-4">3.3.1</span> Please introduce yourself</h4>
 <div class="outline-text-4" id="text-3-3-1">
-
-<ul>
-<li id="sec-3-3-1-1">git config &ndash;global user.name "Andrey Kotlarski"<br/>
-</li>
-</ul>
-<ul>
-<li id="sec-3-3-1-2">git config &ndash;global user.email akotlarski@vayant.com<br/>
-
-</li>
-</ul>
+</div><ol class="org-ol"><li><a id="sec-3-3-1-1" name="sec-3-3-1-1"></a>git config &#x2013;global user.name "Andrey Kotlarski"<br  /></li>
+<li><a id="sec-3-3-1-2" name="sec-3-3-1-2"></a>git config &#x2013;global user.email akotlarski@vayant.com<br  /></li></ol>
 </div>
 
-</div>
-
-<div id="outline-container-3-3-2" class="outline-4">
+<div id="outline-container-sec-3-3-2" class="outline-4">
 <h4 id="sec-3-3-2"><span class="section-number-4">3.3.2</span> initialize repository</h4>
 <div class="outline-text-4" id="text-3-3-2">
-
-<ul>
-<li id="sec-3-3-2-1">git init<br/>
-</li>
-</ul>
-<ul>
-<li id="sec-3-3-2-2">git add .<br/>
-</li>
-</ul>
-<ul>
-<li id="sec-3-3-2-3">git commit -m 'Initial commit.'<br/>
-
-</li>
-</ul>
+</div><ol class="org-ol"><li><a id="sec-3-3-2-1" name="sec-3-3-2-1"></a>git init<br  /></li>
+<li><a id="sec-3-3-2-2" name="sec-3-3-2-2"></a>git add .<br  /></li>
+<li><a id="sec-3-3-2-3" name="sec-3-3-2-3"></a>git commit -m 'Initial commit.'<br  /></li></ol>
 </div>
 
-</div>
-
-<div id="outline-container-3-3-3" class="outline-4">
-<h4 id="sec-3-3-3"><span class="section-number-4">3.3.3</span> &hellip;or clone existing one</h4>
+<div id="outline-container-sec-3-3-3" class="outline-4">
+<h4 id="sec-3-3-3"><span class="section-number-4">3.3.3</span> &#x2026;or clone existing one</h4>
 <div class="outline-text-4" id="text-3-3-3">
-
-<ul>
-<li id="sec-3-3-3-1">git clone URL<br/>
-
-</li>
-</ul>
+</div><ol class="org-ol"><li><a id="sec-3-3-3-1" name="sec-3-3-3-1"></a>git clone URL<br  /></li></ol>
 </div>
 </div>
 
-</div>
-
-<div id="outline-container-3-4" class="outline-3">
+<div id="outline-container-sec-3-4" class="outline-3">
 <h3 id="sec-3-4"><span class="section-number-3">3.4</span> Revisions</h3>
 <div class="outline-text-3" id="text-3-4">
-
-
-
-</div>
-
-<div id="outline-container-3-4-1" class="outline-4">
+</div><div id="outline-container-sec-3-4-1" class="outline-4">
 <h4 id="sec-3-4-1"><span class="section-number-4">3.4.1</span> unique SHA1s, not numbers</h4>
-<div class="outline-text-4" id="text-3-4-1">
-
 </div>
-
-</div>
-
-<div id="outline-container-3-4-2" class="outline-4">
+<div id="outline-container-sec-3-4-2" class="outline-4">
 <h4 id="sec-3-4-2"><span class="section-number-4">3.4.2</span> only initial characters can be used as long as uniquely identifiable</h4>
-<div class="outline-text-4" id="text-3-4-2">
-
 </div>
-
-</div>
-
-<div id="outline-container-3-4-3" class="outline-4">
+<div id="outline-container-sec-3-4-3" class="outline-4">
 <h4 id="sec-3-4-3"><span class="section-number-4">3.4.3</span> HEAD, HEAD\textasciicircum , HEAD\textasciitilde 5</h4>
-<div class="outline-text-4" id="text-3-4-3">
-
-
 </div>
 </div>
 
-</div>
-
-<div id="outline-container-3-5" class="outline-3">
+<div id="outline-container-sec-3-5" class="outline-3">
 <h3 id="sec-3-5"><span class="section-number-3">3.5</span> Branches and tags</h3>
 <div class="outline-text-3" id="text-3-5">
-
-
-</div>
-
-<div id="outline-container-3-5-1" class="outline-4">
+</div><div id="outline-container-sec-3-5-1" class="outline-4">
 <h4 id="sec-3-5-1"><span class="section-number-4">3.5.1</span> git branch NAME</h4>
-<div class="outline-text-4" id="text-3-5-1">
-
 </div>
-
-</div>
-
-<div id="outline-container-3-5-2" class="outline-4">
+<div id="outline-container-sec-3-5-2" class="outline-4">
 <h4 id="sec-3-5-2"><span class="section-number-4">3.5.2</span> git checkout BRANCH/REV/FILE</h4>
-<div class="outline-text-4" id="text-3-5-2">
-
-
 </div>
 
-</div>
-
-<div id="outline-container-3-5-3" class="outline-4">
+<div id="outline-container-sec-3-5-3" class="outline-4">
 <h4 id="sec-3-5-3"><span class="section-number-4">3.5.3</span> git tag -a TAG</h4>
-<div class="outline-text-4" id="text-3-5-3">
-
 </div>
-
-</div>
-
-<div id="outline-container-3-5-4" class="outline-4">
+<div id="outline-container-sec-3-5-4" class="outline-4">
 <h4 id="sec-3-5-4"><span class="section-number-4">3.5.4</span> git tag -l</h4>
-<div class="outline-text-4" id="text-3-5-4">
-
-
 </div>
 </div>
 
-</div>
-
-<div id="outline-container-3-6" class="outline-3">
+<div id="outline-container-sec-3-6" class="outline-3">
 <h3 id="sec-3-6"><span class="section-number-3">3.6</span> Remote repos, branches and sharing</h3>
 <div class="outline-text-3" id="text-3-6">
-
-
-
+</div><div id="outline-container-sec-3-6-1" class="outline-4">
+<h4 id="sec-3-6-1"><span class="section-number-4">3.6.1</span> git checkout &#x2013;track -b BRANCH</h4>
 </div>
 
-<div id="outline-container-3-6-1" class="outline-4">
-<h4 id="sec-3-6-1"><span class="section-number-4">3.6.1</span> git checkout &ndash;track -b BRANCH</h4>
-<div class="outline-text-4" id="text-3-6-1">
-
-
-</div>
-
-</div>
-
-<div id="outline-container-3-6-2" class="outline-4">
+<div id="outline-container-sec-3-6-2" class="outline-4">
 <h4 id="sec-3-6-2"><span class="section-number-4">3.6.2</span> git remote add URL</h4>
 <div class="outline-text-4" id="text-3-6-2">
-
-<ul>
-<li id="sec-3-6-2-1">don't switch to remote branch locally!<br/>
-
-</li>
-</ul>
+</div><ol class="org-ol"><li><a id="sec-3-6-2-1" name="sec-3-6-2-1"></a>don't switch to remote branch locally!<br  /></li></ol>
 </div>
 
-</div>
-
-<div id="outline-container-3-6-3" class="outline-4">
+<div id="outline-container-sec-3-6-3" class="outline-4">
 <h4 id="sec-3-6-3"><span class="section-number-4">3.6.3</span> git pull</h4>
-<div class="outline-text-4" id="text-3-6-3">
-
-
 </div>
 
-</div>
-
-<div id="outline-container-3-6-4" class="outline-4">
+<div id="outline-container-sec-3-6-4" class="outline-4">
 <h4 id="sec-3-6-4"><span class="section-number-4">3.6.4</span> git push origin</h4>
-<div class="outline-text-4" id="text-3-6-4">
-
-
 </div>
 </div>
 
-</div>
-
-<div id="outline-container-3-7" class="outline-3">
+<div id="outline-container-sec-3-7" class="outline-3">
 <h3 id="sec-3-7"><span class="section-number-3">3.7</span> Merging</h3>
 <div class="outline-text-3" id="text-3-7">
-
-
-
-</div>
-
-<div id="outline-container-3-7-1" class="outline-4">
+</div><div id="outline-container-sec-3-7-1" class="outline-4">
 <h4 id="sec-3-7-1"><span class="section-number-4">3.7.1</span> git merge BRANCH</h4>
 <div class="outline-text-4" id="text-3-7-1">
-
-<ul>
-<li id="sec-3-7-1-1">fast-forward merges<br/>
-
-</li>
-</ul>
+</div><ol class="org-ol"><li><a id="sec-3-7-1-1" name="sec-3-7-1-1"></a>fast-forward merges<br  /></li></ol>
 </div>
 
-</div>
-
-<div id="outline-container-3-7-2" class="outline-4">
+<div id="outline-container-sec-3-7-2" class="outline-4">
 <h4 id="sec-3-7-2"><span class="section-number-4">3.7.2</span> git rebase</h4>
 <div class="outline-text-4" id="text-3-7-2">
-
-<ul>
-<li id="sec-3-7-2-1">for brave history manipulators<br/>
-</li>
-</ul>
-<ul>
-<li id="sec-3-7-2-2">don't do this for public visible commits, havoc ensues!<br/>
-
-</li>
-</ul>
+</div><ol class="org-ol"><li><a id="sec-3-7-2-1" name="sec-3-7-2-1"></a>for brave history manipulators<br  /></li>
+<li><a id="sec-3-7-2-2" name="sec-3-7-2-2"></a>don't do this for public visible commits, havoc ensues!<br  /></li></ol>
 </div>
 
-</div>
-
-<div id="outline-container-3-7-3" class="outline-4">
+<div id="outline-container-sec-3-7-3" class="outline-4">
 <h4 id="sec-3-7-3"><span class="section-number-4">3.7.3</span> git cherry-pick REV</h4>
-<div class="outline-text-4" id="text-3-7-3">
-
-
 </div>
 </div>
 
-</div>
-
-<div id="outline-container-3-8" class="outline-3">
+<div id="outline-container-sec-3-8" class="outline-3">
 <h3 id="sec-3-8"><span class="section-number-3">3.8</span> Get information</h3>
 <div class="outline-text-3" id="text-3-8">
-
-
-
-</div>
-
-<div id="outline-container-3-8-1" class="outline-4">
+</div><div id="outline-container-sec-3-8-1" class="outline-4">
 <h4 id="sec-3-8-1"><span class="section-number-4">3.8.1</span> git log</h4>
-<div class="outline-text-4" id="text-3-8-1">
-
 </div>
-
-</div>
-
-<div id="outline-container-3-8-2" class="outline-4">
+<div id="outline-container-sec-3-8-2" class="outline-4">
 <h4 id="sec-3-8-2"><span class="section-number-4">3.8.2</span> git status</h4>
-<div class="outline-text-4" id="text-3-8-2">
-
 </div>
-
-</div>
-
-<div id="outline-container-3-8-3" class="outline-4">
+<div id="outline-container-sec-3-8-3" class="outline-4">
 <h4 id="sec-3-8-3"><span class="section-number-4">3.8.3</span> git show REV/TAG/REV:PATH-TO-FILE-OR-DIR</h4>
-<div class="outline-text-4" id="text-3-8-3">
-
-
 </div>
 </div>
 
-</div>
-
-<div id="outline-container-3-9" class="outline-3">
+<div id="outline-container-sec-3-9" class="outline-3">
 <h3 id="sec-3-9"><span class="section-number-3">3.9</span> Recommendations</h3>
 <div class="outline-text-3" id="text-3-9">
-
-
-
-</div>
-
-<div id="outline-container-3-9-1" class="outline-4">
+</div><div id="outline-container-sec-3-9-1" class="outline-4">
 <h4 id="sec-3-9-1"><span class="section-number-4">3.9.1</span> avoid working in master</h4>
 <div class="outline-text-4" id="text-3-9-1">
-
-<ul>
-<li id="sec-3-9-1-1">keep master clean and compilable, this is your face to the world normally<br/>
-
-</li>
-</ul>
+</div><ol class="org-ol"><li><a id="sec-3-9-1-1" name="sec-3-9-1-1"></a>keep master clean and compilable, this is your face to the world normally<br  /></li></ol>
 </div>
 
-</div>
-
-<div id="outline-container-3-9-2" class="outline-4">
+<div id="outline-container-sec-3-9-2" class="outline-4">
 <h4 id="sec-3-9-2"><span class="section-number-4">3.9.2</span> use branches for whatever little or big changes</h4>
 <div class="outline-text-4" id="text-3-9-2">
+</div><ol class="org-ol"><li><a id="sec-3-9-2-1" name="sec-3-9-2-1"></a>instantaneous creation<br  /></li>
+<li><a id="sec-3-9-2-2" name="sec-3-9-2-2"></a>commit often<br  /></li>
+<li><a id="sec-3-9-2-3" name="sec-3-9-2-3"></a>it can often be in experimental state (including commits), no problem<br  /></li>
 
-<ul>
-<li id="sec-3-9-2-1">instantaneous creation<br/>
-</li>
-</ul>
-<ul>
-<li id="sec-3-9-2-2">commit often<br/>
-</li>
-</ul>
-<ul>
-<li id="sec-3-9-2-3">it can often be in experimental state (including commits), no problem<br/>
-
-</li>
-</ul>
-<ul>
-<li id="sec-3-9-2-4">push important branches to the remote origin for backup<br/>
-
-</li>
-</ul>
+<li><a id="sec-3-9-2-4" name="sec-3-9-2-4"></a>push important branches to the remote origin for backup<br  /></li></ol>
 </div>
 </div>
 </div>
 
-</div>
-
-<div id="outline-container-4" class="outline-2">
+<div id="outline-container-sec-4" class="outline-2">
 <h2 id="sec-4"><span class="section-number-2">4</span> Appendix</h2>
 <div class="outline-text-2" id="text-4">
-
-
-
-</div>
-
-<div id="outline-container-4-1" class="outline-3">
+</div><div id="outline-container-sec-4-1" class="outline-3">
 <h3 id="sec-4-1"><span class="section-number-3">4.1</span> Links</h3>
 <div class="outline-text-3" id="text-4-1">
-
-
-
-</div>
-
-<div id="outline-container-4-1-1" class="outline-4">
+</div><div id="outline-container-sec-4-1-1" class="outline-4">
 <h4 id="sec-4-1-1"><span class="section-number-4">4.1.1</span> man git-*</h4>
-<div class="outline-text-4" id="text-4-1-1">
-
 </div>
-
-</div>
-
-<div id="outline-container-4-1-2" class="outline-4">
+<div id="outline-container-sec-4-1-2" class="outline-4">
 <h4 id="sec-4-1-2"><span class="section-number-4">4.1.2</span> <a href="http://git-scm.com">official site</a></h4>
-<div class="outline-text-4" id="text-4-1-2">
-
 </div>
-
-</div>
-
-<div id="outline-container-4-1-3" class="outline-4">
+<div id="outline-container-sec-4-1-3" class="outline-4">
 <h4 id="sec-4-1-3"><span class="section-number-4">4.1.3</span> <a href="http://git.or.cz/course/svn.html">Git - SVN crash course</a></h4>
-<div class="outline-text-4" id="text-4-1-3">
-
 </div>
-
-</div>
-
-<div id="outline-container-4-1-4" class="outline-4">
+<div id="outline-container-sec-4-1-4" class="outline-4">
 <h4 id="sec-4-1-4"><span class="section-number-4">4.1.4</span> <a href="http://nvie.com/posts/a-successful-git-branching-model/">Successful git branching model</a></h4>
-<div class="outline-text-4" id="text-4-1-4">
-
 </div>
 </div>
 </div>
 </div>
-</div>
-
-<div id="postamble">
-<p class="date">Date: 2013-03-25T01:07+0200</p>
+<div id="postamble" class="status">
 <p class="author">Author: Andrey Kotlarski</p>
-<p class="creator"><a href="http://orgmode.org">Org</a> version 7.9.3f with <a href="http://www.gnu.org/software/emacs/">Emacs</a> version 24</p>
-<a href="http://validator.w3.org/check?uri=referer">Validate XHTML 1.0</a>
-
+<p class="date">Created: 2015-08-30 нд 17:28</p>
+<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.5.1 (<a href="http://orgmode.org">Org</a> mode 8.2.10)</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
 </html>

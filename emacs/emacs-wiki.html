@@ -1,63 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-               "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
 <title>Andrey's Opinionated Emacs Guide</title>
-<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
-<meta name="title" content="Andrey's Opinionated Emacs Guide"/>
-<meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2013-09-28T17:02+0300"/>
-<meta name="author" content="Andrey Kotlarski"/>
-<meta name="description" content="Quick and general up to the point guide to GNU Emacs"/>
-<meta name="keywords" content="gnu,emacs,elisp,guide,tutorial,intro,crash course"/>
+<!-- 2015-08-30 нд 17:44 -->
+<meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta  name="generator" content="Org-mode" />
+<meta  name="author" content="Andrey Kotlarski" />
+<meta  name="description" content="Quick and general up to the point guide to GNU Emacs"
+ />
+<meta  name="keywords" content="gnu,emacs,elisp,guide,tutorial,intro,crash course" />
 <style type="text/css">
  <!--/*--><![CDATA[/*><!--*/
-  html { font-family: Times, serif; font-size: 12pt; }
   .title  { text-align: center; }
-  .todo   { color: red; }
+  .todo   { font-family: monospace; color: red; }
   .done   { color: green; }
-  .tag    { background-color: #add8e6; font-weight:normal }
-  .target { }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
   .timestamp { color: #bebebe; }
   .timestamp-kwd { color: #5f9ea0; }
-  .right  {margin-left:auto; margin-right:0px;  text-align:right;}
-  .left   {margin-left:0px;  margin-right:auto; text-align:left;}
-  .center {margin-left:auto; margin-right:auto; text-align:center;}
-  p.verse { margin-left: 3% }
+  .right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
   pre {
-	border: 1pt solid #AEBDCC;
-	background-color: #F3F5F7;
-	padding: 5pt;
-	font-family: courier, monospace;
-        font-size: 90%;
-        overflow:auto;
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
   }
-  table { border-collapse: collapse; }
-  td, th { vertical-align: top;  }
-  th.right  { text-align:center;  }
-  th.left   { text-align:center;   }
-  th.center { text-align:center; }
-  td.right  { text-align:right;  }
-  td.left   { text-align:left;   }
-  td.center { text-align:center; }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  pre.src-sh:before    { content: 'sh'; }
+  pre.src-bash:before  { content: 'sh'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-R:before     { content: 'R'; }
+  pre.src-perl:before  { content: 'Perl'; }
+  pre.src-java:before  { content: 'Java'; }
+  pre.src-sql:before   { content: 'SQL'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.right  { text-align: center;  }
+  th.left   { text-align: center;   }
+  th.center { text-align: center; }
+  td.right  { text-align: right;  }
+  td.left   { text-align: left;   }
+  td.center { text-align: center; }
   dt { font-weight: bold; }
-  div.figure { padding: 0.5em; }
-  div.figure p { text-align: center; }
-  div.inlinetask {
-    padding:10px;
-    border:2px solid gray;
-    margin:10px;
+  .footpara:nth-child(2) { display: inline; }
+  .footpara { display: block; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
     background: #ffffcc;
   }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
   textarea { overflow-x: auto; }
-  .linenr { font-size:smaller }
-  .code-highlighted {background-color:#ffff00;}
-  .org-info-js_info-navigation { border-style:none; }
-  #org-info-js_console-label { font-size:10px; font-weight:bold;
-                               white-space:nowrap; }
-  .org-info-js_search-highlight {background-color:#ffff00; color:#000000;
-                                 font-weight:bold; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
   /*]]>*/-->
 </style>
 <link rel="stylesheet" type="text/css" href="../css/worg-classic.css" />
@@ -107,203 +138,256 @@ for the JavaScript code in this tag.
  }
 /*]]>*///-->
 </script>
+<script type="text/javascript" src="http://orgmode.org/mathjax/MathJax.js"></script>
+<script type="text/javascript">
+<!--/*--><![CDATA[/*><!--*/
+    MathJax.Hub.Config({
+        // Only one of the two following lines, depending on user settings
+        // First allows browser-native MathML display, second forces HTML/CSS
+        //  config: ["MMLorHTML.js"], jax: ["input/TeX"],
+            jax: ["input/TeX", "output/HTML-CSS"],
+        extensions: ["tex2jax.js","TeX/AMSmath.js","TeX/AMSsymbols.js",
+                     "TeX/noUndefined.js"],
+        tex2jax: {
+            inlineMath: [ ["\\(","\\)"] ],
+            displayMath: [ ['$$','$$'], ["\\[","\\]"], ["\\begin{displaymath}","\\end{displaymath}"] ],
+            skipTags: ["script","noscript","style","textarea","pre","code"],
+            ignoreClass: "tex2jax_ignore",
+            processEscapes: false,
+            processEnvironments: true,
+            preview: "TeX"
+        },
+        showProcessingMessages: true,
+        displayAlign: "center",
+        displayIndent: "2em",
 
+        "HTML-CSS": {
+             scale: 100,
+             availableFonts: ["STIX","TeX"],
+             preferredFont: "TeX",
+             webFont: "TeX",
+             imageFont: "TeX",
+             showMathMenu: true,
+        },
+        MMLorHTML: {
+             prefer: {
+                 MSIE:    "MML",
+                 Firefox: "MML",
+                 Opera:   "HTML",
+                 other:   "HTML"
+             }
+        }
+    });
+/*]]>*///-->
+</script>
 </head>
 <body>
-<div id="org-div-home-and-up" style="text-align:right;font-size:70%;white-space:nowrap;">
+<div id="org-div-home-and-up">
  <a accesskey="h" href="../sitemap.html"> UP </a>
  |
  <a accesskey="H" href="../index.html"> HOME </a>
-</div>
-
-<div id="preamble">
-
-</div>
-
-<div id="content">
+</div><div id="content">
 <h1 class="title">Andrey's Opinionated Emacs Guide</h1>
-
-
 <div id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#sec-1">1 Introduction</a>
+<li><a href="#sec-1">1. Introduction</a>
 <ul>
-<li><a href="#sec-1-1">1.1 Glossary</a>
+<li><a href="#sec-1-1">1.1. Glossary</a>
 <ul>
-<li><a href="#sec-1-1-1">1.1.1 User terminology</a></li>
-<li><a href="#sec-1-1-2">1.1.2 Keys</a></li>
-<li><a href="#sec-1-1-3">1.1.3 Modes</a></li>
+<li><a href="#sec-1-1-1">1.1.1. User terminology</a></li>
+<li><a href="#sec-1-1-2">1.1.2. Keys</a></li>
+<li><a href="#sec-1-1-3">1.1.3. Modes</a></li>
 </ul>
 </li>
-<li><a href="#sec-1-2">1.2 First steps</a></li>
-<li><a href="#sec-1-3">1.3 Execute code/settings on the fly</a></li>
-<li><a href="#sec-1-4">1.4 Settings</a></li>
+<li><a href="#sec-1-2">1.2. First steps</a></li>
+<li><a href="#sec-1-3">1.3. Execute code/settings on the fly</a></li>
+<li><a href="#settings">1.4. Settings</a></li>
 </ul>
 </li>
-<li><a href="#sec-2">2 Practical essentials</a>
+<li><a href="#sec-2">2. Practical essentials</a>
 <ul>
-<li><a href="#sec-2-1">2.1 Run Emacs as daemon</a></li>
-<li><a href="#sec-2-2">2.2 Cancel current action</a></li>
-<li><a href="#sec-2-3">2.3 Commands, completion and hints</a></li>
-<li><a href="#sec-2-4">2.4 Additional packages</a></li>
-<li><a href="#sec-2-5">2.5 Assign key bindings to commands</a></li>
-<li><a href="#sec-2-6">2.6 Undo/redo</a></li>
-<li><a href="#sec-2-7">2.7 Search for great good</a></li>
+<li><a href="#sec-2-1">2.1. Run Emacs as daemon</a></li>
+<li><a href="#sec-2-2">2.2. Cancel current action</a></li>
+<li><a href="#sec-2-3">2.3. Commands, completion and hints</a></li>
+<li><a href="#sec-2-4">2.4. Additional packages</a></li>
+<li><a href="#sec-2-5">2.5. Assign key bindings to commands</a></li>
+<li><a href="#undo">2.6. Undo/redo</a></li>
+<li><a href="#search">2.7. Search for great good</a></li>
 </ul>
 </li>
-<li><a href="#sec-3">3 General tips and tricks</a>
+<li><a href="#sec-3">3. General tips and tricks</a>
 <ul>
-<li><a href="#sec-3-1">3.1 Yes-No prompts, why type so much?</a></li>
-<li><a href="#sec-3-2">3.2 Region</a></li>
-<li><a href="#sec-3-3">3.3 Markers</a></li>
-<li><a href="#sec-3-4">3.4 Operations on selection/region</a></li>
-<li><a href="#sec-3-5">3.5 Work with directories</a></li>
-<li><a href="#sec-3-6">3.6 Fuzzy matching when navigating the file system</a></li>
-<li><a href="#sec-3-7">3.7 Remote network and sudo access</a></li>
-<li><a href="#sec-3-8">3.8 Backup and file versions</a></li>
-<li><a href="#sec-3-9">3.9 Manage GnuPG encrypted files</a></li>
-<li><a href="#sec-3-10">3.10 Don't ask for sudo or ssh passwords</a></li>
-<li><a href="#sec-3-11">3.11 Gnus for mail and news</a></li>
-<li><a href="#sec-3-12">3.12 Shell, terminal, console, whatever you call it</a></li>
-<li><a href="#sec-3-13">3.13 Microsoft Windows (tm)</a></li>
+<li><a href="#sec-3-1">3.1. Yes-No prompts, why type so much?</a></li>
+<li><a href="#sec-3-2">3.2. Region</a></li>
+<li><a href="#mark">3.3. Markers</a></li>
+<li><a href="#sec-3-4">3.4. Operations on selection/region</a></li>
+<li><a href="#sec-3-5">3.5. Work with directories</a></li>
+<li><a href="#fuzzy">3.6. Fuzzy matching when navigating the file system</a></li>
+<li><a href="#remote">3.7. Remote network and sudo access</a></li>
+<li><a href="#sec-3-8">3.8. Backup and file versions</a></li>
+<li><a href="#sec-3-9">3.9. Manage GnuPG encrypted files</a></li>
+<li><a href="#auth">3.10. Don't ask for sudo or ssh passwords</a></li>
+<li><a href="#sec-3-11">3.11. Gnus for mail and news</a></li>
+<li><a href="#sec-3-12">3.12. Shell, terminal, console, whatever you call it</a></li>
+<li><a href="#windows">3.13. Microsoft Windows (tm)</a></li>
 </ul>
 </li>
-<li><a href="#sec-4">4 Programming tips and tricks</a>
+<li><a href="#sec-4">4. Programming tips and tricks</a>
 <ul>
-<li><a href="#sec-4-1">4.1 Grep on steroids</a></li>
-<li><a href="#sec-4-2">4.2 Edit grep results in place</a></li>
-<li><a href="#sec-4-3">4.3 Occur</a></li>
-<li><a href="#sec-4-4">4.4 If it moves - compile</a></li>
-<li><a href="#sec-4-5">4.5 Find file in project</a></li>
-<li><a href="#sec-4-6">4.6 Source control</a>
+<li><a href="#sec-4-1">4.1. Grep on steroids</a></li>
+<li><a href="#sec-4-2">4.2. Edit grep results in place</a></li>
+<li><a href="#sec-4-3">4.3. Occur</a></li>
+<li><a href="#sec-4-4">4.4. If it moves - compile</a></li>
+<li><a href="#sec-4-5">4.5. Find file in project</a></li>
+<li><a href="#sec-4-6">4.6. Source control</a>
 <ul>
-<li><a href="#sec-4-6-1">4.6.1 Magnificent git</a></li>
+<li><a href="#sec-4-6-1">4.6.1. Magnificent git</a></li>
 </ul>
 </li>
-<li><a href="#sec-4-7">4.7 Interactive diff and merging</a></li>
-<li><a href="#sec-4-8">4.8 Regular expressions</a></li>
-<li><a href="#sec-4-9">4.9 GDB</a></li>
-<li><a href="#sec-4-10">4.10 Semantic</a></li>
-<li><a href="#sec-4-11">4.11 Completion</a></li>
-<li><a href="#sec-4-12">4.12 General coding IDE</a></li>
-<li><a href="#sec-4-13">4.13 C++</a>
+<li><a href="#sec-4-7">4.7. Interactive diff and merging</a></li>
+<li><a href="#sec-4-8">4.8. Regular expressions</a></li>
+<li><a href="#sec-4-9">4.9. GDB</a></li>
+<li><a href="#sec-4-10">4.10. Semantic</a></li>
+<li><a href="#sec-4-11">4.11. Completion</a></li>
+<li><a href="#sec-4-12">4.12. General coding IDE</a></li>
+<li><a href="#sec-4-13">4.13. C++</a>
 <ul>
-<li><a href="#sec-4-13-1">4.13.1 Jump to definitions</a></li>
-</ul></li>
+<li><a href="#sec-4-13-1">4.13.1. Jump to definitions</a></li>
 </ul>
 </li>
-<li><a href="#sec-5">5 Documentation</a>
-<ul>
-<li><a href="#sec-5-1">5.1 Info</a></li>
-<li><a href="#sec-5-2">5.2 Browse system manuals</a></li>
-<li><a href="#sec-5-3">5.3 Elisp live documentation</a></li>
-<li><a href="#sec-5-4">5.4 Apropos</a></li>
-<li><a href="#sec-5-5">5.5 Discover available long key-binding sequences by their first part</a></li>
-<li><a href="#sec-5-6">5.6 Where is some command?</a></li>
-<li><a href="#sec-5-7">5.7 In short</a></li>
 </ul>
 </li>
-<li><a href="#sec-6">6 Random</a>
+<li><a href="#sec-5">5. Documentation</a>
 <ul>
-<li><a href="#sec-6-1">6.1 Org mode</a>
-<ul>
-<li><a href="#sec-6-1-1">6.1.1 Basic usage</a></li>
-<li><a href="#sec-6-1-2">6.1.2 Tables</a></li>
-<li><a href="#sec-6-1-3">6.1.3 Lightening fast documents</a></li>
+<li><a href="#info">5.1. Info</a></li>
+<li><a href="#sec-5-2">5.2. Browse system manuals</a></li>
+<li><a href="#sec-5-3">5.3. Elisp live documentation</a></li>
+<li><a href="#sec-5-4">5.4. Apropos</a></li>
+<li><a href="#sec-5-5">5.5. Discover available long key-binding sequences by their first part</a></li>
+<li><a href="#sec-5-6">5.6. Where is some command?</a></li>
+<li><a href="#sec-5-7">5.7. In short</a></li>
 </ul>
 </li>
-<li><a href="#sec-6-2">6.2 Vim</a></li>
+<li><a href="#sec-6">6. Random</a>
+<ul>
+<li><a href="#sec-6-1">6.1. Org mode</a>
+<ul>
+<li><a href="#sec-6-1-1">6.1.1. Basic usage</a></li>
+<li><a href="#sec-6-1-2">6.1.2. Tables</a></li>
+<li><a href="#sec-6-1-3">6.1.3. Lightening fast documents</a></li>
 </ul>
 </li>
-<li><a href="#sec-7">7 Emacs for black belts</a>
-<ul>
-<li><a href="#sec-7-1">7.1 Keyboard macros</a></li>
-<li><a href="#sec-7-2">7.2 Emacs Lisp</a>
-<ul>
-<li><a href="#sec-7-2-1">7.2.1 Text superpowers</a></li>
-<li><a href="#sec-7-2-2">7.2.2 Text processing automation for dummies</a></li>
-</ul></li>
+<li><a href="#vi">6.2. Vim</a></li>
 </ul>
 </li>
-<li><a href="#sec-8">8 Where to go next?</a>
+<li><a href="#sec-7">7. Emacs for black belts</a>
 <ul>
-<li><a href="#sec-8-1">8.1 Random resources</a></li>
+<li><a href="#key-macro">7.1. Keyboard macros</a></li>
+<li><a href="#elisp">7.2. Emacs Lisp</a>
+<ul>
+<li><a href="#sec-7-2-1">7.2.1. Text superpowers</a></li>
+<li><a href="#sec-7-2-2">7.2.2. Text processing automation for dummies</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#sec-8">8. Where to go next?</a>
+<ul>
+<li><a href="#sec-8-1">8.1. Random resources</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-1" class="outline-2">
+<div id="outline-container-sec-1" class="outline-2">
 <h2 id="sec-1"><span class="section-number-2">1</span> Introduction</h2>
 <div class="outline-text-2" id="text-1">
-
-
 <p>
 <b>Emacs is the red pill</b>
 </p>
+
 <p>
 Now that we got this out of the way, note that there are many Emacs
 flavours but what follows generally refers only to the eldest and most
 thriving at present - <a href="http://en.wikipedia.org/wiki/Emacs">GNU Emacs</a>.  If something below doesn't work for
 you, then you are probably using version older than 24.
 </p>
+
 <p>
 Emacs works in terminal almost at full capacity (imagine that under
 the Windows command line!).  In graphical mode you get better
 colouring, fonts, more key-sequences, ability to see images and pdf
 documents.
 </p>
-
 </div>
 
-<div id="outline-container-1-1" class="outline-3">
+<div id="outline-container-sec-1-1" class="outline-3">
 <h3 id="sec-1-1"><span class="section-number-3">1.1</span> Glossary</h3>
 <div class="outline-text-3" id="text-1-1">
-
-
-
-</div>
-
-<div id="outline-container-1-1-1" class="outline-4">
+</div><div id="outline-container-sec-1-1-1" class="outline-4">
 <h4 id="sec-1-1-1"><span class="section-number-4">1.1.1</span> User terminology</h4>
 <div class="outline-text-4" id="text-1-1-1">
-
-
 <p>
 Emacs is so ancient that it predates currently popular graphical
 layouts.  As such, it has terminology that may seem odd to poor
 contemporary users.  Here's a little correspondence table for some of
 the basics:
 </p>
+
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-<colgroup><col class="left" /><col class="left" />
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
 </colgroup>
 <thead>
-<tr><th scope="col" class="left"><b>Emacs land (I'll call it Lala land below)</b></th><th scope="col" class="left"><b>Rest of the world</b></th></tr>
+<tr>
+<th scope="col" class="left"><b>Emacs land (I'll call it Lala land below)</b></th>
+<th scope="col" class="left"><b>Rest of the world</b></th>
+</tr>
 </thead>
 <tbody>
-<tr><td class="left">frame</td><td class="left">program window</td></tr>
+<tr>
+<td class="left">frame</td>
+<td class="left">program window</td>
+</tr>
 </tbody>
 <tbody>
-<tr><td class="left">window</td><td class="left">pane</td></tr>
+<tr>
+<td class="left">window</td>
+<td class="left">pane</td>
+</tr>
 </tbody>
 <tbody>
-<tr><td class="left">buffer</td><td class="left">file or something that may have text in it</td></tr>
+<tr>
+<td class="left">buffer</td>
+<td class="left">file or something that may have text in it</td>
+</tr>
 </tbody>
 <tbody>
-<tr><td class="left">kill</td><td class="left">cut</td></tr>
+<tr>
+<td class="left">kill</td>
+<td class="left">cut</td>
+</tr>
 </tbody>
 <tbody>
-<tr><td class="left">yank</td><td class="left">paste</td></tr>
+<tr>
+<td class="left">yank</td>
+<td class="left">paste</td>
+</tr>
 </tbody>
 <tbody>
-<tr><td class="left">region</td><td class="left">selection</td></tr>
+<tr>
+<td class="left">region</td>
+<td class="left">selection</td>
+</tr>
 </tbody>
 </table>
-
 
 <p>
 Buffer may not be associated to file?!  What is this planet, <a href="http://en.wikipedia.org/wiki/Kin-dza-dza">Pluke</a>?
@@ -314,112 +398,115 @@ file.  Emacs frames are actually <a href="http://en.wikipedia.org/wiki/Tiling_wi
 mercy and stop here.
 </p>
 </div>
-
 </div>
 
-<div id="outline-container-1-1-2" class="outline-4">
+<div id="outline-container-sec-1-1-2" class="outline-4">
 <h4 id="sec-1-1-2"><span class="section-number-4">1.1.2</span> Keys</h4>
 <div class="outline-text-4" id="text-1-1-2">
-
-
 <p>
 Emacsers like keyboard shortcuts so much that they often sequence
 several in a row.  Here's how to read some examples:
 </p>
+
 <p>
 <b>M-x tetris</b>
 </p>
+
 <p>
 (<b>M</b> stands for <b>&lt;Alt&gt;</b>, so press and hold <b>&lt;Alt&gt;</b>, press <b>&lt;x&gt;</b>,
-release these keys, type <b>tetris</b> and press <b>&lt;Enter&gt;</b> &hellip;by the way
+release these keys, type <b>tetris</b> and press <b>&lt;Enter&gt;</b> &#x2026;by the way
 this is a real command, try it!)
 </p>
+
 <p>
 <b>C-x C-f PATH-TO-SOME-FILE</b>
 </p>
+
 <p>
 (<b>C</b> stands for <b>&lt;Ctrl&gt;</b>, so press and hold <b>&lt;Ctrl&gt;</b>, press <b>&lt;x&gt;</b>,
 release these keys, press and hold <b>&lt;Ctrl&gt;</b>, press <b>&lt;f&gt;</b>, release
 these keys, type path to some file or directory and then
 press <b>&lt;Enter&gt;</b>)
 </p>
+
 <p>
 <b>C-x v d PATH-TO-VERSION-CONTROLLED-FOLDER</b>
 </p>
+
 <p>
 (press and hold <b>&lt;Ctrl&gt;</b>, press <b>&lt;x&gt;</b>, relese these keys, press <b>&lt;v&gt;</b>,
 release, press
 <b>&lt;d&gt;</b>, release, type path to some directory and then hit <b>&lt;Enter&gt;</b>)
 </p>
 </div>
-
 </div>
 
-<div id="outline-container-1-1-3" class="outline-4">
+<div id="outline-container-sec-1-1-3" class="outline-4">
 <h4 id="sec-1-1-3"><span class="section-number-4">1.1.3</span> Modes</h4>
 <div class="outline-text-4" id="text-1-1-3">
-
-
 <p>
 Each buffer is associated with something called major mode and may
 have a bunch of active minor modes.  What is this thing, a <a href="http://stefan-klinger.de/files/monadGuide.pdf">Monad</a>?  No,
 save me from another "Grok Monads in 2<sup>365</sup> easy steps" tutorial!
 </p>
+
 <p>
 Modes are sets of specific rules and key-bindings active for some
 buffer.  There is a read-only mode that forbids you editing, there are
 <a href="http://emacswiki.org/emacs/ProgrammingModes">language aware modes</a> for shell scripts / makefiles / python / java / c
 / <a href="http://en.wikipedia.org/wiki/Scheme_(programming_language)">scheme</a> / <a href="http://clojure.org">clojure</a> / <a href="http://www.haskell.org">haskell</a> / <a href="http://wiki.portal.chalmers.se/agda/pmwiki.php">agda</a> / (insert your favourite niche
 language here) that give proper colouring, automatic indentation
-rules, special key-bindings for specific niceties&hellip;  There are modes
-that grow in packages for <a href="http://www.gnus.org/">reading or composing mail</a>, <a href="http://orgmode.org">creating presentations/books</a>, <a href="http://emacswiki.org/emacs/CategoryVersionControl">version control</a>, <a href="http://emacswiki.org/emacs/CategoryShell">shells</a>, <a href="http://emacswiki.org/emacs/CategorySql">DB prompts</a>,
+rules, special key-bindings for specific niceties&#x2026;  There are modes
+that grow in packages for <a href="http://www.gnus.org/">reading or composing mail</a>, <a href="http://orgmode.org">creating
+presentations/books</a>, <a href="http://emacswiki.org/emacs/CategoryVersionControl">version control</a>, <a href="http://emacswiki.org/emacs/CategoryShell">shells</a>, <a href="http://emacswiki.org/emacs/CategorySql">DB prompts</a>,
 <a href="http://emacswiki.org/emacs/CategoryDocumentation">composing/reading documentation</a>, <a href="http://www.emacswiki.org/emacs/CategoryCalendar">calendar</a>, <a href="http://www.emacswiki.org/emacs/CategoryCalculators">stack calculator</a>,
-dictionaries, agendas and organizers, spreadsheets, <a href="http://emacs-w3m.namazu.org/">browsing the internetz</a>, <a href="http://emacswiki.org/emacs/Rudel">collaborative editing</a>, <a href="http://www.emacswiki.org/EmacSpeak">audio desktop</a> for visually impaired,
+dictionaries, agendas and organizers, spreadsheets, <a href="http://emacs-w3m.namazu.org/">browsing the
+internetz</a>, <a href="http://emacswiki.org/emacs/Rudel">collaborative editing</a>, <a href="http://www.emacswiki.org/EmacSpeak">audio desktop</a> for visually impaired,
 <a href="http://emacswiki.org/emacs/ArtistMode">ASCII drawing</a>, <a href="http://www.gnu.org/software/emms/">media collection managers</a> and <a href="http://www.emacswiki.org/emacs/MusicPlayers">players</a>, <a href="http://www.emacswiki.org/emacs/CategoryGames">games</a>,
-<a href="http://emacswiki.org/emacs/EmacsDoctor">psychotherapist</a>, <a href="http://youtu.be/D1sXuHnf_lo">controlling vibrators</a>&hellip; to name a few.  Oops,
+<a href="http://emacswiki.org/emacs/EmacsDoctor">psychotherapist</a>, <a href="http://youtu.be/D1sXuHnf_lo">controlling vibrators</a>&#x2026; to name a few.  Oops,
 overdid it somewhere.
 </p>
+
 <p>
 To get description of the major mode for the current buffer:
 </p>
+
 <p>
 <b>C-h m</b>
 </p>
+
 <p>
 To get all currently available key-bindings grouped by modes:
 </p>
+
 <p>
 <b>C-h b</b>
 </p>
 </div>
 </div>
-
 </div>
 
-<div id="outline-container-1-2" class="outline-3">
+<div id="outline-container-sec-1-2" class="outline-3">
 <h3 id="sec-1-2"><span class="section-number-3">1.2</span> First steps</h3>
 <div class="outline-text-3" id="text-1-2">
-
-
 <p>
 If you are new to Emacs, invoke:
 </p>
+
 <p>
 <b>C-h t</b>
 </p>
+
 <p>
 to get the intro tutorial.  It's really good and will save you
 headbanging.  Unless you are a metal-head \m/
 </p>
 </div>
-
 </div>
 
-<div id="outline-container-1-3" class="outline-3">
+<div id="outline-container-sec-1-3" class="outline-3">
 <h3 id="sec-1-3"><span class="section-number-3">1.3</span> Execute code/settings on the fly</h3>
 <div class="outline-text-3" id="text-1-3">
-
-
 <p>
 Unlike other environments and programs that pretend to be interactive,
 Emacs actually is.  When you see a code snippet closed between
@@ -427,193 +514,184 @@ parenthesis (well, it needs to be somewhat valid <a href="http://en.wikipedia.or
 example:
 </p>
 
-
+<div class="org-src-container">
 
 <pre class="src src-emacs-lisp">(message <span style="color: #95e454;">"Mozart is a great %s."</span>
          (<span style="color: #8ac6f2; font-weight: bold;">if</span> (&gt; (string-to-number (emacs-uptime <span style="color: #95e454;">"%H"</span>)) 3)
              <span style="color: #95e454;">"programmer"</span>
            <span style="color: #95e454;">"composer"</span>))
 </pre>
-
+</div>
 
 <p>
 it can be immediately executed by placing the cursor just after the
 last closing paren and pressing:
 </p>
+
 <p>
 <b>C-x C-e</b>
 </p>
+
 <p>
 You can (re)set/(re)define functions, variables, whatever this way and
 it immediately comes into effect.  This holds for everything you see
 below.
 </p>
 </div>
-
 </div>
 
-<div id="outline-container-1-4" class="outline-3">
-<h3 id="sec-1-4"><span class="section-number-3">1.4</span> Settings</h3>
-<div class="outline-text-3" id="text-1-4">
-
+<div id="outline-container-settings" class="outline-3">
+<h3 id="settings"><a id="sec-1-4" name="sec-1-4"></a><span class="section-number-3">1.4</span> Settings</h3>
+<div class="outline-text-3" id="text-settings">
 
 <p>
 Settings usually reside in <b>~/.emacs.d/init.el</b>
 This is where you can paste the tips from below and expect to be in
 effect on each Emacs invocation.
 </p>
+
 <p>
 If you somehow manage to push settings that make your Emacs unusable
 (I would expect that this would take some talent) like for example:
 </p>
 
-
+<div class="org-src-container">
 
 <pre class="src src-emacs-lisp">(fset 'self-insert-command
       (<span style="color: #8ac6f2; font-weight: bold;">lambda</span> () <span style="color: #95e454;">"Print message instead of entering characters."</span>
         (interactive)
         (message <span style="color: #95e454;">"HALLO?"</span>)))
 </pre>
-
+</div>
 
 <p>
 just fix it with <a href="http://www.vim.org/">Vim</a>.  Got the joke?  Nah, run Emacs like this:
 </p>
+
 <p>
 <b>emacs -Q</b>
 </p>
+
 <p>
 and it will skip loading the <b>init.el</b> file, giving you a chance to
 clean the mess.
 </p>
 </div>
 </div>
-
 </div>
 
-<div id="outline-container-2" class="outline-2">
+<div id="outline-container-sec-2" class="outline-2">
 <h2 id="sec-2"><span class="section-number-2">2</span> Practical essentials</h2>
 <div class="outline-text-2" id="text-2">
-
-
-
-</div>
-
-<div id="outline-container-2-1" class="outline-3">
+</div><div id="outline-container-sec-2-1" class="outline-3">
 <h3 id="sec-2-1"><span class="section-number-3">2.1</span> Run Emacs as daemon</h3>
 <div class="outline-text-3" id="text-2-1">
-
-
 <p>
 Stock Emacs is quick and nimble (extensions are loaded only when/if
-demanded), you can use it just like <a href="#sec-6-2">Vim</a>, start it to edit a file, then
+demanded), you can use it just like <a href="#vi">Vim</a>, start it to edit a file, then
 kill it.  However, Emacs is so much more useful that many emacsers
 prefer to start it once and reuse this single instance for many tasks.
-So&hellip;
+So&#x2026;
 </p>
+
 <p>
 Forget religious prejudices, run Emacs as daemon and connect to this
 hell of a creature in graphics mode or from terminal
-or&hellip;both&hellip;several times.  Here's how:
+or&#x2026;both&#x2026;several times.  Here's how:
 </p>
 
-
+<div class="org-src-container">
 
 <pre class="src src-sh">emacs --daemon
 </pre>
-
+</div>
 
 <p>
 Now, to connect in graphical frame, invoke:
 </p>
 
-
+<div class="org-src-container">
 
 <pre class="src src-sh">emacsclient -c
 </pre>
-
+</div>
 
 <p>
 and/or in terminal:
 </p>
 
-
+<div class="org-src-container">
 
 <pre class="src src-sh">emacsclient -t
 </pre>
-
+</div>
 
 <p>
-The <b>&ndash;daemon</b> option is certainly available under GNU/Linux and BSDs.
+The <b>&#x2013;daemon</b> option is certainly available under GNU/Linux and BSDs.
 It might even work for BSD rip-off like MacOS but not under Windows.
 Nah.  A trve programmer should resort to the latter two only under
 death threat or starvation anyway.
 </p>
 </div>
-
 </div>
 
-<div id="outline-container-2-2" class="outline-3">
+<div id="outline-container-sec-2-2" class="outline-3">
 <h3 id="sec-2-2"><span class="section-number-3">2.2</span> Cancel current action</h3>
 <div class="outline-text-3" id="text-2-2">
-
-
 <p>
 Sometimes you start some action, Emacs asks you questions, or you're
-in a middle of <a href="#sec-2-7">incremental search</a> or whatever.  Suddenly, you come to
+in a middle of <a href="#search">incremental search</a> or whatever.  Suddenly, you come to
 realize that you don't want to continue and stop immediately:
 </p>
+
 <p>
 <b>C-g</b>
 </p>
+
 <p>
 This is the universal cancel/quit command.  If one press doesn't end
 it, press it again.  Normally 2-3 invocations are enough to take you
 out of whatever complicated action.
 </p>
 </div>
-
 </div>
 
-<div id="outline-container-2-3" class="outline-3">
+<div id="outline-container-sec-2-3" class="outline-3">
 <h3 id="sec-2-3"><span class="section-number-3">2.3</span> Commands, completion and hints</h3>
 <div class="outline-text-3" id="text-2-3">
-
-
 <p>
 Emacs is all running on commands.  Press whatever button, bam, some
 command is invoked.  There are so many that one can remember just a
 percent of what there is.  So how to find something useful?  Should
 you use menus like in other programs?  Possible, but what kind of menu
-would hold 3 000+ commands in coherent way&hellip; Call the devil by name:
+would hold 3 000+ commands in coherent way&#x2026; Call the devil by name:
 </p>
+
 <p>
 <b>M-x SOME-COMMAND-NAME</b>
 </p>
+
 <p>
 <b>&lt;Tab&gt;</b> can be used for completion.  Furthermore, you can do:
 </p>
 
-
+<div class="org-src-container">
 
 <pre class="src src-emacs-lisp">(custom-set-variables
  '(icomplete-mode t))
 </pre>
-
+</div>
 
 <p>
 and you'll get smart hints what commands are available while entering
 characters.
 </p>
 </div>
-
 </div>
 
-<div id="outline-container-2-4" class="outline-3">
+<div id="outline-container-sec-2-4" class="outline-3">
 <h3 id="sec-2-4"><span class="section-number-3">2.4</span> Additional packages</h3>
 <div class="outline-text-3" id="text-2-4">
-
-
 <p>
 Emacs has tons of them.  Your grandmother probably has written one or
 two too.  Until recently there was no canonical way to distribute and
@@ -623,9 +701,11 @@ or above, you are one lucky bastard!  GNU Emacs is living to its
 promise to become full fledged operating system and now has a packet
 manager that can be invoked with:
 </p>
+
 <p>
 <b>M-x list-packages</b>
 </p>
+
 <p>
 To install package from there, position on the line of the desired one
 and press <b>&lt;I&gt;</b> (yes, capital).  You can do this several times.  When
@@ -633,12 +713,13 @@ done shopping, press <b>&lt;x&gt;</b>, answer some prompts and you'll soon have
 these extensions in your <b>~/.emacs.d/elpa/</b> directory ready to be
 used.
 </p>
+
 <p>
 By default only the GNU package repository is used but you can add
 others too:
 </p>
 
-
+<div class="org-src-container">
 
 <pre class="src src-emacs-lisp">(custom-set-variables
  '(package-archives '((<span style="color: #95e454;">"gnu"</span> . <span style="color: #95e454;">"http://elpa.gnu.org/packages/"</span>)
@@ -647,33 +728,31 @@ others too:
                       (<span style="color: #95e454;">"marmalade"</span> .
                        <span style="color: #95e454;">"http://marmalade-repo.org/packages/"</span>))))
 </pre>
-
-
+</div>
+</div>
 </div>
 
-</div>
-
-<div id="outline-container-2-5" class="outline-3">
+<div id="outline-container-sec-2-5" class="outline-3">
 <h3 id="sec-2-5"><span class="section-number-3">2.5</span> Assign key bindings to commands</h3>
 <div class="outline-text-3" id="text-2-5">
-
-
 <p>
 You're in love with some command but there is no key sequence to
 invoke it and you have to resort to:
 </p>
+
 <p>
 <b>M-x BELOVED-COMMAND</b>
 </p>
+
 <p>
 Here's how to assign global key-binding:
 </p>
 
-
+<div class="org-src-container">
 
 <pre class="src src-emacs-lisp">(define-key global-map (kbd <span style="color: #95e454;">"C-c z"</span>) 'BELOVED-COMMAND)
 </pre>
-
+</div>
 
 <p>
 Et voilà.  Now you'll have your beloved command available anywhere
@@ -683,61 +762,63 @@ though.  It is recommended that user defined combinations should be
 what is the key combination sequence syntax accepted by the `kbd'
 function see:
 </p>
+
 <p>
 <b>C-h f edmacro-mode</b>
 </p>
+
 <p>
 What if you want to assign special key combination only for some
 specific mode?  You'll generally have to know the name of the key map
 variable for this mode:
 </p>
 
-
+<div class="org-src-container">
 
 <pre class="src src-emacs-lisp">(define-key occur-mode-map <span style="color: #95e454;">"n"</span> 'occur-next)
 </pre>
-
-
+</div>
+</div>
 </div>
 
-</div>
-
-<div id="outline-container-2-6" class="outline-3">
-<h3 id="sec-2-6"><span class="section-number-3">2.6</span> Undo/redo</h3>
-<div class="outline-text-3" id="text-2-6">
-
+<div id="outline-container-undo" class="outline-3">
+<h3 id="undo"><a id="sec-2-6" name="sec-2-6"></a><span class="section-number-3">2.6</span> Undo/redo</h3>
+<div class="outline-text-3" id="text-undo">
 
 <p>
 Your last changes are rubbish?  Undo them:
 </p>
+
 <p>
 <b>C-/</b>
 </p>
+
 <p>
-Then, they were actually not that bad.  Let's redo&hellip; You are in for a
+Then, they were actually not that bad.  Let's redo&#x2026; You are in for a
 surprise - there is no redo in Emacs.  <a href="http://www.youtube.com/watch?v=kXEgk1Hdze0">Wat</a>?!  The reason is that the
 undo command is so mighty that it can undo itself (pun intended).
 After you stop a series of undos (by hitting whatever other button),
 you can start again undo-ing and it will eventually undo your previous
-undos, which is roughly equivalent to redo<sup><a class="footref" name="fnr-.1" href="#fn-.1">1</a></sup>.  This is a very
-powerful mechanism but a brain-twister for novices.  Try out <a href="http://www.emacswiki.org/emacs/UndoTree">Undo Tree</a><sup><a class="footref" name="fnr-.2" href="#fn-.2">2</a></sup>, it visualizes the states between series of undos and
+undos, which is roughly equivalent to redo<sup><a id="fnr.1" name="fnr.1" class="footref" href="#fn.1">1</a></sup>.  This is a very
+powerful mechanism but a brain-twister for novices.  Try out <a href="http://www.emacswiki.org/emacs/UndoTree">Undo
+Tree</a><sup><a id="fnr.2" name="fnr.2" class="footref" href="#fn.2">2</a></sup>, it visualizes the states between series of undos and
 changes and can even allow you travel in time for your edits.
 </p>
 </div>
-
 </div>
 
-<div id="outline-container-2-7" class="outline-3">
-<h3 id="sec-2-7"><span class="section-number-3">2.7</span> Search for great good</h3>
-<div class="outline-text-3" id="text-2-7">
-
+<div id="outline-container-search" class="outline-3">
+<h3 id="search"><a id="sec-2-7" name="sec-2-7"></a><span class="section-number-3">2.7</span> Search for great good</h3>
+<div class="outline-text-3" id="text-search">
 
 <p>
 <a href="http://emacswiki.org/emacs/IncrementalSearch">Searching</a> is nice and unobtrusive, just:
 </p>
+
 <p>
 <b>C-s</b>
 </p>
+
 <p>
 and start typing something.  Press <b>C-s</b> again to iterate matches
 forward or <b>C-r</b> to do it backward.  Press <b>&lt;Enter&gt;</b> when you've found
@@ -745,29 +826,22 @@ what you need or <b>C-g</b> to cancel search and return to where it
 started.  This is traditional way of just moving around text too.
 More precise and reliable than even a mouse!
 </p>
+
 <p>
-If search was successful (ending with <b>&lt;Enter&gt;</b>), <a href="#sec-3-3">mark</a> has been
+If search was successful (ending with <b>&lt;Enter&gt;</b>), <a href="#mark">mark</a> has been
 established on the point where the search was invoked.  So if you feel
 like going back, just press <b>C-u C-&lt;SPC&gt;</b>.
 </p>
 </div>
 </div>
-
 </div>
 
-<div id="outline-container-3" class="outline-2">
+<div id="outline-container-sec-3" class="outline-2">
 <h2 id="sec-3"><span class="section-number-2">3</span> General tips and tricks</h2>
 <div class="outline-text-2" id="text-3">
-
-
-
-</div>
-
-<div id="outline-container-3-1" class="outline-3">
+</div><div id="outline-container-sec-3-1" class="outline-3">
 <h3 id="sec-3-1"><span class="section-number-3">3.1</span> Yes-No prompts, why type so much?</h3>
 <div class="outline-text-3" id="text-3-1">
-
-
 <p>
 Often Emacs asks something and expects you to type <b>yes</b> or <b>no</b>
 followed by <b>&lt;Enter&gt;</b>.  Here's how to change this and when faced with
@@ -775,38 +849,38 @@ such existential question be able to just press <b>&lt;y&gt;</b> or <b>&lt;n&gt;
 instead:
 </p>
 
-
+<div class="org-src-container">
 
 <pre class="src src-emacs-lisp">(fset 'yes-or-no-p 'y-or-n-p)
 </pre>
-
-
+</div>
+</div>
 </div>
 
-</div>
-
-<div id="outline-container-3-2" class="outline-3">
+<div id="outline-container-sec-3-2" class="outline-3">
 <h3 id="sec-3-2"><span class="section-number-3">3.2</span> Region</h3>
 <div class="outline-text-3" id="text-3-2">
-
-
 <p>
 While you can do selection with mouse (and <b>&lt;Shift&gt;</b> in combination
 with the arrows) as years of brainwashing have taught us, Emacs allows
 some more.  Press:
 </p>
+
 <p>
 <b>C-&lt;SPC&gt;</b>
 </p>
+
 <p>
 where you'd like to start a selection and then move around to where
-selection should end.  <a href="#sec-2-7">Incremental search</a> is allowed!  Not only this,
+selection should end.  <a href="#search">Incremental search</a> is allowed!  Not only this,
 if you think that the initial point of selection needs to change,
 invoke:
 </p>
+
 <p>
 <b>C-x C-x</b>
 </p>
+
 <p>
 and cursor will move to the initial selection point, allowing you to
 refine it (again, searching is OK), while selection region is still
@@ -814,57 +888,56 @@ active.  In fact, you can jump like this between the selection ends
 and refine them as many times as you want.  Neat.
 </p>
 </div>
-
 </div>
 
-<div id="outline-container-3-3" class="outline-3">
-<h3 id="sec-3-3"><span class="section-number-3">3.3</span> Markers</h3>
-<div class="outline-text-3" id="text-3-3">
-
+<div id="outline-container-mark" class="outline-3">
+<h3 id="mark"><a id="sec-3-3" name="sec-3-3"></a><span class="section-number-3">3.3</span> Markers</h3>
+<div class="outline-text-3" id="text-mark">
 
 <p>
 Moving around selection ends is dandy and is result of a more general
 mechanism.  Enter marks.  Pressing:
 </p>
+
 <p>
 <b>C-&lt;SPC&gt; C-&lt;SPC&gt;</b>
 </p>
+
 <p>
 marks current cursor position as special.  If you now move around the
 buffer, pressing:
 </p>
+
 <p>
 <b>C-u C-&lt;SPC&gt;</b>
 </p>
+
 <p>
 will move you back to the special position.  You can keep
 pressing <b>C-u C-&lt;SPC&gt;</b> and it will cycle through all such special
-positions that have been marked at some point in the buffer<sup><a class="footref" name="fnr-.3" href="#fn-.3">3</a></sup>.
+positions that have been marked at some point in the buffer<sup><a id="fnr.3" name="fnr.3" class="footref" href="#fn.3">3</a></sup>.
 Some commands automatically mark current position so don't be
 surprised if such cycling brings you to places where search or
 selection has been invoked.
 </p>
 </div>
-
 </div>
 
-<div id="outline-container-3-4" class="outline-3">
+<div id="outline-container-sec-3-4" class="outline-3">
 <h3 id="sec-3-4"><span class="section-number-3">3.4</span> Operations on selection/region</h3>
 <div class="outline-text-3" id="text-3-4">
-
-
 <p>
 Lesser programs normally allow two actions on selection - copying and
 deletion.  Emacs is not as boring.  Beside the obvious, when a region
 is selected:
 </p>
-<ul>
+
+<ul class="org-ul">
 <li>all sorts of string/regex replace work only on this region
 </li>
-<li><a href="#sec-2-6">undo</a> acts only on the region
+<li><a href="#undo">undo</a> acts only on the region
 </li>
 </ul>
-
 
 <p>
 The last one is an Easter Egg.  Think how useful it can be, undoing
@@ -872,136 +945,141 @@ changes just in some selection.  <a href="http://www.gnu.org/software/emacs/manu
 overview of what more is supported.
 </p>
 </div>
-
 </div>
 
-<div id="outline-container-3-5" class="outline-3">
+<div id="outline-container-sec-3-5" class="outline-3">
 <h3 id="sec-3-5"><span class="section-number-3">3.5</span> Work with directories</h3>
 <div class="outline-text-3" id="text-3-5">
-
-
 <p>
-<a href="http://emacswiki.org/emacs/DiredMode">Dired</a><sup><a class="footref" name="fnr-.4" href="#fn-.4">4</a></sup> is the most capable file manager I've encountered.  To
+<a href="http://emacswiki.org/emacs/DiredMode">Dired</a><sup><a id="fnr.4" name="fnr.4" class="footref" href="#fn.4">4</a></sup> is the most capable file manager I've encountered.  To
 start it:
 </p>
+
 <p>
 <b>C-x d PATH-TO-SOME-DIRECTORY</b>
 </p>
+
 <p>
 Now hit:
 </p>
+
 <p>
 <b>C-h m</b>
 </p>
+
 <p>
 to get summary of what it can do.
 </p>
 </div>
-
 </div>
 
-<div id="outline-container-3-6" class="outline-3">
-<h3 id="sec-3-6"><span class="section-number-3">3.6</span> Fuzzy matching when navigating the file system</h3>
-<div class="outline-text-3" id="text-3-6">
-
+<div id="outline-container-fuzzy" class="outline-3">
+<h3 id="fuzzy"><a id="sec-3-6" name="sec-3-6"></a><span class="section-number-3">3.6</span> Fuzzy matching when navigating the file system</h3>
+<div class="outline-text-3" id="text-fuzzy">
 
 <p>
-Sounds nice?  Add this to <a href="#sec-1-4">init.el</a>:
+Sounds nice?  Add this to <a href="#settings">init.el</a>:
 </p>
 
-
+<div class="org-src-container">
 
 <pre class="src src-emacs-lisp">(custom-set-variables
  '(ido-enable-flex-matching t)
  '(ido-mode 'both)
  '(ido-use-virtual-buffers t))
 </pre>
-
+</div>
 
 <p>
 If you now invoke:
 </p>
+
 <p>
 <b>C-x C-f</b>
 </p>
+
 <p>
 you'll be able to navigate directories and files of the current folder
 by entering parts of their name.  To go directory up, <b>&lt;Backspace&gt;</b>
 would suffice.  To open currently shown directory, press <b>C-d</b>.  To
 create a new file, type its desired name and press <b>C-j</b>.
 </p>
+
 <p>
 There's more magic.  Using the traditional way to switch to a buffer:
 </p>
+
 <p>
 <b>C-x b</b>
 </p>
+
 <p>
 you'll get matching by parts of name and may also get suggestions for
 files that have been opened in previous sessions.
 </p>
 </div>
-
 </div>
 
-<div id="outline-container-3-7" class="outline-3">
-<h3 id="sec-3-7"><span class="section-number-3">3.7</span> Remote network and sudo access</h3>
-<div class="outline-text-3" id="text-3-7">
-
+<div id="outline-container-remote" class="outline-3">
+<h3 id="remote"><a id="sec-3-7" name="sec-3-7"></a><span class="section-number-3">3.7</span> Remote network and sudo access</h3>
+<div class="outline-text-3" id="text-remote">
 
 <p>
 Why reside to primitive shell &amp; ssh to peek/edit a file on some remote
 server?  You can do it directly from Emacs:
 </p>
+
 <p>
 <b>C-x C-f /ssh:andrey@some-server:/path/to/some/file/or/folder &lt;Enter&gt;</b>
 (enter password when/if prompted)
 </p>
+
 <p>
 Some servers may have fancy colourful prompts that get in the way of
 the default settings though.  Here's something that may work for you:
 </p>
 
-
+<div class="org-src-container">
 
 <pre class="src src-emacs-lisp">(custom-set-variables
  '(tramp-shell-prompt-pattern
-   <span style="color: #95e454;">"</span><span style="color: #95e454; font-weight: bold;">\\</span><span style="color: #95e454; font-weight: bold;">(?:</span><span style="color: #95e454;">^</span><span style="color: #95e454; font-weight: bold;">\\</span><span style="color: #95e454; font-weight: bold;">|</span><span style="color: #95e454;">
-</span><span style="color: #95e454; font-weight: bold;">\\</span><span style="color: #95e454; font-weight: bold;">)</span><span style="color: #95e454;">[</span><span style="color: #95e454;">^</span><span style="color: #95e454;">]#$%&gt;\n]*#?[]#$%&gt;] *</span><span style="color: #95e454; font-weight: bold;">\\</span><span style="color: #95e454; font-weight: bold;">(</span><span style="color: #95e454;">;?&#27;\\[[0-9;]*[a-zA-Z] *</span><span style="color: #95e454; font-weight: bold;">\\</span><span style="color: #95e454; font-weight: bold;">)</span><span style="color: #95e454;">*"</span>))
+   <span style="color: #95e454;">"</span><span style="color: #95e454; font-weight: bold;">\\</span><span style="color: #95e454; font-weight: bold;">(?:</span><span style="color: #95e454;">^</span><span style="color: #95e454; font-weight: bold;">\\</span><span style="color: #95e454; font-weight: bold;">|</span><span style="color: #95e454;"></span><span style="color: #95e454; font-weight: bold;">\\</span><span style="color: #95e454; font-weight: bold;">)</span><span style="color: #95e454;">[</span><span style="color: #95e454;">^</span><span style="color: #95e454;">]#$%&gt;\n]*#?[]#$%&gt;] *</span><span style="color: #95e454; font-weight: bold;">\\</span><span style="color: #95e454; font-weight: bold;">(</span><span style="color: #95e454;">;?&#27;\\[[0-9;]*[a-zA-Z] *</span><span style="color: #95e454; font-weight: bold;">\\</span><span style="color: #95e454; font-weight: bold;">)</span><span style="color: #95e454;">*"</span>))
 </pre>
-
+</div>
 
 <p>
 Note that there are a couple of non-printing characters in the ugly
 regular expression above.  Instead of new line, there is:
 </p>
+
 <p>
 <b>C-q C-m</b>
 </p>
+
 <p>
 Need to quickly edit some system file?  Don't touch the shell, Emacs
 started by your user is just enough:
 </p>
+
 <p>
 <b>C-x C-f /sudo:root@localhost:/etc/fstab &lt;Enter&gt;</b>
 (enter password when/if prompted)
 </p>
+
 <p>
-<a href="http://emacswiki.org/emacs/TrampMode">TRAMP</a><sup><a class="footref" name="fnr-.4.2" href="#fn-.4">4</a></sup> is a killer.  It supports plethora of protocols.  For more
+<a href="http://emacswiki.org/emacs/TrampMode">TRAMP</a><sup><a id="fnr.4.100" name="fnr.4.100" class="footref" href="#fn.4">4</a></sup> is a killer.  It supports plethora of protocols.  For more
 information invoke/type:
 </p>
+
 <p>
 <b>C-h i m TRAMP</b>
 </p>
 </div>
-
 </div>
 
-<div id="outline-container-3-8" class="outline-3">
+<div id="outline-container-sec-3-8" class="outline-3">
 <h3 id="sec-3-8"><span class="section-number-3">3.8</span> Backup and file versions</h3>
 <div class="outline-text-3" id="text-3-8">
-
-
 <p>
 By default Emacs creates backups for each edited file and places them
 in the same directory adding tilde to the original file name.  This
@@ -1010,45 +1088,42 @@ way to forbid this but I have a better proposition.  How about saving
 all backups in a single place?
 </p>
 
-
+<div class="org-src-container">
 
 <pre class="src src-emacs-lisp">(setq backup-directory-alist
       `((<span style="color: #95e454;">"."</span> . ,(concat user-emacs-directory <span style="color: #95e454;">"backup/"</span>)))
       tramp-backup-directory-alist backup-directory-alist)
 </pre>
-
+</div>
 
 <p>
 While at it, how about some primitive form of version control for each
 file you edit with Emacs?
 </p>
 
-
+<div class="org-src-container">
 
 <pre class="src src-emacs-lisp">(custom-set-variables
  '(version-control t))
 </pre>
-
+</div>
 
 <p>
 With the two above spells, all backup files are collected to
 <b>~/.emacs.d/backup/</b> and some number of old versions is kept.  Borked
 some critical file somewhere and regret it?  Do not panic!  Go to the
-backup folder (it may be in <b>/root/.emacs.d/backup/</b> if edited as
+backup folder (it may be in <b><i>root</i>.emacs.d/backup/</b> if edited as
 root, including through TRAMP) and find some stable older version.
 This has saved my ass not once or twice.  This backup/version scheme
 doesn't apply to files that are under "official" version control
 system.  Guess what, you don't need it there anyway.
 </p>
 </div>
-
 </div>
 
-<div id="outline-container-3-9" class="outline-3">
+<div id="outline-container-sec-3-9" class="outline-3">
 <h3 id="sec-3-9"><span class="section-number-3">3.9</span> Manage GnuPG encrypted files</h3>
 <div class="outline-text-3" id="text-3-9">
-
-
 <p>
 For this you'll need the <a href="http://www.gnupg.org/">GNU Privacy Guard</a> program.  Open new file
 like <b>example.gpg</b> (note the file extension).  Write something there
@@ -1058,133 +1133,135 @@ open encrypted file with <b>.gpg</b> extension from Emacs, you'll be asked
 for password.  Magic.
 </p>
 </div>
-
 </div>
 
-<div id="outline-container-3-10" class="outline-3">
-<h3 id="sec-3-10"><span class="section-number-3">3.10</span> Don't ask for sudo or ssh passwords</h3>
-<div class="outline-text-3" id="text-3-10">
-
+<div id="outline-container-auth" class="outline-3">
+<h3 id="auth"><a id="sec-3-10" name="sec-3-10"></a><span class="section-number-3">3.10</span> Don't ask for sudo or ssh passwords</h3>
+<div class="outline-text-3" id="text-auth">
 
 <p>
 Create a file <b>~/.authinfo.gpg</b> and paste there something like:
 </p>
 
+<div class="org-src-container">
 
-
-<pre class="src src-sh">machine localhost port sudo login root password very-very-secret
+<pre class="src src-conf">machine localhost port sudo login root password very-very-secret
 machine test-server port ssh login andrey password very-secret
 </pre>
-
+</div>
 
 <p>
 Save this file (entering password for encryption).  Now, when you
 attempt to ssh (to test-server) or sudo directly from Emacs as
-explained <a href="#sec-3-7">above</a>, you'll be asked for the <b>.authinfo.gpg</b> password once
+explained <a href="#remote">above</a>, you'll be asked for the <b>.authinfo.gpg</b> password once
 and from there on (for this Emacs session), the passwords listed there
 will be automatically used when you try to access the respective
 resources.
 </p>
 </div>
-
 </div>
 
-<div id="outline-container-3-11" class="outline-3">
+<div id="outline-container-sec-3-11" class="outline-3">
 <h3 id="sec-3-11"><span class="section-number-3">3.11</span> Gnus for mail and news</h3>
 <div class="outline-text-3" id="text-3-11">
-
-
 <blockquote>
-
-<p><i>Every program attempts to expand until it can read mail.                 &ndash; Jamie Zawinski</i>
+<p>
+<i>Every program attempts to expand until it can read mail.
+                &#x2013; Jamie Zawinski</i>
 </p>
 </blockquote>
 
-
 <p>
 There are a lot of ways to manage mail within Emacs.  I use the
-mail/news kitchen sink <a href="http://www.gnus.org/">Gnus</a><sup><a class="footref" name="fnr-.4.3" href="#fn-.4">4</a></sup>.  Here's its glory documented (it
+mail/news kitchen sink <a href="http://www.gnus.org/">Gnus</a><sup><a id="fnr.4.100" name="fnr.4.100" class="footref" href="#fn.4">4</a></sup>.  Here's its glory documented (it
 would be too much to give opinionated guide):
 </p>
+
 <p>
 <b>C-h i m Gnus</b>
 </p>
+
 <p>
 <a href="https://github.com/m00natic/dot-emacs/blob/master/conf/my-mail.el">Here</a> are my current mail settings.  To summarize, it attaches to my
-gmail, vayant mail accounts (through imap) and also to the gmane/gwene
-news/rss server (I try to follow about 100 mailing lists and blogs).
-There are heuristics to guess default mail sender/server (yeah, I
-frequently send spam from both), workarounds for the flaky Vayant
-Exchange server, integration with the <a href="http://en.wikipedia.org/wiki/Fortune_%28Unix%29">fortune</a>(-mod) program (where all
-stupid quotes on the back of my mails come from), <a href="http://www.emacswiki.org/emacs/FlySpell">automatic spell-checking</a> and <a href="http://emacswiki.org/emacs/LineWrap">line wrapping</a> (don't you hate when mail text goes
-out of your wide screen?), integration with <a href="http://bbdb.sourceforge.net/">The Insidious Big Brother Database</a> (BBDB)<sup><a class="footref" name="fnr-.2.2" href="#fn-.2">2</a></sup> for managing contacts, automatic checking for
+gmail and work mail accounts (through imap) and also to the
+gmane/gwene news/rss server (I try to follow about 100 mailing lists
+and blogs).  There are heuristics to guess default mail sender/server
+(yeah, I frequently send spam from both), workarounds for the flaky
+Exchange server, integration with the <a href="http://en.wikipedia.org/wiki/Fortune_%2528Unix%2529">fortune</a>(-mod) program (where all
+stupid quotes on the back of my mails come from), <a href="http://www.emacswiki.org/emacs/FlySpell">automatic
+spell-checking</a> and <a href="http://emacswiki.org/emacs/LineWrap">line wrapping</a> (don't you hate when mail text goes
+out of your wide screen?), integration with <a href="http://bbdb.sourceforge.net/">The Insidious Big Brother
+Database</a> (BBDB)<sup><a id="fnr.2.100" name="fnr.2.100" class="footref" href="#fn.2">2</a></sup> for managing contacts, automatic checking for
 new messages for selected (mail)boxes and notifications.  For
-notifications I'm using notify.el<sup><a class="footref" name="fnr-.2.3" href="#fn-.2">2</a></sup>.
+notifications I'm using notify.el<sup><a id="fnr.2.100" name="fnr.2.100" class="footref" href="#fn.2">2</a></sup>.
 </p>
+
 <p>
 Wouldn't want to type passwords every now and then when dealing with
-mail accounts?  <a href="#sec-3-10">authinfo</a>(.gpg) to the rescue again!
+mail accounts?  <a href="#auth">authinfo</a>(.gpg) to the rescue again!
 </p>
 
+<div class="org-src-container">
 
-
-<pre class="src src-sh">machine gmail port 993 login andrey password very-very-secret
+<pre class="src src-conf">machine gmail port 993 login andrey password very-very-secret
 machine smtp.gmail.com port 587 login andrey password very-very-secret
 </pre>
-
-
+</div>
+</div>
 </div>
 
-</div>
-
-<div id="outline-container-3-12" class="outline-3">
+<div id="outline-container-sec-3-12" class="outline-3">
 <h3 id="sec-3-12"><span class="section-number-3">3.12</span> Shell, terminal, console, whatever you call it</h3>
 <div class="outline-text-3" id="text-3-12">
-
-
 <p>
 Tired of unable to search or copy properly inside the terminal
 program?  Emacsers like shells (and don't start them on <a href="http://en.wikipedia.org/wiki/REPL">REPL</a>s) so much
 that have tons of them and at least 3 somewhat differing are available
-by default. The first one integrates nicely with <a href="#sec-7-2">Elisp</a>:
+by default. The first one integrates nicely with <a href="#elisp">Elisp</a>:
 </p>
+
 <p>
 <b>M-x eshell</b>
 </p>
+
 <p>
 The next one is an almost 1:1 wrapper for systems that provide Unix
 like terminals:
 </p>
+
 <p>
 <b>M-x ansi-term</b>
 </p>
+
 <p>
 Lastly, this is good for systems with somewhat dumb command line:
 </p>
+
 <p>
 <b>M-x shell</b>
 </p>
+
 <p>
 All of them have advantages and disadvantages to one another but it
 will be too much to go into details.  The package manager offers some
 more.
 </p>
 </div>
-
 </div>
 
-<div id="outline-container-3-13" class="outline-3">
-<h3 id="sec-3-13"><span class="section-number-3">3.13</span> Microsoft Windows (tm)</h3>
-<div class="outline-text-3" id="text-3-13">
-
+<div id="outline-container-windows" class="outline-3">
+<h3 id="windows"><a id="sec-3-13" name="sec-3-13"></a><span class="section-number-3">3.13</span> Microsoft Windows (tm)</h3>
+<div class="outline-text-3" id="text-windows">
 
 <p>
 Death threat?  Starvation?  Feel for you, sis.  Here is something to
 ease your pain:
 </p>
+
 <p>
 <b>M-x doctor</b>
 </p>
+
 <p>
 Emacs is generally good enough to make you forget what iron you are
 running upon.  Until you reach for outside programs.  To make your
@@ -1192,13 +1269,14 @@ windows experience in general more acceptable, use <a href="http://www.cygwin.co
 you bash terminal and package manager to the ever useful <a href="http://www.gnu.org/">GNU tools</a> and
 other ported stuff.
 </p>
+
 <p>
 To make Emacs aware of the cygwin environment and prefer it instead of
-the crippled windows ecosystem, install cygwin-mount<sup><a class="footref" name="fnr-.2.4" href="#fn-.2">2</a></sup> and
-then put this in your <a href="#sec-1-4">init.el</a>:
+the crippled windows ecosystem, install cygwin-mount<sup><a id="fnr.2.100" name="fnr.2.100" class="footref" href="#fn.2">2</a></sup> and
+then put this in your <a href="#settings">init.el</a>:
 </p>
 
-
+<div class="org-src-container">
 
 <pre class="src src-emacs-lisp">(<span style="color: #8ac6f2; font-weight: bold;">defconst</span> <span style="color: #cae682;">+win-path+</span> <span style="color: #95e454;">"C:/"</span> <span style="color: #95e454;">"Windows root path."</span>)
 
@@ -1214,122 +1292,125 @@ then put this in your <a href="#sec-1-4">init.el</a>:
       (cygwin-mount-activate)
       (setq w32shell-cygwin-bin cygwin-dir))))
 </pre>
-
+</div>
 
 <p>
 This assumes that <b>C:\cygwin</b> is used for cygwin root and
 <b>C:\cygwin\bin</b> holds the binaries.
 </p>
+
 <p>
 Dealing with what path is taken as home directory under Windows is a
-headache.  And you need this to know where <a href="#sec-1-4">init.el</a> should reside.  I
+headache.  And you need this to know where <a href="#settings">init.el</a> should reside.  I
 remotely remember <a href="http://www.emacswiki.org/emacs/MsWindowsInstallation">setting HOME variable</a> in some MyComputer settings
 (also modifying the PATH one to prefer cygwin's paths).
 </p>
 </div>
 </div>
-
 </div>
 
-<div id="outline-container-4" class="outline-2">
+<div id="outline-container-sec-4" class="outline-2">
 <h2 id="sec-4"><span class="section-number-2">4</span> Programming tips and tricks</h2>
 <div class="outline-text-2" id="text-4">
-
-
-
-</div>
-
-<div id="outline-container-4-1" class="outline-3">
+</div><div id="outline-container-sec-4-1" class="outline-3">
 <h3 id="sec-4-1"><span class="section-number-3">4.1</span> Grep on steroids</h3>
 <div class="outline-text-3" id="text-4-1">
-
-
 <p>
 Like other GNU tools, <a href="http://en.wikipedia.org/wiki/Grep">grep</a> has nice integration within Emacs.  I most
 frequently need recursive searching within some directory and its
 sub-directories.  Here's how to do it and get hyperlinks to the
 results:
 </p>
+
 <p>
 <b>M-x rgrep</b>
 </p>
+
 <p>
 On the second step you'll be asked what files the search should be
 constrained upon.  Glob patterns are accepted like:
 </p>
+
 <p>
 <code>*.cpp *.h</code>
 </p>
+
 <p>
 Note that <b>&lt;SPC&gt;</b> invokes completion here.  To actually insert a space
 character, "quote" it with <b>C-q</b>.
 </p>
 </div>
-
 </div>
 
-<div id="outline-container-4-2" class="outline-3">
+<div id="outline-container-sec-4-2" class="outline-3">
 <h3 id="sec-4-2"><span class="section-number-3">4.2</span> Edit grep results in place</h3>
 <div class="outline-text-3" id="text-4-2">
-
-
 <p>
 Jumping to result locations is not enough for you?  You, spoiled brat!
-Try wgrep<sup><a class="footref" name="fnr-.2.5" href="#fn-.2">2</a></sup>:
+Try wgrep<sup><a id="fnr.2.100" name="fnr.2.100" class="footref" href="#fn.2">2</a></sup>:
 </p>
+
 <p>
 <b>M-x wgrep-change-to-wgrep-mode</b>
 </p>
+
 <p>
 while in grep buffer.  Now you can edit in place result lines (regex
 replacing <b>M-%</b> is intelligently acting only over the actual text and
 skipping file/line information).  After you're done:
 </p>
+
 <p>
 <b>C-x C-s</b>
 </p>
+
 <p>
 Now all files that have had their lines edited are opened with your
 changes there waiting to be saved.  If it happens to be a lot of files
 and you're confident that you want all these changes saved, use
-IBuffer<sup><a class="footref" name="fnr-.4.4" href="#fn-.4">4</a></sup>:
+IBuffer<sup><a id="fnr.4.100" name="fnr.4.100" class="footref" href="#fn.4">4</a></sup>:
 </p>
+
 <p>
 <b>M-x ibuffer</b>
 </p>
+
 <p>
 Now all current Emacs buffer are listed.  How convenient.  Now hit:
 </p>
+
 <p>
 <code>* u</code>
 </p>
+
 <p>
 and all buffers with unsaved changes are marked.  Now press capital
 <b>&lt;S&gt;</b> to save them all.  Job done.  As all within Lala land, IBuffer
 is <a href="http://www.emacswiki.org/emacs/IbufferMode">full of tricks and neat features</a>, I even have it bound to:
 </p>
+
 <p>
 <b>C-x C-b</b>
 </p>
+
 <p>
-instead the default `list-buffers'<sup><a class="footref" name="fnr-.4.5" href="#fn-.4">4</a></sup>.
+instead the default `list-buffers'<sup><a id="fnr.4.100" name="fnr.4.100" class="footref" href="#fn.4">4</a></sup>.
 </p>
 </div>
-
 </div>
 
-<div id="outline-container-4-3" class="outline-3">
+<div id="outline-container-sec-4-3" class="outline-3">
 <h3 id="sec-4-3"><span class="section-number-3">4.3</span> Occur</h3>
 <div class="outline-text-3" id="text-4-3">
-
-
 <p>
 Wanna grep something within the current buffer?  It may not be a file
 but even then, why bother with grep? Try:
 </p>
+
 <p>
 <b>M-x occur</b>
 </p>
+
 <p>
 You'll again get a list of results and can jump between locations.
 Handy for quick indexes of whatever search pattern.  You can even
@@ -1337,73 +1418,75 @@ invoke <b>occur</b> over <b>occur</b> buffer!  If using recent version of GNU
 Emacs, you can edit results in place pressing <b>&lt;e&gt;</b>.
 </p>
 </div>
-
 </div>
 
-<div id="outline-container-4-4" class="outline-3">
+<div id="outline-container-sec-4-4" class="outline-3">
 <h3 id="sec-4-4"><span class="section-number-3">4.4</span> If it moves - compile</h3>
 <div class="outline-text-3" id="text-4-4">
-
-
 <p>
 Welcome 20 years back!  You can compile through Emacs and get
 errors/warnings as hyperlinks to the offending locations:
 </p>
+
 <p>
 <b>M-x compile</b>
 </p>
+
 <p>
 You're asked for a compile command, WTF?!  Here's what I usually type:
 </p>
+
 <p>
 <b>cd ~/branches/trunk/release &amp;&amp; make -j4</b>
 </p>
+
 <p>
-&hellip;now get a cup of tea.  Or if you're a minimalist like me and use
+&#x2026;now get a cup of tea.  Or if you're a minimalist like me and use
 Emacs as an OS - do whatever you like because your computer is as
 responsive as an idle machine of your colleagues.
 </p>
+
 <p>
 You may keep the compilation buffer around even after compilation has
 finished.  Within it, you can just press <b>&lt;g&gt;</b> to recompile.
 </p>
 </div>
-
 </div>
 
-<div id="outline-container-4-5" class="outline-3">
+<div id="outline-container-sec-4-5" class="outline-3">
 <h3 id="sec-4-5"><span class="section-number-3">4.5</span> Find file in project</h3>
 <div class="outline-text-3" id="text-4-5">
-
-
 <p>
-Well, get <a href="http://emacswiki.org/emacs/FindFileInProject">find-file-in-project</a><sup><a class="footref" name="fnr-.2.6" href="#fn-.2">2</a></sup> and then bind the same-named
+Well, get <a href="http://emacswiki.org/emacs/FindFileInProject">find-file-in-project</a><sup><a id="fnr.2.100" name="fnr.2.100" class="footref" href="#fn.2">2</a></sup> and then bind the same-named
 command to a key like:
 </p>
 
-
+<div class="org-src-container">
 
 <pre class="src src-emacs-lisp">(define-key global-map <span style="color: #95e454;">"\C-cf"</span> 'find-file-in-project)
 </pre>
-
+</div>
 
 <p>
 Now hit:
 </p>
+
 <p>
 <b>C-c f</b>
 </p>
+
 <p>
-And you'll be able to select a file.  If you have <a href="#sec-3-6">ido-mode</a> enabled for
+And you'll be able to select a file.  If you have <a href="#fuzzy">ido-mode</a> enabled for
 files, you'll get flex matching.  Note that the <a href="http://en.wikipedia.org/wiki/Find">GNU find</a> command is
 expected, which means that under Windows, you'll probably need the
-Cygwin environment with the settings mentioned <a href="#sec-3-13">above</a>.
+Cygwin environment with the settings mentioned <a href="#windows">above</a>.
 </p>
+
 <p>
 Here's a sample customization for C++ project:
 </p>
 
-
+<div class="org-src-container">
 
 <pre class="src src-emacs-lisp">(setq-default
  ffip-project-file <span style="color: #95e454;">".emacs-project"</span>
@@ -1413,7 +1496,7 @@ Here's a sample customization for C++ project:
  <span style="color: #95e454;">"-not -regex \".*</span><span style="color: #95e454; font-weight: bold;">\\</span><span style="color: #95e454; font-weight: bold;">(</span><span style="color: #95e454;">debug</span><span style="color: #95e454; font-weight: bold;">\\</span><span style="color: #95e454; font-weight: bold;">|</span><span style="color: #95e454;">release</span><span style="color: #95e454; font-weight: bold;">\\</span><span style="color: #95e454; font-weight: bold;">|</span><span style="color: #95e454;">svn</span><span style="color: #95e454; font-weight: bold;">\\</span><span style="color: #95e454; font-weight: bold;">|</span><span style="color: #95e454;">git</span><span style="color: #95e454; font-weight: bold;">\\</span><span style="color: #95e454; font-weight: bold;">)</span><span style="color: #95e454;">.*\""</span>
  ffip-limit 4096)
 </pre>
-
+</div>
 
 <p>
 This makes directories that have file named <b>.emacs-project</b> root
@@ -1421,15 +1504,16 @@ project folders.  Also C-like sources are added to list of files to
 offer.  Some source control and build directories are skipped from
 indexing and maximum amount of files offered is set to 4096.
 </p>
+
 <p>
 I know this is nothing new for you, IDE cry-babies.  But can we
 generalize a bit?  I like this recursive locating of files, why do it
 just for projects?  Let's get hands dirty then:
 </p>
 
+<div class="org-src-container">
 
-
-<pre class="src src-emacs-lisp">(<span style="color: #8ac6f2; font-weight: bold;">eval-after-load</span> <span style="color: #95e454;">"find-file-in-project"</span>
+<pre class="src src-emacs-lisp">(eval-after-load <span style="color: #95e454;">"find-file-in-project"</span>
   '(<span style="color: #8ac6f2; font-weight: bold;">progn</span>
      (<span style="color: #8ac6f2; font-weight: bold;">defun</span> <span style="color: #cae682;">my-ffip-project-root-function</span> ()
        <span style="color: #95e454;">"Check for `</span><span style="color: #e5786d;">ffip-project-file</span><span style="color: #95e454;">' and if no such, \</span>
@@ -1446,7 +1530,7 @@ just for projects?  Let's get hands dirty then:
      (setq-default
       ffip-project-root-function 'my-ffip-project-root-function)))
 </pre>
-
+</div>
 
 <p>
 With these magic incantations we get the expected behaviour when
@@ -1455,14 +1539,11 @@ treated like a root project directory, file name search will be done
 there and within all sub-folders as well.  Sweet.
 </p>
 </div>
-
 </div>
 
-<div id="outline-container-4-6" class="outline-3">
+<div id="outline-container-sec-4-6" class="outline-3">
 <h3 id="sec-4-6"><span class="section-number-3">4.6</span> Source control</h3>
 <div class="outline-text-3" id="text-4-6">
-
-
 <p>
 Are you tired of the different command line interfaces of the many
 <a href="http://en.wikipedia.org/wiki/Version_control">version control systems</a> that you use?  Even worse if you use GUIs.
@@ -1470,9 +1551,11 @@ Emacs provides unified interface to some of the widely used VCSes (and
 of course has additional packages for less popular ones).  To see what
 I'm talking about:
 </p>
+
 <p>
 <b>C-x v d PATH-TO-FOLDER-UNDER-VERSION-CONTROL</b>
 </p>
+
 <p>
 Emacs also automatically detects if a file that you've opened is under
 some version control and gives you key-bindings to view diff of
@@ -1480,26 +1563,26 @@ uncommitted changes, history of the file (and you can look at each
 individual diff), blame (annotate) and travel in time for lines
 functionality and more.  To see what is available:
 </p>
+
 <p>
 <b>C-x v C-h</b>
 </p>
+
 <p>
 And these are commands that by default have been given keys.  To see
 all available:
 </p>
+
 <p>
 <b>M-x vc-&lt;Tab&gt;</b>
 </p>
-
 </div>
 
-<div id="outline-container-4-6-1" class="outline-4">
+<div id="outline-container-sec-4-6-1" class="outline-4">
 <h4 id="sec-4-6-1"><span class="section-number-4">4.6.1</span> Magnificent git</h4>
 <div class="outline-text-4" id="text-4-6-1">
-
-
 <p>
-If you happen to use <a href="http://git-scm.com">Git</a>, check out <a href="http://magit.github.com/magit/">Magit</a><sup><a class="footref" name="fnr-.2.7" href="#fn-.2">2</a></sup>.  It's a nice
+If you happen to use <a href="http://git-scm.com">Git</a>, check out <a href="http://magit.github.com/magit/">Magit</a><sup><a id="fnr.2.100" name="fnr.2.100" class="footref" href="#fn.2">2</a></sup>.  It's a nice
 interface to some of the most often used Git commands.  My favourite
 feature is the ability to iterate through the diff hunks and
 selectively choose which ones to stage, unstage or revert (works not
@@ -1508,110 +1591,107 @@ commits trivial.
 </p>
 </div>
 </div>
-
 </div>
 
-<div id="outline-container-4-7" class="outline-3">
+<div id="outline-container-sec-4-7" class="outline-3">
 <h3 id="sec-4-7"><span class="section-number-3">4.7</span> Interactive diff and merging</h3>
 <div class="outline-text-3" id="text-4-7">
-
-
 <p>
 Have you ever had two chunks of text with rare differences that you
 need to find, needle in a haystack?  In Lala land you would yank each
 text in separate buffer and invoke:
 </p>
+
 <p>
 <b>M-x ediff-buffers</b>
 </p>
+
 <p>
 selecting names of the buffers to compare.  Now you can jump
 difference by difference and throw them between buffers doing
 impromptu merging if you want.  <a href="http://emacswiki.org/emacs/EdiffMode">Ediff</a> is really powerful and handy.
 </p>
+
 <p>
 Could we use this to resolve conflicts under version control?  Yes!
 If a file is in conflict state, open it and:
 </p>
+
 <p>
 <b>M-x smerge-ediff</b>
 </p>
 </div>
-
 </div>
 
-<div id="outline-container-4-8" class="outline-3">
+<div id="outline-container-sec-4-8" class="outline-3">
 <h3 id="sec-4-8"><span class="section-number-3">4.8</span> Regular expressions</h3>
 <div class="outline-text-3" id="text-4-8">
-
-
 <blockquote>
-
-<p><i>Some people, when confronted with a problem, think "I know, I'll use regular expressions." Now they have two problems.</i>
-                <i>&ndash; Jamie Zawinski</i>
+<p>
+<i>Some people, when confronted with a problem, think "I know, I'll use
+regular expressions." Now they have two problems.</i>
+                <i>&#x2013; Jamie Zawinski</i>
 </p>
 </blockquote>
-
 
 <p>
 Not surprisingly, <a href="http://en.wikipedia.org/wiki/Regular_expressions">regexes</a> are supported all over the place.  There are
 some differences to the popular <a href="http://en.wikipedia.org/wiki/Pcre">PCRE</a> style and if you're serious about
 it, you should read the appropriate sections in the great Emacs and
-Elisp <a href="#sec-5-1">info pages</a>.
+Elisp <a href="#info">info pages</a>.
 </p>
+
 <p>
 I would like to open your eyes about some gem however.  If you invoke
 this in some buffer:
 </p>
+
 <p>
 <b>M-x regexp-builder</b>
 </p>
+
 <p>
 you'll be able to interactively build regular expression and on each
 character entered, matching terms will be highlighted in the initial
 buffer.  Provided the regex is somewhat correct.
 </p>
 </div>
-
 </div>
 
-<div id="outline-container-4-9" class="outline-3">
+<div id="outline-container-sec-4-9" class="outline-3">
 <h3 id="sec-4-9"><span class="section-number-3">4.9</span> GDB</h3>
 <div class="outline-text-3" id="text-4-9">
-
-
 <p>
 Remember Visual Studio?  Aaaarrrrgh, <a href="http://www.youtube.com/watch?v=sk9zflW6dtU">the horror</a>!  Well, you can get
 some of it integrating with <a href="http://www.gnu.org/software/gdb/">GNU Debugger</a>:
 </p>
 
-
+<div class="org-src-container">
 
 <pre class="src src-emacs-lisp">(custom-set-variables
  '(gdb-many-windows t))
 </pre>
-
+</div>
 
 <p>
 Now invoke (it will be nice if you open the destination directory
 first):
 </p>
+
 <p>
 <b>M-x gdb</b>
 </p>
+
 <p>
 You'll be asked how to run it, append the path of the desired
 executable and <a href="http://www.youtube.com/watch?v=1BH7poMtPVU">rock</a>!
 </p>
 </div>
-
 </div>
 
-<div id="outline-container-4-10" class="outline-3">
+<div id="outline-container-sec-4-10" class="outline-3">
 <h3 id="sec-4-10"><span class="section-number-3">4.10</span> Semantic</h3>
 <div class="outline-text-3" id="text-4-10">
-
-
 <p>
 Recently Emacs is acquiring infrastructure for more unified code
 awareness in the face of the <a href="http://cedet.sourceforge.net/">CEDET</a> utilities.  Here are some
@@ -1620,9 +1700,9 @@ object under cursor, colouring local variables instances, highlighting
 current function:
 </p>
 
+<div class="org-src-container">
 
-
-<pre class="src src-emacs-lisp">(<span style="color: #8ac6f2; font-weight: bold;">eval-after-load</span> <span style="color: #95e454;">"semantic"</span>
+<pre class="src src-emacs-lisp">(eval-after-load <span style="color: #95e454;">"semantic"</span>
    '(<span style="color: #8ac6f2; font-weight: bold;">progn</span>
       (add-to-list 'semantic-default-submodes
                    'global-semantic-decoration-mode)
@@ -1633,41 +1713,39 @@ current function:
       (add-to-list 'semantic-default-submodes
                    'global-semantic-mru-bookmark-mode)))
 </pre>
-
+</div>
 
 <p>
 To activate:
 </p>
+
 <p>
 <b>M-x semantic</b>
 </p>
 </div>
-
 </div>
 
-<div id="outline-container-4-11" class="outline-3">
+<div id="outline-container-sec-4-11" class="outline-3">
 <h3 id="sec-4-11"><span class="section-number-3">4.11</span> Completion</h3>
 <div class="outline-text-3" id="text-4-11">
-
-
 <p>
 There are many packages that deal with code (and not only) completion,
-but none are particularly good at C++.  I use <a href="http://cx4a.org/software/auto-complete/">auto-complete</a><sup><a class="footref" name="fnr-.2.8" href="#fn-.2">2</a></sup>
+but none are particularly good at C++.  I use <a href="http://cx4a.org/software/auto-complete/">auto-complete</a><sup><a id="fnr.2.100" name="fnr.2.100" class="footref" href="#fn.2">2</a></sup>
 which is for completion of anything, not just code.  Here is some
 setup:
 </p>
 
-
+<div class="org-src-container">
 
 <pre class="src src-emacs-lisp">(<span style="color: #8ac6f2; font-weight: bold;">when</span> (<span style="color: #8ac6f2; font-weight: bold;">ignore-errors</span> (<span style="color: #8ac6f2; font-weight: bold;">require</span> '<span style="color: #e5786d;">auto-complete-config</span> nil t))
   (ac-config-default)
   (ac-flyspell-workaround)
 
-  (<span style="color: #8ac6f2; font-weight: bold;">eval-after-load</span> <span style="color: #95e454;">"semantic"</span>
+  (eval-after-load <span style="color: #95e454;">"semantic"</span>
     '(setq-default ac-sources
                    (cons 'ac-source-semantic ac-sources))))
 </pre>
-
+</div>
 
 <p>
 On the pros side, you'll get particularly useful suggestions for
@@ -1675,55 +1753,50 @@ symbols typed anywhere in the currently opened buffers.  Long
 function/variable names become non-issue.
 </p>
 </div>
-
 </div>
 
-<div id="outline-container-4-12" class="outline-3">
+<div id="outline-container-sec-4-12" class="outline-3">
 <h3 id="sec-4-12"><span class="section-number-3">4.12</span> General coding IDE</h3>
 <div class="outline-text-3" id="text-4-12">
-
-
 <p>
 I'm sure your grannies have used <a href="http://en.wikipedia.org/wiki/Integrated_development_environment">IDE</a>s all their life.  There is a
-package called <a href="http://emacswiki.org/emacs/EmacsCodeBrowser">Emacs Code Browser</a> (ECB)<sup><a class="footref" name="fnr-.2.9" href="#fn-.2">2</a></sup> that may give you a
+package called <a href="http://emacswiki.org/emacs/EmacsCodeBrowser">Emacs Code Browser</a> (ECB)<sup><a id="fnr.2.100" name="fnr.2.100" class="footref" href="#fn.2">2</a></sup> that may give you a
 breeze of life-supporting IDE familiarity.  Furthermore, imagine how
-cool it is to have IDE working in terminal&hellip;yes, it does, just like
+cool it is to have IDE working in terminal&#x2026;yes, it does, just like
 rest of Emacs.  Here are some settings for it (some of them are
 necessary to get it started at all):
 </p>
 
-
+<div class="org-src-container">
 
 <pre class="src src-emacs-lisp">(custom-set-variables
  '(ecb-options-version <span style="color: #95e454;">"2.40"</span>))
 
-(<span style="color: #8ac6f2; font-weight: bold;">eval-after-load</span> <span style="color: #95e454;">"ecb"</span>
+(eval-after-load <span style="color: #95e454;">"ecb"</span>
   `(<span style="color: #8ac6f2; font-weight: bold;">let</span> ((prog-path ,(concat +home-path+ <span style="color: #95e454;">"Programs"</span>))) <span style="color: #99968b;">; </span><span style="color: #99968b;">set folder where you store projects</span>
      (ecb-add-source-path prog-path prog-path t))) <span style="color: #99968b;">; </span><span style="color: #99968b;">not really important</span>
 </pre>
-
+</div>
 
 <p>
 Now fire it:
 </p>
+
 <p>
 <b>M-x ecb-activate</b>
 </p>
 </div>
-
 </div>
 
-<div id="outline-container-4-13" class="outline-3">
+<div id="outline-container-sec-4-13" class="outline-3">
 <h3 id="sec-4-13"><span class="section-number-3">4.13</span> C++</h3>
 <div class="outline-text-3" id="text-4-13">
-
-
 <p>
 Emacs doesn't come with shining C/C++ support, sorry.  Here are a few
 ways to get something.  Firstly some general customization:
 </p>
 
-
+<div class="org-src-container">
 
 <pre class="src src-emacs-lisp">(custom-set-variables
  '(c-default-style '((java-mode . <span style="color: #95e454;">"java"</span>)
@@ -1732,31 +1805,28 @@ ways to get something.  Firstly some general customization:
  '(indent-tabs-mode nil)
  '(which-function-mode t))
 </pre>
-
+</div>
 
 <p>
 It sets some automatic indent styles for C-like languages.  Uses
 spaces instead of tabs and shows the name of function that the cursor
 is currently placed in the mode-line.
 </p>
-
 </div>
 
-<div id="outline-container-4-13-1" class="outline-4">
+<div id="outline-container-sec-4-13-1" class="outline-4">
 <h4 id="sec-4-13-1"><span class="section-number-4">4.13.1</span> Jump to definitions</h4>
 <div class="outline-text-4" id="text-4-13-1">
-
-
 <p>
-Emacs comes with a separate binary <a href="http://www.emacswiki.org/emacs/EmacsBrowse">ebrowse</a><sup><a class="footref" name="fnr-.4.6" href="#fn-.4">4</a></sup> that can
+Emacs comes with a separate binary <a href="http://www.emacswiki.org/emacs/EmacsBrowse">ebrowse</a><sup><a id="fnr.4.100" name="fnr.4.100" class="footref" href="#fn.4">4</a></sup> that can
 annotate multiple C/C++ source files and create some form of DB which
 can be used for getting different kind of information for the indexed
 sources.  Here's a little wrapper shell script that should be placed
-somewhere on your PATH (<b>/usr/local/bin/</b> preferably),
+somewhere on your PATH (<b><i>usr/local/bin</i></b> preferably),
 named <b>ebrowse-c++</b> and made executable:
 </p>
 
-
+<div class="org-src-container">
 
 <pre class="src src-sh"><span style="color: #99968b;">#</span><span style="color: #99968b;">!/bin/</span><span style="color: #8ac6f2; font-weight: bold;">sh</span>
 
@@ -1769,13 +1839,13 @@ named <b>ebrowse-c++</b> and made executable:
 find . -regex <span style="color: #95e454;">".*\.\(hpp\|cpp\|h\|c\)"</span> <span style="color: #95e454;">\</span>
     -not -regex <span style="color: #95e454;">".*\(debug\|release\|svn\|git\).*"</span> | ebrowse
 </pre>
-
+</div>
 
 <p>
 Again it needs the <b>GNU find</b> program.  To make use of it:
 </p>
 
-
+<div class="org-src-container">
 
 <pre class="src src-emacs-lisp">(<span style="color: #8ac6f2; font-weight: bold;">when</span> (executable-find <span style="color: #95e454;">"ebrowse-c++"</span>)
   (<span style="color: #8ac6f2; font-weight: bold;">defun</span> <span style="color: #cae682;">my-ebrowse-refresh</span> (arg)
@@ -1796,126 +1866,135 @@ Again it needs the <b>GNU find</b> program.  To make use of it:
                 (find-file-noselect (concat project-dir
                                             <span style="color: #95e454;">"BROWSE"</span>)))))))))
 </pre>
-
+</div>
 
 <p>
 Now, while in some project directory (again assuming <b>.emacs-project</b>
 is present in the root project folder):
 </p>
+
 <p>
 <b>M-x my-ebrowse-refresh</b>
 </p>
+
 <p>
 It loads/refreshes the DB for the current project and opens it in
 background.  To jump over function/variable definition:
 </p>
+
 <p>
 <b>C-c C-m f NAME-OF-SOME-FUNCTION-OR-METHOD-OR-MEMBER</b>
 </p>
+
 <p>
 Don't worry, you'll get completion.  To jump to declaration:
 </p>
+
 <p>
 <b>C-c C-m F NAME-OF-SOME-FUNCTION-OR-METHOD-OR-MEMBER</b>
 </p>
+
 <p>
 To see more unlocked functionality:
 </p>
+
 <p>
 <b>C-c C-m C-h</b>
 </p>
+
 <p>
 Unfortunately you can't use two ebrowse DBs at a time.  To load
 another one (while being in another <b>.emacs-project</b> governed
 location):
 </p>
+
 <p>
 <b>C-u M-x my-ebrowse-refresh</b>
 </p>
 </div>
 </div>
 </div>
-
 </div>
 
-<div id="outline-container-5" class="outline-2">
+<div id="outline-container-sec-5" class="outline-2">
 <h2 id="sec-5"><span class="section-number-2">5</span> Documentation</h2>
 <div class="outline-text-2" id="text-5">
-
-
 <p>
 Emacs documentation is the most complete and easily accessible set of
-resources I have seen (only second to <a href="http://en.wikipedia.org/wiki/Lisp_machine">Lisp Machines</a>'s <a href="http://en.wikipedia.org/wiki/Genera_%28operating_system%29">Genera operating systems</a> but they are 20 years in the past and as one may observe,
+resources I have seen (only second to <a href="http://en.wikipedia.org/wiki/Lisp_machine">Lisp Machines</a>'s <a href="http://en.wikipedia.org/wiki/Genera_%2528operating_system%2529">Genera operating
+systems</a> but they are 20 years in the past and as one may observe,
 technology is <a href="http://www.loper-os.org/?p=300">stubbornly regressing</a> in this along other aspects since
 then).
 </p>
+
 <p>
 This is the only environment that has enabled me in a day learn
 relevant chunk of language and easily add useful functionality without
 internet access.  And do this with pleasure and still have hair on my
 head.  It's that good.
 </p>
-
 </div>
 
-<div id="outline-container-5-1" class="outline-3">
-<h3 id="sec-5-1"><span class="section-number-3">5.1</span> Info</h3>
-<div class="outline-text-3" id="text-5-1">
-
+<div id="outline-container-info" class="outline-3">
+<h3 id="info"><a id="sec-5-1" name="sec-5-1"></a><span class="section-number-3">5.1</span> Info</h3>
+<div class="outline-text-3" id="text-info">
 
 <p>
-To invoke the info reader<sup><a class="footref" name="fnr-.4.7" href="#fn-.4">4</a></sup>:
+To invoke the info reader<sup><a id="fnr.4.100" name="fnr.4.100" class="footref" href="#fn.4">4</a></sup>:
 </p>
+
 <p>
 <b>C-h i</b>
 </p>
+
 <p>
 Here's access to the info manuals on your system.  Within it, you can
 jump to the Emacs documentation:
 </p>
+
 <p>
 <b>m Emacs</b>
 </p>
+
 <p>
 the Elisp documentation is top notch too:
 </p>
+
 <p>
 <b>m Elisp</b>
 </p>
+
 <p>
 Mostly <a href="http://en.wikipedia.org/wiki/Richard_M_Stallman">Dick Stallman</a> has initiated exceptional job, enjoy!
 </p>
 </div>
-
 </div>
 
-<div id="outline-container-5-2" class="outline-3">
+<div id="outline-container-sec-5-2" class="outline-3">
 <h3 id="sec-5-2"><span class="section-number-3">5.2</span> Browse system manuals</h3>
 <div class="outline-text-3" id="text-5-2">
-
-
 <p>
 You can read system's man pages within Emacs too:
 </p>
+
 <p>
 <b>M-x woman</b>
 </p>
+
 <p>
 now choose with completion the desired manual.  Woman is not always
 reliable though.  In case it doesn't work, non-imaginatively try:
 </p>
+
 <p>
 <b>M-x man</b>
 </p>
 </div>
-
 </div>
 
-<div id="outline-container-5-3" class="outline-3">
+<div id="outline-container-sec-5-3" class="outline-3">
 <h3 id="sec-5-3"><span class="section-number-3">5.3</span> Elisp live documentation</h3>
 <div class="outline-text-3" id="text-5-3">
-
-
 <p>
 Not only is Emacs interactive, it's self-documenting!  No need for
 doxygen or other such offline stuff.  Once you declare function,
@@ -1923,7 +2002,7 @@ macro, variable, constant or mode and document it properly with a
 docstring, for example:
 </p>
 
-
+<div class="org-src-container">
 
 <pre class="src src-emacs-lisp">(<span style="color: #8ac6f2; font-weight: bold;">defmacro</span> <span style="color: #cae682;">define-keys</span> (mode <span style="color: #92a65e; font-weight: bold;">&amp;rest</span> keys)
   <span style="color: #95e454;">"Define cascade of keys for a MODE.</span>
@@ -1935,163 +2014,156 @@ docstring, for example:
                 (setq keys (cddr keys)))
               (nreverse res))))
 </pre>
-
+</div>
 
 <p>
 The documentation becomes immediately available to the doc system for
 retrieval:
 </p>
+
 <p>
 <b>C-h f define-keys</b>
 </p>
+
 <p>
 This is for functions, macros and modes.  For variables use:
 </p>
+
 <p>
 <b>C-h v SOME-VARIABLE-NAME</b>
 </p>
+
 <p>
 Completion should ease you in both cases.
 </p>
+
 <p>
 If object is loaded from file, not only is documentation available,
 but you'll get hyperlink to the source.  Invaluable way to explore the
 running system.
 </p>
 </div>
-
 </div>
 
-<div id="outline-container-5-4" class="outline-3">
+<div id="outline-container-sec-5-4" class="outline-3">
 <h3 id="sec-5-4"><span class="section-number-3">5.4</span> Apropos</h3>
 <div class="outline-text-3" id="text-5-4">
-
-
 <p>
 The above is useful when you have vague idea about the first symbols,
 which normally denote package.  If this is not the case, there is even
 better search for random Emacs objects:
 </p>
+
 <p>
 <b>M-x apropos</b>
 </p>
 </div>
-
 </div>
 
-<div id="outline-container-5-5" class="outline-3">
+<div id="outline-container-sec-5-5" class="outline-3">
 <h3 id="sec-5-5"><span class="section-number-3">5.5</span> Discover available long key-binding sequences by their first part</h3>
 <div class="outline-text-3" id="text-5-5">
-
-
 <p>
 I always have problems recalling what register commands there are.
 But I remember they start with:
 </p>
+
 <p>
 <b>C-x r</b>
 </p>
+
 <p>
 Can Emacs help me?  Rhetorical!  Add <b>C-h</b> to the end of some sequence
 and you'll get all command bindings starting this way:
 </p>
+
 <p>
 <b>C-x r C-h</b>
 </p>
 </div>
-
 </div>
 
-<div id="outline-container-5-6" class="outline-3">
+<div id="outline-container-sec-5-6" class="outline-3">
 <h3 id="sec-5-6"><span class="section-number-3">5.6</span> Where is some command?</h3>
 <div class="outline-text-3" id="text-5-6">
-
-
 <p>
 <b>C-h b</b>
 </p>
+
 <p>
 lists you all available key-bindings for the current buffer.  If you
 are lazy to invoke a search there to find some elusive command:
 </p>
+
 <p>
 <b>C-h w SOME-COMMAND-NAME</b>
 </p>
+
 <p>
 to see if SOME-COMMAND-NAME is currently available through some key
 combination.
 </p>
 </div>
-
 </div>
 
-<div id="outline-container-5-7" class="outline-3">
+<div id="outline-container-sec-5-7" class="outline-3">
 <h3 id="sec-5-7"><span class="section-number-3">5.7</span> In short</h3>
 <div class="outline-text-3" id="text-5-7">
-
-
 <p>
 <b>C-h C-h</b>
 </p>
 </div>
 </div>
-
 </div>
 
-<div id="outline-container-6" class="outline-2">
+<div id="outline-container-sec-6" class="outline-2">
 <h2 id="sec-6"><span class="section-number-2">6</span> Random</h2>
 <div class="outline-text-2" id="text-6">
-
-
-
-</div>
-
-<div id="outline-container-6-1" class="outline-3">
+</div><div id="outline-container-sec-6-1" class="outline-3">
 <h3 id="sec-6-1"><span class="section-number-3">6.1</span> Org mode</h3>
 <div class="outline-text-3" id="text-6-1">
-
-
 <blockquote>
-
-<p><i>I rarely write documents and presentations.  When I do, I use Org mode.</i>
-                <i>&ndash; Mahatma Gandhi</i>
+<p>
+<i>I rarely write documents and presentations.  When I do, I use Org
+mode.</i>
+                <i>&#x2013; Mahatma Gandhi</i>
 </p>
 </blockquote>
 
-
 <p>
-There is another wonderful thing that comes with Emacs known as <a href="http://orgmode.org/">Org mode</a>.  It's often quoted as prime reason for people starting to use
+There is another wonderful thing that comes with Emacs known as <a href="http://orgmode.org/">Org
+mode</a>.  It's often quoted as prime reason for people starting to use
 Emacs, even former Vimmers.  Here's what's written on their site:
 </p>
-<blockquote>
 
-<p>"Org mode is for keeping notes, maintaining TODO lists, doing project
+<blockquote>
+<p>
+"Org mode is for keeping notes, maintaining TODO lists, doing project
 planning, and authoring with a fast and effective plain-text system."
 </p>
 </blockquote>
-
 
 <p>
 This guide is all <a href="https://github.com/m00natic/m00natic.github.com/blob/master/org/emacs/emacs-wiki.org">done in Org mode</a> and then exported to HTML (one of
 many available formats).
 </p>
-
 </div>
 
-<div id="outline-container-6-1-1" class="outline-4">
+<div id="outline-container-sec-6-1-1" class="outline-4">
 <h4 id="sec-6-1-1"><span class="section-number-4">6.1.1</span> Basic usage</h4>
 <div class="outline-text-4" id="text-6-1-1">
-
-
 <p>
 To launch Org mode either:
 </p>
+
 <p>
 <b>M-x org-mode</b>
 </p>
+
 <p>
 for existing buffer, or name your file with an <b>.org</b> extension.
 </p>
+
 <p>
 You'll go a long way even with the minimum - number of stars at the
 beginning of line signifies heading in the document hierarchy.  The
@@ -2099,11 +2171,11 @@ less stars - the more important the heading.  Here's a random Org
 rambling:
 </p>
 
-
+<div class="org-src-container">
 
 <pre class="src src-org"><span style="color: #cae682;">* This is important header</span>
 
-<span style="color: #8ac6f2; text-decoration: underline;">./img/funny-image.jpg</span>
+<span style="color: #8ac6f2; text-decoration: underline;"><a href="./img/funny-image.jpg">./img/funny-image.jpg</a></span>
 
 <span style="color: #cae682;">** This is sub-header</span>
 
@@ -2120,9 +2192,9 @@ Here's a cool report:
 
 <span style="color: #8ac6f2; font-weight: bold;">*** This is sub-sub-header (maybe even a bullet)</span>
 
-<span style="color: #8ac6f2; text-decoration: underline;">Outsourcing has betrayed us link</span>
+<span style="color: #8ac6f2; text-decoration: underline;"><a href="http://outsource.cn">Outsourcing has betrayed us link</a></span>
 
-<span style="color: #99968b;"># this is a comment, won't be exported</span>
+<span style="color: #99968b;"> # this is a comment, won't be exported</span>
 
 <span style="color: #cae682;">** Another sub-header</span>
 
@@ -2131,17 +2203,20 @@ Some rescue plan.
 <span style="color: #e5786d;">****** This is so low, I don't even know how will be exported</span>
 <span style="color: #e5786d;">****** At least there are two of us</span>
 </pre>
-
+</div>
 
 <p>
 You can press:
 </p>
+
 <p>
 <b>C-c C-e</b>
 </p>
+
 <p>
 and choose some format to export to.
 </p>
+
 <p>
 You can easily reorder headers at the same level (reordering all
 sub-headers and content as well) with <b>&lt;Alt&gt;+&lt;Shift&gt;+&lt;Up&gt;</b> and
@@ -2151,23 +2226,20 @@ different levels with <b>&lt;Shift&gt;+&lt;Tab&gt;</b> and so on.  Have a look a
 site or the manuals for more.
 </p>
 </div>
-
 </div>
 
-<div id="outline-container-6-1-2" class="outline-4">
+<div id="outline-container-sec-6-1-2" class="outline-4">
 <h4 id="sec-6-1-2"><span class="section-number-4">6.1.2</span> Tables</h4>
 <div class="outline-text-4" id="text-6-1-2">
-
-
 <p>
 Org tables <a href="http://www.youtube.com/watch?v=YtxEOX3WwcM">rock</a>!  Here's how to start one:
 </p>
 
-
+<div class="org-src-container">
 
 <pre class="src src-org"><span style="color: #87cefa;">| heading1 | heading2 | bla |</span>
 </pre>
-
+</div>
 
 <p>
 Now press <b>&lt;Tab&gt;</b> and new row will be added.  <b>&lt;Tab&gt;</b> now moves over
@@ -2175,40 +2247,40 @@ the fields and automatically resizes the table if longer text is
 entered somewhere.  To insert row separator enter:
 </p>
 
-
+<div class="org-src-container">
 
 <pre class="src src-org"><span style="color: #87cefa;">|-</span>
 </pre>
-
+</div>
 
 <p>
 in the beginning of line and press <b>&lt;Tab&gt;</b>, it will expand as much as
 necessary.  You can create tables from blocks of text that look like
 one (like coma or whitespace separated rows of values) with
 </p>
+
 <p>
 <b>M-x org-table-create-or-convert-from-region</b>
 </p>
+
 <p>
 You can do sorting on columns, calculations on rows or columns or
 parts of them and more - it has spreadsheet functionality.  Very handy
 for quick dealing with formatted program output.
 </p>
 </div>
-
 </div>
 
-<div id="outline-container-6-1-3" class="outline-4">
+<div id="outline-container-sec-6-1-3" class="outline-4">
 <h4 id="sec-6-1-3"><span class="section-number-4">6.1.3</span> Lightening fast documents</h4>
 <div class="outline-text-4" id="text-6-1-3">
-
-
 <p>
 Have to write some official document?  Want to concentrate on content
 and structure rather than fonts, colours, headings and what not?
 Write an Org mode file and export it to PDF (through <a href="http://en.wikipedia.org/wiki/LaTeX">LaTeX</a>)!  It will
 take care of all details, add table of content even.
 </p>
+
 <p>
 Setting up fancy header page may be a little work though.  Here's a
 little <a href="https://gist.github.com/m00natic/15410be25f7475984a71">example</a> how to make one with some picture logo and integrate it
@@ -2217,42 +2289,35 @@ author, title and export type as well.  Tweak it however you want.
 </p>
 </div>
 </div>
-
 </div>
 
-<div id="outline-container-6-2" class="outline-3">
-<h3 id="sec-6-2"><span class="section-number-3">6.2</span> Vim</h3>
-<div class="outline-text-3" id="text-6-2">
-
+<div id="outline-container-vi" class="outline-3">
+<h3 id="vi"><a id="sec-6-2" name="sec-6-2"></a><span class="section-number-3">6.2</span> Vim</h3>
+<div class="outline-text-3" id="text-vi">
 
 <p>
 Can Vim emulate Emacs?  Forget it!  But the other way works.  There
 are many packages that give some sort of <a href="http://www.emacswiki.org/emacs/CategoryEmulation">Vim emulation</a>.  If you are
 such an insert/escape addict but still want the power of symbolic
 universe, you might try one of them.  The current poster child is
-<a href="http://emacswiki.org/emacs/Evil">Evil</a><sup><a class="footref" name="fnr-.2.10" href="#fn-.2">2</a></sup> and seems praised as the most potent emulation not just
+<a href="http://emacswiki.org/emacs/Evil">Evil</a><sup><a id="fnr.2.100" name="fnr.2.100" class="footref" href="#fn.2">2</a></sup> and seems praised as the most potent emulation not just
 in Lala land.
 </p>
+
 <p>
-By the way, I thought editor wars finished when <a href="http://upsilon.cc/~zack/blog/posts/2008/10/from_Vim_to_Emacs_-_part_1/">Debian's Vim maintainer switched to Emacs</a>.
+By the way, I thought editor wars finished when
+<a href="http://upsilon.cc/~zack/blog/posts/2008/10/from_Vim_to_Emacs_-_part_1/">Debian's Vim maintainer switched to Emacs</a>.
 </p>
 </div>
 </div>
-
 </div>
 
-<div id="outline-container-7" class="outline-2">
+<div id="outline-container-sec-7" class="outline-2">
 <h2 id="sec-7"><span class="section-number-2">7</span> Emacs for black belts</h2>
 <div class="outline-text-2" id="text-7">
-
-
-
-</div>
-
-<div id="outline-container-7-1" class="outline-3">
-<h3 id="sec-7-1"><span class="section-number-3">7.1</span> Keyboard macros</h3>
-<div class="outline-text-3" id="text-7-1">
-
+</div><div id="outline-container-key-macro" class="outline-3">
+<h3 id="key-macro"><a id="sec-7-1" name="sec-7-1"></a><span class="section-number-3">7.1</span> Keyboard macros</h3>
+<div class="outline-text-3" id="text-key-macro">
 
 <p>
 Being mainly keyboard driven, Emacs offers one simple yet extremely
@@ -2260,42 +2325,53 @@ powerful facility for automation - keyboard macros.  The idea is
 capturing multiple series of keystrokes and then automatically
 executing them on demand.  Here's how to start one:
 </p>
+
 <p>
 <b>C-x (</b>
 </p>
+
 <p>
 Now do a series of actions that you'd like to automate.  Be careful,
 take your time and try to think of a clean way to achieve the first
 round of what you'd like to do.  When you are ready:
 </p>
+
 <p>
 <b>C-x )</b>
 </p>
+
 <p>
 To execute what you've just captured:
 </p>
+
 <p>
 <b>C-x e</b>
 </p>
+
 <p>
 To execute it 42 times:
 </p>
+
 <p>
 <b>C-u 42 C-x e</b>
 </p>
+
 <p>
 This <b>C-u NUMBER</b> combination, known as prefix/universal argument, is
 a way to pass additional argument to many commands and most often
 causes them to be executed number of times.
 </p>
+
 <p>
 Note that you don't have to execute the captured macro immediately.
 It stays available for execution until you define another one.  To
 cancel capture while still recording, do the usual:
 </p>
+
 <p>
 <b>C-g</b>
 </p>
+
 <p>
 It will probably take you some practice to get used to recording
 composable series of actions, see <a href="http://emacswiki.org/emacs/KeyboardMacros">here</a> for example.  Once you master
@@ -2307,85 +2383,82 @@ there and add new line, then go back to the e-mail buffer and move to
 the next line.  Now execute this automatically 100 times.
 </p>
 </div>
-
 </div>
 
-<div id="outline-container-7-2" class="outline-3">
-<h3 id="sec-7-2"><span class="section-number-3">7.2</span> Emacs Lisp</h3>
-<div class="outline-text-3" id="text-7-2">
-
+<div id="outline-container-elisp" class="outline-3">
+<h3 id="elisp"><a id="sec-7-2" name="sec-7-2"></a><span class="section-number-3">7.2</span> Emacs Lisp</h3>
+<div class="outline-text-3" id="text-elisp">
 
 <blockquote>
-
-<p><i>I have to tell you that probably of all the languages I've used, definitely, Emacs Lisp has been the most fun.</i>
-                <i>&ndash; John Wiegley</i>
+<p>
+<i>I have to tell you that probably of all the languages I've used,
+definitely, Emacs Lisp has been the most fun.</i>
+                <i>&#x2013; John Wiegley</i>
 </p>
 </blockquote>
-
 
 <p>
 I wonder if after all this stuff, you have decided for yourself what
 Emacs actually is.  Is it an advanced editor, an integrated
 development environment, an operating system, a kitchen sink or maybe
-a Death Star?  Time has come to tell you the truth.  Luke, I'm your&hellip;
+a Death Star?  Time has come to tell you the truth.  Luke, I'm your&#x2026;
 </p>
+
 <p>
-Emacs at its essence is an interpreter for a <a href="http://en.wikipedia.org/wiki/Lisp_%28programming_language%29">Lisp</a> dialect - Emacs Lisp
+Emacs at its essence is an interpreter for a <a href="http://en.wikipedia.org/wiki/Lisp_%2528programming_language%2529">Lisp</a> dialect - Emacs Lisp
 (Elisp).  All magic interactivity and extensibility is a byproduct of
 this.  All parenthesized settings and code snippets from above are
 actually Elisp program pieces.  Here's a nice built-in introduction:
 </p>
+
 <p>
 <b>C-h i m Emacs Lisp Intro</b>
 </p>
+
 <p>
 I won't go into details how <a href="http://www.youtube.com/watch?v=HM1Zb3xmvMc">cool</a> Lisp-like languages are, <a href="http://www.paulgraham.com/diff.html">there</a> <a href="http://www.paulgraham.com/avg.html">is</a> a
 <a href="http://www.gigamonkeys.com/book/introduction-why-lisp.html">lot</a> of <a href="http://www.gigamonkeys.com/book/macros-defining-your-own.html">material</a> out <a href="http://www.defmacro.org/ramblings/lisp.html">there</a>.  I won't tell you much about Elisp either
 for the built-in reference is outstanding:
 </p>
+
 <p>
 <b>C-h i m Elisp</b>
 </p>
+
 <p>
 However, I will tell you about one of my aha-moments and some
 practical consequences.  While Elisp is becoming quite an adequate
-lisp<sup><a class="footref" name="fnr-.5" href="#fn-.5">5</a></sup>, it really shines at&hellip;
+lisp<sup><a id="fnr.5" name="fnr.5" class="footref" href="#fn.5">5</a></sup>, it really shines at&#x2026;
 </p>
-
 </div>
 
-<div id="outline-container-7-2-1" class="outline-4">
+<div id="outline-container-sec-7-2-1" class="outline-4">
 <h4 id="sec-7-2-1"><span class="section-number-4">7.2.1</span> Text superpowers</h4>
 <div class="outline-text-4" id="text-7-2-1">
-
-
 <p>
-I've come to appreciate that Elisp is the <a href="http://ergoemacs.org/emacs/elisp_text_processing_lang.html">best programming language for text processing</a>.  No joke, it's because Emacs has <span style="text-decoration:underline;">a lot</span> of
+I've come to appreciate that Elisp is the <a href="http://ergoemacs.org/emacs/elisp_text_processing_lang.html">best programming language
+for text processing</a>.  No joke, it's because Emacs has <span class="underline">a lot</span> of
 primitives for dealing with text and buffers, after all, one of its
 specialties is text editing, doh.  There is another thing though, I
-told you that each key stroke/sequence invokes some function&hellip;
+told you that each key stroke/sequence invokes some function&#x2026;
 </p>
 </div>
-
 </div>
 
-<div id="outline-container-7-2-2" class="outline-4">
+<div id="outline-container-sec-7-2-2" class="outline-4">
 <h4 id="sec-7-2-2"><span class="section-number-4">7.2.2</span> Text processing automation for dummies</h4>
 <div class="outline-text-4" id="text-7-2-2">
-
-
 <p>
 While combining built-in functionality with additional packages and
-especially <a href="#sec-7-1">keyboard macros</a> can get you beyond what most people would
+especially <a href="#key-macro">keyboard macros</a> can get you beyond what most people would
 imagine possible for a human, sometimes you may stumble onto something
 that requires some nastier text processing and probably editing and/or
 generating hundreds of files.  A general recipe how to write such
 programs in Elisp follows.
 </p>
 
-
-
-<pre class="example">1. Do by hand what you'd like to do.  Probably multiple times, till
+<pre class="example">
+1. Do by hand what you'd like to do.  Probably multiple times, till
    you extract a more or less clean general procedure.
 
 2. Having concrete series of actions, for each of them check what
@@ -2403,102 +2476,97 @@ programs in Elisp follows.
 4. Use these functions in order to form your program.
 </pre>
 
-
 <p>
 So code literally follows the editing process, ingenious!  Step 3 is
 very educational, manifest of free (as in speech) software, though
 with time you may need it less often.
 </p>
+
 <p>
 This is a start.  If you become serious practitioner, you'll randomly
-start at step 4 which is basically&hellip;programming.  But you'll
+start at step 4 which is basically&#x2026;programming.  But you'll
 appreciate the availability of the other steps for true Emacsers never
 cease to learn.  Happy lisping!
 </p>
 </div>
 </div>
 </div>
-
 </div>
 
-<div id="outline-container-8" class="outline-2">
+<div id="outline-container-sec-8" class="outline-2">
 <h2 id="sec-8"><span class="section-number-2">8</span> Where to go next?</h2>
 <div class="outline-text-2" id="text-8">
-
-
 <p>
 Emacs is what you make of it.  I don't know of other environment as
 malleable as it is.  Play with it, make it comfortable.  It's defaults
 are not set in stones, make them suit your tasks.  Unlike most other
-tools, learning Emacs<sup><a class="footref" name="fnr-.6" href="#fn-.6">6</a></sup> can pay off spectacularly, especially in
+tools, learning Emacs<sup><a id="fnr.6" name="fnr.6" class="footref" href="#fn.6">6</a></sup> can pay off spectacularly, especially in
 terms of productivity.  As with most other quality things in life, if
 you persist, it will deliver.
 </p>
-
 </div>
 
-<div id="outline-container-8-1" class="outline-3">
+<div id="outline-container-sec-8-1" class="outline-3">
 <h3 id="sec-8-1"><span class="section-number-3">8.1</span> Random resources</h3>
 <div class="outline-text-3" id="text-8-1">
-
-
 <p>
 The trash bin of Emacs resources - <a href="http://www.emacswiki.org/">EmacsWiki</a>.
 </p>
+
 <p>
 <a href="http://emacsrocks.com/">Emacs rocks</a>, literally.
 </p>
+
 <p>
 <a href="http://planet.emacsen.org/">Planet Emacsen</a> is an aggregator of many related blogs.
 </p>
+
 <p>
 Looking at other people settings is traditional for novices (and not
 only).  You can always peek at <a href="https://github.com/m00natic/dot-emacs/">mine</a> as a source of mastery and
 inspiration.
 </p>
+</div>
+</div>
+</div>
 <div id="footnotes">
 <h2 class="footnotes">Footnotes: </h2>
 <div id="text-footnotes">
-<p class="footnote"><sup><a class="footnum" name="fn-.1" href="#fnr-.1">1</a></sup> If you made it through the last sentence, require your award
-</p>
 
+<div class="footdef"><sup><a id="fn.1" name="fn.1" class="footnum" href="#fnr.1">1</a></sup> <p class="footpara">
+If you made it through the last sentence, require your award
+</p></div>
 
-<p class="footnote"><sup><a class="footnum" name="fn-.2" href="#fnr-.2">2</a></sup> Available through <b>M-x list-packages</b>
-</p>
+<div class="footdef"><sup><a id="fn.2" name="fn.2" class="footnum" href="#fnr.2">2</a></sup> <p class="footpara">
+Available through <b>M-x list-packages</b>
+</p></div>
 
-
-<p class="footnote"><sup><a class="footnum" name="fn-.3" href="#fnr-.3">3</a></sup> Well, there is a maximum number of marks that can be remembered
+<div class="footdef"><sup><a id="fn.3" name="fn.3" class="footnum" href="#fnr.3">3</a></sup> <p class="footpara">
+Well, there is a maximum number of marks that can be remembered
 for a buffer at time (16 by default).  More general mechanism is
 offered by <a href="http://www.gnu.org/software/emacs/manual/html_node/emacs/Position-Registers.html">registers</a>.
-</p>
+</p></div>
 
+<div class="footdef"><sup><a id="fn.4" name="fn.4" class="footnum" href="#fnr.4">4</a></sup> <p class="footpara">
+This is a built-in extension
+</p></div>
 
-<p class="footnote"><sup><a class="footnum" name="fn-.4" href="#fnr-.4">4</a></sup> This is a built-in extension
-</p>
+<div class="footdef"><sup><a id="fn.5" name="fn.5" class="footnum" href="#fnr.5">5</a></sup> <p class="footpara">
+Some people even write <a href="http://elnode.org/">web servers</a> nowadays
+</p></div>
 
-
-<p class="footnote"><sup><a class="footnum" name="fn-.5" href="#fnr-.5">5</a></sup> Some people even write <a href="http://elnode.org/">web servers</a> nowadays
-</p>
-
-
-<p class="footnote"><sup><a class="footnum" name="fn-.6" href="#fnr-.6">6</a></sup> Realistically, no mortal can learn Emacs in its entirety
-</p>
+<div class="footdef"><sup><a id="fn.6" name="fn.6" class="footnum" href="#fnr.6">6</a></sup> <p class="footpara">
+Realistically, no mortal can learn Emacs in its entirety
+</p></div>
 
 
 </div>
-</div>
-</div>
-
-</div>
-</div>
-</div>
-
-<div id="postamble">
-<p class="date">Date: 2013-09-28T17:02+0300</p>
+</div></div>
+<div id="postamble" class="status">
 <p class="author">Author: Andrey Kotlarski</p>
-<p class="creator"><a href="http://orgmode.org">Org</a> version 7.9.3f with <a href="http://www.gnu.org/software/emacs/">Emacs</a> version 24</p>
-<a href="http://validator.w3.org/check?uri=referer">Validate XHTML 1.0</a>
-
+<p class="date">Created: 2015-08-30 нд 17:44</p>
+<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.5.1 (<a href="http://orgmode.org">Org</a> mode 8.2.10)</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
 </html>

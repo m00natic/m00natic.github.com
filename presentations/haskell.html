@@ -1,63 +1,94 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-               "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
 <title>Haskell (pure and lazy, yet functional)</title>
-<meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1"/>
-<meta name="title" content="Haskell (pure and lazy, yet functional)"/>
-<meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2013-03-25T01:07+0200"/>
-<meta name="author" content="Andrey Kotlarski"/>
-<meta name="description" content="Haskell presentation"/>
-<meta name="keywords" content="haskell,programming,intro"/>
+<!-- 2015-08-30 нд 17:28 -->
+<meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta  name="generator" content="Org-mode" />
+<meta  name="author" content="Andrey Kotlarski" />
+<meta  name="description" content="Haskell presentation"
+ />
+<meta  name="keywords" content="haskell,programming,intro" />
 <style type="text/css">
  <!--/*--><![CDATA[/*><!--*/
-  html { font-family: Times, serif; font-size: 12pt; }
   .title  { text-align: center; }
-  .todo   { color: red; }
+  .todo   { font-family: monospace; color: red; }
   .done   { color: green; }
-  .tag    { background-color: #add8e6; font-weight:normal }
-  .target { }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
   .timestamp { color: #bebebe; }
   .timestamp-kwd { color: #5f9ea0; }
-  .right  {margin-left:auto; margin-right:0px;  text-align:right;}
-  .left   {margin-left:0px;  margin-right:auto; text-align:left;}
-  .center {margin-left:auto; margin-right:auto; text-align:center;}
-  p.verse { margin-left: 3% }
+  .right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
   pre {
-	border: 1pt solid #AEBDCC;
-	background-color: #F3F5F7;
-	padding: 5pt;
-	font-family: courier, monospace;
-        font-size: 90%;
-        overflow:auto;
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
   }
-  table { border-collapse: collapse; }
-  td, th { vertical-align: top;  }
-  th.right  { text-align:center;  }
-  th.left   { text-align:center;   }
-  th.center { text-align:center; }
-  td.right  { text-align:right;  }
-  td.left   { text-align:left;   }
-  td.center { text-align:center; }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  pre.src-sh:before    { content: 'sh'; }
+  pre.src-bash:before  { content: 'sh'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-R:before     { content: 'R'; }
+  pre.src-perl:before  { content: 'Perl'; }
+  pre.src-java:before  { content: 'Java'; }
+  pre.src-sql:before   { content: 'SQL'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.right  { text-align: center;  }
+  th.left   { text-align: center;   }
+  th.center { text-align: center; }
+  td.right  { text-align: right;  }
+  td.left   { text-align: left;   }
+  td.center { text-align: center; }
   dt { font-weight: bold; }
-  div.figure { padding: 0.5em; }
-  div.figure p { text-align: center; }
-  div.inlinetask {
-    padding:10px;
-    border:2px solid gray;
-    margin:10px;
+  .footpara:nth-child(2) { display: inline; }
+  .footpara { display: block; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
     background: #ffffcc;
   }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
   textarea { overflow-x: auto; }
-  .linenr { font-size:smaller }
-  .code-highlighted {background-color:#ffff00;}
-  .org-info-js_info-navigation { border-style:none; }
-  #org-info-js_console-label { font-size:10px; font-weight:bold;
-                               white-space:nowrap; }
-  .org-info-js_search-highlight {background-color:#ffff00; color:#000000;
-                                 font-weight:bold; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
   /*]]>*/-->
 </style>
 <link rel="stylesheet" type="text/css" href="../css/worg-classic.css" />
@@ -107,167 +138,201 @@ for the JavaScript code in this tag.
  }
 /*]]>*///-->
 </script>
+<script type="text/javascript" src="http://orgmode.org/mathjax/MathJax.js"></script>
+<script type="text/javascript">
+<!--/*--><![CDATA[/*><!--*/
+    MathJax.Hub.Config({
+        // Only one of the two following lines, depending on user settings
+        // First allows browser-native MathML display, second forces HTML/CSS
+        //  config: ["MMLorHTML.js"], jax: ["input/TeX"],
+            jax: ["input/TeX", "output/HTML-CSS"],
+        extensions: ["tex2jax.js","TeX/AMSmath.js","TeX/AMSsymbols.js",
+                     "TeX/noUndefined.js"],
+        tex2jax: {
+            inlineMath: [ ["\\(","\\)"] ],
+            displayMath: [ ['$$','$$'], ["\\[","\\]"], ["\\begin{displaymath}","\\end{displaymath}"] ],
+            skipTags: ["script","noscript","style","textarea","pre","code"],
+            ignoreClass: "tex2jax_ignore",
+            processEscapes: false,
+            processEnvironments: true,
+            preview: "TeX"
+        },
+        showProcessingMessages: true,
+        displayAlign: "center",
+        displayIndent: "2em",
 
+        "HTML-CSS": {
+             scale: 100,
+             availableFonts: ["STIX","TeX"],
+             preferredFont: "TeX",
+             webFont: "TeX",
+             imageFont: "TeX",
+             showMathMenu: true,
+        },
+        MMLorHTML: {
+             prefer: {
+                 MSIE:    "MML",
+                 Firefox: "MML",
+                 Opera:   "HTML",
+                 other:   "HTML"
+             }
+        }
+    });
+/*]]>*///-->
+</script>
 </head>
 <body>
-<div id="org-div-home-and-up" style="text-align:right;font-size:70%;white-space:nowrap;">
+<div id="org-div-home-and-up">
  <a accesskey="h" href="../sitemap.html"> UP </a>
  |
  <a accesskey="H" href="../index.html"> HOME </a>
-</div>
-
-<div id="preamble">
-
-</div>
-
-<div id="content">
+</div><div id="content">
 <h1 class="title">Haskell (pure and lazy, yet functional)</h1>
-
-
-
-
-
 <div id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#sec-1">1 Quick overview</a>
+<li><a href="#sec-1">1. Quick overview</a>
 <ul>
-<li><a href="#sec-1-1">1.1 History and stuff</a>
+<li><a href="#sec-1-1">1.1. History and stuff</a>
 <ul>
-<li><a href="#sec-1-1-1">1.1.1 Unification of efforts in lazy functional programming</a></li>
-<li><a href="#sec-1-1-2">1.1.2 A lot of theory underneath</a></li>
-<li><a href="#sec-1-1-3">1.1.3 Academy driven, cutting edge research</a></li>
-<li><a href="#sec-1-1-4">1.1.4 Evolving standard</a></li>
-<li><a href="#sec-1-1-5">1.1.5 Glasgow Haskell Compiler being the canonical implementation</a></li>
-<li><a href="#sec-1-1-6">1.1.6 Avoid Success at All Costs</a></li>
-<li><a href="#sec-1-1-7">1.1.7 Hoare quote</a></li>
+<li><a href="#sec-1-1-1">1.1.1. Unification of efforts in lazy functional programming</a></li>
+<li><a href="#sec-1-1-2">1.1.2. A lot of theory underneath</a></li>
+<li><a href="#sec-1-1-3">1.1.3. Academy driven, cutting edge research</a></li>
+<li><a href="#sec-1-1-4">1.1.4. Evolving standard</a></li>
+<li><a href="#sec-1-1-5">1.1.5. Glasgow Haskell Compiler being the canonical implementation</a></li>
+<li><a href="#sec-1-1-6">1.1.6. Avoid Success at All Costs</a></li>
+<li><a href="#sec-1-1-7">1.1.7. Hoare quote&#xa0;&#xa0;&#xa0;<span class="tag"><span class="B_quote">B_quote</span></span></a></li>
 </ul>
 </li>
-<li><a href="#sec-1-2">1.2 Theoretical base</a>
+<li><a href="#sec-1-2">1.2. Theoretical base</a>
 <ul>
-<li><a href="#sec-1-2-1">1.2.1 (Typed) &lambda; -calculus</a></li>
-<li><a href="#sec-1-2-2">1.2.2 Category theory</a></li>
-<li><a href="#sec-1-2-3">1.2.3 Hindley-Milner(-Damas) type inference</a></li>
+<li><a href="#sec-1-2-1">1.2.1. (Typed) &lambda; -calculus</a></li>
+<li><a href="#sec-1-2-2">1.2.2. Category theory</a></li>
+<li><a href="#sec-1-2-3">1.2.3. Hindley-Milner(-Damas) type inference</a></li>
 </ul>
 </li>
-<li><a href="#sec-1-3">1.3 Technical merits</a>
+<li><a href="#sec-1-3">1.3. Technical merits</a>
 <ul>
-<li><a href="#sec-1-3-1">1.3.1 Purely functional</a></li>
-<li><a href="#sec-1-3-2">1.3.2 Lazy (non-strict)</a></li>
-<li><a href="#sec-1-3-3">1.3.3 Polymorphic strong static typing</a></li>
-<li><a href="#sec-1-3-4">1.3.4 Elegant (sort of), math inspired syntax</a></li>
-</ul></li>
+<li><a href="#sec-1-3-1">1.3.1. Purely functional</a></li>
+<li><a href="#sec-1-3-2">1.3.2. Lazy (non-strict)</a></li>
+<li><a href="#sec-1-3-3">1.3.3. Polymorphic strong static typing</a></li>
+<li><a href="#sec-1-3-4">1.3.4. Elegant (sort of), math inspired syntax</a></li>
 </ul>
 </li>
-<li><a href="#sec-2">2 The language from bird's-eye</a>
-<ul>
-<li><a href="#sec-2-1">2.1 Pure functional?</a>
-<ul>
-<li><a href="#sec-2-1-1">2.1.1 Program is a tree of nested expresions</a></li>
-<li><a href="#sec-2-1-2">2.1.2 Functions are the base building unit</a></li>
-<li><a href="#sec-2-1-3">2.1.3 No side effects by default</a></li>
 </ul>
 </li>
-<li><a href="#sec-2-2">2.2 Functions</a>
+<li><a href="#sec-2">2. The language from bird's-eye</a>
 <ul>
-<li><a href="#sec-2-2-1">2.2.1 Pattern matching</a></li>
-<li><a href="#sec-2-2-2">2.2.2 Curring</a></li>
-<li><a href="#sec-2-2-3">2.2.3 Composition</a></li>
+<li><a href="#sec-2-1">2.1. Pure functional?</a>
+<ul>
+<li><a href="#sec-2-1-1">2.1.1. Program is a tree of nested expresions</a></li>
+<li><a href="#sec-2-1-2">2.1.2. Functions are the base building unit</a></li>
+<li><a href="#sec-2-1-3">2.1.3. No side effects by default</a></li>
 </ul>
 </li>
-<li><a href="#sec-2-3">2.3 Lazy?</a>
+<li><a href="#sec-2-2">2.2. Functions</a>
 <ul>
-<li><a href="#sec-2-3-1">2.3.1 Evaluation order</a></li>
-<li><a href="#sec-2-3-2">2.3.2 Thunks</a></li>
+<li><a href="#sec-2-2-1">2.2.1. Pattern matching</a></li>
+<li><a href="#sec-2-2-2">2.2.2. Curring</a></li>
+<li><a href="#sec-2-2-3">2.2.3. Composition</a></li>
 </ul>
 </li>
-<li><a href="#sec-2-4">2.4 Strong static typing?</a>
+<li><a href="#sec-2-3">2.3. Lazy?</a>
 <ul>
-<li><a href="#sec-2-4-1">2.4.1 Each expression has a type known at compile time</a></li>
-<li><a href="#sec-2-4-2">2.4.2 Our types determine a theorem and compiling is a proof of its correctness within the Haskell world</a></li>
-<li><a href="#sec-2-4-3">2.4.3 Polymorphic types</a></li>
+<li><a href="#sec-2-3-1">2.3.1. Evaluation order</a></li>
+<li><a href="#sec-2-3-2">2.3.2. Thunks</a></li>
 </ul>
 </li>
-<li><a href="#sec-2-5">2.5 Algebraic data types</a>
+<li><a href="#sec-2-4">2.4. Strong static typing?</a>
 <ul>
-<li><a href="#sec-2-5-1">2.5.1 Union of possible values or value constructors</a></li>
-<li><a href="#sec-2-5-2">2.5.2 Type parameters</a></li>
+<li><a href="#sec-2-4-1">2.4.1. Each expression has a type known at compile time</a></li>
+<li><a href="#sec-2-4-2">2.4.2. Our types determine a theorem and compiling is a proof of its correctness within the Haskell world</a></li>
+<li><a href="#sec-2-4-3">2.4.3. Polymorphic types</a></li>
 </ul>
 </li>
-<li><a href="#sec-2-6">2.6 Typeclasses</a>
+<li><a href="#sec-2-5">2.5. Algebraic data types</a>
 <ul>
-<li><a href="#sec-2-6-1">2.6.1 Interfaces sort of</a></li>
-<li><a href="#sec-2-6-2">2.6.2 If it quacks like a duck, it's a duck</a></li>
+<li><a href="#sec-2-5-1">2.5.1. Union of possible values or value constructors</a></li>
+<li><a href="#sec-2-5-2">2.5.2. Type parameters</a></li>
 </ul>
 </li>
-<li><a href="#sec-2-7">2.7 I/O vs Purity</a>
+<li><a href="#sec-2-6">2.6. Typeclasses</a>
 <ul>
-<li><a href="#sec-2-7-1">2.7.1 The IO Monad</a></li>
-<li><a href="#sec-2-7-2">2.7.2 Reverse words</a></li>
-<li><a href="#sec-2-7-3">2.7.3 Cool one-liner</a></li>
+<li><a href="#sec-2-6-1">2.6.1. Interfaces sort of</a></li>
+<li><a href="#sec-2-6-2">2.6.2. If it quacks like a duck, it's a duck</a></li>
 </ul>
 </li>
-<li><a href="#sec-2-8">2.8 Functors</a>
+<li><a href="#sec-2-7">2.7. I/O vs Purity</a>
 <ul>
-<li><a href="#sec-2-8-1">2.8.1 Don't confuse with C++ ;-)</a></li>
-<li><a href="#sec-2-8-2">2.8.2 Iterable?</a></li>
-<li><a href="#sec-2-8-3">2.8.3 Lift ordinary function to operate on boxed value</a></li>
+<li><a href="#sec-2-7-1">2.7.1. The IO Monad</a></li>
+<li><a href="#sec-2-7-2">2.7.2. Reverse words</a></li>
+<li><a href="#sec-2-7-3">2.7.3. Cool one-liner</a></li>
 </ul>
 </li>
-<li><a href="#sec-2-9">2.9 Applicative</a>
+<li><a href="#sec-2-8">2.8. Functors</a>
 <ul>
-<li><a href="#sec-2-9-1">2.9.1 Beefed up functors</a></li>
-<li><a href="#sec-2-9-2">2.9.2 Sequence of several boxed actions</a></li>
-<li><a href="#sec-2-9-3">2.9.3 pure f &lt;*&gt; x &equiv; fmap f x</a></li>
+<li><a href="#sec-2-8-1">2.8.1. Don't confuse with C++ ;-)</a></li>
+<li><a href="#sec-2-8-2">2.8.2. Iterable?</a></li>
+<li><a href="#sec-2-8-3">2.8.3. Lift ordinary function to operate on boxed value</a></li>
 </ul>
 </li>
-<li><a href="#sec-2-10">2.10 Monoids</a>
+<li><a href="#sec-2-9">2.9. Applicative</a>
 <ul>
-<li><a href="#sec-2-10-1">2.10.1 Associative binary function + identity value</a></li>
-<li><a href="#sec-2-10-2">2.10.2 Accumulate a boxed value from several boxes</a></li>
+<li><a href="#sec-2-9-1">2.9.1. Beefed up functors</a></li>
+<li><a href="#sec-2-9-2">2.9.2. Sequence of several boxed actions</a></li>
+<li><a href="#sec-2-9-3">2.9.3. pure f &lt;*&gt; x &equiv; fmap f x</a></li>
 </ul>
 </li>
-<li><a href="#sec-2-11">2.11 Monads</a>
+<li><a href="#sec-2-10">2.10. Monoids</a>
 <ul>
-<li><a href="#sec-2-11-1">2.11.1 Beefed up applicatives</a></li>
-</ul></li>
+<li><a href="#sec-2-10-1">2.10.1. Associative binary function + identity value</a></li>
+<li><a href="#sec-2-10-2">2.10.2. Accumulate a boxed value from several boxes</a></li>
 </ul>
 </li>
-<li><a href="#sec-3">3 Pros and cons</a>
+<li><a href="#sec-2-11">2.11. Monads</a>
 <ul>
-<li><a href="#sec-3-1">3.1 Benefits</a>
-<ul>
-<li><a href="#sec-3-1-1">3.1.1 The pervasive type system gives a lot of information to the compiler</a></li>
-<li><a href="#sec-3-1-2">3.1.2 Side effects are not the norm and are explicitly specified and controlled</a></li>
+<li><a href="#sec-2-11-1">2.11.1. Beefed up applicatives</a></li>
 </ul>
 </li>
-<li><a href="#sec-3-2">3.2 Problems</a>
-<ul>
-<li><a href="#sec-3-2-1">3.2.1 There are cases where static typing may not be natural</a></li>
-<li><a href="#sec-3-2-2">3.2.2 For huge systems, you may paint yourself in the corner if having somehow wrong base</a></li>
-<li><a href="#sec-3-2-3">3.2.3 Laziness makes order of evaluation non-obvious</a></li>
-</ul></li>
 </ul>
 </li>
-<li><a href="#sec-4">4 Resources</a>
+<li><a href="#sec-3">3. Pros and cons</a>
 <ul>
-<li><a href="#sec-4-1">4.1 Links &amp; books</a>
+<li><a href="#sec-3-1">3.1. Benefits</a>
 <ul>
-<li><a href="#sec-4-1-1">4.1.1 Official site</a></li>
-<li><a href="#sec-4-1-2">4.1.2 Learn You a Haskell for Great Good!</a></li>
-<li><a href="#sec-4-1-3">4.1.3 The Haskell Programmer's Guide to the IO Monad - Don't Panic.</a></li>
-<li><a href="#sec-4-1-4">4.1.4 Real World Haskell</a></li>
-<li><a href="#sec-4-1-5">4.1.5 Great list of tutorials</a></li>
-<li><a href="#sec-4-1-6">4.1.6 Recent interview with Simon Peyton-Jones</a></li>
-</ul></li>
+<li><a href="#sec-3-1-1">3.1.1. The pervasive type system gives a lot of information to the compiler</a></li>
+<li><a href="#sec-3-1-2">3.1.2. Side effects are not the norm and are explicitly specified and controlled</a></li>
 </ul>
 </li>
-<li><a href="#sec-5">5 Fun</a>
+<li><a href="#sec-3-2">3.2. Problems</a>
 <ul>
-<li><a href="#sec-5-1">5.1 Why so serious?</a>
+<li><a href="#sec-3-2-1">3.2.1. There are cases where static typing may not be natural</a></li>
+<li><a href="#sec-3-2-2">3.2.2. For huge systems, you may paint yourself in the corner if having somehow wrong base</a></li>
+<li><a href="#sec-3-2-3">3.2.3. Laziness makes order of evaluation non-obvious</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#sec-4">4. Resources</a>
 <ul>
-<li><a href="#sec-5-1-1">5.1.1 The Evolution of a Haskell Programmer</a></li>
+<li><a href="#sec-4-1">4.1. Links &amp; books</a>
+<ul>
+<li><a href="#sec-4-1-1">4.1.1. Official site</a></li>
+<li><a href="#sec-4-1-2">4.1.2. Learn You a Haskell for Great Good!</a></li>
+<li><a href="#sec-4-1-3">4.1.3. The Haskell Programmer's Guide to the IO Monad - Don't Panic.</a></li>
+<li><a href="#sec-4-1-4">4.1.4. Real World Haskell</a></li>
+<li><a href="#sec-4-1-5">4.1.5. Great list of tutorials</a></li>
+<li><a href="#sec-4-1-6">4.1.6. Recent interview with Simon Peyton-Jones</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#sec-5">5. Fun</a>
+<ul>
+<li><a href="#sec-5-1">5.1. Why so serious?</a>
+<ul>
+<li><a href="#sec-5-1-1">5.1.1. The Evolution of a Haskell Programmer</a></li>
 </ul>
 </li>
 </ul>
@@ -276,444 +341,250 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-1" class="outline-2">
+<div id="outline-container-sec-1" class="outline-2">
 <h2 id="sec-1"><span class="section-number-2">1</span> Quick overview</h2>
 <div class="outline-text-2" id="text-1">
-
-
-
-</div>
-
-<div id="outline-container-1-1" class="outline-3">
+</div><div id="outline-container-sec-1-1" class="outline-3">
 <h3 id="sec-1-1"><span class="section-number-3">1.1</span> History and stuff</h3>
 <div class="outline-text-3" id="text-1-1">
-
-
-
-</div>
-
-<div id="outline-container-1-1-1" class="outline-4">
+</div><div id="outline-container-sec-1-1-1" class="outline-4">
 <h4 id="sec-1-1-1"><span class="section-number-4">1.1.1</span> Unification of efforts in lazy functional programming</h4>
-<div class="outline-text-4" id="text-1-1-1">
-
 </div>
-
-</div>
-
-<div id="outline-container-1-1-2" class="outline-4">
+<div id="outline-container-sec-1-1-2" class="outline-4">
 <h4 id="sec-1-1-2"><span class="section-number-4">1.1.2</span> A lot of theory underneath</h4>
-<div class="outline-text-4" id="text-1-1-2">
-
 </div>
-
-</div>
-
-<div id="outline-container-1-1-3" class="outline-4">
+<div id="outline-container-sec-1-1-3" class="outline-4">
 <h4 id="sec-1-1-3"><span class="section-number-4">1.1.3</span> Academy driven, cutting edge research</h4>
-<div class="outline-text-4" id="text-1-1-3">
-
 </div>
-
-</div>
-
-<div id="outline-container-1-1-4" class="outline-4">
+<div id="outline-container-sec-1-1-4" class="outline-4">
 <h4 id="sec-1-1-4"><span class="section-number-4">1.1.4</span> Evolving standard</h4>
-<div class="outline-text-4" id="text-1-1-4">
-
 </div>
-
-</div>
-
-<div id="outline-container-1-1-5" class="outline-4">
+<div id="outline-container-sec-1-1-5" class="outline-4">
 <h4 id="sec-1-1-5"><span class="section-number-4">1.1.5</span> Glasgow Haskell Compiler being the canonical implementation</h4>
-<div class="outline-text-4" id="text-1-1-5">
-
 </div>
-
-</div>
-
-<div id="outline-container-1-1-6" class="outline-4">
+<div id="outline-container-sec-1-1-6" class="outline-4">
 <h4 id="sec-1-1-6"><span class="section-number-4">1.1.6</span> Avoid Success at All Costs</h4>
 <div class="outline-text-4" id="text-1-1-6">
-
-<p>\pause
-</p></div>
-
-</div>
-
-<div id="outline-container-1-1-7" class="outline-4">
-<h4 id="sec-1-1-7"><span class="section-number-4">1.1.7</span> Hoare quote &nbsp;&nbsp;&nbsp;<span class="tag"><span class="B_quote">B_quote</span></span></h4>
-<div class="outline-text-4" id="text-1-1-7">
-
-<p>I fear that Haskell is doomed to succeed.
-</p>
 <p>
-&ndash; C.A.R. Hoare
+\pause
 </p>
 </div>
 </div>
+<div id="outline-container-sec-1-1-7" class="outline-4">
+<h4 id="sec-1-1-7"><span class="section-number-4">1.1.7</span> Hoare quote&#xa0;&#xa0;&#xa0;<span class="tag"><span class="B_quote">B_quote</span></span></h4>
+<div class="outline-text-4" id="text-1-1-7">
+<p>
+I fear that Haskell is doomed to succeed.
+</p>
 
+<p>
+&#x2013; C.A.R. Hoare
+</p>
+</div>
+</div>
 </div>
 
-<div id="outline-container-1-2" class="outline-3">
+<div id="outline-container-sec-1-2" class="outline-3">
 <h3 id="sec-1-2"><span class="section-number-3">1.2</span> Theoretical base</h3>
 <div class="outline-text-3" id="text-1-2">
-
-
-
-</div>
-
-<div id="outline-container-1-2-1" class="outline-4">
+</div><div id="outline-container-sec-1-2-1" class="outline-4">
 <h4 id="sec-1-2-1"><span class="section-number-4">1.2.1</span> (Typed) &lambda; -calculus</h4>
-<div class="outline-text-4" id="text-1-2-1">
-
 </div>
-
-</div>
-
-<div id="outline-container-1-2-2" class="outline-4">
+<div id="outline-container-sec-1-2-2" class="outline-4">
 <h4 id="sec-1-2-2"><span class="section-number-4">1.2.2</span> Category theory</h4>
-<div class="outline-text-4" id="text-1-2-2">
-
 </div>
-
-</div>
-
-<div id="outline-container-1-2-3" class="outline-4">
+<div id="outline-container-sec-1-2-3" class="outline-4">
 <h4 id="sec-1-2-3"><span class="section-number-4">1.2.3</span> Hindley-Milner(-Damas) type inference</h4>
-<div class="outline-text-4" id="text-1-2-3">
-
-
 </div>
 </div>
 
-</div>
-
-<div id="outline-container-1-3" class="outline-3">
+<div id="outline-container-sec-1-3" class="outline-3">
 <h3 id="sec-1-3"><span class="section-number-3">1.3</span> Technical merits</h3>
 <div class="outline-text-3" id="text-1-3">
-
-
-
-</div>
-
-<div id="outline-container-1-3-1" class="outline-4">
+</div><div id="outline-container-sec-1-3-1" class="outline-4">
 <h4 id="sec-1-3-1"><span class="section-number-4">1.3.1</span> Purely functional</h4>
-<div class="outline-text-4" id="text-1-3-1">
-
 </div>
-
-</div>
-
-<div id="outline-container-1-3-2" class="outline-4">
+<div id="outline-container-sec-1-3-2" class="outline-4">
 <h4 id="sec-1-3-2"><span class="section-number-4">1.3.2</span> Lazy (non-strict)</h4>
-<div class="outline-text-4" id="text-1-3-2">
-
 </div>
-
-</div>
-
-<div id="outline-container-1-3-3" class="outline-4">
+<div id="outline-container-sec-1-3-3" class="outline-4">
 <h4 id="sec-1-3-3"><span class="section-number-4">1.3.3</span> Polymorphic strong static typing</h4>
 <div class="outline-text-4" id="text-1-3-3">
-
-<p>\pause
-</p></div>
-
+<p>
+\pause
+</p>
 </div>
-
-<div id="outline-container-1-3-4" class="outline-4">
+</div>
+<div id="outline-container-sec-1-3-4" class="outline-4">
 <h4 id="sec-1-3-4"><span class="section-number-4">1.3.4</span> Elegant (sort of), math inspired syntax</h4>
-<div class="outline-text-4" id="text-1-3-4">
-
-
 </div>
 </div>
 </div>
 
-</div>
-
-<div id="outline-container-2" class="outline-2">
+<div id="outline-container-sec-2" class="outline-2">
 <h2 id="sec-2"><span class="section-number-2">2</span> The language from bird's-eye</h2>
 <div class="outline-text-2" id="text-2">
-
-
-
-</div>
-
-<div id="outline-container-2-1" class="outline-3">
+</div><div id="outline-container-sec-2-1" class="outline-3">
 <h3 id="sec-2-1"><span class="section-number-3">2.1</span> Pure functional?</h3>
 <div class="outline-text-3" id="text-2-1">
-
-
-
-</div>
-
-<div id="outline-container-2-1-1" class="outline-4">
+</div><div id="outline-container-sec-2-1-1" class="outline-4">
 <h4 id="sec-2-1-1"><span class="section-number-4">2.1.1</span> Program is a tree of nested expresions</h4>
-<div class="outline-text-4" id="text-2-1-1">
-
 </div>
-
-</div>
-
-<div id="outline-container-2-1-2" class="outline-4">
+<div id="outline-container-sec-2-1-2" class="outline-4">
 <h4 id="sec-2-1-2"><span class="section-number-4">2.1.2</span> Functions are the base building unit</h4>
-<div class="outline-text-4" id="text-2-1-2">
-
 </div>
-
-</div>
-
-<div id="outline-container-2-1-3" class="outline-4">
+<div id="outline-container-sec-2-1-3" class="outline-4">
 <h4 id="sec-2-1-3"><span class="section-number-4">2.1.3</span> No side effects by default</h4>
 <div class="outline-text-4" id="text-2-1-3">
-
-<ul>
-<li id="sec-2-1-3-1">like in mathematic functions<br/>
-
-</li>
-</ul>
+</div><ol class="org-ol"><li><a id="sec-2-1-3-1" name="sec-2-1-3-1"></a>like in mathematic functions<br  /></li></ol>
 </div>
 </div>
 
-</div>
-
-<div id="outline-container-2-2" class="outline-3">
+<div id="outline-container-sec-2-2" class="outline-3">
 <h3 id="sec-2-2"><span class="section-number-3">2.2</span> Functions</h3>
 <div class="outline-text-3" id="text-2-2">
-
-
-
-</div>
-
-<div id="outline-container-2-2-1" class="outline-4">
+</div><div id="outline-container-sec-2-2-1" class="outline-4">
 <h4 id="sec-2-2-1"><span class="section-number-4">2.2.1</span> Pattern matching</h4>
 <div class="outline-text-4" id="text-2-2-1">
-
-
-
-
+<div class="org-src-container">
 
 <pre class="src src-haskell"><span style="color: #cae682;">map</span> <span style="color: #cae682;">::</span> (a <span style="color: #cae682;">-&gt;</span> b) <span style="color: #cae682;">-&gt;</span> [a] <span style="color: #cae682;">-&gt;</span> [b]
 <span style="color: #cae682;">map</span> <span style="color: #8ac6f2; font-weight: bold;">_</span> <span style="color: #92a65e; font-weight: bold;">[]</span> <span style="color: #cae682;">=</span> <span style="color: #92a65e; font-weight: bold;">[]</span>
 <span style="color: #cae682;">map</span> f (x<span style="color: #92a65e; font-weight: bold;">:</span>xs) <span style="color: #cae682;">=</span> f x <span style="color: #92a65e; font-weight: bold;">:</span> map f xs
 </pre>
-
-
+</div>
+</div>
 </div>
 
-</div>
-
-<div id="outline-container-2-2-2" class="outline-4">
+<div id="outline-container-sec-2-2-2" class="outline-4">
 <h4 id="sec-2-2-2"><span class="section-number-4">2.2.2</span> Curring</h4>
 <div class="outline-text-4" id="text-2-2-2">
-
-<ul>
-<li id="sec-2-2-2-1">Function of N arguments is actually an application of N 1-argument functions<br/>
-
-
-
+</div><ol class="org-ol"><li><a id="sec-2-2-2-1" name="sec-2-2-2-1"></a>Function of N arguments is actually an application of N 1-argument functions<br  /><div class="outline-text-5" id="text-2-2-2-1">
+<div class="org-src-container">
 
 <pre class="src src-haskell"><span style="color: #cae682;">map</span> (5 <span style="color: #cae682;">+</span>) [1<span style="color: #cae682;">..</span>10]
 </pre>
-
-
-</li>
-</ul>
+</div>
+</div>
+</li></ol>
 </div>
 
-</div>
-
-<div id="outline-container-2-2-3" class="outline-4">
+<div id="outline-container-sec-2-2-3" class="outline-4">
 <h4 id="sec-2-2-3"><span class="section-number-4">2.2.3</span> Composition</h4>
 <div class="outline-text-4" id="text-2-2-3">
+<div class="org-src-container">
 
-
-
-
-
-<pre class="src src-haskell"><span style="color: #cae682;">map</span> (negate <span style="color: #cae682;">.</span> sum <span style="color: #cae682;">.</span> tail) [[1<span style="color: #cae682;">..</span>5],[3<span style="color: #cae682;">..</span>6],[1<span style="color: #cae682;">..</span>7]]
+<pre class="src src-haskell"><span style="color: #cae682;">map</span> (negate <span style="color: #cae682;">.</span> sum <span style="color: #cae682;">.</span> tail) [[1<span style="color: #cae682;">..</span>5]<span style="color: #cae682;">,</span>[3<span style="color: #cae682;">..</span>6]<span style="color: #cae682;">,</span>[1<span style="color: #cae682;">..</span>7]]
 </pre>
-
-
+</div>
+</div>
 </div>
 </div>
 
-</div>
-
-<div id="outline-container-2-3" class="outline-3">
+<div id="outline-container-sec-2-3" class="outline-3">
 <h3 id="sec-2-3"><span class="section-number-3">2.3</span> Lazy?</h3>
 <div class="outline-text-3" id="text-2-3">
-
-
-
-</div>
-
-<div id="outline-container-2-3-1" class="outline-4">
+</div><div id="outline-container-sec-2-3-1" class="outline-4">
 <h4 id="sec-2-3-1"><span class="section-number-4">2.3.1</span> Evaluation order</h4>
-<div class="outline-text-4" id="text-2-3-1">
-
 </div>
-
-</div>
-
-<div id="outline-container-2-3-2" class="outline-4">
+<div id="outline-container-sec-2-3-2" class="outline-4">
 <h4 id="sec-2-3-2"><span class="section-number-4">2.3.2</span> Thunks</h4>
 <div class="outline-text-4" id="text-2-3-2">
-
-<ul>
-<li id="sec-2-3-2-1">Delayed computations<br/>
-
+</div><ol class="org-ol"><li><a id="sec-2-3-2-1" name="sec-2-3-2-1"></a>Delayed computations<br  /><div class="outline-text-5" id="text-2-3-2-1">
 <p>
 \begin{lstlisting}[language=c++]
 int* take(int amount, int collection[])
-{&hellip;}
+{&#x2026;}
+#+END<sub>SRC</sub>
 </p>
+</div>
 </li>
-</ul>
-<ul>
-<li id="sec-2-3-2-2">Don't compute anything until/unless required<br/>
 
-
-
+<li><a id="sec-2-3-2-2" name="sec-2-3-2-2"></a>Don't compute anything until/unless required<br  /><div class="outline-text-5" id="text-2-3-2-2">
+<div class="org-src-container">
 
 <pre class="src src-haskell"><span style="color: #cae682;">take</span> 10 <span style="color: #cae682;">$</span> map (5 <span style="color: #cae682;">+</span>) [1<span style="color: #cae682;">..</span>]
 </pre>
-
-
-</li>
-</ul>
+</div>
+</div>
+</li></ol>
 </div>
 </div>
 
-</div>
-
-<div id="outline-container-2-4" class="outline-3">
+<div id="outline-container-sec-2-4" class="outline-3">
 <h3 id="sec-2-4"><span class="section-number-3">2.4</span> Strong static typing?</h3>
 <div class="outline-text-3" id="text-2-4">
-
-
-
-</div>
-
-<div id="outline-container-2-4-1" class="outline-4">
+</div><div id="outline-container-sec-2-4-1" class="outline-4">
 <h4 id="sec-2-4-1"><span class="section-number-4">2.4.1</span> Each expression has a type known at compile time</h4>
 <div class="outline-text-4" id="text-2-4-1">
-
-<ul>
-<li id="sec-2-4-1-1">so do functions<br/>
-
-</li>
-</ul>
+</div><ol class="org-ol"><li><a id="sec-2-4-1-1" name="sec-2-4-1-1"></a>so do functions<br  /></li></ol>
 </div>
 
-</div>
-
-<div id="outline-container-2-4-2" class="outline-4">
+<div id="outline-container-sec-2-4-2" class="outline-4">
 <h4 id="sec-2-4-2"><span class="section-number-4">2.4.2</span> Our types determine a theorem and compiling is a proof of its correctness within the Haskell world</h4>
 <div class="outline-text-4" id="text-2-4-2">
-
-<ul>
-<li id="sec-2-4-2-1">common theme for such advanced type systems<br/>
-</li>
-</ul>
+</div><ol class="org-ol"><li><a id="sec-2-4-2-1" name="sec-2-4-2-1"></a>common theme for such advanced type systems<br  /></li></ol>
 </div>
-
-</div>
-
-<div id="outline-container-2-4-3" class="outline-4">
+<div id="outline-container-sec-2-4-3" class="outline-4">
 <h4 id="sec-2-4-3"><span class="section-number-4">2.4.3</span> Polymorphic types</h4>
 <div class="outline-text-4" id="text-2-4-3">
-
-
 <p>
 Prelude&gt; :t filter
 </p>
-
+<div class="org-src-container">
 
 <pre class="src src-haskell"><span style="color: #cae682;">filter</span> <span style="color: #cae682;">::</span> (a <span style="color: #cae682;">-&gt;</span> <span style="color: #92a65e; font-weight: bold;">Bool</span>) <span style="color: #cae682;">-&gt;</span> [a] <span style="color: #cae682;">-&gt;</span> [a]
 </pre>
-
-
+</div>
+</div>
 </div>
 </div>
 
-</div>
-
-<div id="outline-container-2-5" class="outline-3">
+<div id="outline-container-sec-2-5" class="outline-3">
 <h3 id="sec-2-5"><span class="section-number-3">2.5</span> Algebraic data types</h3>
 <div class="outline-text-3" id="text-2-5">
-
-
-
-</div>
-
-<div id="outline-container-2-5-1" class="outline-4">
+</div><div id="outline-container-sec-2-5-1" class="outline-4">
 <h4 id="sec-2-5-1"><span class="section-number-4">2.5.1</span> Union of possible values or value constructors</h4>
 <div class="outline-text-4" id="text-2-5-1">
-
-
-
-
+<div class="org-src-container">
 
 <pre class="src src-haskell"><span style="color: #8ac6f2; font-weight: bold;">data</span> <span style="color: #92a65e; font-weight: bold;">Bool</span> <span style="color: #cae682;">=</span> <span style="color: #92a65e; font-weight: bold;">False</span> <span style="color: #cae682;">|</span> <span style="color: #92a65e; font-weight: bold;">True</span>
 
 <span style="color: #8ac6f2; font-weight: bold;">data</span> <span style="color: #92a65e; font-weight: bold;">Car</span> <span style="color: #cae682;">=</span> <span style="color: #92a65e; font-weight: bold;">Car</span> {model <span style="color: #cae682;">::</span> <span style="color: #92a65e; font-weight: bold;">String</span>
-               , year <span style="color: #cae682;">::</span> <span style="color: #92a65e; font-weight: bold;">Int</span>
-               , burnTime <span style="color: #cae682;">::</span> <span style="color: #92a65e; font-weight: bold;">Int</span>
+               <span style="color: #cae682;">,</span> year <span style="color: #cae682;">::</span> <span style="color: #92a65e; font-weight: bold;">Int</span>
+               <span style="color: #cae682;">,</span> burnTime <span style="color: #cae682;">::</span> <span style="color: #92a65e; font-weight: bold;">Int</span>
                } <span style="color: #8ac6f2; font-weight: bold;">deriving</span> (<span style="color: #92a65e; font-weight: bold;">Show</span>)
 </pre>
-
-
+</div>
+</div>
 </div>
 
-</div>
-
-<div id="outline-container-2-5-2" class="outline-4">
+<div id="outline-container-sec-2-5-2" class="outline-4">
 <h4 id="sec-2-5-2"><span class="section-number-4">2.5.2</span> Type parameters</h4>
 <div class="outline-text-4" id="text-2-5-2">
-
-
-
-
+<div class="org-src-container">
 
 <pre class="src src-haskell"><span style="color: #8ac6f2; font-weight: bold;">data</span> <span style="color: #92a65e; font-weight: bold;">Maybe</span> a <span style="color: #cae682;">=</span> <span style="color: #92a65e; font-weight: bold;">Nothing</span> <span style="color: #cae682;">|</span> <span style="color: #92a65e; font-weight: bold;">Just</span> a
 
 <span style="color: #8ac6f2; font-weight: bold;">data</span> <span style="color: #92a65e; font-weight: bold;">Tree</span> a <span style="color: #cae682;">=</span> <span style="color: #92a65e; font-weight: bold;">EmptyTree</span> <span style="color: #cae682;">|</span> <span style="color: #92a65e; font-weight: bold;">Node</span> a (<span style="color: #92a65e; font-weight: bold;">Tree</span> a)
                           (<span style="color: #92a65e; font-weight: bold;">Tree</span> a)
-            <span style="color: #8ac6f2; font-weight: bold;">deriving</span> (<span style="color: #92a65e; font-weight: bold;">Show</span>, <span style="color: #92a65e; font-weight: bold;">Read</span>, <span style="color: #92a65e; font-weight: bold;">Eq</span>)
+            <span style="color: #8ac6f2; font-weight: bold;">deriving</span> (<span style="color: #92a65e; font-weight: bold;">Show</span><span style="color: #cae682;">,</span> <span style="color: #92a65e; font-weight: bold;">Read</span><span style="color: #cae682;">,</span> <span style="color: #92a65e; font-weight: bold;">Eq</span>)
 </pre>
-
-
+</div>
+</div>
 </div>
 </div>
 
-</div>
-
-<div id="outline-container-2-6" class="outline-3">
+<div id="outline-container-sec-2-6" class="outline-3">
 <h3 id="sec-2-6"><span class="section-number-3">2.6</span> Typeclasses</h3>
 <div class="outline-text-3" id="text-2-6">
-
-
-
-</div>
-
-<div id="outline-container-2-6-1" class="outline-4">
+</div><div id="outline-container-sec-2-6-1" class="outline-4">
 <h4 id="sec-2-6-1"><span class="section-number-4">2.6.1</span> Interfaces sort of</h4>
-<div class="outline-text-4" id="text-2-6-1">
-
 </div>
-
-</div>
-
-<div id="outline-container-2-6-2" class="outline-4">
+<div id="outline-container-sec-2-6-2" class="outline-4">
 <h4 id="sec-2-6-2"><span class="section-number-4">2.6.2</span> If it quacks like a duck, it's a duck</h4>
 <div class="outline-text-4" id="text-2-6-2">
-
-
-
-
+<div class="org-src-container">
 
 <pre class="src src-haskell"><span style="color: #8ac6f2; font-weight: bold;">class</span> <span style="color: #92a65e; font-weight: bold;">Eq</span> a <span style="color: #8ac6f2; font-weight: bold;">where</span>
     (<span style="color: #cae682;">==</span>) <span style="color: #cae682;">::</span> a <span style="color: #cae682;">-&gt;</span> a <span style="color: #cae682;">-&gt;</span> <span style="color: #92a65e; font-weight: bold;">Bool</span>
@@ -727,37 +598,22 @@ Prelude&gt; :t filter
     <span style="color: #92a65e; font-weight: bold;">Nothing</span> <span style="color: #cae682;">==</span> <span style="color: #92a65e; font-weight: bold;">Nothing</span> <span style="color: #cae682;">=</span> <span style="color: #92a65e; font-weight: bold;">True</span>
     <span style="color: #8ac6f2; font-weight: bold;">_</span> <span style="color: #cae682;">==</span> <span style="color: #8ac6f2; font-weight: bold;">_</span> <span style="color: #cae682;">=</span> <span style="color: #92a65e; font-weight: bold;">False</span>
 </pre>
-
-
+</div>
+</div>
 </div>
 </div>
 
-</div>
-
-<div id="outline-container-2-7" class="outline-3">
+<div id="outline-container-sec-2-7" class="outline-3">
 <h3 id="sec-2-7"><span class="section-number-3">2.7</span> I/O vs Purity</h3>
 <div class="outline-text-3" id="text-2-7">
-
-
-
-</div>
-
-<div id="outline-container-2-7-1" class="outline-4">
+</div><div id="outline-container-sec-2-7-1" class="outline-4">
 <h4 id="sec-2-7-1"><span class="section-number-4">2.7.1</span> The IO Monad</h4>
-<div class="outline-text-4" id="text-2-7-1">
-
-
 </div>
 
-</div>
-
-<div id="outline-container-2-7-2" class="outline-4">
+<div id="outline-container-sec-2-7-2" class="outline-4">
 <h4 id="sec-2-7-2"><span class="section-number-4">2.7.2</span> Reverse words</h4>
 <div class="outline-text-4" id="text-2-7-2">
-
-
-
-
+<div class="org-src-container">
 
 <pre class="src src-haskell"><span style="color: #cae682;">main</span> <span style="color: #cae682;">=</span> <span style="color: #8ac6f2; font-weight: bold;">do</span>
     line <span style="color: #cae682;">&lt;-</span> getLine
@@ -770,61 +626,36 @@ Prelude&gt; :t filter
 <span style="color: #cae682;">reverseWords</span> <span style="color: #cae682;">::</span> <span style="color: #92a65e; font-weight: bold;">String</span> <span style="color: #cae682;">-&gt;</span> <span style="color: #92a65e; font-weight: bold;">String</span>
 <span style="color: #cae682;">reverseWords</span> <span style="color: #cae682;">=</span> unwords <span style="color: #cae682;">.</span> map reverse <span style="color: #cae682;">.</span> words
 </pre>
-
-
+</div>
+</div>
 </div>
 
-</div>
-
-<div id="outline-container-2-7-3" class="outline-4">
+<div id="outline-container-sec-2-7-3" class="outline-4">
 <h4 id="sec-2-7-3"><span class="section-number-4">2.7.3</span> Cool one-liner</h4>
 <div class="outline-text-4" id="text-2-7-3">
-
-
-
-
+<div class="org-src-container">
 
 <pre class="src src-haskell"><span style="color: #cae682;">main</span> <span style="color: #cae682;">=</span> interact <span style="color: #cae682;">$</span> unlines <span style="color: #cae682;">.</span>
        filter ((<span style="color: #cae682;">&gt;</span>200) <span style="color: #cae682;">.</span> length) <span style="color: #cae682;">.</span> lines
 </pre>
-
-
+</div>
+</div>
 </div>
 </div>
 
-</div>
-
-<div id="outline-container-2-8" class="outline-3">
+<div id="outline-container-sec-2-8" class="outline-3">
 <h3 id="sec-2-8"><span class="section-number-3">2.8</span> Functors</h3>
 <div class="outline-text-3" id="text-2-8">
-
-
-
-</div>
-
-<div id="outline-container-2-8-1" class="outline-4">
+</div><div id="outline-container-sec-2-8-1" class="outline-4">
 <h4 id="sec-2-8-1"><span class="section-number-4">2.8.1</span> Don't confuse with C++ ;-)</h4>
-<div class="outline-text-4" id="text-2-8-1">
-
 </div>
-
-</div>
-
-<div id="outline-container-2-8-2" class="outline-4">
+<div id="outline-container-sec-2-8-2" class="outline-4">
 <h4 id="sec-2-8-2"><span class="section-number-4">2.8.2</span> Iterable?</h4>
-<div class="outline-text-4" id="text-2-8-2">
-
 </div>
-
-</div>
-
-<div id="outline-container-2-8-3" class="outline-4">
+<div id="outline-container-sec-2-8-3" class="outline-4">
 <h4 id="sec-2-8-3"><span class="section-number-4">2.8.3</span> Lift ordinary function to operate on boxed value</h4>
 <div class="outline-text-4" id="text-2-8-3">
-
-
-
-
+<div class="org-src-container">
 
 <pre class="src src-haskell"><span style="color: #8ac6f2; font-weight: bold;">class</span> <span style="color: #92a65e; font-weight: bold;">Functor</span> f <span style="color: #8ac6f2; font-weight: bold;">where</span>
     fmap <span style="color: #cae682;">::</span> (a <span style="color: #cae682;">-&gt;</span> b) <span style="color: #cae682;">-&gt;</span> f a <span style="color: #cae682;">-&gt;</span> f b
@@ -836,36 +667,21 @@ Prelude&gt; :t filter
     fmap f (<span style="color: #92a65e; font-weight: bold;">Just</span> x) <span style="color: #cae682;">=</span> <span style="color: #92a65e; font-weight: bold;">Just</span> (f x)
     fmap f <span style="color: #92a65e; font-weight: bold;">Nothing</span> <span style="color: #cae682;">=</span> <span style="color: #92a65e; font-weight: bold;">Nothing</span>
 </pre>
-
-
+</div>
+</div>
 </div>
 </div>
 
-</div>
-
-<div id="outline-container-2-9" class="outline-3">
+<div id="outline-container-sec-2-9" class="outline-3">
 <h3 id="sec-2-9"><span class="section-number-3">2.9</span> Applicative</h3>
 <div class="outline-text-3" id="text-2-9">
-
-
-
-</div>
-
-<div id="outline-container-2-9-1" class="outline-4">
+</div><div id="outline-container-sec-2-9-1" class="outline-4">
 <h4 id="sec-2-9-1"><span class="section-number-4">2.9.1</span> Beefed up functors</h4>
-<div class="outline-text-4" id="text-2-9-1">
-
 </div>
-
-</div>
-
-<div id="outline-container-2-9-2" class="outline-4">
+<div id="outline-container-sec-2-9-2" class="outline-4">
 <h4 id="sec-2-9-2"><span class="section-number-4">2.9.2</span> Sequence of several boxed actions</h4>
 <div class="outline-text-4" id="text-2-9-2">
-
-
-
-
+<div class="org-src-container">
 
 <pre class="src src-haskell"><span style="color: #8ac6f2; font-weight: bold;">class</span> (<span style="color: #92a65e; font-weight: bold;">Functor</span> f) <span style="color: #cae682;">=&gt;</span> <span style="color: #92a65e; font-weight: bold;">Applicative</span> f <span style="color: #8ac6f2; font-weight: bold;">where</span>
     pure <span style="color: #cae682;">::</span> a <span style="color: #cae682;">-&gt;</span> f a
@@ -876,45 +692,25 @@ Prelude&gt; :t filter
     <span style="color: #92a65e; font-weight: bold;">Nothing</span> <span style="color: #cae682;">&lt;*&gt;</span> <span style="color: #8ac6f2; font-weight: bold;">_</span> <span style="color: #cae682;">=</span> <span style="color: #92a65e; font-weight: bold;">Nothing</span>
     (<span style="color: #92a65e; font-weight: bold;">Just</span> f) <span style="color: #cae682;">&lt;*&gt;</span> something <span style="color: #cae682;">=</span> fmap f something
 </pre>
-
-
+</div>
+</div>
 </div>
 
-</div>
-
-<div id="outline-container-2-9-3" class="outline-4">
+<div id="outline-container-sec-2-9-3" class="outline-4">
 <h4 id="sec-2-9-3"><span class="section-number-4">2.9.3</span> pure f &lt;*&gt; x &equiv; fmap f x</h4>
-<div class="outline-text-4" id="text-2-9-3">
-
-
 </div>
 </div>
 
-</div>
-
-<div id="outline-container-2-10" class="outline-3">
+<div id="outline-container-sec-2-10" class="outline-3">
 <h3 id="sec-2-10"><span class="section-number-3">2.10</span> Monoids</h3>
 <div class="outline-text-3" id="text-2-10">
-
-
-
-</div>
-
-<div id="outline-container-2-10-1" class="outline-4">
+</div><div id="outline-container-sec-2-10-1" class="outline-4">
 <h4 id="sec-2-10-1"><span class="section-number-4">2.10.1</span> Associative binary function + identity value</h4>
-<div class="outline-text-4" id="text-2-10-1">
-
 </div>
-
-</div>
-
-<div id="outline-container-2-10-2" class="outline-4">
+<div id="outline-container-sec-2-10-2" class="outline-4">
 <h4 id="sec-2-10-2"><span class="section-number-4">2.10.2</span> Accumulate a boxed value from several boxes</h4>
 <div class="outline-text-4" id="text-2-10-2">
-
-
-
-
+<div class="org-src-container">
 
 <pre class="src src-haskell"><span style="color: #8ac6f2; font-weight: bold;">class</span> <span style="color: #92a65e; font-weight: bold;">Monoid</span> m <span style="color: #8ac6f2; font-weight: bold;">where</span>
     mempty <span style="color: #cae682;">::</span> m
@@ -926,28 +722,18 @@ Prelude&gt; :t filter
     mempty <span style="color: #cae682;">=</span> <span style="color: #92a65e; font-weight: bold;">[]</span>
     mappend <span style="color: #cae682;">=</span> (<span style="color: #cae682;">++</span>)
 </pre>
-
-
+</div>
+</div>
 </div>
 </div>
 
-</div>
-
-<div id="outline-container-2-11" class="outline-3">
+<div id="outline-container-sec-2-11" class="outline-3">
 <h3 id="sec-2-11"><span class="section-number-3">2.11</span> Monads</h3>
 <div class="outline-text-3" id="text-2-11">
-
-
-
-</div>
-
-<div id="outline-container-2-11-1" class="outline-4">
+</div><div id="outline-container-sec-2-11-1" class="outline-4">
 <h4 id="sec-2-11-1"><span class="section-number-4">2.11.1</span> Beefed up applicatives</h4>
 <div class="outline-text-4" id="text-2-11-1">
-
-
-
-
+<div class="org-src-container">
 
 <pre class="src src-haskell"><span style="color: #8ac6f2; font-weight: bold;">class</span> <span style="color: #92a65e; font-weight: bold;">Monad</span> m <span style="color: #8ac6f2; font-weight: bold;">where</span>
     return <span style="color: #cae682;">::</span> a <span style="color: #cae682;">-&gt;</span> m a
@@ -965,222 +751,105 @@ Prelude&gt; :t filter
     <span style="color: #92a65e; font-weight: bold;">Just</span> x <span style="color: #cae682;">&gt;&gt;=</span> f  <span style="color: #cae682;">=</span> f x
     fail <span style="color: #8ac6f2; font-weight: bold;">_</span> <span style="color: #cae682;">=</span> <span style="color: #92a65e; font-weight: bold;">Nothing</span>
 </pre>
-
-
 </div>
 </div>
 </div>
-
+</div>
 </div>
 
-<div id="outline-container-3" class="outline-2">
+<div id="outline-container-sec-3" class="outline-2">
 <h2 id="sec-3"><span class="section-number-2">3</span> Pros and cons</h2>
 <div class="outline-text-2" id="text-3">
-
-
-
-</div>
-
-<div id="outline-container-3-1" class="outline-3">
+</div><div id="outline-container-sec-3-1" class="outline-3">
 <h3 id="sec-3-1"><span class="section-number-3">3.1</span> Benefits</h3>
 <div class="outline-text-3" id="text-3-1">
-
-
-
-</div>
-
-<div id="outline-container-3-1-1" class="outline-4">
+</div><div id="outline-container-sec-3-1-1" class="outline-4">
 <h4 id="sec-3-1-1"><span class="section-number-4">3.1.1</span> The pervasive type system gives a lot of information to the compiler</h4>
 <div class="outline-text-4" id="text-3-1-1">
-
-<ul>
-<li id="sec-3-1-1-1">many types (pun intended) of bugs are prevented at compile time<br/>
+</div><ol class="org-ol"><li><a id="sec-3-1-1-1" name="sec-3-1-1-1"></a>many types (pun intended) of bugs are prevented at compile time<br  /></li>
+<li><a id="sec-3-1-1-2" name="sec-3-1-1-2"></a>much room for automatic optimizations<br  /><ol class="org-ol"><li><a id="sec-3-1-1-2-1" name="sec-3-1-1-2-1"></a>Data Parallel Haskell<br  /></li></ol>
 </li>
-</ul>
-<ul>
-<li id="sec-3-1-1-2">much room for automatic optimizations<br/>
-<ul>
-<li id="sec-3-1-1-2-1">Data Parallel Haskell<br/>
-</li>
-</ul>
-</li>
-</ul>
-<ul>
-<li id="sec-3-1-1-3">secure and formally verifiable programs<br/>
-
-</li>
-</ul>
+<li><a id="sec-3-1-1-3" name="sec-3-1-1-3"></a>secure and formally verifiable programs<br  /></li></ol>
 </div>
 
-</div>
-
-<div id="outline-container-3-1-2" class="outline-4">
+<div id="outline-container-sec-3-1-2" class="outline-4">
 <h4 id="sec-3-1-2"><span class="section-number-4">3.1.2</span> Side effects are not the norm and are explicitly specified and controlled</h4>
 <div class="outline-text-4" id="text-3-1-2">
-
-<ul>
-<li id="sec-3-1-2-1">easier to reason about<br/>
-</li>
-</ul>
-<ul>
-<li id="sec-3-1-2-2">better concurrency state<br/>
-<ul>
-<li id="sec-3-1-2-2-1">how many languages have a <span style="text-decoration:underline;">working</span> STM implementation?<br/>
-
-</li>
-</ul>
-</li>
-</ul>
+</div><ol class="org-ol"><li><a id="sec-3-1-2-1" name="sec-3-1-2-1"></a>easier to reason about<br  /></li>
+<li><a id="sec-3-1-2-2" name="sec-3-1-2-2"></a>better concurrency state<br  /><ol class="org-ol"><li><a id="sec-3-1-2-2-1" name="sec-3-1-2-2-1"></a>how many languages have a <span class="underline">working</span> STM implementation?<br  /></li></ol>
+</li></ol>
 </div>
 </div>
 
-</div>
-
-<div id="outline-container-3-2" class="outline-3">
+<div id="outline-container-sec-3-2" class="outline-3">
 <h3 id="sec-3-2"><span class="section-number-3">3.2</span> Problems</h3>
 <div class="outline-text-3" id="text-3-2">
-
-
-
-</div>
-
-<div id="outline-container-3-2-1" class="outline-4">
+</div><div id="outline-container-sec-3-2-1" class="outline-4">
 <h4 id="sec-3-2-1"><span class="section-number-4">3.2.1</span> There are cases where static typing may not be natural</h4>
-<div class="outline-text-4" id="text-3-2-1">
-
 </div>
-
-</div>
-
-<div id="outline-container-3-2-2" class="outline-4">
+<div id="outline-container-sec-3-2-2" class="outline-4">
 <h4 id="sec-3-2-2"><span class="section-number-4">3.2.2</span> For huge systems, you may paint yourself in the corner if having somehow wrong base</h4>
-<div class="outline-text-4" id="text-3-2-2">
-
 </div>
-
-</div>
-
-<div id="outline-container-3-2-3" class="outline-4">
+<div id="outline-container-sec-3-2-3" class="outline-4">
 <h4 id="sec-3-2-3"><span class="section-number-4">3.2.3</span> Laziness makes order of evaluation non-obvious</h4>
 <div class="outline-text-4" id="text-3-2-3">
-
-<ul>
-<li id="sec-3-2-3-1">trouble with performance bottlenecks identification<br/>
-</li>
-</ul>
-<ul>
-<li id="sec-3-2-3-2">memory spikes<br/>
-
-</li>
-</ul>
+</div><ol class="org-ol"><li><a id="sec-3-2-3-1" name="sec-3-2-3-1"></a>trouble with performance bottlenecks identification<br  /></li>
+<li><a id="sec-3-2-3-2" name="sec-3-2-3-2"></a>memory spikes<br  /></li></ol>
 </div>
 </div>
 </div>
 
-</div>
-
-<div id="outline-container-4" class="outline-2">
+<div id="outline-container-sec-4" class="outline-2">
 <h2 id="sec-4"><span class="section-number-2">4</span> Resources</h2>
 <div class="outline-text-2" id="text-4">
-
-
-
-</div>
-
-<div id="outline-container-4-1" class="outline-3">
+</div><div id="outline-container-sec-4-1" class="outline-3">
 <h3 id="sec-4-1"><span class="section-number-3">4.1</span> Links &amp; books</h3>
 <div class="outline-text-3" id="text-4-1">
-
-
-
-</div>
-
-<div id="outline-container-4-1-1" class="outline-4">
+</div><div id="outline-container-sec-4-1-1" class="outline-4">
 <h4 id="sec-4-1-1"><span class="section-number-4">4.1.1</span> <a href="http://haskell.org">Official site</a></h4>
-<div class="outline-text-4" id="text-4-1-1">
-
 </div>
-
-</div>
-
-<div id="outline-container-4-1-2" class="outline-4">
+<div id="outline-container-sec-4-1-2" class="outline-4">
 <h4 id="sec-4-1-2"><span class="section-number-4">4.1.2</span> <a href="http://learnyouahaskell.com">Learn You a Haskell for Great Good!</a></h4>
-<div class="outline-text-4" id="text-4-1-2">
-
 </div>
-
-</div>
-
-<div id="outline-container-4-1-3" class="outline-4">
+<div id="outline-container-sec-4-1-3" class="outline-4">
 <h4 id="sec-4-1-3"><span class="section-number-4">4.1.3</span> <a href="http://stefan-klinger.de/files/monadGuide.pdf">The Haskell Programmer's Guide to the IO Monad - Don't Panic.</a></h4>
-<div class="outline-text-4" id="text-4-1-3">
-
 </div>
-
-</div>
-
-<div id="outline-container-4-1-4" class="outline-4">
+<div id="outline-container-sec-4-1-4" class="outline-4">
 <h4 id="sec-4-1-4"><span class="section-number-4">4.1.4</span> <a href="http://book.realworldhaskell.org">Real World Haskell</a></h4>
-<div class="outline-text-4" id="text-4-1-4">
-
 </div>
-
-</div>
-
-<div id="outline-container-4-1-5" class="outline-4">
+<div id="outline-container-sec-4-1-5" class="outline-4">
 <h4 id="sec-4-1-5"><span class="section-number-4">4.1.5</span> <a href="http://haskell.org/haskellwiki/Tutorials">Great list of tutorials</a></h4>
-<div class="outline-text-4" id="text-4-1-5">
-
 </div>
-
-</div>
-
-<div id="outline-container-4-1-6" class="outline-4">
+<div id="outline-container-sec-4-1-6" class="outline-4">
 <h4 id="sec-4-1-6"><span class="section-number-4">4.1.6</span> <a href="http://channel9.msdn.com/Blogs/Charles/YOW-2011-Simon-Peyton-Jones-Closer-to-Nirvana">Recent interview with Simon Peyton-Jones</a></h4>
-<div class="outline-text-4" id="text-4-1-6">
-
-
 </div>
 </div>
 </div>
 
-</div>
-
-<div id="outline-container-5" class="outline-2">
+<div id="outline-container-sec-5" class="outline-2">
 <h2 id="sec-5"><span class="section-number-2">5</span> Fun</h2>
 <div class="outline-text-2" id="text-5">
-
-
-
-</div>
-
-<div id="outline-container-5-1" class="outline-3">
+</div><div id="outline-container-sec-5-1" class="outline-3">
 <h3 id="sec-5-1"><span class="section-number-3">5.1</span> Why so serious?</h3>
 <div class="outline-text-3" id="text-5-1">
 
-
-<p>
-<img src="./newline.jpg"  alt="./newline.jpg" />
+<div class="figure">
+<p><img src="./newline.jpg" alt="newline.jpg" />
 </p>
-
+</div>
 </div>
 
-<div id="outline-container-5-1-1" class="outline-4">
+<div id="outline-container-sec-5-1-1" class="outline-4">
 <h4 id="sec-5-1-1"><span class="section-number-4">5.1.1</span> <a href="http://www.willamette.edu/~fruehr/haskell/evolution.html">The Evolution of a Haskell Programmer</a></h4>
-<div class="outline-text-4" id="text-5-1-1">
-
 </div>
 </div>
 </div>
 </div>
-</div>
-
-<div id="postamble">
-<p class="date">Date: 2013-03-25T01:07+0200</p>
+<div id="postamble" class="status">
 <p class="author">Author: Andrey Kotlarski</p>
-<p class="creator"><a href="http://orgmode.org">Org</a> version 7.9.3f with <a href="http://www.gnu.org/software/emacs/">Emacs</a> version 24</p>
-<a href="http://validator.w3.org/check?uri=referer">Validate XHTML 1.0</a>
-
+<p class="date">Created: 2015-08-30 нд 17:28</p>
+<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.5.1 (<a href="http://orgmode.org">Org</a> mode 8.2.10)</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
 </html>
