@@ -1,0 +1,6 @@
+@startuml
+
+(Runtime query) --> (Macro transformation\ngenerates specialized code)
+(Macro transformation\ngenerates specialized code) --> (Compile and run)
+
+@enduml

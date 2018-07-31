@@ -11,7 +11,9 @@
 colleagues but being general and self-contained thus applicable to
 broader public.
 
-* Presentations
+* Articles and presentations
+
+[[./lisp-manual-jit.org][Uniform Structured Syntax, Meta Programming and Runtime Compilation]]
 
 Introductions done for my coworkers.
 
