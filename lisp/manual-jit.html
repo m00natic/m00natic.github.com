@@ -3,15 +3,15 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-08-01 ср 03:53 -->
+<!-- 2018-08-02 чт 18:32 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Uniform Structured Syntax, Meta Programming and Runtime Compilation</title>
+<title>Uniform Structured Syntax, Metaprogramming and Runtime Compilation</title>
 <meta name="generator" content="Org mode" />
 <meta name="author" content="Andrey Kotlarski" />
 <meta name="description" content="Real world example where uniform syntax enables unthinkable solution"
  />
-<meta name="keywords" content="meta-programming, syntax, lisp, compilation, optimization" />
+<meta name="keywords" content="metaprogramming, syntax, lisp, compilation, optimization" />
 <style type="text/css">
  <!--/*--><![CDATA[/*><!--*/
   .title  { text-align: center;
@@ -183,7 +183,7 @@
   .org-svg { width: 90%; }
   /*]]>*/-->
 </style>
-<link rel="stylesheet" type="text/css" href="css/worg-classic.css" />
+<link rel="stylesheet" type="text/css" href="../css/worg-classic.css" />
 <script type="text/javascript">
 /*
 @licstart  The following is the entire license notice for the
@@ -233,52 +233,54 @@ for the JavaScript code in this tag.
 </head>
 <body>
 <div id="org-div-home-and-up">
- <a accesskey="h" href="sitemap.html"> UP </a>
+ <a accesskey="h" href="../sitemap.html"> UP </a>
  |
- <a accesskey="H" href="index.html"> HOME </a>
+ <a accesskey="H" href="../index.html"> HOME </a>
 </div><div id="content">
-<h1 class="title">Uniform Structured Syntax, Meta Programming and Runtime Compilation</h1>
+<h1 class="title">Uniform Structured Syntax, Metaprogramming and Runtime Compilation</h1>
 <div id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org3be35d9">1. Intro</a></li>
-<li><a href="#orga67b786">2. The Problem</a></li>
-<li><a href="#orgf77d741">3. Approach I</a>
+<li><a href="#org65debb9">1. Intro</a></li>
+<li><a href="#org8012e01">2. The Problem</a></li>
+<li><a href="#org212ab02">3. Approach I</a>
 <ul>
-<li><a href="#org0940d89">3.1. WHERE tree</a></li>
-<li><a href="#org551a029">3.2. WHERE matcher</a></li>
+<li><a href="#org2e743b4">3.1. WHERE tree</a></li>
+<li><a href="#orga573539">3.2. WHERE matcher</a></li>
 </ul>
 </li>
-<li><a href="#orgbdfcb19">4. Approach II</a>
+<li><a href="#org1106f67">4. Approach II</a>
 <ul>
-<li><a href="#org75f9003">4.1. Prelude</a></li>
-<li><a href="#orgdd62685">4.2. Embedded domain specific languages</a></li>
-<li><a href="#orge71e178">4.3. WHERE tree</a></li>
+<li><a href="#org779e7ca">4.1. Prelude</a></li>
+<li><a href="#org9d21170">4.2. Embedded domain specific languages</a></li>
+<li><a href="#org3b04450">4.3. WHERE tree</a></li>
+<li><a href="#org92e47b7">4.4. Loop unrolling</a></li>
 </ul>
 </li>
-<li><a href="#org5cf63d7">5. Addendum</a>
+<li><a href="#orgfd2ad7a">5. Addendum</a>
 <ul>
-<li><a href="#org503883b">5.1. Manual JIT</a>
+<li><a href="#orga9c7025">5.1. Manual JIT</a>
 <ul>
-<li><a href="#org9011cdd">5.1.1. Eval?</a></li>
+<li><a href="#orgc03dfd8">5.1.1. Eval?</a></li>
 </ul>
 </li>
-<li><a href="#org71f35ef">5.2. Alternative syntax</a></li>
+<li><a href="#org1136d89">5.2. Image based development and deploy</a></li>
+<li><a href="#orge5d6cf6">5.3. Alternative syntax</a></li>
 </ul>
 </li>
-<li><a href="#org3562ff9">6. Further reading</a></li>
+<li><a href="#orgfb1fb18">6. Further reading</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org3be35d9" class="outline-2">
-<h2 id="org3be35d9"><span class="section-number-2">1</span> Intro</h2>
+<div id="outline-container-org65debb9" class="outline-2">
+<h2 id="org65debb9"><span class="section-number-2">1</span> Intro</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 Often times I hear the claim that (programming language) syntax
 doesn't matter or if it does, it's only to provide some subjective
-readability aestetics.  It's somewhat surprising to me how large
+readability aesthetics.  It's somewhat surprising to me how large
 majority of supposedly rational people like programmers/computer
 scientists would throw out objectivity with such confidence.  So let
 me provide a real world case where uniform syntax enables out of the
@@ -289,21 +291,21 @@ Watch out!
 </div>
 </div>
 
-<div id="outline-container-orga67b786" class="outline-2">
-<h2 id="orga67b786"><span class="section-number-2">2</span> The Problem</h2>
+<div id="outline-container-org8012e01" class="outline-2">
+<h2 id="org8012e01"><span class="section-number-2">2</span> The Problem</h2>
 <div class="outline-text-2" id="text-2">
 <p>
-Here's my situation: there are over 100 let's say plain text DBs, each
-one containing lines of different fixed-size fields format. Let's
+Here's our situation: there are over 100 let's say plain text DBs,
+each one containing lines of different fixed-size fields format. Let's
 assume lines within a single DB have same format.
 </p>
 
 <pre class="example">
-# part of the record S5 db
+# extract from the record S5 db
 S5EK OCSEK  00000000Z        151217999999CBF          X                                FLEX CONDITION                          0000000000000000                
 S5LH OC021  00000000F        160629999999IBG CY PE08  1CPETC                        201PET IN CABIN DOG                        0003444200000000                
 
-# part of the category 1 db
+# extract from the category 1 db
 3200100030530CNNX02110000000000000000396626 NRNTR                       
 3200100030531CPNX    0000000000000000396627 NRNTR                       
 3200100030622UNN   110000000000000000000000                             
@@ -312,7 +314,7 @@ S5LH OC021  00000000F        160629999999IBG CY PE08  1CPETC                    
 <p>
 So you can consider that each DB has a schema where each field is
 located at a fixed offset from the beginning of the line.  We have to
-provide (subset of) <a href="https://en.wikipedia.org/wiki/Sql">SQL</a>-like operations over them<sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup>, for example:
+provide subset of <a href="https://en.wikipedia.org/wiki/Sql">SQL</a>-like operations over them<sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup>, for example:
 </p>
 
 <div class="org-src-container">
@@ -355,21 +357,21 @@ expression matching, either with constant string or other field.
 </div>
 </div>
 
-<div id="outline-container-orgf77d741" class="outline-2">
-<h2 id="orgf77d741"><span class="section-number-2">3</span> Approach I</h2>
+<div id="outline-container-org212ab02" class="outline-2">
+<h2 id="org212ab02"><span class="section-number-2">3</span> Approach I</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 So how do we go about it?  A straightforward way is to create a tree
-structure instance mirroring the where clause and a matcher would
+structure instance mirroring the WHERE clause and a matcher would
 traverse this tree for each line to see if the clause is satisfied.
 </p>
 </div>
 
-<div id="outline-container-org0940d89" class="outline-3">
-<h3 id="org0940d89"><span class="section-number-3">3.1</span> WHERE tree</h3>
+<div id="outline-container-org2e743b4" class="outline-3">
+<h3 id="org2e743b4"><span class="section-number-3">3.1</span> WHERE tree</h3>
 <div class="outline-text-3" id="text-3-1">
 <p>
-Can look something like:
+Let's assume the WHERE part gets parsed to something like:
 </p>
 
 <div class="org-src-container">
@@ -389,8 +391,8 @@ Can look something like:
 </div>
 </div>
 
-<div id="outline-container-org551a029" class="outline-3">
-<h3 id="org551a029"><span class="section-number-3">3.2</span> WHERE matcher</h3>
+<div id="outline-container-orga573539" class="outline-3">
+<h3 id="orga573539"><span class="section-number-3">3.2</span> WHERE matcher</h3>
 <div class="outline-text-3" id="text-3-2">
 <p>
 Traverses the WHERE tree in <a href="https://en.wikipedia.org/wiki/Depth-first">depth first</a> order and performs
@@ -447,7 +449,7 @@ regex matching, something.  Easy-peasy!
 
 <p>
 If there's one problem with the above, it would probably be that
-<b>match</b> is recursive (and not in good <a href="https://en.wikipedia.org/wiki/Tail_recursion">tail-recursive</a> way) and the
+<b>match</b> is recursive (and not in good <a href="https://en.wikipedia.org/wiki/Tail_recursion">tail-recursive</a> way) so the
 compiler wouldn't be that jubilant.  There probably is a way to
 linearize the WHERE tree but I'm a little concerned to think out in
 depth how to conserve the short-circuiting without backtracking and
@@ -457,12 +459,12 @@ getting a headache.
 </div>
 </div>
 
-<div id="outline-container-orgbdfcb19" class="outline-2">
-<h2 id="orgbdfcb19"><span class="section-number-2">4</span> Approach II</h2>
+<div id="outline-container-org1106f67" class="outline-2">
+<h2 id="org1106f67"><span class="section-number-2">4</span> Approach II</h2>
 <div class="outline-text-2" id="text-4">
 </div>
-<div id="outline-container-org75f9003" class="outline-3">
-<h3 id="org75f9003"><span class="section-number-3">4.1</span> Prelude</h3>
+<div id="outline-container-org779e7ca" class="outline-3">
+<h3 id="org779e7ca"><span class="section-number-3">4.1</span> Prelude</h3>
 <div class="outline-text-3" id="text-4-1">
 <p>
 I actually didn't consider <b>Approach I</b> at all until much later, and
@@ -521,8 +523,8 @@ time of course!  Only if we had such superpower.
 </div>
 </div>
 
-<div id="outline-container-orgdd62685" class="outline-3">
-<h3 id="orgdd62685"><span class="section-number-3">4.2</span> Embedded domain specific languages</h3>
+<div id="outline-container-org9d21170" class="outline-3">
+<h3 id="org9d21170"><span class="section-number-3">4.2</span> Embedded domain specific languages</h3>
 <div class="outline-text-3" id="text-4-2">
 <p>
 By the way did you notice how ugly I've made the one-off thing look?
@@ -555,18 +557,17 @@ supposed to be humane syntax.
 
 <p>
 So <b>select</b> can be a <a href="http://www.gigamonkeys.com/book/macros-defining-your-own.html">macro</a> which expands to procedure that maps over
-the given DB, compiles and then calls it.  Depending on the compiler,
-the explicit compilation step may be unnecessary.  Here's skeleton
-implementation:
+the given DB, compiles and then calls it.
 </p>
 
 <div class="org-src-container">
 <pre class="src src-lisp">(<span style="color: #8ac6f2; font-weight: bold;">defmacro</span> <span style="color: #cae682;">select</span> (field-list db <span style="color: #92a65e; font-weight: bold;">&amp;key</span> where)
-  <span style="color: #95e454;">"Generate selection procedure, compile and run it."</span>
+  <span style="color: #95e454;">"Generate selection procedure and run it."</span>
   (<span style="color: #8ac6f2; font-weight: bold;">let</span> ((spec (get-spec db)))  <span style="color: #99968b;">;pull out the specification for this db</span>
-    `(funcall (compile nil (<span style="color: #8ac6f2; font-weight: bold;">lambda</span> () (<span style="color: #8ac6f2; font-weight: bold;">declare</span> (optimize (speed 3) (debug 0) (safety 1)))
-                             (do-lines (line ,db) <span style="color: #99968b;">;bind line to db entries</span>
-                               (<span style="color: #8ac6f2; font-weight: bold;">when</span> ,(or (build-where 'line where spec) t)
+    `(funcall (compile nil (<span style="color: #8ac6f2; font-weight: bold;">lambda</span> ()
+                             (<span style="color: #8ac6f2; font-weight: bold;">declare</span> (optimize (speed 3) (debug 0) (safety 1)))
+                             (<span style="color: #8ac6f2; font-weight: bold;">do-lines</span> (line ,db) <span style="color: #99968b;">;bind line to db entries</span>
+                               (<span style="color: #8ac6f2; font-weight: bold;">when</span> ,(or (build-where where 'line spec) t)
                                  <span style="color: #99968b;">;; </span><span style="color: #99968b;">if where is empty, condition is considered satisfied</span>
                                  (gen-print-selection ,field-list line ,spec))))))))
 </pre>
@@ -579,8 +580,8 @@ entries.
 </div>
 </div>
 
-<div id="outline-container-orge71e178" class="outline-3">
-<h3 id="orge71e178"><span class="section-number-3">4.3</span> WHERE tree</h3>
+<div id="outline-container-org3b04450" class="outline-3">
+<h3 id="org3b04450"><span class="section-number-3">4.3</span> WHERE tree</h3>
 <div class="outline-text-3" id="text-4-3">
 <p>
 Let's look at the WHERE transformation.  We can mirror the query tree
@@ -589,13 +590,13 @@ and replace necessary parts with "real" code:
 
 <div class="org-src-container">
 <pre class="src src-lisp">(<span style="color: #8ac6f2; font-weight: bold;">defun</span> <span style="color: #cae682;">build-where</span> (where line-var spec)
-  <span style="color: #95e454;">"Create mirror tree for WHERE.</span>
+  <span style="color: #95e454;">"Create actual boolean tree for WHERE.</span>
 <span style="color: #95e454;">LINE-VAR is symbol representing the current line variable.</span>
 <span style="color: #95e454;">SPEC contains fields' offset and size information."</span>
   (<span style="color: #8ac6f2; font-weight: bold;">when</span> (consp where)
     (<span style="color: #8ac6f2; font-weight: bold;">let</span> ((op (first where)))
       (cons (<span style="color: #8ac6f2; font-weight: bold;">if</span> (member op '(and or not))
-                op
+                op                <span style="color: #99968b;">;the boolean operators stay the same</span>
                 (build-field-op op line-var spec))
             (build-where (rest where) line-var spec)))))
 </pre>
@@ -604,8 +605,18 @@ and replace necessary parts with "real" code:
 <p>
 Where <b>build-field-op</b> based on the field operation, fields and
 constants involved and given the specification for field offsets and
-sizes would generate appropriate code.  Here's how the macro expanded
-WHERE part of the code can look like:
+sizes would generate appropriate code.
+</p>
+
+<p>
+Amusingly this miniscule recursive <a href="https://en.wikipedia.org/wiki/Source-to-source_compiler">transpiler</a> corresponds to the
+recursive <a href="#orga573539">match</a> procedure in the <b>Approach I</b> C++ general solution.
+Only the former solves the problem partly at compile time while the
+latter is confined to roar only at runtime.
+</p>
+
+<p>
+Here's how the macro expanded WHERE part of the code can look like:
 </p>
 
 <div class="org-src-container">
@@ -627,17 +638,28 @@ WHERE part of the code can look like:
 
 <p>
 That's analogical to the C++ one-off version.  With such simple,
-straightforward code and a few declarations, the <a href="http://sbcl.org/">SBCL</a> compiler in
-particular would be able to match a C++ compiler for the native code
-generation even skipping array bound checks if one decides so.  In
-fact, in the same vein the <a href="https://edicl.github.io/cl-ppcre/">cl-ppcre</a> library goes a step further
-(than usual compiled languages) to build regex scanners for the
-literals at compile time thanks to (read time) compiler macro.
+straightforward code and a few declarations, the <a href="http://sbcl.org/">Steel Bank Common
+Lisp</a> compiler in particular would be able to match a C++ compiler for
+the native code generation even skipping array bound checks if one
+decides so.  In fact, in the same vein the <a href="https://edicl.github.io/cl-ppcre/">cl-ppcre</a> library goes a
+step further (than usual compiled languages) to build regex scanners
+for constant literals (as is the case in our expansion) at compile
+time thanks to a <b>compiler macro</b>.
 </p>
 
 <p>
+From such base, we can apply other transformations like
+result-preserving reorder of boolean expressions.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org92e47b7" class="outline-3">
+<h3 id="org92e47b7"><span class="section-number-3">4.4</span> Loop unrolling</h3>
+<div class="outline-text-3" id="text-4-4">
+<p>
 While the WHERE simplification is most substantial, other parts of the
-selection procedure can also enjoy improvement.  For example, under
+selection procedure can also enjoy improvement.  Concretely, under
 <b>Approach I</b> one has to introduce cycle over the selected fields to
 print them.  <b>Approach II</b> allows such loop to be unrolled during the
 macro expansion phase, for example:
@@ -662,29 +684,29 @@ This will expand to:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-lisp">(<span style="color: #8ac6f2; font-weight: bold;">progn</span>
-  (write-string line nil
+<pre class="src src-lisp">(<span style="color: #8ac6f2; font-weight: bold;">PROGN</span>
+  (WRITE-STRING LINE NIL
                 <span style="color: #e5786d;">:start</span> CXR-OFFSET
                 <span style="color: #e5786d;">:end</span> (+ CXR-OFFSET CXR-SIZE)) <span style="color: #99968b;">;these will actually be already summed numbers</span>
-  (write-string line nil
+  (WRITE-STRING LINE NIL
                 <span style="color: #e5786d;">:start</span> SUBCODE-OFFSET
                 <span style="color: #e5786d;">:end</span> (+ SUBCODE-OFFSET SUBCODE-SIZE)) <span style="color: #99968b;">;</span>
-  (write-string line nil
+  (WRITE-STRING LINE NIL
                 <span style="color: #e5786d;">:start</span> COMMERCIAL_NAME-OFFSET
                 <span style="color: #e5786d;">:end</span> (+ COMMERCIAL_NAME-OFFSET COMMERCIAL_NAME-SIZE)) <span style="color: #99968b;">;</span>
-  (format t <span style="color: #95e454;">"~%"</span>))
+  (FORMAT T <span style="color: #95e454;">"~%"</span>))
 </pre>
 </div>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org5cf63d7" class="outline-2">
-<h2 id="org5cf63d7"><span class="section-number-2">5</span> Addendum</h2>
+<div id="outline-container-orgfd2ad7a" class="outline-2">
+<h2 id="orgfd2ad7a"><span class="section-number-2">5</span> Addendum</h2>
 <div class="outline-text-2" id="text-5">
 </div>
-<div id="outline-container-org503883b" class="outline-3">
-<h3 id="org503883b"><span class="section-number-3">5.1</span> Manual JIT</h3>
+<div id="outline-container-orga9c7025" class="outline-3">
+<h3 id="orga9c7025"><span class="section-number-3">5.1</span> Manual JIT</h3>
 <div class="outline-text-3" id="text-5-1">
 <p>
 Here's the essence of <b>Approach II</b>:
@@ -713,13 +735,13 @@ Common Lisp is especially suited with:
 <li>compiler can be evoked at runtime (the <b>compile</b> function)</li>
 <li>per function re/compilation over several dimensions and levels of optimization</li>
 <li>per function disassembly</li>
-<li>designed for (image based) system evolution, including <a href="http://www.gigamonkeys.com/book/object-reorientation-generic-functions.html">CLOS</a>, the
-object system</li>
+<li>designed for (image based) system evolution, including <a href="http://www.gigamonkeys.com/book/object-reorientation-generic-functions.html">CLOS</a><sup><a id="fnr.4" class="footref" href="#fn.4">4</a></sup>,
+the object system</li>
 </ul>
 
 <p>
 Some CL implementations can leverage type declarations to rival static
-language <a href="https://en.wikipedia.org/wiki/Ahead-of-time_compilation">AOT</a> compilers<sup><a id="fnr.4" class="footref" href="#fn.4">4</a></sup>.  SBCL even provides hints where and why
+language <a href="https://en.wikipedia.org/wiki/Ahead-of-time_compilation">AOT</a> compilers<sup><a id="fnr.5" class="footref" href="#fn.5">5</a></sup>.  SBCL even provides hints where and why
 a micro optimization couldn't be applied to guide type declaration
 refinements:
 </p>
@@ -739,15 +761,15 @@ source.lisp:4:3:
 </pre>
 
 <p>
-Through meta-programming (where Lisps excel at) one can generate
+Through <a href="https://en.wikipedia.org/wiki/Metaprogramming">metaprogramming</a> (where Lisps excel at) one can generate
 practically static code for optimal performance.  The ability to see
 how a function's disassembly changes corresponding to code adjustments
 is also quite helpful and insightful.
 </p>
 </div>
 
-<div id="outline-container-org9011cdd" class="outline-4">
-<h4 id="org9011cdd"><span class="section-number-4">5.1.1</span> Eval?</h4>
+<div id="outline-container-orgc03dfd8" class="outline-4">
+<h4 id="orgc03dfd8"><span class="section-number-4">5.1.1</span> Eval?</h4>
 <div class="outline-text-4" id="text-5-1-1">
 <p>
 I can hear you say:
@@ -767,6 +789,8 @@ And you'd be right with these caveats:
 <ul class="org-ul">
 <li>string manipulation to cover random syntax is uncomfortable and
 error prone</li>
+<li>the possible alternative of building explicit internal <a href="https://en.wikipedia.org/wiki/Abstract_syntax_tree">AST</a> objects
+is more acceptable but still clunky and half-assed</li>
 <li>it's still interpretation, not compilation (maybe some JavaScript
 compiler is exception?)</li>
 </ul>
@@ -781,31 +805,61 @@ implement, it feels like cheating.
 </div>
 </div>
 
-<div id="outline-container-org71f35ef" class="outline-3">
-<h3 id="org71f35ef"><span class="section-number-3">5.2</span> Alternative syntax</h3>
+<div id="outline-container-org1136d89" class="outline-3">
+<h3 id="org1136d89"><span class="section-number-3">5.2</span> Image based development and deploy</h3>
 <div class="outline-text-3" id="text-5-2">
 <p>
-One may object that all falls into pieces only if we limit the users
-to <a href="https://en.wikipedia.org/wiki/S-expressions">S-expression</a> DSL.  What if forced to literary provide SQL syntax?
-Common Lisp in particular has programmable reader (through reader
-macros) which allows performing read time transformation of more funky
-syntax to good ole S-expressions and keep the same approach.
+Think Lisp tricks end here?  Common Lisp like <a href="https://en.wikipedia.org/wiki/Smalltalk">Smalltalk</a> is not just a
+compiler but an image environment.  The image initially contains just
+the core language and is gradually extended and changed by the
+programmer during development.  Be it by loading libraries,
+re/defining functions, constants, re/setting global variables etc.
+</p>
+
+<p>
+How would one produce user facing executable?  Dump the image<sup><a id="fnr.6" class="footref" href="#fn.6">6</a></sup>.
+This opens opportunity to also embed data within the image before
+dumping which would otherwise have to be loaded, parsed, pre/processed
+during execution.
+</p>
+
+<p>
+For our little query engine such data are the configuration
+specifications for the multiple DBs.  These rarely change and makes
+sense to be parsed down to particular structure instances and put into
+a global hash table for example before dump thus being available and
+ready to use immediately on (user) image execution.  This would
+improve executable's latency for queries.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orge5d6cf6" class="outline-3">
+<h3 id="orge5d6cf6"><span class="section-number-3">5.3</span> Alternative syntax</h3>
+<div class="outline-text-3" id="text-5-3">
+<p>
+One may object that all falls into pieces only if we limit users to
+<a href="https://en.wikipedia.org/wiki/S-expressions">S-expression</a> DSLs.  What if forced to literary provide SQL syntax?
+Common Lisp in particular has programmable reader (through <b>reader
+macros</b>) which allows performing read time transformation (before
+"regular" macro expansion time) of more funky syntax to good ole
+S-expressions.  Doing this would allow us keep the same approach.
 </p>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org3562ff9" class="outline-2">
-<h2 id="org3562ff9"><span class="section-number-2">6</span> Further reading</h2>
+<div id="outline-container-orgfb1fb18" class="outline-2">
+<h2 id="orgfb1fb18"><span class="section-number-2">6</span> Further reading</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 Looking at conference materials, lispers (at least the Common breed)
-at times take advantage of such techniques<sup><a id="fnr.5" class="footref" href="#fn.5">5</a></sup> for difficult
+at times take advantage of such techniques<sup><a id="fnr.7" class="footref" href="#fn.7">7</a></sup> for difficult
 problems but seem troubled to gain attention of the outside world.
 </p>
 
 <p>
-I've been rooting for the <a href="https://medium.com/@MartinCracauer/a-gentle-introduction-to-compile-time-computing-part-1-d4d96099cea0">Gentle Introduction to Compile-Time
+I've been cheering for the <a href="https://medium.com/@MartinCracauer/a-gentle-introduction-to-compile-time-computing-part-1-d4d96099cea0">Gentle Introduction to Compile-Time
 Computing</a> series to really launch for deeper descend into the matter
 but even the outline can suggest what sort of magic is possible.
 </p>
@@ -837,14 +891,24 @@ for implementations to perform optimizations are present.
 </p></div></div>
 
 <div class="footdef"><sup><a id="fn.3" class="footnum" href="#fnr.3">3</a></sup> <div class="footpara"><p class="footpara">
-i.e. Scheme, Racket, Clojure
+Clojure at least, incremental compilation for Scheme is wholly
+dependent on the implementation.
 </p></div></div>
 
 <div class="footdef"><sup><a id="fn.4" class="footnum" href="#fnr.4">4</a></sup> <div class="footpara"><p class="footpara">
-<a href="https://benchmarksgame-team.pages.debian.net/benchmarksgame/which-programs-are-fast.html">https://benchmarksgame-team.pages.debian.net/benchmarksgame/which-programs-are-fast.html</a>
+See the <a href="http://www.lispworks.com/documentation/HyperSpec/Body/04_cf.htm">Redefining Classes</a> machinery in the Common Lisp HyperSpec.
 </p></div></div>
 
 <div class="footdef"><sup><a id="fn.5" class="footnum" href="#fnr.5">5</a></sup> <div class="footpara"><p class="footpara">
+<a href="https://benchmarksgame-team.pages.debian.net/benchmarksgame/which-programs-are-fast.html">https://benchmarksgame-team.pages.debian.net/benchmarksgame/which-programs-are-fast.html</a>
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.6" class="footnum" href="#fnr.6">6</a></sup> <div class="footpara"><p class="footpara">
+Among other things the <a href="https://gitlab.common-lisp.net/asdf/asdf/tree/master/uiop">uiop</a> library provides portable wrapper
+to dump images for various implementations.
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.7" class="footnum" href="#fnr.7">7</a></sup> <div class="footpara"><p class="footpara">
 Like <a href="https://european-lisp-symposium.org/static/2018/heisig.pdf">Petalisp - A Common Lisp Library for Data Parallel Programming</a>
 </p></div></div>
 
@@ -853,8 +917,8 @@ Like <a href="https://european-lisp-symposium.org/static/2018/heisig.pdf">Petali
 </div></div>
 <div id="postamble" class="status">
 <p class="author">Author: Andrey Kotlarski</p>
-<p class="date">Created: 2018-08-01 ср 03:53</p>
-<p class="creator"><a href="https://www.gnu.org/software/emacs/">Emacs</a> 26.1 (<a href="https://orgmode.org">Org</a> mode 9.1.9)</p>
+<p class="date">Created: 2018-08-02 чт 18:32</p>
+<p class="creator"><a href="https://www.gnu.org/software/emacs/">Emacs</a> 27.0.50 (<a href="https://orgmode.org">Org</a> mode 9.1.9)</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

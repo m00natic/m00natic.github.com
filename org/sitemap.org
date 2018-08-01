@@ -3,11 +3,12 @@
 - [[file:index.org][Home]]
 - [[file:my-pc.org][If you happen to sit on my computer...]]
 - [[file:todo.org][TODO]]
-- [[file:lisp-manual-jit.org][Uniform Structured Syntax, Meta Programming and Runtime Compilation]]
 - emacs
   - [[file:emacs/emacs-wiki.org][Andrey's Opinionated Emacs Guide]]
   - [[file:emacs/why-emacs.org][Why Emacs?]]
   - [[file:emacs/emacs-intro-bg.org][Въведение в Емакс]]
+- lisp
+  - [[file:lisp/manual-jit.org][Uniform Structured Syntax, Meta Programming and Runtime Compilation]]
 - presentations
   - [[file:presentations/git.org][Git vs Subversion]]
   - [[file:presentations/haskell.org][Haskell (pure and lazy, yet functional)]]

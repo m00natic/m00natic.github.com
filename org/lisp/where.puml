@@ -1,0 +1,32 @@
+@startuml
+digraph where {
+  node [style=rounded, fillcolor="#EEE8AA", style="filled", fontsize=10]
+
+  and1 [label="AND"]
+  op1 [shape=box, label="cxr LIKE 'LH|EK'"]
+  OR
+  op2 [shape=box, label="date_disc < '180620'"]
+  op3 [shape=box, label="date_eff < date_disc"]
+  and2 [label="AND"]
+  and3 [label="AND"]
+  op4 [shape=box, label="commercial_name LIKE 'PET'"]
+  op5 [shape=box, label="type='C"]
+  op6 [shape=box, label="type='F"]
+  op7 [shape=box, label="commercial_name='MEAL'"]
+
+  and1 -> op1
+  and1 -> OR
+  and1 -> op2
+  and1 -> op3
+
+  OR -> and2
+  OR -> and3
+
+  and2 -> op4
+  and2 -> op5
+
+  and3 -> op6
+  and3 -> op7
+}
+
+@enduml

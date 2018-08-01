@@ -13,9 +13,9 @@ broader public.
 
 * Articles and presentations
 
-[[./lisp-manual-jit.org][Uniform Structured Syntax, Meta Programming and Runtime Compilation]]
+[[./lisp/manual-jit.org][Uniform Structured Syntax, Metaprogramming and Runtime Compilation]]
 
-Introductions done for my coworkers.
+Introductions done for my coworkers:
 
 [[./presentations/lisp.pdf][Lisp]]
 
