@@ -3,10 +3,10 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-08-02 чт 18:32 -->
+<!-- 2018-08-09 чт 14:02 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Uniform Structured Syntax, Metaprogramming and Runtime Compilation</title>
+<title>Uniform Structured Syntax, Metaprogramming and Run-time Compilation</title>
 <meta name="generator" content="Org mode" />
 <meta name="author" content="Andrey Kotlarski" />
 <meta name="description" content="Real world example where uniform syntax enables unthinkable solution"
@@ -237,7 +237,7 @@ for the JavaScript code in this tag.
  |
  <a accesskey="H" href="../index.html"> HOME </a>
 </div><div id="content">
-<h1 class="title">Uniform Structured Syntax, Metaprogramming and Runtime Compilation</h1>
+<h1 class="title">Uniform Structured Syntax, Metaprogramming and Run-time Compilation</h1>
 <div id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
@@ -246,7 +246,7 @@ for the JavaScript code in this tag.
 <li><a href="#org8012e01">2. The Problem</a></li>
 <li><a href="#org212ab02">3. Approach I</a>
 <ul>
-<li><a href="#org2e743b4">3.1. WHERE tree</a></li>
+<li><a href="#org8b80c39">3.1. WHERE tree</a></li>
 <li><a href="#orga573539">3.2. WHERE matcher</a></li>
 </ul>
 </li>
@@ -254,8 +254,11 @@ for the JavaScript code in this tag.
 <ul>
 <li><a href="#org779e7ca">4.1. Prelude</a></li>
 <li><a href="#org9d21170">4.2. Embedded domain specific languages</a></li>
-<li><a href="#org3b04450">4.3. WHERE tree</a></li>
-<li><a href="#org92e47b7">4.4. Loop unrolling</a></li>
+<li><a href="#org7e35be4">4.3. Top level implementation</a></li>
+<li><a href="#org1d42e56">4.4. Abstracting iteration</a></li>
+<li><a href="#orgf1e05fe">4.5. WHERE tree</a></li>
+<li><a href="#org92e47b7">4.6. Loop unrolling</a></li>
+<li><a href="#org02a6db1">4.7. End result</a></li>
 </ul>
 </li>
 <li><a href="#orgfd2ad7a">5. Addendum</a>
@@ -265,8 +268,9 @@ for the JavaScript code in this tag.
 <li><a href="#orgc03dfd8">5.1.1. Eval?</a></li>
 </ul>
 </li>
-<li><a href="#org1136d89">5.2. Image based development and deploy</a></li>
-<li><a href="#orge5d6cf6">5.3. Alternative syntax</a></li>
+<li><a href="#orgbb5e268">5.2. Life stages of a program</a></li>
+<li><a href="#org1136d89">5.3. Image based development and deploy</a></li>
+<li><a href="#orge5d6cf6">5.4. Alternative syntax</a></li>
 </ul>
 </li>
 <li><a href="#orgfb1fb18">6. Further reading</a></li>
@@ -301,14 +305,14 @@ assume lines within a single DB have same format.
 </p>
 
 <pre class="example">
-# extract from the record S5 db
-S5EK OCSEK  00000000Z        151217999999CBF          X                                FLEX CONDITION                          0000000000000000                
-S5LH OC021  00000000F        160629999999IBG CY PE08  1CPETC                        201PET IN CABIN DOG                        0003444200000000                
+# excerpt from the record S5 db
+S5XXZSEK151217999999CBF        X        FLEX CONDITION  
+S5YYF021160629999999IBG CY PE081CPETC201PET IN CABIN DOG
 
-# extract from the category 1 db
-3200100030530CNNX02110000000000000000396626 NRNTR                       
-3200100030531CPNX    0000000000000000396627 NRNTR                       
-3200100030622UNN   110000000000000000000000                             
+# excerpt from the category 1 db
+00100030530CNNX0211396626 NRNTR
+00100030531CPNX    396627 NRNTR
+00100030622UNN   11000000      
 </pre>
 
 <p>
@@ -319,7 +323,7 @@ provide subset of <a href="https://en.wikipedia.org/wiki/Sql">SQL</a>-like opera
 
 <div class="org-src-container">
 <pre class="src src-sql"><span style="color: #8ac6f2; font-weight: bold;">SELECT</span> cxr,subcode,commercial_name <span style="color: #8ac6f2; font-weight: bold;">FROM</span> recordS5
-<span style="color: #8ac6f2; font-weight: bold;">WHERE</span> cxr <span style="color: #8ac6f2; font-weight: bold;">LIKE</span> <span style="color: #95e454;">'LH|EK'</span>
+<span style="color: #8ac6f2; font-weight: bold;">WHERE</span> cxr <span style="color: #8ac6f2; font-weight: bold;">LIKE</span> <span style="color: #95e454;">'YY|XX'</span>
       <span style="color: #8ac6f2; font-weight: bold;">AND</span> ((commercial_name <span style="color: #8ac6f2; font-weight: bold;">LIKE</span> <span style="color: #95e454;">'PET'</span> <span style="color: #8ac6f2; font-weight: bold;">AND</span> <span style="color: #8ac6f2; font-weight: bold;">type</span>=<span style="color: #95e454;">'C'</span>)
           <span style="color: #8ac6f2; font-weight: bold;">OR</span> (<span style="color: #8ac6f2; font-weight: bold;">type</span>=<span style="color: #95e454;">'F'</span> <span style="color: #8ac6f2; font-weight: bold;">AND</span> commercial_name=<span style="color: #95e454;">'MEAL'</span>))
       <span style="color: #8ac6f2; font-weight: bold;">AND</span> date_disc &lt; <span style="color: #95e454;">'180620'</span> <span style="color: #8ac6f2; font-weight: bold;">AND</span> date_eff &lt; date_disc
@@ -331,8 +335,8 @@ provide subset of <a href="https://en.wikipedia.org/wiki/Sql">SQL</a>-like opera
 </div>
 
 <p>
-(prompts if you guess the domain from these, also no, I've never been
-affiliated with the well known Lisp company in that sector)
+(cheers if you guess the domain from these, also no, I've never been
+affiliated with the well known lisp company in that sector)
 </p>
 
 <p>
@@ -362,13 +366,13 @@ expression matching, either with constant string or other field.
 <div class="outline-text-2" id="text-3">
 <p>
 So how do we go about it?  A straightforward way is to create a tree
-structure instance mirroring the WHERE clause and a matcher would
-traverse this tree for each line to see if the clause is satisfied.
+structure instance mirroring the WHERE clause and a matcher which
+would traverse it for each line to see if the clause is satisfied.
 </p>
 </div>
 
-<div id="outline-container-org2e743b4" class="outline-3">
-<h3 id="org2e743b4"><span class="section-number-3">3.1</span> WHERE tree</h3>
+<div id="outline-container-org8b80c39" class="outline-3">
+<h3 id="org8b80c39"><span class="section-number-3">3.1</span> WHERE tree</h3>
 <div class="outline-text-3" id="text-3-1">
 <p>
 Let's assume the WHERE part gets parsed to something like:
@@ -488,7 +492,7 @@ quick &amp; dirty, morally equivalent to:
 <div class="org-src-container">
 <pre class="src src-c++"><span style="color: #92a65e; font-weight: bold;">bool</span> <span style="color: #cae682;">match</span>(<span style="color: #8ac6f2; font-weight: bold;">const</span> <span style="color: #92a65e; font-weight: bold;">char</span> *<span style="color: #cae682;">dbLine</span>)
 {
-    <span style="color: #8ac6f2; font-weight: bold;">const</span> <span style="color: #e5786d;">std</span>::<span style="color: #92a65e; font-weight: bold;">regex</span> <span style="color: #cae682;">cxrRegex</span>(<span style="color: #95e454;">"LH|EK"</span>);
+    <span style="color: #8ac6f2; font-weight: bold;">const</span> <span style="color: #e5786d;">std</span>::<span style="color: #92a65e; font-weight: bold;">regex</span> <span style="color: #cae682;">cxrRegex</span>(<span style="color: #95e454;">"YY|XX"</span>);
     <span style="color: #8ac6f2; font-weight: bold;">const</span> <span style="color: #e5786d;">std</span>::<span style="color: #92a65e; font-weight: bold;">regex</span> <span style="color: #cae682;">commercialNameRegex</span>(<span style="color: #95e454;">"PET"</span>);
 
     <span style="color: #8ac6f2; font-weight: bold;">return</span> (<span style="color: #e5786d;">std</span>::regex_match(dbLine + CXR_OFFSET,
@@ -499,9 +503,9 @@ quick &amp; dirty, morally equivalent to:
                                   commercialNameRegex)
                  &amp;&amp; dbLine[TYPE_OFFSET] == <span style="color: #95e454;">'C'</span>)
                 || (dbLine[TYPE_OFFSET] == <span style="color: #95e454;">'F'</span>
-                    &amp;&amp; strncmp(<span style="color: #95e454;">"MEAL"</span>, dbLine + COMMERCIAL_NAME_OFFSET, <span style="color: #8ac6f2; font-weight: bold;">sizeof</span>(<span style="color: #95e454;">"MEAL"</span>) - 1) == 0))
-            &amp;&amp; strncmp(<span style="color: #95e454;">"180620"</span>, dbLine + DATE_DISC_OFFSET, DATE_DISC_SIZE) &lt; 0
-            &amp;&amp; strncmp(dbLine + DATE_EFF_OFFSET, dbLine + DATE_DISC_OFFSET, DATE_DISC_SIZE) &lt; 0);
+                    &amp;&amp; memcmp(<span style="color: #95e454;">"MEAL"</span>, dbLine + COMMERCIAL_NAME_OFFSET, <span style="color: #8ac6f2; font-weight: bold;">sizeof</span>(<span style="color: #95e454;">"MEAL"</span>) - 1) == 0))
+            &amp;&amp; memcmp(<span style="color: #95e454;">"180620"</span>, dbLine + DATE_DISC_OFFSET, DATE_DISC_SIZE) &lt; 0
+            &amp;&amp; memcmp(dbLine + DATE_EFF_OFFSET, dbLine + DATE_DISC_OFFSET, DATE_DISC_SIZE) &lt; 0);
 }
 </pre>
 </div>
@@ -528,9 +532,9 @@ time of course!  Only if we had such superpower.
 <div class="outline-text-3" id="text-4-2">
 <p>
 By the way did you notice how ugly I've made the one-off thing look?
-All those parenthesis, like some broken old Lisp!  We said we are
+All those parenthesis, like some broken old lisp!  We said we are
 interested only in "systems" languages but let's see how we'd approach
-this problem from Common Lisp's side<sup><a id="fnr.2" class="footref" href="#fn.2">2</a></sup>.
+this problem from <a href="http://lisp-lang.org/">Common Lisp</a>'s side<sup><a id="fnr.2" class="footref" href="#fn.2">2</a></sup>.
 </p>
 
 <p>
@@ -540,7 +544,7 @@ example like this:
 
 <div class="org-src-container">
 <pre class="src src-lisp">(select (cxr subcode commercial_name) recordS5
-        <span style="color: #e5786d;">:where</span> (and (like cxr <span style="color: #95e454;">"LH|EK"</span>)
+        <span style="color: #e5786d;">:where</span> (and (like cxr <span style="color: #95e454;">"YY|XX"</span>)
                     (or (and (like COMMERCIAL_NAME <span style="color: #95e454;">"PET"</span>)
                              (= type <span style="color: #95e454;">"C"</span>))
                         (and (= type <span style="color: #95e454;">"F"</span>)
@@ -552,44 +556,112 @@ example like this:
 
 <p>
 Don't know about you, but on my eyes this looks better than SQL's
-supposed to be humane syntax.
+supposed to be humane syntax.  A recurring theme in lisp eDSL
+programming is that one first chooses nice succinct <a href="https://en.wikipedia.org/wiki/S-expressions">S-expression</a>
+representation (leaving all parsing to the lisp <a href="http://www.lispworks.com/documentation/HyperSpec/Body/02_b.htm">reader</a>) and then is
+confident that will be able to transform it to whatever executable
+code is needed.  We can of course implement <b>Approach I</b> now.  But we
+can do better.  Much better!
 </p>
+</div>
+</div>
 
+<div id="outline-container-org7e35be4" class="outline-3">
+<h3 id="org7e35be4"><span class="section-number-3">4.3</span> Top level implementation</h3>
+<div class="outline-text-3" id="text-4-3">
 <p>
 So <b>select</b> can be a <a href="http://www.gigamonkeys.com/book/macros-defining-your-own.html">macro</a> which expands to procedure that maps over
-the given DB, compiles and then calls it.
+the given DB, compiles and then calls it.  Note that during its macro
+expansion, it will be observing a concrete query so it can check out
+the DB and its schema, what fields are selected, what is the exact
+WHERE clause.  Instead of solving the problem for <span class="underline">all</span> possible
+queries as <b>Approach I</b> <span class="underline">must</span>, we <span class="underline">can</span> instead solve it for this
+single case.  That's our time pausing mechanism.  So let's write a
+mini <a href="https://en.wikipedia.org/wiki/Optimizing_compiler">optimizing compiler</a> or something!
 </p>
 
 <div class="org-src-container">
 <pre class="src src-lisp">(<span style="color: #8ac6f2; font-weight: bold;">defmacro</span> <span style="color: #cae682;">select</span> (field-list db <span style="color: #92a65e; font-weight: bold;">&amp;key</span> where)
   <span style="color: #95e454;">"Generate selection procedure and run it."</span>
   (<span style="color: #8ac6f2; font-weight: bold;">let</span> ((spec (get-spec db)))  <span style="color: #99968b;">;pull out the specification for this db</span>
-    `(funcall (compile nil (<span style="color: #8ac6f2; font-weight: bold;">lambda</span> ()
-                             (<span style="color: #8ac6f2; font-weight: bold;">declare</span> (optimize (speed 3) (debug 0) (safety 1)))
-                             (<span style="color: #8ac6f2; font-weight: bold;">do-lines</span> (line ,db) <span style="color: #99968b;">;bind line to db entries</span>
-                               (<span style="color: #8ac6f2; font-weight: bold;">when</span> ,(or (build-where where 'line spec) t)
-                                 <span style="color: #99968b;">;; </span><span style="color: #99968b;">if where is empty, condition is considered satisfied</span>
-                                 (gen-print-selection ,field-list line ,spec))))))))
+    `(funcall (compile nil (<span style="color: #8ac6f2; font-weight: bold;">lambda</span> ()  <span style="color: #99968b;">;guarantee execution of a compiled object</span>
+                             (<span style="color: #8ac6f2; font-weight: bold;">declare</span> (optimize (speed 3) (debug 0) (safety 1) (space 0)))
+                             (<span style="color: #8ac6f2; font-weight: bold;">do-lines</span> (line ,spec) <span style="color: #99968b;">;bind line to db entries</span>
+                               <span style="color: #99968b;">;; </span><span style="color: #99968b;">particular DB line size is known at compile-time</span>
+                               (<span style="color: #8ac6f2; font-weight: bold;">locally</span> (<span style="color: #8ac6f2; font-weight: bold;">declare</span> (type (simple-string ,(line-size spec)) line))
+                                 <span style="color: #99968b;">;; </span><span style="color: #99968b;">if where is empty, condition is considered always satisfied</span>
+                                 (<span style="color: #8ac6f2; font-weight: bold;">when</span> ,(or (gen-where where 'line spec) t)
+                                   ,(gen-print-selection field-list 'line spec)))))))))
 </pre>
 </div>
 
 <p>
-Here <b>do-lines</b> would be a macro that abstracts iteration over DB
-entries.
+Here <a href="#org1d42e56">do-lines</a> would be a macro that abstracts iteration over DB
+entries.  <b>spec</b> is for example structure/object instance which holds
+information about specific DB - storage (file), entry size, field
+names with their offsets and sizes.  I won't spell it out, you can
+imagine what methods working over it would do.
+</p>
+
+<p>
+Result wise we can get away only with the body of the procedure
+enclosed by <b>do-lines</b> but depending on implementation, this might get
+executed in interpreter mode<sup><a id="fnr.3" class="footref" href="#fn.3">3</a></sup>.  However, in this case we want to
+explicitly ensure compilation happens.
+</p>
+
+<p>
+Since entry size for particular DB is fixed and known, we declare the
+<b>line</b> variable as appropriately sized string type.  This may help the
+compiler elide array bound checks for the <a href="http://www.lispworks.com/documentation/HyperSpec/Body/s_locall.htm">locally</a> enclosed line
+operations.<sup><a id="fnr.4" class="footref" href="#fn.4">4</a></sup>
 </p>
 </div>
 </div>
 
-<div id="outline-container-org3b04450" class="outline-3">
-<h3 id="org3b04450"><span class="section-number-3">4.3</span> WHERE tree</h3>
-<div class="outline-text-3" id="text-4-3">
+<div id="outline-container-org1d42e56" class="outline-3">
+<h3 id="org1d42e56"><span class="section-number-3">4.4</span> Abstracting iteration</h3>
+<div class="outline-text-3" id="text-4-4">
+<p>
+Here's how we can implement iteration for our example flat file DB
+representation:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-lisp">(<span style="color: #8ac6f2; font-weight: bold;">defmacro</span> <span style="color: #cae682;">do-lines</span> (line-var spec <span style="color: #92a65e; font-weight: bold;">&amp;body</span> body)
+  <span style="color: #95e454;">"Bind LINE-VAR to each line in SPEC specified file and execute BODY."</span>
+  (<span style="color: #8ac6f2; font-weight: bold;">let</span> ((in (gensym))) <span style="color: #99968b;">;make sure the file stream variable is not visible to the body</span>
+    `(<span style="color: #8ac6f2; font-weight: bold;">with-open-file</span> (,in ,(db-file spec) <span style="color: #e5786d;">:direction</span> <span style="color: #e5786d;">:input</span>)
+       (<span style="color: #8ac6f2; font-weight: bold;">loop</span> for ,line-var = (read-line ,in nil)
+             while ,line-var do ,@body))))
+</pre>
+</div>
+
+<p>
+See, that's what it takes to provide convenient zero cost syntactic
+sugar for safe file line iteration in spirit of the built-in <a href="http://www.lispworks.com/documentation/HyperSpec/Body/m_dolist.htm">dolist</a>.
+No need to hack the compiler and/or assemble language committee for
+agreement.
+</p>
+
+<p>
+I didn't name this <b>do-file-lines</b> because it can be extended to handle
+other DB storage types, key-value, SQL, whatever.  This is the place
+to extend if we go for parallel processing too.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgf1e05fe" class="outline-3">
+<h3 id="orgf1e05fe"><span class="section-number-3">4.5</span> WHERE tree</h3>
+<div class="outline-text-3" id="text-4-5">
 <p>
 Let's look at the WHERE transformation.  We can mirror the query tree
 and replace necessary parts with "real" code:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-lisp">(<span style="color: #8ac6f2; font-weight: bold;">defun</span> <span style="color: #cae682;">build-where</span> (where line-var spec)
+<pre class="src src-lisp">(<span style="color: #8ac6f2; font-weight: bold;">defun</span> <span style="color: #cae682;">gen-where</span> (where line-var spec)
   <span style="color: #95e454;">"Create actual boolean tree for WHERE.</span>
 <span style="color: #95e454;">LINE-VAR is symbol representing the current line variable.</span>
 <span style="color: #95e454;">SPEC contains fields' offset and size information."</span>
@@ -597,32 +669,34 @@ and replace necessary parts with "real" code:
     (<span style="color: #8ac6f2; font-weight: bold;">let</span> ((op (first where)))
       (cons (<span style="color: #8ac6f2; font-weight: bold;">if</span> (member op '(and or not))
                 op                <span style="color: #99968b;">;the boolean operators stay the same</span>
-                (build-field-op op line-var spec))
-            (build-where (rest where) line-var spec)))))
+                (gen-field-op op line-var spec))
+            (gen-where (rest where) line-var spec)))))
 </pre>
 </div>
 
 <p>
-Where <b>build-field-op</b> based on the field operation, fields and
+Where <b>gen-field-op</b> based on the field operation, fields and
 constants involved and given the specification for field offsets and
 sizes would generate appropriate code.
 </p>
 
 <p>
-Amusingly this miniscule recursive <a href="https://en.wikipedia.org/wiki/Source-to-source_compiler">transpiler</a> corresponds to the
-recursive <a href="#orga573539">match</a> procedure in the <b>Approach I</b> C++ general solution.
-Only the former solves the problem partly at compile time while the
-latter is confined to roar only at runtime.
+Amusingly this miniscule recursive let's say <a href="https://en.wikipedia.org/wiki/Source-to-source_compiler">transpiler</a> corresponds to
+the recursive <a href="#orga573539">match</a> procedure in the <b>Approach I</b> general solution.
+Only the former solves the problem partly at compile-time (<a href="#orgbb5e268">macro
+expansion time</a> if we have to be pedantic) while the latter is confined
+to roar only at run-time.
 </p>
 
 <p>
-Here's how the macro expanded WHERE part of the code can look like:
+Here's how the expanded WHERE part of the code can look like:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-lisp">(AND (CL-PPCRE:SCAN <span style="color: #95e454;">"LH|EK"</span> LINE <span style="color: #e5786d;">:START</span> CXR-OFFSET <span style="color: #e5786d;">:END</span> (+ CXR-OFFSET CXR-SIZE))
+<pre class="src src-lisp">(AND (CL-PPCRE:SCAN <span style="color: #95e454;">"YY|XX"</span> LINE <span style="color: #e5786d;">:START</span> CXR-OFFSET <span style="color: #e5786d;">:END</span> (+ CXR-OFFSET CXR-SIZE))
      (OR
       (AND (CL-PPCRE:SCAN <span style="color: #95e454;">"PET"</span> LINE <span style="color: #e5786d;">:START</span> COMMERCIAL_NAME-OFFSET
+                                        <span style="color: #99968b;">; the bellow :ENDs will actually be already summed</span>
                                      <span style="color: #e5786d;">:END</span> (+ COMMERCIAL_NAME-OFFSET COMMERCIAL_NAME-SIZE))
            (CHAR= (AREF LINE TYPE-OFFSET) #\C))
       (AND
@@ -637,17 +711,7 @@ Here's how the macro expanded WHERE part of the code can look like:
 </div>
 
 <p>
-That's analogical to the C++ one-off version.  With such simple,
-straightforward code and a few declarations, the <a href="http://sbcl.org/">Steel Bank Common
-Lisp</a> compiler in particular would be able to match a C++ compiler for
-the native code generation even skipping array bound checks if one
-decides so.  In fact, in the same vein the <a href="https://edicl.github.io/cl-ppcre/">cl-ppcre</a> library goes a
-step further (than usual compiled languages) to build regex scanners
-for constant literals (as is the case in our expansion) at compile
-time thanks to a <b>compiler macro</b>.
-</p>
-
-<p>
+Beside more readable, that's analogical to the C++ <a href="#org779e7ca">one-off version</a>.
 From such base, we can apply other transformations like
 result-preserving reorder of boolean expressions.
 </p>
@@ -655,23 +719,31 @@ result-preserving reorder of boolean expressions.
 </div>
 
 <div id="outline-container-org92e47b7" class="outline-3">
-<h3 id="org92e47b7"><span class="section-number-3">4.4</span> Loop unrolling</h3>
-<div class="outline-text-3" id="text-4-4">
+<h3 id="org92e47b7"><span class="section-number-3">4.6</span> Loop unrolling</h3>
+<div class="outline-text-3" id="text-4-6">
 <p>
 While the WHERE simplification is most substantial, other parts of the
 selection procedure can also enjoy improvement.  Concretely, under
 <b>Approach I</b> one has to introduce cycle over the selected fields to
-print them.  <b>Approach II</b> allows such loop to be unrolled during the
-macro expansion phase, for example:
+print them.  We can do this of course but <b>Approach II</b> allows such
+loop to be unrolled during the macro expansion phase.  Why do this?
+</p>
+
+<p>
+Because we can!  More responsibly, combined with the above line size
+declaration, the compiler (if not sufficiently advanced to unroll on
+its own) will now be certain that all line operations are within array
+bounds.  Here's how to do it:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-lisp">(<span style="color: #8ac6f2; font-weight: bold;">defmacro</span> <span style="color: #cae682;">gen-print-selection</span> (fields line spec)
+<pre class="src src-lisp">(<span style="color: #8ac6f2; font-weight: bold;">defun</span> <span style="color: #cae682;">gen-print-selection</span> (fields line-var spec)
   <span style="color: #95e454;">"Unroll selected FIELDS' print statements.</span>
-<span style="color: #95e454;">LINE is the current db entry.  SPEC holds field offset details."</span>
+<span style="color: #95e454;">LINE-VAR is symbol representing the current line variable.</span>
+<span style="color: #95e454;">SPEC holds field offset details."</span>
   `(<span style="color: #8ac6f2; font-weight: bold;">progn</span>
      ,@(<span style="color: #8ac6f2; font-weight: bold;">loop</span> for field in fields <span style="color: #99968b;">;collect print statements in list and splice them</span>
-             collect `(write-string ,line nil
+             collect `(write-string ,line-var nil
                                     <span style="color: #e5786d;">:start</span> ,(field-offset field spec)
                                     <span style="color: #e5786d;">:end</span> ,(+ (field-offset field spec)
                                              (field-size field spec))))
@@ -680,23 +752,162 @@ macro expansion phase, for example:
 </div>
 
 <p>
-This will expand to:
+Which will expand to:
 </p>
 
 <div class="org-src-container">
 <pre class="src src-lisp">(<span style="color: #8ac6f2; font-weight: bold;">PROGN</span>
   (WRITE-STRING LINE NIL
-                <span style="color: #e5786d;">:start</span> CXR-OFFSET
-                <span style="color: #e5786d;">:end</span> (+ CXR-OFFSET CXR-SIZE)) <span style="color: #99968b;">;these will actually be already summed numbers</span>
+                <span style="color: #e5786d;">:START</span> CXR-OFFSET
+                <span style="color: #e5786d;">:END</span> (+ CXR-OFFSET CXR-SIZE)) <span style="color: #99968b;">;these will actually be already summed numbers</span>
+  (WRITE-STRING LINE NIL <span style="color: #99968b;">;not that the compiler wouldn't constant fold them anyway</span>
+                <span style="color: #e5786d;">:START</span> SUBCODE-OFFSET
+                <span style="color: #e5786d;">:END</span> (+ SUBCODE-OFFSET SUBCODE-SIZE))
   (WRITE-STRING LINE NIL
-                <span style="color: #e5786d;">:start</span> SUBCODE-OFFSET
-                <span style="color: #e5786d;">:end</span> (+ SUBCODE-OFFSET SUBCODE-SIZE)) <span style="color: #99968b;">;</span>
-  (WRITE-STRING LINE NIL
-                <span style="color: #e5786d;">:start</span> COMMERCIAL_NAME-OFFSET
-                <span style="color: #e5786d;">:end</span> (+ COMMERCIAL_NAME-OFFSET COMMERCIAL_NAME-SIZE)) <span style="color: #99968b;">;</span>
+                <span style="color: #e5786d;">:START</span> COMMERCIAL_NAME-OFFSET
+                <span style="color: #e5786d;">:END</span> (+ COMMERCIAL_NAME-OFFSET COMMERCIAL_NAME-SIZE))
   (FORMAT T <span style="color: #95e454;">"~%"</span>))
 </pre>
 </div>
+
+<p>
+We can even check if adjacent in the schema fields are selected next
+to each other and fold them within single <a href="http://www.lispworks.com/documentation/HyperSpec/Body/f_wr_stg.htm">write-string</a> call.  This
+would be especially good for <b>select *</b> operations.  We can also
+unroll just some fields and leave a loop for the rest if too many not
+to blow executable size.  We are helping the compiler generate good
+code while the compiler is helping us generate good code.  <a href="https://en.wikipedia.org/wiki/Drawing_Hands">Escher</a>
+would approve.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org02a6db1" class="outline-3">
+<h3 id="org02a6db1"><span class="section-number-3">4.7</span> End result</h3>
+<div class="outline-text-3" id="text-4-7">
+<p>
+Let's assume record S5 has fixed size of 56 and field offsets and
+sizes:
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">field</th>
+<th scope="col" class="org-right">offset</th>
+<th scope="col" class="org-right">size</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">cxr</td>
+<td class="org-right">2</td>
+<td class="org-right">2</td>
+</tr>
+
+<tr>
+<td class="org-left">type</td>
+<td class="org-right">4</td>
+<td class="org-right">1</td>
+</tr>
+
+<tr>
+<td class="org-left">subcode</td>
+<td class="org-right">5</td>
+<td class="org-right">3</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>date_eff</code></td>
+<td class="org-right">8</td>
+<td class="org-right">6</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>date_disc</code></td>
+<td class="org-right">14</td>
+<td class="org-right">6</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>commercial_name</code></td>
+<td class="org-right">40</td>
+<td class="org-right">16</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+We can enjoy the total of our efforts using <a href="http://www.lispworks.com/documentation/HyperSpec/Body/f_mexp_.htm">macroexpand</a> in the <a href="https://en.wikipedia.org/wiki/REPL">REPL</a>:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-lisp">CL-USER&gt; (macroexpand '(select (cxr subcode commercial_name) recordS5
+                               <span style="color: #e5786d;">:where</span> (and (like cxr <span style="color: #95e454;">"YY|XX"</span>)
+                                           (or (and (like COMMERCIAL_NAME <span style="color: #95e454;">"PET"</span>)
+                                                (= type <span style="color: #95e454;">"C"</span>))
+                                               (and (= type <span style="color: #95e454;">"F"</span>)
+                                                    (= commercial_name <span style="color: #95e454;">"MEAL"</span>)))
+                                           (&lt; <span style="color: #95e454;">"180620"</span> date_disc)
+                                           (&lt; date_eff date_disc))))
+(FUNCALL
+ (COMPILE NIL
+          (<span style="color: #8ac6f2; font-weight: bold;">LAMBDA</span> ()
+            (<span style="color: #8ac6f2; font-weight: bold;">DECLARE</span> (OPTIMIZE (SPEED 3) (DEBUG 0) (SAFETY 1) (SPACE 0)))
+            (<span style="color: #8ac6f2; font-weight: bold;">WITH-OPEN-FILE</span> (<span style="color: #99968b;">#:</span><span style="color: #95e454;">G616</span> #P<span style="color: #95e454;">"/path/to/recordS5.db"</span> <span style="color: #e5786d;">:DIRECTION</span> <span style="color: #e5786d;">:INPUT</span>)
+              (<span style="color: #8ac6f2; font-weight: bold;">LOOP</span> FOR LINE = (READ-LINE <span style="color: #99968b;">#:</span><span style="color: #95e454;">G616</span> NIL)
+                    WHILE LINE
+                    DO (<span style="color: #8ac6f2; font-weight: bold;">LOCALLY</span>
+                        (<span style="color: #8ac6f2; font-weight: bold;">DECLARE</span> (TYPE (SIMPLE-STRING 56) LINE))
+                        (<span style="color: #8ac6f2; font-weight: bold;">WHEN</span>
+                            (AND (CL-PPCRE:SCAN <span style="color: #95e454;">"YY|XX"</span> LINE <span style="color: #e5786d;">:START</span> 2 <span style="color: #e5786d;">:END</span> 4)
+                                 (OR
+                                  (AND (CL-PPCRE:SCAN <span style="color: #95e454;">"PET"</span> LINE <span style="color: #e5786d;">:START</span> 40 <span style="color: #e5786d;">:END</span> 56)
+                                       (CHAR= (AREF LINE 7) #\C))
+                                  (AND (CHAR= (AREF LINE 7) #\F)
+                                       (STRING= <span style="color: #95e454;">"MEAL"</span> LINE <span style="color: #e5786d;">:START1</span> 0 <span style="color: #e5786d;">:END1</span> 4
+                                                <span style="color: #e5786d;">:START2</span> 40 <span style="color: #e5786d;">:END2</span> 44)))
+                                 (STRING&lt; <span style="color: #95e454;">"180620"</span> LINE <span style="color: #e5786d;">:START1</span> 0 <span style="color: #e5786d;">:END1</span> 6
+                                          <span style="color: #e5786d;">:START2</span> 14 <span style="color: #e5786d;">:END2</span> 20)
+                                 (STRING&lt; LINE LINE <span style="color: #e5786d;">:START1</span> 8 <span style="color: #e5786d;">:END1</span> 14 <span style="color: #e5786d;">:START2</span> 14
+                                                    <span style="color: #e5786d;">:END2</span> 20))
+                          (<span style="color: #8ac6f2; font-weight: bold;">PROGN</span>
+                           (WRITE-STRING LINE NIL <span style="color: #e5786d;">:START</span> 2 <span style="color: #e5786d;">:END</span> 4)
+                           (WRITE-STRING LINE NIL <span style="color: #e5786d;">:START</span> 5 <span style="color: #e5786d;">:END</span> 8)
+                           (WRITE-STRING LINE NIL <span style="color: #e5786d;">:START</span> 40 <span style="color: #e5786d;">:END</span> 56)
+                           (FORMAT T <span style="color: #95e454;">"~%"</span>)))))))))
+</pre>
+</div>
+
+<p>
+Which is pretty much what one would write by hand if not lazy to
+unroll loops.  And nice starting point for the compiler to generate
+good machine code before running it over the DB.
+</p>
+
+<p>
+With such simple, straightforward code and few declarations, the <a href="http://sbcl.org/">Steel
+Bank Common Lisp</a> compiler in particular would be able to match a C++
+compiler for the native code generation.  I mean compared to the
+<a href="#org779e7ca">one-off near optimal C++ version</a> of our dreams.
+</p>
+
+<p>
+In fact, in the same vein the <a href="https://edicl.github.io/cl-ppcre/">cl-ppcre</a> library used here goes a step
+further than usual compiled languages to build regex state machine
+scanners for constant literals (as is the case in our expansion) at
+compile-time thanks to a <a href="#orgbb5e268">compiler macro</a>.  I hear people are still
+struggling to <a href="https://github.com/hanickadot/compile-time-regular-expressions">hack limited form of this</a> with templates in C++?
+</p>
 </div>
 </div>
 </div>
@@ -720,28 +931,28 @@ Here's the essence of <b>Approach II</b>:
 
 <p>
 I like to call this tactic of plugging Ahead-Of-Time compilation on
-the fly (runtime) over newly assembled specialized code "Manual
+the fly (run-time) over newly assembled specialized code "Manual
 Just-In-Time compilation".  Works at a higher level than <a href="https://en.wikipedia.org/wiki/Just-in-time_compilation">JIT</a> and opens
-opportunities for greater (while orthogonal) gain and as seen - even
+opportunities for greater while orthogonal gain and as seen - even
 algorithm simplification.  This doesn't work (at least is not
 portable) for languages which leave only minimal dead skeleton of the
-program for runtime like&#x2026;er, about all compiled languages.  It's
-idiomatic and easily available in most Lisps<sup><a id="fnr.3" class="footref" href="#fn.3">3</a></sup> through macros.
-Common Lisp is especially suited with:
+program for run-time like&#x2026;er, about all compiled languages.  It's
+idiomatic and easily available in most lisps through macros.  Common
+Lisp is especially suited with:
 </p>
 
 <ul class="org-ul">
-<li>optional variable type declarations</li>
-<li>compiler can be evoked at runtime (the <b>compile</b> function)</li>
+<li>compiler can be explicitly evoked at run-time (the <a href="http://www.lispworks.com/documentation/HyperSpec/Body/f_cmp.htm">compile</a> function)</li>
 <li>per function re/compilation over several dimensions and levels of optimization</li>
-<li>per function disassembly</li>
-<li>designed for (image based) system evolution, including <a href="http://www.gigamonkeys.com/book/object-reorientation-generic-functions.html">CLOS</a><sup><a id="fnr.4" class="footref" href="#fn.4">4</a></sup>,
-the object system</li>
+<li>per function <a href="http://www.lispworks.com/documentation/HyperSpec/Body/f_disass.htm">disassembly</a></li>
+<li>optional variable type declarations</li>
+<li>designed for system evolution, including <a href="http://www.gigamonkeys.com/book/object-reorientation-generic-functions.html">CLOS</a><sup><a id="fnr.5" class="footref" href="#fn.5">5</a></sup>, the object
+system</li>
 </ul>
 
 <p>
 Some CL implementations can leverage type declarations to rival static
-language <a href="https://en.wikipedia.org/wiki/Ahead-of-time_compilation">AOT</a> compilers<sup><a id="fnr.5" class="footref" href="#fn.5">5</a></sup>.  SBCL even provides hints where and why
+language <a href="https://en.wikipedia.org/wiki/Ahead-of-time_compilation">AOT</a> compilers<sup><a id="fnr.6" class="footref" href="#fn.6">6</a></sup>.  SBCL even provides hints where and why
 a micro optimization couldn't be applied to guide type declaration
 refinements:
 </p>
@@ -761,7 +972,7 @@ source.lisp:4:3:
 </pre>
 
 <p>
-Through <a href="https://en.wikipedia.org/wiki/Metaprogramming">metaprogramming</a> (where Lisps excel at) one can generate
+Through <a href="https://en.wikipedia.org/wiki/Metaprogramming">metaprogramming</a> (where lisps excel at) one can produce
 practically static code for optimal performance.  The ability to see
 how a function's disassembly changes corresponding to code adjustments
 is also quite helpful and insightful.
@@ -777,7 +988,7 @@ I can hear you say:
 
 <blockquote>
 <p>
-The parenthesis, my eyes!  Sir, just use "modern" dynamic language
+THE PARENTHESIS, MY EYES!  Sir, just use "modern" dynamic language
 which provides <b>eval</b>!
 </p>
 </blockquote>
@@ -790,14 +1001,14 @@ And you'd be right with these caveats:
 <li>string manipulation to cover random syntax is uncomfortable and
 error prone</li>
 <li>the possible alternative of building explicit internal <a href="https://en.wikipedia.org/wiki/Abstract_syntax_tree">AST</a> objects
-is more acceptable but still clunky and half-assed</li>
+is more acceptable but still clunky and non composable</li>
 <li>it's still interpretation, not compilation (maybe some JavaScript
 compiler is exception?)</li>
 </ul>
 
 <p>
 In contrast to random-syntax code-is-a-string/file-blob languages,
-Lisps deal with already parsed trees basically all the time.  Simple
+lisps deal with already parsed trees basically all the time.  Simple
 and reliable to generate, traverse, transform.  DSLs become so easy to
 implement, it feels like cheating.
 </p>
@@ -805,45 +1016,145 @@ implement, it feels like cheating.
 </div>
 </div>
 
-<div id="outline-container-org1136d89" class="outline-3">
-<h3 id="org1136d89"><span class="section-number-3">5.2</span> Image based development and deploy</h3>
+<div id="outline-container-orgbb5e268" class="outline-3">
+<h3 id="orgbb5e268"><span class="section-number-3">5.2</span> Life stages of a program</h3>
 <div class="outline-text-3" id="text-5-2">
 <p>
-Think Lisp tricks end here?  Common Lisp like <a href="https://en.wikipedia.org/wiki/Smalltalk">Smalltalk</a> is not just a
+Where metaprogramming power comes from?  Beside the infamous uniform
+structured syntax which allows <a href="https://en.wikipedia.org/wiki/Homoiconicity">duality between code and data</a>, lisps
+normally make fine grained distinction between different (possibly
+interleaving and recurring) phases of program existence and provide
+means to hook into (most of) them.  And what language would you
+reprogram them in, some dumb pre-processor or half-assed template
+engine?  No, <a href="https://en.wikipedia.org/wiki/Turtles_all_the_way_down">it's turtles all the way</a>!
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Phase</th>
+<th scope="col" class="org-left">Description</th>
+<th scope="col" class="org-left">Control entry point</th>
+<th scope="col" class="org-left">Common Lisp</th>
+<th scope="col" class="org-left">Racket<sup><a id="fnr.7" class="footref" href="#fn.7">7</a></sup></th>
+<th scope="col" class="org-left">Scheme</th>
+<th scope="col" class="org-left">Clojure</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">Read-time</td>
+<td class="org-left">the moment a set of characters is fed to the lisp reader</td>
+<td class="org-left">reader macros</td>
+<td class="org-left">o</td>
+<td class="org-left">o</td>
+<td class="org-left"><a href="https://srfi.schemers.org/srfi-10/srfi-10.html">SRFI-10</a></td>
+<td class="org-left">x</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">Macro expansion time</td>
+<td class="org-left">actually initial part of compile-time, regular macros are expanded on demand</td>
+<td class="org-left">macros</td>
+<td class="org-left">o</td>
+<td class="org-left">o</td>
+<td class="org-left">o</td>
+<td class="org-left">o</td>
+</tr>
+
+<tr>
+<td class="org-left">Compile-time</td>
+<td class="org-left">when compiler is just about to assemble runnable (possibly machine) code, all reader and regular macros have already been expanded and only function calls left</td>
+<td class="org-left">compiler macros</td>
+<td class="org-left">o</td>
+<td class="org-left">?</td>
+<td class="org-left">x</td>
+<td class="org-left">x</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">Run-time</td>
+<td class="org-left">execution</td>
+<td class="org-left">functions</td>
+<td class="org-left">o</td>
+<td class="org-left">o</td>
+<td class="org-left">o</td>
+<td class="org-left">o</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+While the above is the natural sequence of "events" - <a href="http://www.lispworks.com/documentation/HyperSpec/Body/f_rd_rd.htm">read</a>, <b>compile</b>,
+can additionally happen at any time as do macros and function calls.
+See how the <b>select</b> macro is knitted together by amalgam of user
+defined functions and macros&#x2026; not that the system makes any
+difference to the built-in ones.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org1136d89" class="outline-3">
+<h3 id="org1136d89"><span class="section-number-3">5.3</span> Image based development and deploy</h3>
+<div class="outline-text-3" id="text-5-3">
+<p>
+Think lisp tricks end here?  Common Lisp like <a href="https://en.wikipedia.org/wiki/Smalltalk">Smalltalk</a> is not just a
 compiler but an image environment.  The image initially contains just
-the core language and is gradually extended and changed by the
-programmer during development.  Be it by loading libraries,
-re/defining functions, constants, re/setting global variables etc.
+the core language (and compiler + reader) and is incrementally
+extended and changed during development/user interaction.  Be it by
+loading libraries, re/defining functions, constants, re/setting global
+variables, executing code with side effects etc.
 </p>
 
 <p>
-How would one produce user facing executable?  Dump the image<sup><a id="fnr.6" class="footref" href="#fn.6">6</a></sup>.
-This opens opportunity to also embed data within the image before
-dumping which would otherwise have to be loaded, parsed, pre/processed
-during execution.
+How would one produce user facing executable?  Dump the current
+image<sup><a id="fnr.8" class="footref" href="#fn.8">8</a></sup>.  This opens opportunity to also embed data within the
+image before dumping which would otherwise have to be loaded, parsed,
+pre/processed during execution.
 </p>
 
 <p>
 For our little query engine such data are the configuration
 specifications for the multiple DBs.  These rarely change and makes
 sense to be parsed down to particular structure instances and put into
-a global hash table for example before dump thus being available and
-ready to use immediately on (user) image execution.  This would
+a global hash table variable for example before dump thus becoming
+available and ready to use immediately on image execution.  This would
 improve executable's latency for queries.
 </p>
 </div>
 </div>
 
 <div id="outline-container-orge5d6cf6" class="outline-3">
-<h3 id="orge5d6cf6"><span class="section-number-3">5.3</span> Alternative syntax</h3>
-<div class="outline-text-3" id="text-5-3">
+<h3 id="orge5d6cf6"><span class="section-number-3">5.4</span> Alternative syntax</h3>
+<div class="outline-text-3" id="text-5-4">
 <p>
-One may object that all falls into pieces only if we limit users to
-<a href="https://en.wikipedia.org/wiki/S-expressions">S-expression</a> DSLs.  What if forced to literary provide SQL syntax?
-Common Lisp in particular has programmable reader (through <b>reader
-macros</b>) which allows performing read time transformation (before
-"regular" macro expansion time) of more funky syntax to good ole
-S-expressions.  Doing this would allow us keep the same approach.
+One may object that all falls into place only if we limit users to
+S-expression DSLs.  What if forced to literary provide SQL syntax?
+Common Lisp in particular has <a href="http://www.lispworks.com/documentation/HyperSpec/Body/23_aa.htm">reprogrammable reader</a> through <a href="#orgbb5e268">reader
+macros</a> which allows performing read-time transformation (before
+"regular" macro expansion time) of more funky syntax (with some
+limits) to good ole S-expressions.  We'll have to do some parsing by
+ourselves, like animals, but using this would allow us keep rest of
+our solution unchanged.
 </p>
 </div>
 </div>
@@ -854,7 +1165,7 @@ S-expressions.  Doing this would allow us keep the same approach.
 <div class="outline-text-2" id="text-6">
 <p>
 Looking at conference materials, lispers (at least the Common breed)
-at times take advantage of such techniques<sup><a id="fnr.7" class="footref" href="#fn.7">7</a></sup> for difficult
+at times take advantage of such techniques<sup><a id="fnr.9" class="footref" href="#fn.9">9</a></sup> for difficult
 problems but seem troubled to gain attention of the outside world.
 </p>
 
@@ -862,6 +1173,23 @@ problems but seem troubled to gain attention of the outside world.
 I've been cheering for the <a href="https://medium.com/@MartinCracauer/a-gentle-introduction-to-compile-time-computing-part-1-d4d96099cea0">Gentle Introduction to Compile-Time
 Computing</a> series to really launch for deeper descend into the matter
 but even the outline can suggest what sort of magic is possible.
+</p>
+
+<p>
+Traditional recommendations for macro black belting are <a href="http://www.paulgraham.com/onlisp.html">On Lisp:
+Advanced Techniques for Common Lisp</a> and its logical successor <a href="https://letoverlambda.com/">Let Over
+Lambda</a>.  <a href="https://en.wikipedia.org/wiki/The_Art_of_the_Metaobject_Protocol">The Art of the Metaobject Protocol</a> is the bible of object
+system metaprogramming.  <a href="https://github.com/norvig/paip-lisp">Paradigms of Artificial Intelligence
+Programming: Case Studies in Common Lisp</a> is an instructive showoff how
+complex systems become not so complex with a powerful language and
+clear idea.
+</p>
+
+<p>
+Newcomers are generally recommended <a href="http://www.gigamonkeys.com/book/">Practical Common Lisp</a> or if more
+humourous: <a href="http://landoflisp.com/">Land Of Lisp</a>; more seasoned practitioners: <a href="http://weitz.de/cl-recipes/">Common Lisp
+Recipes</a>.  For an advanced development environment, one can try
+<a href="https://portacle.github.io/">Portacle</a>.
 </p>
 </div>
 </div>
@@ -877,11 +1205,11 @@ is not done.
 </p></div></div>
 
 <div class="footdef"><sup><a id="fn.2" class="footnum" href="#fnr.2">2</a></sup> <div class="footpara"><p class="footpara">
-Although Common Lisp is dynamically typed language and everyone
+Although Common Lisp is <a href="https://en.wikipedia.org/wiki/Type_system">dynamically typed</a> and everyone
 "knows" all such languages are slow, CL is rare exception.  One reason
-is <a href="https://en.wikipedia.org/wiki/Common_lisp">history</a>.  Lisps were the primordial wave of dynamic languages and
+is <a href="https://en.wikipedia.org/wiki/Common_lisp">history</a>.  Lisps were the primordial wave of <a href="https://en.wikipedia.org/wiki/Dynamic_programming_language">dynamic languages</a> and
 had to run acceptably on quite limited hardware compared to nowadays.
-Lisps were crafted in ways where possibility for performance
+Thus they were crafted in ways where possibility for performance
 optimizations were kept in sight and with <a href="https://en.wikipedia.org/wiki/Moore%27s_law">Moore's law</a> still
 progressing - they were gradually catching up the statically typed
 languages.  To the point where <a href="https://en.wikipedia.org/wiki/Genera_(operating_system)">operating systems</a> were written from the
@@ -891,24 +1219,42 @@ for implementations to perform optimizations are present.
 </p></div></div>
 
 <div class="footdef"><sup><a id="fn.3" class="footnum" href="#fnr.3">3</a></sup> <div class="footpara"><p class="footpara">
-Clojure at least, incremental compilation for Scheme is wholly
-dependent on the implementation.
+Some CL implementations work only as interpreters, others only as
+compilers. It will be all the same in such case.  Talking of CL
+implementations, there's bunch of standard compliant ones with
+different pros and cons.  <a href="https://common-lisp.net/~dlw/LispSurvey.html">Here</a>'s slightly outdated survey on most of
+the contemporary ones.
 </p></div></div>
 
 <div class="footdef"><sup><a id="fn.4" class="footnum" href="#fnr.4">4</a></sup> <div class="footpara"><p class="footpara">
-See the <a href="http://www.lispworks.com/documentation/HyperSpec/Body/04_cf.htm">Redefining Classes</a> machinery in the Common Lisp HyperSpec.
+Array bound checks should be unconditionally elided within the
+<a href="http://www.lispworks.com/documentation/HyperSpec/Body/d_optimi.htm">(safety 0)</a> optimization level.  In case we decide to go
+berserk&#x2026; like C/C++'s only mode of operation for <a href="https://en.wikipedia.org/wiki/Plain_old_data">POD</a> types.
 </p></div></div>
 
 <div class="footdef"><sup><a id="fn.5" class="footnum" href="#fnr.5">5</a></sup> <div class="footpara"><p class="footpara">
-<a href="https://benchmarksgame-team.pages.debian.net/benchmarksgame/which-programs-are-fast.html">https://benchmarksgame-team.pages.debian.net/benchmarksgame/which-programs-are-fast.html</a>
+For instance see the <a href="http://www.lispworks.com/documentation/HyperSpec/Body/04_cf.htm">Redefining Classes</a> machinery in the Common
+Lisp HyperSpec.
 </p></div></div>
 
 <div class="footdef"><sup><a id="fn.6" class="footnum" href="#fnr.6">6</a></sup> <div class="footpara"><p class="footpara">
+See <a href="https://benchmarksgame-team.pages.debian.net/benchmarksgame/which-programs-are-fast.html">The Computer Language Benchmarks Game</a> to get rough
+idea. With all the usual toy micro benchmark disclaimers.
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.7" class="footnum" href="#fnr.7">7</a></sup> <div class="footpara"><p class="footpara">
+The table is from Common Lisp's perspective but <a href="https://racket-lang.org/">Racket</a> seems to
+have even more elaborate <a href="https://docs.racket-lang.org/guide/phases.html">macro phase system</a>.  Part of the reason is
+Racket, being a <a href="https://en.wikipedia.org/wiki/Scheme_%28programming_language%29">Scheme</a> descendant, has single namespace for functions
+and variables (Lisp-1).  And all those crazy academics!
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.8" class="footnum" href="#fnr.8">8</a></sup> <div class="footpara"><p class="footpara">
 Among other things the <a href="https://gitlab.common-lisp.net/asdf/asdf/tree/master/uiop">uiop</a> library provides portable wrapper
 to dump images for various implementations.
 </p></div></div>
 
-<div class="footdef"><sup><a id="fn.7" class="footnum" href="#fnr.7">7</a></sup> <div class="footpara"><p class="footpara">
+<div class="footdef"><sup><a id="fn.9" class="footnum" href="#fnr.9">9</a></sup> <div class="footpara"><p class="footpara">
 Like <a href="https://european-lisp-symposium.org/static/2018/heisig.pdf">Petalisp - A Common Lisp Library for Data Parallel Programming</a>
 </p></div></div>
 
@@ -917,7 +1263,7 @@ Like <a href="https://european-lisp-symposium.org/static/2018/heisig.pdf">Petali
 </div></div>
 <div id="postamble" class="status">
 <p class="author">Author: Andrey Kotlarski</p>
-<p class="date">Created: 2018-08-02 чт 18:32</p>
+<p class="date">Created: 2018-08-09 чт 14:02</p>
 <p class="creator"><a href="https://www.gnu.org/software/emacs/">Emacs</a> 27.0.50 (<a href="https://orgmode.org">Org</a> mode 9.1.9)</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
