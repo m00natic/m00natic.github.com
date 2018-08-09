@@ -1,0 +1,97 @@
+@startuml
+skinparam backgroundColor #EEEBDC
+skinparam handwritten true
+
+actor User
+
+box "Interpreter" #LightGray
+    participant RunTime
+end box
+
+box "Reader" #LightGreen
+    participant ReadTime
+end box
+
+box "Compiler" #LightBlue
+    participant MacroExpansionTime
+    participant CompileTime
+end box
+
+User -> RunTime : (select (cxr...
+activate RunTime
+
+RunTime -> ReadTime : read "(select (cxr..."
+activate ReadTime
+
+ReadTime -> RunTime : `(select (cxr
+deactivate ReadTime
+
+RunTime -> MacroExpansionTime : expand (select (cxr...
+activate MacroExpansionTime
+
+MacroExpansionTime -> RunTime : eval (get-spec db)
+activate RunTime
+RunTime -> MacroExpansionTime : return spec
+deactivate RunTime
+
+MacroExpansionTime -> RunTime : eval (or (gen-where...
+activate RunTime
+RunTime -> MacroExpansionTime : generated WHERE condition
+deactivate RunTime
+
+MacroExpansionTime -> RunTime : eval (gen-print-selection...
+activate RunTime
+
+RunTime -> MacroExpansionTime : expand (loop for field...
+activate MacroExpansionTime
+
+MacroExpansionTime -> RunTime : expanded (loop for field...
+deactivate MacroExpansionTime
+
+RunTime -> MacroExpansionTime : generated print code
+deactivate RunTime
+
+MacroExpansionTime -> RunTime : `(funcall (compile nil...
+deactivate MacroExpansionTime
+
+RunTime -> CompileTime : compile (lambda ()...
+activate CompileTime
+
+CompileTime -> MacroExpansionTime : expand (do-lines...
+activate MacroExpansionTime
+
+MacroExpansionTime -> RunTime : eval (1+ (line-size spec))
+activate RunTime
+RunTime -> MacroExpansionTime : return db line size
+deactivate RunTime
+
+MacroExpansionTime -> RunTime : eval (db-file spec)
+activate RunTime
+RunTime -> MacroExpansionTime : return file
+deactivate RunTime
+
+MacroExpansionTime -> CompileTime : `(with-open-file...
+deactivate MacroExpansionTime
+
+CompileTime -> MacroExpansionTime : expand (with-open-file...
+activate MacroExpansionTime
+MacroExpansionTime -> CompileTime : expanded (with-open-file...
+deactivate MacroExpansionTime
+
+CompileTime -> MacroExpansionTime : expand (loop for line...
+activate MacroExpansionTime
+MacroExpansionTime -> CompileTime : expanded (loop for line...
+deactivate MacroExpansionTime
+
+CompileTime -> CompileTime : expand\n(cl-ppcre:scan "XX|YY"...
+CompileTime -> CompileTime : expand\n(cl-ppcre:scan "PET"...
+note over CompileTime : generate machine code
+CompileTime -> RunTime : compiled (lambda ()...
+deactivate CompileTime
+
+note over RunTime: Run Compiled Lambda, Run
+...
+RunTime -> User : Results
+deactivate RunTime
+
+@enduml

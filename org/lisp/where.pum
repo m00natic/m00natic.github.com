@@ -1,9 +1,9 @@
 @startuml
 digraph where {
-  node [style=rounded, fillcolor="#EEE8AA", style="filled", fontsize=10]
+  node [style=rounded, fillcolor="#EEE8AA", backgroundcolor="#EEEBDC", style="filled", fontsize=10]
 
   and1 [label="AND"]
-  op1 [shape=box, label="cxr LIKE 'LH|EK'"]
+  op1 [shape=box, label="cxr LIKE 'XX|YY'"]
   OR
   op2 [shape=box, label="date_disc < '180620'"]
   op3 [shape=box, label="date_eff < date_disc"]

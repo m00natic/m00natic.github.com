@@ -1,4 +1,5 @@
 @startuml
+skinparam backgroundColor #EEEBDC
 
 (Run-time query) --> (Macro transformation\ngenerates specialized code)
 (Macro transformation\ngenerates specialized code) --> (Compile and run)
