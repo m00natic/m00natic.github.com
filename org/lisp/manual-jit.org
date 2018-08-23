@@ -11,15 +11,19 @@ readability aesthetics.  It's somewhat surprising to me how large
 majority of supposedly rational people like programmers/computer
 scientists would throw out objectivity with such confidence.  So let
 me provide a simple real world case where uniform syntax enables out
-of the box solution which is qualitatively simpler.  Also there's
-popular belief that abstraction and flexibility are at odds with
-performance.  Watch out!
+of the box solution which is qualitatively simpler.  This is
+practically achievable ([[https://en.wikipedia.org/wiki/Turing_completeness][Turing-completeness]] doesn't help much) and
+idiomatic in very few languages and about a single one of them has the
+additional means to pull it off with great performance.
+
+(the ideas outlined here are more thoroughly fleshed out and extended
+in the [[https://github.com/m00natic/cl-fdbq][cl-fdbq]] project)
 
 * The Problem
 
 Here's our situation: there are over 100 let's say plain text dbs,
-each one containing lines of different fixed-size fields format. Let's
-assume lines within a single db have same format.
+each one containing lines of different fixed-size fields [[https://en.wikipedia.org/wiki/ASCII][ASCII]]
+format. Let's assume lines within a single db have same format.
 
 #+BEGIN_EXAMPLE
   # excerpt from the record S5 db
@@ -57,7 +61,7 @@ queries can happen to run over billions of entries so we'll eye some
 "systems" language, band-aids like Python are out of question.
 
 Let's focus only on the filter condition.  WHERE is essentially a tree
-where intermediate nodes are boolean operations *and*, *or* or *not*
+where intermediate nodes are boolean predicates *and*, *or* or *not*
 and leaves being concrete line field operation - comparison, regular
 expression matching, either with constant string or other field.
 
@@ -140,13 +144,91 @@ Traverses the WHERE tree in [[https://en.wikipedia.org/wiki/Depth-first][depth f
   }
 #+END_SRC
 
-Where *applyFieldOp* would apply appropriate clause comparison.  If
-there's one problem with the above, it would probably be that *match*
-is recursive (and not in good [[https://en.wikipedia.org/wiki/Tail_recursion][tail-recursive]] way) so the compiler
-wouldn't be that jubilant.  There probably is a way to linearize the
-WHERE tree but I'm a little concerned to think out in depth how to
-conserve the short-circuiting without backtracking and getting a
-headache.
+If there's one problem with the above, it would probably be that
+*match* is recursive (and not in good [[https://en.wikipedia.org/wiki/Tail_recursion][tail-recursive]] way) so the
+compiler wouldn't be that jubilant.  There probably is a way to
+linearize the WHERE tree but I'm a little concerned to think out in
+depth how to conserve the short-circuiting without backtracking and
+getting a headache.
+
+** Clause interpretation
+
+For completeness, here's the leaf operation processor:
+
+#+BEGIN_SRC C++
+  bool WhereNode::applyFieldOp(const char *line) const
+  {
+      switch(op)
+      {
+      case OperationType::WhereRegex:
+          if(field2.isEmpty())
+          {
+              return std::regex_search(line + field1.offset,
+                                       line + (field1.offset + field1.size),
+                                       regexFilter);
+          }
+          else
+          {
+              std::regex lineRegexFilter(line + field2.offset, field2.size);
+              return std::regex_search(line + field1.offset,
+                                       line + (field1.offset + field1.size),
+                                       lineRegexFilter);
+          }
+
+      case OperationType::WhereSearch:
+          return memmem(line + field1.offset, field1.size,
+                        filter.c_str(), filter.size());
+
+      default:
+          break;
+      }
+
+      int cmpResult;
+
+      if(field2.isEmpty())
+      {
+          cmpResult = memcmp(line + field1.offset, filter.c_str(), filter.size());
+      }
+      else
+      {
+          cmpResult = memcmp(line + field1.offset, line + field2.offset, cmpSize);
+      }
+
+      switch(op)
+      {
+      case OperationType::WhereEq:
+          return cmpResult == 0;
+
+      case OperationType::WhereNotEq:
+          return cmpResult != 0;
+
+      case OperationType::WhereLess:
+          return cmpResult < 0;
+
+      case OperationType::WhereLessEq:
+          return cmpResult <= 0;
+
+      case OperationType::WhereMore:
+          return cmpResult > 0;
+
+      case OperationType::WhereMoreEq:
+          return cmpResult >= 0;
+      }
+
+      return false;
+  }
+#+END_SRC
+
+We assume certain pre-processing is done while building the tree, like
+assigning proper operation type; checking if regex filter is not
+really regex, in which case getting downgraded to substring search
+etc.
+
+For a complete solution we'd need a query parser (or may defer to
+something like [[https://en.wikipedia.org/wiki/JSON][JSON]] and use existing parser though that wouldn't be
+very ergonomic for interactive use) and another interpreter to
+translate and pre-process parsed tokens to the above data structure
+used in the hot loop.
 
 * Approach II - Compiler
 
@@ -194,16 +276,16 @@ to the general solution!  Ignoring syntax noise, this is direct
 translation of the WHERE condition.
 
 Now imagine if on receiving a query we could temporarily pause time,
-write a simple and efficient matcher tailored to the specific query
-and then let it fly over the db.  We must remember to unpause cosmic
-time of course!  Only if we had such superpower.
+write a simple and efficient matcher tailored to the specific query,
+compile and then let it fly over the db.  And remember to unpause
+cosmic time of course!  We can dream, or...
 
 ** Embedded domain specific languages
 
-By the way did you notice how ugly I've made the one-off thing look?
-All those parenthesis, like some broken old Lisp!  We said we are
-interested only in "systems" languages but let's see how we'd approach
-this problem from [[http://lisp-lang.org/][Common Lisp]]'s side[fn:2].
+By the way did you notice how ugly the one-off thing looks?  All those
+parenthesis...  We declared interest only in "systems" languages but
+let's see how we'd approach this problem from [[http://lisp-lang.org/][Common Lisp]]'s
+side[fn:2].
 
 The usual thing to do is embed a [[https://en.wikipedia.org/wiki/Domain-specific_language][DSL]].  We can represent the selection
 example like this:
@@ -222,7 +304,7 @@ example like this:
 Don't know about you, but on my eyes this looks better than SQL's
 supposed to be humane syntax.  A recurring theme in Lisp eDSL
 programming is that one first chooses nice succinct [[https://en.wikipedia.org/wiki/S-expressions][S-expression]]
-representation (leaving all parsing to the lisp [[http://www.lispworks.com/documentation/HyperSpec/Body/02_b.htm][reader]]) and then is
+representation (leaving all parsing to the [[http://www.lispworks.com/documentation/HyperSpec/Body/02_b.htm][Lisp reader]]) and then is
 confident that will be able to transform it to whatever executable
 code is needed.  We can of course implement *Approach I* now.  But we
 can do better.  Much better!
@@ -231,7 +313,7 @@ can do better.  Much better!
 
 So *select* has to be [[http://www.gigamonkeys.com/book/macros-defining-your-own.html][macro]] (the chosen representation doesn't adhere
 to the function calling convention, for user convenience) which
-expands to procedure that maps over the given db, compiles and then
+expands to procedure that maps over the given db, _compiles_ and then
 calls it.  Note that during its macro expansion, it will be observing
 a concrete query so it can check out the db and its schema, what
 fields are selected, what is the exact WHERE clause.  Instead of
@@ -240,9 +322,9 @@ we _can_ instead solve for this single case.  That's our time pausing
 mechanism.
 
 Since we are supposed to work over large dbs, we can gain a lot by
-first introspecting the request and specializing on its properties.
-So let's make a little [[https://en.wikipedia.org/wiki/Optimizing_compiler][optimizing compiler]]!  Don't freak out, it's
-surprisingly easy... in Lisp:
+first introspecting the request and specializing on its
+properties[fn:3].  So let's make a little impromptu [[https://en.wikipedia.org/wiki/Optimizing_compiler][optimizing
+compiler]]!  Don't freak out, it's surprisingly easy... in Lisp:
 
 #+BEGIN_SRC lisp
   (defmacro select (field-list db &key where)
@@ -264,7 +346,7 @@ imagine what methods working over it would do.
 
 Result wise we can get away only with the body of the procedure
 enclosed by [[Abstracting iteration][do-lines]] but depending on lisp implementation, this might
-get executed in interpreter mode[fn:3].  However, in this case we want
+get executed in interpreter mode[fn:4].  However, in this case we want
 to explicitly ensure compilation happens.
 
 ** Abstracting iteration
@@ -275,37 +357,38 @@ example flat file db representation:
 #+BEGIN_SRC lisp
   (defmacro do-lines ((line-var spec) &body body)
     "Bind LINE-VAR to each line in SPEC specified file and execute BODY."
-    (let ((in (gensym)) ;make sure the file stream variable is not visible to the body
-          (line-size (1+ (line-size spec)))) ;line size is known, add 1 for newline
-      `(with-open-file (,in ,(db-file spec) :direction :input
-                                            :external-format :ascii
-                                            :element-type 'base-char)
-         ;; allocate line buffer
-         (let ((,line-var (make-string ,line-size :element-type 'base-char)))
-           (declare (type (simple-base-string ,line-size) ,line-var)
-                    (dynamic-extent ,line-var)) ;use stack allocation if possible
-           (loop while (= ,line-size (read-sequence ,line-var ,in))
+    (let ((ins (gensym)) ;make sure the file stream variable is not visible to the body
+          (line-size (1+ (spec-size spec)))) ;line size is known, add 1 for newline
+      `(let ((,line-var (make-string ,line-size :element-type 'base-char)));allocate line buffer
+         (declare (type (simple-base-string ,line-size) ,line-var)
+                  (dynamic-extent ,line-var)) ;use stack allocation if possible
+         (with-open-file (,ins ,(spec-path spec) :direction :input
+                                                 :external-format :ascii
+                                                 :element-type 'base-char)
+           (loop while (= ,line-size (read-sequence ,line-var ,ins))
                  do ,@body)))))
 #+END_SRC
 
 See, that's what it takes to provide convenient zero cost syntactic
 abstraction for specialized file line iteration in spirit of the
-built-in [[http://www.lispworks.com/documentation/HyperSpec/Body/m_dolist.htm][dolist]].  No need to hack the compiler and/or assemble
-language committee for agreement.
+built-in [[http://www.lispworks.com/documentation/HyperSpec/Body/m_dolist.htm][dolist]].  No need to hack the compiler, pray to [[https://en.wikipedia.org/wiki/BDFL][BDFL]] and/or
+assemble language committee for agreement.
 
-Since entry size for particular db is fixed and known, we declare and
+Since entry size for particular db is fixed and known, we declare (the
+compiler might infer this type on its own without the declaration) and
 pre-allocate appropriately typed and sized line buffer and read
 entries within it.  The declaration may further help the compiler
-elide array bound checks for the enclosed line operations.[fn:4]
+elide array bound checks for the enclosed line operations.[fn:5]
 
 I didn't name this *do-file-lines* because it can be extended to handle
 other db storage types, key-value, SQL, whatever.  This is the place
 to extend if we go for parallel processing too.
 
-** Compile WHERE tree
+** Generate WHERE tree
 
 Let's look at the WHERE transformation.  We can mirror the query tree
-and replace necessary parts with "real" code:
+and replace necessary parts (the leaves in this case) with "real"
+code:
 
 #+BEGIN_SRC lisp
   (defun gen-where (where line-var spec)
@@ -314,26 +397,114 @@ and replace necessary parts with "real" code:
   SPEC contains fields' offset and size information."
     (when (consp where)
       (let ((op (first where)))
-        (cons (if (member op '(and or not))
-                  op                    ;boolean operators stay the same
-                  (gen-field-op op line-var spec))
-              (gen-where (rest where) line-var spec)))))
+        (cond ((consp op)         ;several expressions in a row, recurse
+               (cons (gen-where op line-var spec)
+                     (gen-where (rest where) line-var spec)))
+              ((member op '(and or not))  ;intermediate node, recurse
+               (cons op (gen-where (rest where) line-var spec)))
+              ((member op '(= /= < <= > >= like)) ;leaf
+               (gen-field-op where line-var spec))
+              (t (error (format nil "Bad where clause: ~A" where)))))))
 #+END_SRC
 
-Where *gen-field-op* based on the field operation, fields and
-constants involved and given the specification for field offsets and
-sizes would generate appropriate code.
+Where [[Transform WHERE clauses][gen-field-op]] based on the field operation, fields and constants
+involved and given the specification for field offsets and sizes would
+generate appropriate code.
 
-Amusingly this miniscule recursive, let's say [[https://en.wikipedia.org/wiki/Source-to-source_compiler][transpiler]] corresponds
+Amusingly this miniscule recursive, let's say [[https://en.wikipedia.org/wiki/Source-to-source_compiler][transpiler]], corresponds
 to the recursive [[WHERE matcher][match]] procedure in the *Approach I* solution.  Only
 the former solves the problem partly at compile-time ([[Life stages of a program][macro expansion
 time]] if we have to be pedantic) and eliminates run-time recursion,
 while the latter is confined to roar only at run-time.
 
-Here's how the expanded WHERE part of the code can look like:
+** Transform WHERE clauses
+
+As a little preparation for clause transformers, let's introduce some
+helpers:
 
 #+BEGIN_SRC lisp
-  ;; bellow :ENDs can actually be already summed constants
+  (defclass operand-traits ()
+    ((offset :initarg :offset)
+     (size :initarg :size)
+     (filter :initarg :filter :initform nil)))
+
+  (defmethod get-operand-traits ((operand string) spec)
+    "Get dimensions of literal string OPERAND."
+    (declare (ignore spec))
+    (make-instance 'operand-traits :offset 0 :size (length operand)
+                                   :filter operand))
+
+  (defmethod get-operand-traits ((operand symbol) spec)
+    "Get dimensions of field OPERAND according to SPEC."
+    (make-instance 'operand-traits :offset (field-offset operand spec)
+                                   :size (field-size operand spec)))
+#+END_SRC
+
+Above we introduce a class to represent both field references and
+constant string operands and (an implicit) [[http://www.gigamonkeys.com/book/object-reorientation-generic-functions.html][generic function]] with
+couple of methods to dispatch the 2 cases.  Here come the actual
+generators:
+
+#+BEGIN_SRC lisp
+  (defun gen-field-op (clause line-var spec)
+    "Generate code for a leaf where CLAUSE."
+    (destructuring-bind (op field1 field2) clause ;decompose clause
+      (gen-field-clause op (get-operand-traits field1 spec)
+                        (get-operand-traits field2 spec) line-var)))
+
+  (defun simple-regex? (str)
+    "Check if string is not really a regex.
+  This a bit pessimistic."
+    (not (find-if-not #'alphanumericp str)))
+
+  (defmethod gen-field-clause ((op (eql 'like)) field1 field2 line-var)
+    "Generate code for regex clause."
+    (with-slots ((offset1 offset) (size1 size)) field1
+      (with-slots ((offset2 offset) (size2 size) (filter2 filter)) field2
+        (cond ((null filter2)             ;regex is taken from a field
+               `(cl-ppcre:scan (subseq ,line-var ,offset2
+                                       :end ,(+ offset2 size2))
+                               ,line-var :start ,offset1
+                                         :end ,(+ offset1 size1)))
+              ((simple-regex? filter2) ;use plain search instead of regex
+               `(search ,filter2 ,line-var
+                        :start1 ,offset2 :end1 ,(+ offset2 size2)
+                        :start2 ,offset1 :end2 ,(+ offset1 size1)))
+              (t `(cl-ppcre:scan ,filter2
+                                 ,line-var :start ,offset1
+                                           :end ,(+ offset1 size1)))))))
+
+  (defun translate-op (op &optional char?)
+    "Return string/char operation corresponding to OP."
+    (intern (concatenate 'string (if char? "CHAR" "STRING")
+                         (symbol-name op))))
+
+  (defmethod gen-field-clause (op field1 field2 line-var)
+    "Generate code for a comparison clause."
+    (with-slots ((offset1 offset) (size1 size) (filter1 filter)) field1
+      (with-slots ((offset2 offset) (size2 size) (filter2 filter)) field2
+        (let ((size (min size1 size2)))
+          (if (= 1 size)           ;optimize single character comparison
+              (list (translate-op op t)
+                    (if filter1           ;string literal?
+                        (aref filter1 0)
+                        `(aref ,line-var ,offset1))
+                    (if filter2
+                        (aref filter2 0)
+                        `(aref ,line-var ,offset2)))
+              (list (translate-op op)
+                    (or filter1 line-var) (or filter2 line-var)
+                    :start1 offset1 :end1 (+ offset1 size)
+                    :start2 offset2 :end2 (+ offset2 size)))))))
+#+END_SRC
+
+Again (an implicit) generic function through a couple of methods helps
+us differentiate between the regex matching and plain comparisons.
+Here's how the expanded WHERE part of the code will look like for our
+example:
+
+#+BEGIN_SRC lisp
+  ;; bellow :ENDs are actually already folded constants
   (AND (CL-PPCRE:SCAN "YY|XX" LINE :START CXR-OFFSET :END (+ CXR-OFFSET CXR-SIZE))
        (OR               ;we can detect that "PET" is not really a regex
         (AND (SEARCH "PET" LINE :START1 0 :END1 3 ;and use plain search instead
@@ -404,11 +575,19 @@ Which will expand to:
 We can check if adjacent in the schema fields are selected next to
 each other and fold them within single [[http://www.lispworks.com/documentation/HyperSpec/Body/f_wr_stg.htm][write-string]] call.  We can also
 unroll just some fields and leave a loop for the rest if too many, not
-to blow executable size.  We are helping the compiler generate good
-code while the compiler is helping us generate good code.  [[https://en.wikipedia.org/wiki/Drawing_Hands][Escher]]
+to blow executable size.  We are trying to help the compiler generate
+good code while the compiler is helping us generate good code.  [[https://en.wikipedia.org/wiki/Drawing_Hands][Escher]]
 would approve.
 
 ** End result
+
+Congratulations, we just made a working file query engine[fn:6]!  We
+designed a nice query language, outsourced all parsing to the [[http://www.lispworks.com/documentation/HyperSpec/Body/02_b.htm][Lisp
+reader]], courageously went onto implementing a [[https://en.wikipedia.org/wiki/One-pass_compiler][one-pass compiler]] (which
+in this case is easier than [[https://en.wikipedia.org/wiki/Interpreter_(computing)][interpreter]]!) and even managed to sprinkle
+some optimizations.  And on top of that, the language implementation
+borrowed us its "real" compiler (at run-time!) to optimize the
+expansion and generate machine code.
 
 Let's assume Record S5 has fixed size of 56 bytes and field offsets
 and sizes:
@@ -439,18 +618,18 @@ We can enjoy the total of our efforts using [[http://www.lispworks.com/documenta
    (COMPILE NIL
             (LAMBDA ()
               (DECLARE (OPTIMIZE (SPEED 3) (DEBUG 0) (SAFETY 1) (SPACE 0)))
-              (WITH-OPEN-FILE (#:G616 #P"/path/to/recordS5.db" :DIRECTION :INPUT
-                                                               :EXTERNAL-FORMAT :ASCII
-                                                               :ELEMENT-TYPE 'BASE-CHAR)
-                (LET ((LINE (MAKE-STRING 57 :ELEMENT-TYPE 'BASE-CHAR)))
-                  (DECLARE (TYPE (SIMPLE-BASE-STRING 57) LINE)
-                           (DYNAMIC-EXTENT LINE))
+              (LET ((LINE (MAKE-STRING 57 :ELEMENT-TYPE 'BASE-CHAR)))
+                (DECLARE (TYPE (SIMPLE-BASE-STRING 57) LINE)
+                         (DYNAMIC-EXTENT LINE))
+                (WITH-OPEN-FILE (#:G616 #P"/path/to/recordS5.db" :DIRECTION :INPUT
+                                                                 :EXTERNAL-FORMAT :ASCII
+                                                                 :ELEMENT-TYPE 'BASE-CHAR)
                   (LOOP WHILE (= 57 (READ-SEQUENCE LINE #:G616))
                         DO (WHEN
                                (AND (CL-PPCRE:SCAN "YY|XX" LINE :START 2 :END 4)
                                     (OR
                                      (AND (SEARCH "PET" LINE :START1 0 :END1 3
-                                                  :START2 40 :END2 56)
+                                                             :START2 40 :END2 56)
                                           (CHAR= (AREF LINE 7) #\C))
                                      (AND (CHAR= (AREF LINE 7) #\F)
                                           (STRING= "MEAL" LINE :START1 0 :END1 4
@@ -468,8 +647,9 @@ We can enjoy the total of our efforts using [[http://www.lispworks.com/documenta
 #+END_SRC
 
 Which is about what one would write by hand if not lazy to unroll
-loops.  And nice starting point for the compiler to generate machine
-code before running it over the db.
+loops...and not afraid of magic constants.  And nice starting point
+for the compiler to generate machine code before running it over the
+db.
 
 In fact, in similar vein the [[https://edicl.github.io/cl-ppcre/][cl-ppcre]] library used here goes a step
 further than usual compiled languages to build regex [[https://en.wikipedia.org/wiki/Deterministic_finite_automaton][state machine]]
@@ -477,21 +657,184 @@ scanners for constant literals (as is the case in our expansion) at
 compile-time thanks to a [[Life stages of a program][compiler macro]].  I hear people are still
 struggling to [[https://github.com/hanickadot/compile-time-regular-expressions][hack limited form of this]] with templates in C++?
 
-** Times
+** Squeezing performance 1
 
 With such simple, straightforward code and few declarations, the [[http://sbcl.org/][Steel
-Bank Common Lisp]] compiler in particular would be close to matching a
-C++ compiler for the native code generation.  Here are inner loop
-times with analogical query over a little 1GB, entry size 159 db with
-a couple of [[Prelude][one-off versions]] for reference (not real solutions of
-course):
+Bank Common Lisp]] compiler in particular would be able to do
+respectable job.  But performance in this case will still be 4-5 times
+slower than C/C++ for the following reasons:
 
-| Language    | Implementation         | Approach | Time (sec) |
-|-------------+------------------------+----------+------------|
-| C++         | GCC 8.2 -O3            | one-off  |        2.0 |
-| C++         | GCC 8.2 -O3            | I        |        2.3 |
-| Common Lisp | SBCL 1.4.10 (safety 0) | II       |        2.5 |
-| Python      | CPython 3.7            | one-off  |       13.7 |
+- there's no buffering on file read while our entries may be quite
+  small
+- the operations we use require string types which are not direct
+  representation of the file bytes, thus [[http://www.lispworks.com/documentation/HyperSpec/Body/f_rd_seq.htm][read-sequence]] has to apply
+  conversion
+
+The first requires adjusting only the [[Abstracting iteration][do-lines]] macro:
+
+#+BEGIN_SRC lisp
+  (defconstant +max-buffer-size+ (* 1024 6)
+    "Max chunk size to preload in bytes.")
+
+  (deftype ub-char () '(unsigned-byte 8)) ;read file data in raw bytes because faster
+
+  (defmacro do-lines ((line-var spec) &body body)
+    "Bind LINE-VAR to each line in SPEC specified file and execute BODY."
+    (let* ((entry-size (spec-size spec))  ;entry size is known
+           (line-size (1+ entry-size))    ;add 1 for newline
+           (buffer-size (if (< line-size +max-buffer-size+)
+                            (* line-size (floor +max-buffer-size+ line-size))
+                            line-size))
+           (ins (gensym)) ;make sure the file stream variable is not visible to the body
+           (buffer (gensym))    ;-//- for read buffer
+           (bytes (gensym))     ;-//- for number of bytes read
+           (offset (gensym)))   ;-//- current line within buffer offset)
+      `(let ((,buffer (make-array ,buffer-size :element-type 'ub-char)) ;allocate read
+             (,line-var (make-string ,entry-size :element-type 'base-char))) ;and line buffers
+         (declare (dynamic-extent ,buffer ,line-var)) ;use stack allocation if possible
+         (with-open-file (,ins ,(spec-path spec) :direction :input
+                                                 :element-type 'ub-char)
+           (loop for ,bytes fixnum = (read-sequence ,buffer ,ins) ;read as many lines
+                 until (zerop ,bytes)
+                 ;; slide offset through the buffer
+                 do (loop for ,offset fixnum from 0 below (* ,line-size
+                                                             (floor ,bytes ,line-size))
+                                             by ,line-size
+                          ;; fill line with the current window bytes while converting them
+                          do (loop for i fixnum from 0 below ,entry-size
+                                   for j fixnum from ,offset
+                                   do (setf (aref ,line-var i) (code-char (aref ,buffer j))))
+                          ,@body)))))) ;the body only sees the line variable as before
+#+END_SRC
+
+Skeleton is same as before, we only add a buffer dedicated to reading
+several lines at once and then slide through it, copying and
+converting bytes to the line variable.  With this, performance goes
+around 1.5 - 2 times slower than C/C++.  But we can do better!
+
+** Squeezing performance 2
+
+To go further we can try to leave aside copying and converting raw
+bytes and instead apply comparisons directly over them (what C/C++
+does).  So I went on to employ the *ascii-strings* contrib of the
+[[https://bitbucket.org/vityok/cl-string-match][cl-string-match]] library to help with this.  Unfortunately I couldn't
+find substitute for the regex matcher that works on byte arrays, so
+we'd still have to make conversion for fields which are matched
+against regex.
+
+This requires changes mostly in [[Transform WHERE clauses][gen-field-clause]] and friends, slight
+adjustment to [[Loop unrolling][gen-print-selection]] and removing the line conversion
+loop from the improved [[Squeezing performance 1][do-lines]].  Here's a prototype sketch of the
+desired expansion (*#.* is a [[Life stages of a program][reader macro]] which evaluates the
+following expression at read-time):
+
+#+BEGIN_SRC lisp
+  (lambda ()
+    (declare (optimize (speed 3) (debug 0) (safety 0) (compilation-speed 0)))
+    (let ((buffer (make-array #.(* 57 (floor +max-buffer-size+ 57)) ;raw byte buffer
+                             :element-type 'ub-char))
+           ;pre-allocated string used for regex matching
+          (line (make-string 56 :element-type 'base-char)))
+      (declare (dynamic-extent buffer line)) ;stack allocate
+      (with-open-file (in #P"/path/to/recordS5.db" :direction :input
+                                                   :element-type 'ascii:ub-char)
+        (loop for bytes fixnum = (read-sequence buffer in) ;load as many lines at once
+              until (zerop bytes)
+              do (loop for offset fixnum from 0 below (* 57 (floor bytes 57)) by 57
+                       do (when      ;for each entry in the loaded chunk
+                              (and (progn ;fill bytes of this field in string
+                                     (loop for i fixnum from 2 below 4 ;before regex matching
+                                           for j fixnum from (+ offset 2)
+                                           do (setf (aref line i)
+                                                    (code-char (aref buffer (+ offset i)))))
+                                     (cl-ppcre:scan "XX|YY" line :start 2 :end 4))
+                                   (or ;convert filter string to bytes at macro expansion
+                                    (and (search #.(ascii:string-to-ub "PET"
+                                          ;the PET thing will turn to #(80 69 84)
+                                                 buffer :start1 0 :end1 3 ;and match against
+                                                 :start2 (+ offset 40) ;the raw field bytes
+                                                 :end2 (+ offset 56))
+                                         (ascii:ub-char= (aref buffer (+ offset 7))
+                                                         #.(char-code #\C)));convert char to byte
+                                    (and (ascii:ub-char= (aref buffer (+ offset 7))
+                                                         #.(char-code #\F))
+                                         (ascii:ub-string= #.(ascii:string-to-ub "MEAL") buffer
+                                                           :start1 0 :end1 4
+                                                           :start2 (+ offset 40)
+                                                           :end2 (+ offset 56))))
+                                   (ascii:ub-string< #.(ascii:string-to-ub "180620") buffer
+                                                     :start1 0 :end1 6
+                                                     :start2 (+ offset 14)
+                                                     :end2 (+ offset 20))
+                                   (ascii:ub-string< buffer buffer :start1 (+ offset 8)
+                                                                   :end1 (+ offset 14)
+                                                                   :start2 (+ offset 14)
+                                                                   :end2 (+ offset 20)))
+                            (progn
+                              ;; (write-string line nil :start 2 :end 4) ?
+                              (loop for i fixnum from (+ offset 2) below (+ offset 4)
+                                    do (write-char (code-char (aref buffer i))))
+                              (loop for i fixnum from (+ offset 5) below (+ offset 8)
+                                    do (write-char (code-char (aref buffer i))))
+                              (loop for i fixnum from (+ offset 40) below (+ offset 56)
+                                    do (write-char (code-char (aref buffer i))))
+                              (loop for i fixnum from (+ offset 14) below (+ offset 20)
+                                    do (write-char (code-char (aref buffer i))))
+                              (format t "~%"))))))))
+#+END_SRC
+
+Now, that begins to look less like work of a human.  Summary of the
+expansion changes:
+
+- use raw byte comparison operations; convert constant filters to raw
+  bytes during macro expansion; add current line *offset* to field
+  offsets since now working over the buffer
+
+- lazily fill parts of *line* before regex matching; in case a field is
+  matched in multiple places (not the case for this query), we can
+  mark its first byte position with special character at the start of
+  line validation to signal that it has to be filled and can skip
+  filling on subsequent operations over the same line
+
+I won't go into detailed implementation, the previous snippets should
+have shown that programmatically manipulating code in Lisp is
+indistinguishable from juggling with data and these requirements are
+not really rocket science.  You can see a more elaborate and complete
+implementation in [[https://github.com/m00natic/cl-fdbq][cl-fdbq]].
+
+** Times
+
+After the above squeezing, here are processing times I observe with
+analogical query over a little 1GB db with 6.4 million entries sized
+159 (sequential scan takes 0.4 seconds at best) with couple of
+idealized [[Prelude][one-off versions]] (not real solutions of course) for
+reference:
+
+| Language    | Implementation     | Approach | Threads | Time (sec) |
+|-------------+--------------------+----------+---------+------------|
+| Common Lisp | SBCL 1.4.10        | II       |       4 |       1.30 |
+| C++         | GCC 8.2 -O3        | I[fn:7]  |       4 |       1.30 |
+| C++         | Clang 6.0.1 -O3    | I[fn:7]  |       4 |       1.34 |
+| C++         | GCC 8.2 -O3        | one-off  |       1 |       2.42 |
+| C++         | Clang 6.0.1 -O3    | one-off  |       1 |       2.49 |
+| Common Lisp | Clozure 1.12[fn:8] | II       |       4 |       2.62 |
+| C++         | GCC 8.2 -O3        | I[fn:7]  |       1 |       2.70 |
+| C++         | Clang 6.0.1 -O3    | I[fn:7]  |       1 |       2.76 |
+| Common Lisp | SBCL 1.4.10        | II       |       1 |       2.90 |
+| Go          | Go 1.10.3          | one-off  |       1 |       4.02 |
+| Common Lisp | Clozure 1.12       | II       |       1 |       5.04 |
+| Python      | CPython 3.7.0      | one-off  |       1 |      15.50 |
+| Python      | CPython 2.7.15     | one-off  |       1 |      18.07 |
+
+(the parallelized C++ _versions_ are [[https://en.wikipedia.org/wiki/Mmap][memory map]] based, while the CL
+_complete solutions_ still use sequential reading)
+
+Not bad for a "slow" dynamic language!  Anyway, CL and SBCL's
+single thread disadvantage here comes from:
+
+- absence of regex matcher which works over byte arrays rather than
+  strings
+- sequence comparisons are not [[https://en.wikipedia.org/wiki/SIMD][vectorized]] for now
 
 * Addendum
 
@@ -515,11 +858,11 @@ through macros.  Common Lisp is especially suited with:
 - per function re/compilation over several [[http://www.lispworks.com/documentation/HyperSpec/Body/d_optimi.htm][dimensions and levels of optimization]]
 - per function [[http://www.lispworks.com/documentation/HyperSpec/Body/f_disass.htm][disassembly]]
 - optional type declarations
-- designed for system evolution, including [[http://www.gigamonkeys.com/book/object-reorientation-generic-functions.html][CLOS]][fn:5], the object
+- designed for system evolution, including [[http://www.gigamonkeys.com/book/object-reorientation-generic-functions.html][CLOS]][fn:9], the object
   system
 
 Some CL implementations can leverage type declarations to rival static
-language [[https://en.wikipedia.org/wiki/Ahead-of-time_compilation][AOT]] compilers[fn:6].  SBCL has certain ability to perform
+language [[https://en.wikipedia.org/wiki/Ahead-of-time_compilation][AOT]] compilers[fn:10].  SBCL has certain ability to perform
 [[https://en.wikipedia.org/wiki/Type_inference][type inference]] during compilation and beside type errors, even
 provides hints where and why a micro-optimization couldn't be applied
 to guide type declaration refinements:
@@ -538,9 +881,9 @@ to guide type declaration refinements:
             etc.
 #+END_EXAMPLE
 
-As the example suggests, Common Lisp actually has surprisingly rich
-[[http://www.lispworks.com/documentation/HyperSpec/Body/04_bc.htm][type system]].  Combine this with [[https://en.wikipedia.org/wiki/Metaprogramming][metaprogramming]] (where Lisps excel at)
-and one can generate maximally trimmed static code where needed.
+As the examples show, Common Lisp actually has surprisingly rich [[http://www.lispworks.com/documentation/HyperSpec/Body/04_bc.htm][type
+system]].  Combine this with [[https://en.wikipedia.org/wiki/Metaprogramming][metaprogramming]] (where Lisps excel at) and
+one can generate maximally trimmed static code where needed.
 
 The ability to see how a function's disassembly changes after code
 adjustments is also quite helpful and insightful.
@@ -559,12 +902,12 @@ And you'd be right with these caveats:
 - string manipulation to cover random syntax is uncomfortable and
   error prone
 - the possible alternative of building explicit internal [[https://en.wikipedia.org/wiki/Abstract_syntax_tree][AST]] objects
-  is more acceptable but even more clunky and non composable
+  is more acceptable but just as clunky and non composable
 - it's still interpretation, not compilation (maybe some JavaScript
   compiler is exception?)
 - huge majority of dynamic languages which are not Lisps are indeed
   pathetically slow ([[http://luajit.org/luajit.html][LuaJIT]], [[https://JuliaLang.org/][Julia]] being exceptions, though the latter
-  is rather Lisp with default random syntax[fn:7])
+  is rather Lisp with default random syntax[fn:11])
 
 In contrast to random-syntax code-is-a-string/file-blob languages,
 Lisps deal with already parsed trees basically all the time.  Simple
@@ -583,7 +926,7 @@ time.  They are normally nice enough to easily implement syntax sugar
 like [[Abstracting iteration][do-lines]].  But once a task gets a bit harder like having to
 introspect, generate non trivially structured code and/or combine
 transformations - implementation (if at all possible) degrades to
-undecipherable syntax noise beyond 99% of the programmers.  And the
+undecipherable syntax noise that requires PhD to figure out.  And the
 reason is that unlike Lisps, their random syntax is hardly
 representative of the abstract syntax trees the interpreter/compiler
 works with.  So they invent yet another random syntax sub-language to
@@ -594,14 +937,15 @@ bridge them.  These ain't "acceptable Lisps".
 Where metaprogramming power comes from?  Beside the infamous uniform
 structured syntax which allows [[https://en.wikipedia.org/wiki/Homoiconicity][duality between code and data]], Lisps
 normally make distinction between several possibly interleaving and
-recurring phases of program existence and provide hooks into them.
-And what language would you reprogram them in, some dumb pre-processor
-or half-assed template engine?  No, [[https://en.wikipedia.org/wiki/Turtles_all_the_way_down][it's turtles all the way]]!
+recurring phases of program existence and provide hooks into them.  Or
+rather rewrite rules.  And what language would you reprogram them in,
+some dumb pre-processor or half-assed template engine?  No,
+[[https://en.wikipedia.org/wiki/Turtles_all_the_way_down][it's turtles all the way]]!
 
 |----------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------+---------------------+-------------+--------------+---------+---------|
-| Phase                | Description                                                                                                                                                | Control entry point | Common Lisp | Racket[fn:8] | Scheme  | Clojure |
+| Phase                | Description                                                                                                                                                | Control entry point | Common Lisp | Racket[fn:12] | Scheme  | Clojure |
 |----------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------+---------------------+-------------+--------------+---------+---------|
-| Read-time            | the moment a set of characters is fed to the lisp reader                                                                                                   | reader macros       | o           | o            | [[https://srfi.schemers.org/srfi-10/srfi-10.html][SRFI-10]] | x       |
+| Read-time            | the moment a set of characters is fed to the Lisp reader                                                                                                   | reader macros       | o           | o            | [[https://srfi.schemers.org/srfi-10/srfi-10.html][SRFI-10]] | x       |
 |----------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------+---------------------+-------------+--------------+---------+---------|
 | Macro expansion time | actually initial part of compile-time, regular macros are expanded on demand                                                                               | macros              | o           | o            | o       | o       |
 | Compile-time         | when compiler is just about to assemble runnable (possibly machine) code, all reader and regular macros have already been expanded and only functions left | compiler macros     | o           | ?            | x       | x       |
@@ -629,7 +973,7 @@ constants, re/setting global variables, executing code with side
 effects etc.
 
 How would one produce user facing executable?  Dump the current
-image[fn:9].  This opens opportunity to also embed data within the
+image[fn:13].  This opens opportunity to also embed data within the
 image before dumping which would otherwise have to be loaded, parsed,
 pre/processed during execution.
 
@@ -654,7 +998,7 @@ our solution unchanged.
 * Further reading
 
 Looking at conference materials, lispers (at least the Common breed)
-at times take advantage of such techniques[fn:10] for difficult
+at times take advantage of such techniques[fn:14] for difficult
 problems but seem troubled to gain attention of the outside world.
 
 I've been cheering for the [[https://medium.com/@MartinCracauer/a-gentle-introduction-to-compile-time-computing-part-1-d4d96099cea0][Gentle Introduction to Compile-Time
@@ -669,10 +1013,12 @@ Programming: Case Studies in Common Lisp]] is an instructive showoff how
 complex systems become not so complex with a powerful language and
 clear idea.
 
-Newcomers are generally recommended [[http://www.gigamonkeys.com/book/][Practical Common Lisp]] or if more
-humourous: [[http://landoflisp.com/][Land Of Lisp]]; more seasoned practitioners: [[http://weitz.de/cl-recipes/][Common Lisp
-Recipes]].  For an advanced development environment, one can try
-[[https://portacle.github.io/][Portacle]].
+Most of the above require CL familiarity.  If one lacks such, [[http://stevelosh.com/blog/2018/08/a-road-to-common-lisp/][A road
+to Common Lisp]] is an excellent getting started guide.  Newcomers are
+generally recommended [[http://www.gigamonkeys.com/book/][Practical Common Lisp]] or if more humourous: [[http://landoflisp.com/][Land
+Of Lisp]]; more seasoned practitioners: [[http://weitz.de/cl-recipes/][Common Lisp Recipes]].  For an
+advanced development environment, one can try [[https://portacle.github.io/][Portacle]] or possibly [[https://github.com/cxxxr/lem][Lem]]
+if not much into Emacs.
 
 * Footnotes
 
@@ -694,40 +1040,55 @@ original line of dialects, there are many places in its specification
 where freeways for implementations to perform optimizations are
 present.
 
-[fn:3] Some CL implementations work only as interpreters, others only as
+[fn:3] The interpreter approach in a usual language should also do
+this before the iteration begins but the compiler will be long gone at
+that point.
+
+[fn:4] Some CL implementations work only as interpreters, others only as
 compilers. It will be all the same in such case.  Talking of CL
 implementations, there's bunch of standard compliant ones with
 different pros and cons - here's slightly outdated [[https://common-lisp.net/~dlw/LispSurvey.html][survey]] on most of
 them.
 
-[fn:4] Array bound checks should be unconditionally elided within the
+[fn:5] Array bound checks should be unconditionally elided within the
 *(safety 0)* [[http://www.lispworks.com/documentation/HyperSpec/Body/d_optimi.htm][optimization level]].  In case we decide to go
 berserk... like C/C++'s only mode of operation for [[https://en.wikipedia.org/wiki/Plain_old_data][POD]] types.
 
-[fn:5] For instance see the [[http://www.lispworks.com/documentation/HyperSpec/Body/04_cf.htm][Redefining Classes]] machinery in the Common
-Lisp HyperSpec.
+[fn:6] If one may object that C++ code in this article is somewhat
+less, thus perceivably simpler - remember, it presents just smaller
+part of a full solution.
 
-[fn:6] See [[https://benchmarksgame-team.pages.debian.net/benchmarksgame/which-programs-are-fast.html][The Computer Language Benchmarks Game]] to get rough
+[fn:7] That's *Approach I* without actual query parsing, just a
+mocked up specific WHERE tree instance.  So not quite a real
+solution either.  Yeah, I'm lazy (and life's too short for C++).
+
+[fn:8] The [[https://ccl.clozure.com/][Clozure]] Common Lisp implementation is not to be confused
+with the [[https://clojure.org/][Clojure]] language of the Lisp family.
+
+[fn:9] For instance see the [[http://www.lispworks.com/documentation/HyperSpec/Body/04_cf.htm][Redefining Classes]] machinery in the [[http://www.lispworks.com/documentation/HyperSpec/Front/Contents.htm][Common
+Lisp HyperSpec]].
+
+[fn:10] See [[https://benchmarksgame-team.pages.debian.net/benchmarksgame/which-programs-are-fast.html][The Computer Language Benchmarks Game]] to get rough
 idea. With all the usual toy micro benchmark disclaimers, Common
 Lisp/SBCL's competitiveness against statically typed languages is kind
 of embarrassing to the latter.  And that's using same algorithms.
 
-[fn:7] Julia can almost match Common Lisp for this query engine
-thing.  However, it seems to only be able to invoke the compiler
-implicitly at run-time for [[https://docs.julialang.org/en/latest/manual/metaprogramming/#Generated-functions-1][generated functions]] which only see argument
+[fn:11] Julia can almost match Common Lisp for this query engine
+thing.  However, it seems to only be able to invoke (implicitly) the
+compiler at run-time for [[https://docs.julialang.org/en/latest/manual/metaprogramming/#Generated-functions-1][generated functions]] which only see argument
 types, not sufficient for our queries.  Thus [[https://docs.julialang.org/en/latest/devdocs/eval/][eval]] interpretation has
 to be used and the compiler wouldn't be able to optimize the run-time
-generated function.  In this case *Approach I* being subject to
-"normal" compilation may well fare better.  In contrast, with Common
-Lisp we are able to explicitly summon the compiler with full
-optimization over arbitrary generated function.
+generated code.  In this case *Approach I* being subject to "normal"
+compilation may well fare better.  In contrast, with Common Lisp we
+are able to explicitly summon the compiler with full optimization over
+arbitrary generated function.
 
-[fn:8] The table is from Common Lisp's perspective but [[https://racket-lang.org/][Racket]] seems to
+[fn:12] The table is from Common Lisp's perspective but [[https://racket-lang.org/][Racket]] seems to
 have even more elaborate [[https://docs.racket-lang.org/guide/phases.html][macro phase system]].  Part of the reason is
 Racket, being a [[https://en.wikipedia.org/wiki/Scheme_%2528programming_language%2529][Scheme]] descendant, has single namespace for functions
-and variables (Lisp-1).  And all those crazy academics!
+and variables ([[https://en.wikipedia.org/wiki/Common_Lisp#The_function_namespace][Lisp-1]]).  And all those crazy academics!
 
-[fn:9] Among other things, the [[https://gitlab.common-lisp.net/asdf/asdf/tree/master/uiop][uiop]] library provides portable wrapper
+[fn:13] Among other things, the [[https://gitlab.common-lisp.net/asdf/asdf/tree/master/uiop][uiop]] library provides portable wrapper
 to dump images for various implementations.
 
-[fn:10] Like [[https://european-lisp-symposium.org/static/2018/heisig.pdf][Petalisp - A Common Lisp Library for Data Parallel Programming]]
+[fn:14] Like [[https://european-lisp-symposium.org/static/2018/heisig.pdf][Petalisp - A Common Lisp Library for Data Parallel Programming]]

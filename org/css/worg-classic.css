@@ -1,7 +1,7 @@
 @media all
 {
     body {
-        background: #FAF0E6;
+        background: #607b8b;
         color: black;
         margin: 10px 8% 10px 8%;
         font-family: Verdana;
@@ -39,7 +39,7 @@
     }
 
     #content {
-        background: #c0c0c0;
+        background: #bcd2ee;
         border: 1px solid gray;
         padding-left: 3em;
         padding-right: 3em;
