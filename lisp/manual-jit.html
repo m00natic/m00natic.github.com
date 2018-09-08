@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-09-07 пт 05:32 -->
+<!-- 2018-09-14 пт 22:58 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Uniform Structured Syntax, Metaprogramming and Run-time Compilation</title>
@@ -237,7 +237,10 @@ for the JavaScript code in this tag.
  |
  <a accesskey="H" href="../index.html"> HOME </a>
 </div><div id="content">
-<h1 class="title">Uniform Structured Syntax, Metaprogramming and Run-time Compilation</h1>
+<h1 class="title">Uniform Structured Syntax, Metaprogramming and Run-time Compilation
+<br />
+<span class="subtitle">or why you'd be doing yourself disservice not considering Lisp for "big data" processing</span>
+</h1>
 <div id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
@@ -263,7 +266,7 @@ for the JavaScript code in this tag.
 <li><a href="#orgf4b62af">4.8. End result</a></li>
 <li><a href="#org31e949e">4.9. Squeezing performance 1</a></li>
 <li><a href="#orgbb2bfcc">4.10. Squeezing performance 2</a></li>
-<li><a href="#orgb18646c">4.11. Times</a></li>
+<li><a href="#orgd043a43">4.11. Measurements</a></li>
 </ul>
 </li>
 <li><a href="#org8292046">5. Addendum</a>
@@ -297,12 +300,7 @@ me provide a simple real world case where uniform syntax enables out
 of the box solution which is qualitatively simpler.  This is
 practically achievable (<a href="https://en.wikipedia.org/wiki/Turing_completeness">Turing-completeness</a> doesn't help much) and
 idiomatic in very few languages and about a single one of them has the
-additional means to pull it off with great performance.
-</p>
-
-<p>
-(the ideas outlined here are more thoroughly fleshed out and extended
-in the <a href="https://github.com/m00natic/cl-fdbq">cl-fdbq</a> project)
+additional means and synergy to pull it off with great performance.
 </p>
 </div>
 </div>
@@ -574,11 +572,11 @@ used in the hot loop.
 <div class="outline-text-3" id="text-4-1">
 <p>
 I actually didn't consider <b>Approach I</b> at all until much later, and
-that for educational purposes.  It somehow seems more complex than the
-problem it solves.  I mean, look at the SQL WHERE clause - it's a
-boolean expression like any other, why do we have to write tree
-traversal and not "just" use our language's built-in machinery?  Could
-it have something to do with the frontier between code and data?
+that for educational purposes.  It somehow seems artificial and more
+complex than the problem it solves.  I mean, look at the SQL WHERE
+clause - it's a boolean expression almost inviting for immediate
+evaluation, why do we have to write tree traversal and not "just" use
+our language's built-in machinery?
 </p>
 
 <p>
@@ -678,13 +676,13 @@ can do better.  Much better!
 <p>
 So <b>select</b> has to be <a href="http://www.gigamonkeys.com/book/macros-defining-your-own.html">macro</a> (the chosen representation doesn't adhere
 to the function calling convention, for user convenience) which
-expands to procedure that maps over the given db, <span class="underline">compiles</span> and then
-calls it.  Note that during its macro expansion, it will be observing
-a concrete query so it can check out the db and its schema, what
-fields are selected, what is the exact WHERE clause.  Instead of
-solving the problem for <span class="underline">all</span> possible queries as <b>Approach I</b> <span class="underline">must</span>,
-we <span class="underline">can</span> instead solve for this single case.  That's our time pausing
-mechanism.
+expands to procedure that maps over the given db, <span class="underline">compiles</span> (CL
+compilers are lightening fast) and then calls it.  Note that during
+its macro expansion, it will be observing a concrete query so it can
+check out the db and its schema, what fields are selected, what is the
+exact WHERE clause.  Instead of solving the problem for <span class="underline">all</span> possible
+queries as <b>Approach I</b> <span class="underline">must</span>, we <span class="underline">can</span> instead solve for this single
+case.  That's our time pausing mechanism.
 </p>
 
 <p>
@@ -1009,11 +1007,11 @@ would approve.
 <p>
 Congratulations, we just made a working file query engine<sup><a id="fnr.6" class="footref" href="#fn.6">6</a></sup>!  We
 designed a nice query language, outsourced all parsing to the <a href="http://www.lispworks.com/documentation/HyperSpec/Body/02_b.htm">Lisp
-reader</a>, courageously went onto implementing a <a href="https://en.wikipedia.org/wiki/One-pass_compiler">one-pass compiler</a> (which
-in this case is easier than <a href="https://en.wikipedia.org/wiki/Interpreter_(computing)">interpreter</a>!) and even managed to sprinkle
-some optimizations.  And on top of that, the language implementation
-borrowed us its "real" compiler (at run-time!) to optimize the
-expansion and generate machine code.
+reader</a>, courageously went onto implementing a <a href="https://en.wikipedia.org/wiki/One-pass_compiler">one-pass</a> to source
+compiler (which in this case is easier than <a href="https://en.wikipedia.org/wiki/Interpreter_(computing)">interpreter</a>!) and even
+managed to sprinkle some optimizations.  And on top of that, the
+language implementation borrowed us its "real" compiler (at run-time!)
+to optimize the expansion and generate machine code.
 </p>
 
 <p>
@@ -1144,10 +1142,11 @@ struggling to <a href="https://github.com/hanickadot/compile-time-regular-expres
 <h3 id="org31e949e"><span class="section-number-3">4.9</span> Squeezing performance 1</h3>
 <div class="outline-text-3" id="text-4-9">
 <p>
-With such simple, straightforward code and few declarations, the <a href="http://sbcl.org/">Steel
-Bank Common Lisp</a> compiler in particular would be able to do
-respectable job.  But performance in this case will still be 4-5 times
-slower than C/C++ for the following reasons:
+With such simple, straightforward code and few declarations, the
+superb <a href="http://sbcl.org/">Steel Bank Common Lisp</a> compiler in particular would be able to
+do respectable job.  But performance in this case will still be 4-5
+times slower than competent C++ version for the following prosaic
+differences:
 </p>
 
 <ul class="org-ul">
@@ -1178,7 +1177,7 @@ The first requires adjusting only the <a href="#org0434eb9">do-lines</a> macro:
          (ins (gensym)) <span style="color: #99968b;">;make sure the file stream variable is not visible to the body</span>
          (buffer (gensym))    <span style="color: #99968b;">;-//- for read buffer</span>
          (bytes (gensym))     <span style="color: #99968b;">;-//- for number of bytes read</span>
-         (offset (gensym)))   <span style="color: #99968b;">;-//- current line within buffer offset)</span>
+         (offset (gensym)))   <span style="color: #99968b;">;-//- current line within buffer offset</span>
     `(<span style="color: #8ac6f2; font-weight: bold;">let</span> ((,buffer (make-array ,buffer-size <span style="color: #e5786d;">:element-type</span> 'ub-char)) <span style="color: #99968b;">;allocate read</span>
            (,line-var (make-string ,entry-size <span style="color: #e5786d;">:element-type</span> 'base-char))) <span style="color: #99968b;">;and line buffers</span>
        (<span style="color: #8ac6f2; font-weight: bold;">declare</span> (dynamic-extent ,buffer ,line-var)) <span style="color: #99968b;">;use stack allocation if possible</span>
@@ -1202,7 +1201,7 @@ The first requires adjusting only the <a href="#org0434eb9">do-lines</a> macro:
 Skeleton is same as before, we only add a buffer dedicated to reading
 several lines at once and then slide through it, copying and
 converting bytes to the line variable.  With this, performance goes
-around 1.5 - 2 times slower than C/C++.  But we can do better!
+around 1.5 - 2 times slower than C++.  But we can do better!
 </p>
 </div>
 </div>
@@ -1212,8 +1211,8 @@ around 1.5 - 2 times slower than C/C++.  But we can do better!
 <div class="outline-text-3" id="text-4-10">
 <p>
 To go further we can try to leave aside copying and converting raw
-bytes and instead apply comparisons directly over them (what C/C++
-does).  So I went on to employ the <b>ascii-strings</b> contrib of the
+bytes and instead apply comparisons directly over them (what C++
+does).  So I <a href="https://www.quicklisp.org/">Quicklisp</a>-ed the <b>ascii-strings</b> contrib of the
 <a href="https://bitbucket.org/vityok/cl-string-match">cl-string-match</a> library to help with this.  Unfortunately I couldn't
 find substitute for the regex matcher that works on byte arrays, so
 we'd still have to make conversion for fields which are matched
@@ -1232,8 +1231,8 @@ following expression at read-time):
 <pre class="src src-lisp">(<span style="color: #8ac6f2; font-weight: bold;">lambda</span> ()
   (<span style="color: #8ac6f2; font-weight: bold;">declare</span> (optimize (speed 3) (debug 0) (safety 0) (compilation-speed 0)))
   (<span style="color: #8ac6f2; font-weight: bold;">let</span> ((buffer (make-array #.(* 57 (floor +max-buffer-size+ 57)) <span style="color: #99968b;">;raw byte buffer</span>
-                           <span style="color: #e5786d;">:element-type</span> 'ub-char))
-         <span style="color: #99968b;">;pre-allocated string used for regex matching</span>
+                            <span style="color: #e5786d;">:element-type</span> 'ub-char))
+        <span style="color: #99968b;">;;</span><span style="color: #99968b;">pre-allocated string used for regex matching</span>
         (line (make-string 56 <span style="color: #e5786d;">:element-type</span> 'base-char)))
     (<span style="color: #8ac6f2; font-weight: bold;">declare</span> (dynamic-extent buffer line)) <span style="color: #99968b;">;stack allocate</span>
     (<span style="color: #8ac6f2; font-weight: bold;">with-open-file</span> (in #P<span style="color: #95e454;">"/path/to/recordS5.db"</span> <span style="color: #e5786d;">:direction</span> <span style="color: #e5786d;">:input</span>
@@ -1249,27 +1248,56 @@ following expression at read-time):
                                                   (code-char (aref buffer (+ offset i)))))
                                    (cl-ppcre:scan <span style="color: #95e454;">"XX|YY"</span> line <span style="color: #e5786d;">:start</span> 2 <span style="color: #e5786d;">:end</span> 4))
                                  (or <span style="color: #99968b;">;convert filter string to bytes at macro expansion</span>
-                                  (and (search #.(ascii:string-to-ub <span style="color: #95e454;">"PET"</span>
+                                  (and (search #.(ascii:string-to-ub <span style="color: #95e454;">"PET"</span>)
                                         <span style="color: #99968b;">;the PET thing will turn to #(80 69 84)</span>
                                                buffer <span style="color: #e5786d;">:start1</span> 0 <span style="color: #e5786d;">:end1</span> 3 <span style="color: #99968b;">;and match against</span>
                                                <span style="color: #e5786d;">:start2</span> (+ offset 40) <span style="color: #99968b;">;the raw field bytes</span>
                                                <span style="color: #e5786d;">:end2</span> (+ offset 56))
-                                       (ascii:ub-char= (aref buffer (+ offset 7))
-                                                       #.(char-code #\C)))<span style="color: #99968b;">;convert char to byte</span>
-                                  (and (ascii:ub-char= (aref buffer (+ offset 7))
+                                       (= (aref buffer (+ offset 7))
+                                          #.(char-code #\C)))<span style="color: #99968b;">;convert char to byte</span>
+                                  (and (= (aref buffer (+ offset 7))
                                                        #.(char-code #\F))
-                                       (ascii:ub-string= #.(ascii:string-to-ub <span style="color: #95e454;">"MEAL"</span>) buffer
-                                                         <span style="color: #e5786d;">:start1</span> 0 <span style="color: #e5786d;">:end1</span> 4
-                                                         <span style="color: #e5786d;">:start2</span> (+ offset 40)
-                                                         <span style="color: #e5786d;">:end2</span> (+ offset 56))))
-                                 (ascii:ub-string&lt; #.(ascii:string-to-ub <span style="color: #95e454;">"180620"</span>) buffer
-                                                   <span style="color: #e5786d;">:start1</span> 0 <span style="color: #e5786d;">:end1</span> 6
-                                                   <span style="color: #e5786d;">:start2</span> (+ offset 14)
-                                                   <span style="color: #e5786d;">:end2</span> (+ offset 20))
-                                 (ascii:ub-string&lt; buffer buffer <span style="color: #e5786d;">:start1</span> (+ offset 8)
-                                                                 <span style="color: #e5786d;">:end1</span> (+ offset 14)
-                                                                 <span style="color: #e5786d;">:start2</span> (+ offset 14)
-                                                                 <span style="color: #e5786d;">:end2</span> (+ offset 20)))
+                                       (and <span style="color: #99968b;">;MEAL comparison</span>
+                                         (= (aref buffer (+ offset 40)) 77)
+                                         (= (aref buffer (+ offset 41)) 69)
+                                         (= (aref buffer (+ offset 42)) 65)
+                                         (= (aref buffer (+ offset 43)) 76))))
+                                 (<span style="color: #8ac6f2; font-weight: bold;">cond</span>  <span style="color: #99968b;">;"180620" comparison</span>
+                                   ((/= 49 (aref buffer (+ offset 14)))
+                                    (&lt; 49 (aref buffer (+ offset 14))))
+                                   ((/= 56 (aref buffer (+ offset 15)))
+                                    (&lt; 56 (aref buffer (+ offset 15))))
+                                   ((/= 48 (aref buffer (+ offset 16)))
+                                    (&lt; 48 (aref buffer (+ offset 16))))
+                                   ((/= 54 (aref buffer (+ offset 17)))
+                                    (&lt; 54 (aref buffer (+ offset 17))))
+                                   ((/= 50 (aref buffer (+ offset 18)))
+                                    (&lt; 50 (aref buffer (+ offset 18))))
+                                   (t (&lt; 48 (aref buffer (+ offset 19)))))
+                                 (<span style="color: #8ac6f2; font-weight: bold;">cond</span>  <span style="color: #99968b;">;eff &lt; disc dates</span>
+                                   ((/= (aref buffer (+ offset 8))
+                                        (aref buffer (+ offset 14)))
+                                    (&lt; (aref buffer (+ offset 8))
+                                       (aref buffer (+ offset 14))))
+                                   ((/= (aref buffer (+ offset 9))
+                                        (aref buffer (+ offset 15)))
+                                    (&lt; (aref buffer (+ offset 9))
+                                       (aref buffer (+ offset 15))))
+                                   ((/= (aref buffer (+ offset 10))
+                                        (aref buffer (+ offset 16)))
+                                    (&lt; (aref buffer (+ offset 10))
+                                       (aref buffer (+ offset 16))))
+                                   ((/= (aref buffer (+ offset 11))
+                                        (aref buffer (+ offset 17)))
+                                    (&lt; (aref buffer (+ offset 11))
+                                       (aref buffer (+ offset 17))))
+                                   ((/= (aref buffer (+ offset 12))
+                                        (aref buffer (+ offset 18)))
+                                    (&lt; (aref buffer (+ offset 12))
+                                       (aref buffer (+ offset 18))))
+                                   (t
+                                    (&lt; (aref buffer (+ offset 13))
+                                       (aref buffer (+ offset 19))))))
                           (<span style="color: #8ac6f2; font-weight: bold;">progn</span>
                             <span style="color: #99968b;">;; </span><span style="color: #99968b;">(write-string line nil :start 2 :end 4) ?</span>
                             (<span style="color: #8ac6f2; font-weight: bold;">loop</span> for i fixnum from (+ offset 2) below (+ offset 4)
@@ -1285,8 +1313,7 @@ following expression at read-time):
 </div>
 
 <p>
-Now, that begins to look less like work of a human.  Summary of the
-expansion changes:
+Now, that begins to look a bit more compilish.  Here's what changed:
 </p>
 
 <ul class="org-ul">
@@ -1294,25 +1321,27 @@ expansion changes:
 bytes during macro expansion; add current line <b>offset</b> to field
 offsets since now working over the buffer</li>
 
-<li>lazily fill parts of <b>line</b> before regex matching; in case a field is
-matched in multiple places (not the case for this query), we can
-mark its first byte position with special character at the start of
-line validation to signal that it has to be filled and can skip
-filling on subsequent operations over the same line</li>
+<li>unroll all non-regex comparisons</li>
+
+<li>lazily fill parts of <b>line</b> before regex matching; optionally, in
+case a field is matched in multiple places (not the case for this
+query), we can mark its first byte position with special character
+at the start of line validation to signal that it has to be filled
+and can skip filling on subsequent operations over the same line</li>
 </ul>
 
 <p>
 I won't go into detailed implementation, the previous snippets should
-have shown that programmatically manipulating code in Lisp is
-indistinguishable from juggling with data and these requirements are
-not really rocket science.  You can see a more elaborate and complete
-implementation in <a href="https://github.com/m00natic/cl-fdbq">cl-fdbq</a>.
+have shown how programmatically manipulating code in Lisp is
+indistinguishable from juggling with data.  These adjustments are not
+really rocket science.  You can see a more elaborate and complete
+implementation in <a href="https://github.com/m00natic/fdbq">fdbq</a>.
 </p>
 </div>
 </div>
 
-<div id="outline-container-orgb18646c" class="outline-3">
-<h3 id="orgb18646c"><span class="section-number-3">4.11</span> Times</h3>
+<div id="outline-container-orgd043a43" class="outline-3">
+<h3 id="orgd043a43"><span class="section-number-3">4.11</span> Measurements</h3>
 <div class="outline-text-3" id="text-4-11">
 <p>
 After the above squeezing, here are processing times I observe with
@@ -1453,8 +1482,8 @@ reference:
 </table>
 
 <p>
-(the parallelized C++ <span class="underline">versions</span> are <a href="https://en.wikipedia.org/wiki/Mmap">memory map</a> based, while the CL
-<span class="underline">complete solutions</span> still use sequential reading)
+(the parallelized C++ <span class="underline">versions</span> are straightforward <a href="https://en.wikipedia.org/wiki/Mmap">memory map</a> based,
+while the CL <span class="underline">complete solutions</span> still use sequential file reads)
 </p>
 
 <p>
@@ -1465,8 +1494,16 @@ single thread disadvantage here comes from:
 <ul class="org-ul">
 <li>absence of regex matcher which works over byte arrays rather than
 strings</li>
-<li>sequence comparisons are not <a href="https://en.wikipedia.org/wiki/SIMD">vectorized</a> for now</li>
+<li>sequence comparisons are not <a href="https://en.wikipedia.org/wiki/SIMD">vectorized</a> for now (though the
+unrolling pretty much neutralizes that)</li>
 </ul>
+
+<p>
+How does it compensate during parallelization?  It may have something
+to do with the excellent <a href="https://lparallel.org/">lparallel</a> library allowing easily wipe a
+scheme which better saturates the CPUs while playing well with the
+system caches.
+</p>
 </div>
 </div>
 </div>
@@ -1491,13 +1528,13 @@ Here's the essence of <b>Approach II</b>:
 <p>
 I like to call this tactic of plugging Ahead-Of-Time compilation on
 the fly (run-time) over newly assembled specialized code "Manual
-Just-In-Time compilation".  Works at a higher level than <a href="https://en.wikipedia.org/wiki/Just-in-time_compilation">JIT</a> and opens
-opportunities for greater while orthogonal gain and as seen - even
-algorithm simplification.  This doesn't work (at least is not
-portable) for languages which leave only minimal dead skeleton of the
-program for run-time like&#x2026;er, about all compiled languages (unless
-<a href="https://en.wikipedia.org/wiki/Greenspun%27s_tenth_rule">greenspunning</a>).  It's idiomatic and easily available in most Lisps
-through macros.  Common Lisp is especially suited with:
+Just-In-Time compilation".  Works at a higher level than "automatic"
+<a href="https://en.wikipedia.org/wiki/Just-in-time_compilation">JIT</a> and opens opportunities for greater while orthogonal gain and as
+seen - even algorithm simplification.  This doesn't work (at least is
+not portable) for languages which leave only minimal dead skeleton of
+the program for run-time like&#x2026;er, about all compiled languages
+(unless <a href="https://en.wikipedia.org/wiki/Greenspun%27s_tenth_rule">greenspunning</a>).  It's idiomatic and easily available in most
+Lisps through macros.  Common Lisp is especially suited with:
 </p>
 
 <ul class="org-ul">
@@ -1507,11 +1544,12 @@ through macros.  Common Lisp is especially suited with:
 <li>optional type declarations</li>
 <li>designed for system evolution, including <a href="http://www.gigamonkeys.com/book/object-reorientation-generic-functions.html">CLOS</a><sup><a id="fnr.9" class="footref" href="#fn.9">9</a></sup>, the object
 system</li>
+<li>truly multi-paradigm without pushing ahead any particular style<sup><a id="fnr.10" class="footref" href="#fn.10">10</a></sup></li>
 </ul>
 
 <p>
 Some CL implementations can leverage type declarations to rival static
-language <a href="https://en.wikipedia.org/wiki/Ahead-of-time_compilation">AOT</a> compilers<sup><a id="fnr.10" class="footref" href="#fn.10">10</a></sup>.  SBCL has certain ability to perform
+language <a href="https://en.wikipedia.org/wiki/Ahead-of-time_compilation">AOT</a> compilers<sup><a id="fnr.11" class="footref" href="#fn.11">11</a></sup>.  SBCL has certain ability to perform
 <a href="https://en.wikipedia.org/wiki/Type_inference">type inference</a> during compilation and beside type errors, even
 provides hints where and why a micro-optimization couldn't be applied
 to guide type declaration refinements:
@@ -1532,9 +1570,9 @@ source.lisp:4:3:
 </pre>
 
 <p>
-As the examples show, Common Lisp actually has surprisingly rich <a href="http://www.lispworks.com/documentation/HyperSpec/Body/04_bc.htm">type
+As the examples show, Common Lisp actually has unexpectedly rich <a href="http://www.lispworks.com/documentation/HyperSpec/Body/04_bc.htm">type
 system</a>.  Combine this with <a href="https://en.wikipedia.org/wiki/Metaprogramming">metaprogramming</a> (where Lisps excel at) and
-one can generate maximally trimmed static code where needed.
+one can generate pretty trimmed static code where needed.
 </p>
 
 <p>
@@ -1565,12 +1603,11 @@ And you'd be right with these caveats:
 <li>string manipulation to cover random syntax is uncomfortable and
 error prone</li>
 <li>the possible alternative of building explicit internal <a href="https://en.wikipedia.org/wiki/Abstract_syntax_tree">AST</a> objects
-is more acceptable but just as clunky and non composable</li>
-<li>it's still interpretation, not compilation (maybe some JavaScript
-compiler is exception?)</li>
+is more robust but just as clunky and non composable</li>
+<li>it's still interpretation, not compilation</li>
 <li>huge majority of dynamic languages which are not Lisps are indeed
 pathetically slow (<a href="http://luajit.org/luajit.html">LuaJIT</a>, <a href="https://julialang.org/">Julia</a> being exceptions, though the latter
-is rather Lisp with default random syntax<sup><a id="fnr.11" class="footref" href="#fn.11">11</a></sup>)</li>
+is rather Lisp with default random syntax<sup><a id="fnr.12" class="footref" href="#fn.12">12</a></sup>)</li>
 </ul>
 
 <p>
@@ -1593,14 +1630,14 @@ mainstream languages, yadda yadda (obviously never heard of <a href="http://www.
 CL's <a href="http://www.gigamonkeys.com/book/beyond-exception-handling-conditions-and-restarts.html">condition system</a>).  Some of them are even statically typed,
 though these often have limitations on what can be done at compile
 time.  They are normally nice enough to easily implement syntax sugar
-like <a href="#org0434eb9">do-lines</a>.  But once a task gets a bit harder like having to
-introspect, generate non trivially structured code and/or combine
-transformations - implementation (if at all possible) degrades to
-undecipherable syntax noise that requires PhD to figure out.  And the
-reason is that unlike Lisps, their random syntax is hardly
-representative of the abstract syntax trees the interpreter/compiler
-works with.  So they invent yet another random syntax sub-language to
-bridge them.  These ain't "acceptable Lisps".
+like the simple version of <a href="#org0434eb9">do-lines</a>.  But once a task gets a bit
+harder like having to introspect, generate non trivially structured
+code and/or combine transformations - implementation (if at all
+possible) degrades to undecipherable syntax noise that requires PhD to
+figure out.  And the reason is that unlike Lisps, their random syntax
+is hardly representative of the abstract syntax trees the
+interpreter/compiler works with.  So they invent yet another random
+syntax sub-language to bridge them.  These ain't "acceptable Lisps".
 </p>
 </div>
 </div>
@@ -1643,7 +1680,7 @@ some dumb pre-processor or half-assed template engine?  No,
 <th scope="col" class="org-left">Description</th>
 <th scope="col" class="org-left">Control entry point</th>
 <th scope="col" class="org-left">Common Lisp</th>
-<th scope="col" class="org-left">Racket<sup><a id="fnr.12" class="footref" href="#fn.12">12</a></sup></th>
+<th scope="col" class="org-left">Racket<sup><a id="fnr.13" class="footref" href="#fn.13">13</a></sup></th>
 <th scope="col" class="org-left">Scheme</th>
 <th scope="col" class="org-left">Clojure</th>
 </tr>
@@ -1695,11 +1732,12 @@ some dumb pre-processor or half-assed template engine?  No,
 
 <p>
 While the above seems like the natural sequence of "events" - <a href="http://www.lispworks.com/documentation/HyperSpec/Body/f_rd_rd.htm">read</a>,
-<a href="http://www.lispworks.com/documentation/HyperSpec/Body/f_cmp.htm">compile</a>, can additionally happen at any time, as do macros and
-function calls.  Notice how the <a href="#org245b3b7">select</a> macro is knitted together by
-amalgam of built-in and user defined functions and macros.  Here's
-wildly approximate sketch how it may bounce around the phases after
-user invocation:
+<a href="http://www.lispworks.com/documentation/HyperSpec/Body/f_cmp.htm">compile</a>, can additionally happen at any time as any other function
+call (one of several reasons to prefer functions to macros when in
+doubt).  Notice how the <a href="#org245b3b7">select</a> macro is knitted together by amalgam of
+built-in and user defined functions and macros.  Here's wildly
+approximate sketch how it may bounce around the phases after user
+invocation:
 </p>
 
 
@@ -1725,7 +1763,7 @@ effects etc.
 
 <p>
 How would one produce user facing executable?  Dump the current
-image<sup><a id="fnr.13" class="footref" href="#fn.13">13</a></sup>.  This opens opportunity to also embed data within the
+image<sup><a id="fnr.14" class="footref" href="#fn.14">14</a></sup>.  This opens opportunity to also embed data within the
 image before dumping which would otherwise have to be loaded, parsed,
 pre/processed during execution.
 </p>
@@ -1763,7 +1801,7 @@ our solution unchanged.
 <div class="outline-text-2" id="text-6">
 <p>
 Looking at conference materials, lispers (at least the Common breed)
-at times take advantage of such techniques<sup><a id="fnr.14" class="footref" href="#fn.14">14</a></sup> for difficult
+at times take advantage of such techniques<sup><a id="fnr.15" class="footref" href="#fn.15">15</a></sup> for difficult
 problems but seem troubled to gain attention of the outside world.
 </p>
 
@@ -1820,9 +1858,9 @@ present.
 </p></div></div>
 
 <div class="footdef"><sup><a id="fn.3" class="footnum" href="#fnr.3">3</a></sup> <div class="footpara"><p class="footpara">
-The interpreter approach in a usual language should also do
-this before the iteration begins but the compiler will be long gone at
-that point.
+The interpreter approach in a "usual" (or as they say - blub)
+language should also do this before the iteration begins but there's
+no way to specialize the code structure at that point, only the data.
 </p></div></div>
 
 <div class="footdef"><sup><a id="fn.4" class="footnum" href="#fnr.4">4</a></sup> <div class="footpara"><p class="footpara">
@@ -1847,13 +1885,14 @@ part of a full solution.
 
 <div class="footdef"><sup><a id="fn.7" class="footnum" href="#fnr.7">7</a></sup> <div class="footpara"><p class="footpara">
 That's <b>Approach I</b> without actual query parsing, just a
-mocked up specific WHERE tree instance.  So not quite a real
-solution either.  Yeah, I'm lazy (and life's too short for C++).
+mocked up specific WHERE tree instance.  So not quite a real solution
+either, thus times are a bit optimistic.  Yeah, I'm lazy (and life's
+too short for so much C++ ceremony).
 </p></div></div>
 
 <div class="footdef"><sup><a id="fn.8" class="footnum" href="#fnr.8">8</a></sup> <div class="footpara"><p class="footpara">
 The <a href="https://ccl.clozure.com/">Clozure</a> Common Lisp implementation is not to be confused
-with the <a href="https://clojure.org/">Clojure</a> language of the Lisp family.
+with the <a href="https://clojure.org/">Clojure</a> language, also part of the Lisp family.
 </p></div></div>
 
 <div class="footdef"><sup><a id="fn.9" class="footnum" href="#fnr.9">9</a></sup> <div class="footpara"><p class="footpara">
@@ -1862,37 +1901,49 @@ Lisp HyperSpec</a>.
 </p></div></div>
 
 <div class="footdef"><sup><a id="fn.10" class="footnum" href="#fnr.10">10</a></sup> <div class="footpara"><p class="footpara">
+Beside metaprogrammability and being as imperative as it gets,
+CL sports fantastic object system, has adequate out of the box support
+for functional style and <a href="http://www.lispworks.com/documentation/HyperSpec/Body/12_aac.htm">lower level bit-twiddling</a> at the same time.
+Generally, it can assimilate many outside paradigms as if they were
+native thanks to being the programmable programming language.  There
+are library extensions for <a href="https://cliki.net/Prolog">logic programming</a>, <a href="http://lisa.sourceforge.net/">expert systems</a>,
+<a href="http://nikodemus.github.io/screamer/">nondeterministic and constraint programming</a>, <a href="https://github.com/guicho271828/trivia">pattern matching</a>,
+<a href="https://borodust.github.io/projects/cl-flow/">dataflow</a>&#x2026; which normally blend with rest of the language, just like
+user code becomes indistinguishable from the core functionality.
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.11" class="footnum" href="#fnr.11">11</a></sup> <div class="footpara"><p class="footpara">
 See <a href="https://benchmarksgame-team.pages.debian.net/benchmarksgame/which-programs-are-fast.html">The Computer Language Benchmarks Game</a> to get rough
 idea. With all the usual toy micro benchmark disclaimers, Common
 Lisp/SBCL's competitiveness against statically typed languages is kind
 of embarrassing to the latter.  And that's using same algorithms.
 </p></div></div>
 
-<div class="footdef"><sup><a id="fn.11" class="footnum" href="#fnr.11">11</a></sup> <div class="footpara"><p class="footpara">
+<div class="footdef"><sup><a id="fn.12" class="footnum" href="#fnr.12">12</a></sup> <div class="footpara"><p class="footpara">
 Julia can almost match Common Lisp for this query engine
 thing.  However, it seems to only be able to invoke (implicitly) the
 compiler at run-time for <a href="https://docs.julialang.org/en/latest/manual/metaprogramming/#Generated-functions-1">generated functions</a> which only see argument
-types, not sufficient for our queries.  Thus <a href="https://docs.julialang.org/en/latest/devdocs/eval/">eval</a> interpretation has
-to be used and the compiler wouldn't be able to optimize the run-time
-generated code.  In this case <b>Approach I</b> being subject to "normal"
-compilation may well fare better.  In contrast, with Common Lisp we
-are able to explicitly summon the compiler with full optimization over
-arbitrary generated function.
+types.  This is not sufficient for our queries.  Thus <a href="https://docs.julialang.org/en/latest/devdocs/eval/">eval</a>
+interpretation has to be used and the compiler wouldn't be able to
+optimize the run-time generated code.  In this case <b>Approach I</b> being
+subject to "normal" AOT compilation may well fare better.  In
+contrast, with Common Lisp we are able to explicitly summon the
+compiler with full optimization over arbitrary generated function.
 </p></div></div>
 
-<div class="footdef"><sup><a id="fn.12" class="footnum" href="#fnr.12">12</a></sup> <div class="footpara"><p class="footpara">
+<div class="footdef"><sup><a id="fn.13" class="footnum" href="#fnr.13">13</a></sup> <div class="footpara"><p class="footpara">
 The table is from Common Lisp's perspective but <a href="https://racket-lang.org/">Racket</a> seems to
 have even more elaborate <a href="https://docs.racket-lang.org/guide/phases.html">macro phase system</a>.  Part of the reason is
 Racket, being a <a href="https://en.wikipedia.org/wiki/Scheme_%28programming_language%29">Scheme</a> descendant, has single namespace for functions
 and variables (<a href="https://en.wikipedia.org/wiki/Common_Lisp#The_function_namespace">Lisp-1</a>).  And all those crazy academics!
 </p></div></div>
 
-<div class="footdef"><sup><a id="fn.13" class="footnum" href="#fnr.13">13</a></sup> <div class="footpara"><p class="footpara">
+<div class="footdef"><sup><a id="fn.14" class="footnum" href="#fnr.14">14</a></sup> <div class="footpara"><p class="footpara">
 Among other things, the <a href="https://gitlab.common-lisp.net/asdf/asdf/tree/master/uiop">uiop</a> library provides portable wrapper
 to dump images for various implementations.
 </p></div></div>
 
-<div class="footdef"><sup><a id="fn.14" class="footnum" href="#fnr.14">14</a></sup> <div class="footpara"><p class="footpara">
+<div class="footdef"><sup><a id="fn.15" class="footnum" href="#fnr.15">15</a></sup> <div class="footpara"><p class="footpara">
 Like <a href="https://european-lisp-symposium.org/static/2018/heisig.pdf">Petalisp - A Common Lisp Library for Data Parallel Programming</a>
 </p></div></div>
 
@@ -1901,7 +1952,7 @@ Like <a href="https://european-lisp-symposium.org/static/2018/heisig.pdf">Petali
 </div></div>
 <div id="postamble" class="status">
 <p class="author">Author: Andrey Kotlarski</p>
-<p class="date">Created: 2018-09-07 пт 05:32</p>
+<p class="date">Created: 2018-09-14 пт 22:58</p>
 <p class="creator"><a href="https://www.gnu.org/software/emacs/">Emacs</a> 26.1 (<a href="https://orgmode.org">Org</a> mode 9.1.9)</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>

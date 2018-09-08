@@ -27,8 +27,6 @@ Introductions done for my coworkers:
 
 * Miscellaneous
 
-[[./my-pc.org][If you happen to sit on my computer]], don't panic!
-
 [[https://github.com/m00natic][Here]] I am on github.  Considering that this site is a project there -
 the circle is now complete.
 

@@ -66,6 +66,14 @@
         border-bottom: 1px solid #222;
     }
 
+    .subtitle {
+        color: #990000;
+        padding-bottom: 7px;
+        margin-bottom: 20px;
+        border-bottom: 1px solid #222;
+        font-size: 10pt;
+    }
+
     h2 {
         font-size: 12pt;
         padding-bottom: 4px;
@@ -120,7 +128,8 @@
     }
 
     table {
-        border: none;
+        border: 1px solid black;
+        background-color: #b0c4de;
     }
 
     td {
