@@ -33,3 +33,4 @@ the circle is now complete.
 [[./andrey-kotlarski-cv.pdf][My Curriculum Vitae]] kept on +[[https://gitorious.org/~m00natic][Gitorious]]+ [[https://gitlab.com/m00natic/cv][GitLab]] for a change.
 
 You can contact me [[mailto:m00naticus@gmail.com][here]].
+Public key: 9CAB B874 7125 7031 7852 5F0E 3A3E A6AC 19A0 02F0
