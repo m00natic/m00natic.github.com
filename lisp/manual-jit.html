@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-09-14 пт 22:58 -->
+<!-- 2018-11-18 нд 16:49 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Uniform Structured Syntax, Metaprogramming and Run-time Compilation</title>
@@ -245,7 +245,11 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org01309da">1. Intro</a></li>
+<li><a href="#org01309da">1. Intro</a>
+<ul>
+<li><a href="#org0ec6d4a">1.1. Too Long, Don't Read</a></li>
+</ul>
+</li>
 <li><a href="#orgdd40940">2. The Problem</a></li>
 <li><a href="#org4514b78">3. Approach I - Interpreter</a>
 <ul>
@@ -302,6 +306,39 @@ practically achievable (<a href="https://en.wikipedia.org/wiki/Turing_completene
 idiomatic in very few languages and about a single one of them has the
 additional means and synergy to pull it off with great performance.
 </p>
+</div>
+
+<div id="outline-container-org0ec6d4a" class="outline-3">
+<h3 id="org0ec6d4a"><span class="section-number-3">1.1</span> Too Long, Don't Read</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+We develop tiny SQL-like query engine from scratch in <a href="http://lisp-lang.org/">Common
+Lisp</a> which performs on par with a cheating C++ version and handily
+outruns even more cheating Go version.
+</p>
+
+<p>
+This is possible because CL compilers are competent, blazing quick and
+can be programmatically evoked at runtime over arbitrary just-in-time
+generated functions.  This allows turning the task from the usual
+run-time interpreter hammering to an even simplified <a href="https://en.wikipedia.org/wiki/Metaprogramming">metaprogramming</a>
+march.  Generation and native compilation of specialized for any
+concrete query code is deferred right back to query (run) time.  Where
+other languages must pre-compile recursive interpreter, CL compiles
+down a single if-condition.
+</p>
+
+<p>
+As for code generation we have the full power of the language plus
+whatever we've additionally defined, we show off arguably the most
+powerful <a href="https://en.wikipedia.org/wiki/Common_Lisp_Object_System">Common Lisp Object System</a> (CLOS) in use.  This combined with
+the fact that generating code in Lisp is isomorphic to writing
+"regular" code, makes the solution so simple, concise and elegant,
+it's difficult to imagine it does the same thing as those unsung
+geniuses writing low-level optimizing compilers in all those powerless
+non-Lisp languages.
+</p>
+</div>
 </div>
 </div>
 
@@ -1868,7 +1905,8 @@ Some CL implementations work only as interpreters, others only as
 compilers. It will be all the same in such case.  Talking of CL
 implementations, there's bunch of standard compliant ones with
 different pros and cons - here's slightly outdated <a href="https://common-lisp.net/~dlw/LispSurvey.html">survey</a> on most of
-them.
+them.  Probably the biggest omission is the recent <a href="https://github.com/clasp-developers/clasp">Clasp</a>
+implementation.
 </p></div></div>
 
 <div class="footdef"><sup><a id="fn.5" class="footnum" href="#fnr.5">5</a></sup> <div class="footpara"><p class="footpara">
@@ -1952,7 +1990,7 @@ Like <a href="https://european-lisp-symposium.org/static/2018/heisig.pdf">Petali
 </div></div>
 <div id="postamble" class="status">
 <p class="author">Author: Andrey Kotlarski</p>
-<p class="date">Created: 2018-09-14 пт 22:58</p>
+<p class="date">Created: 2018-11-18 нд 16:49</p>
 <p class="creator"><a href="https://www.gnu.org/software/emacs/">Emacs</a> 26.1 (<a href="https://orgmode.org">Org</a> mode 9.1.9)</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>

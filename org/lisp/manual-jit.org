@@ -17,6 +17,30 @@ practically achievable ([[https://en.wikipedia.org/wiki/Turing_completeness][Tur
 idiomatic in very few languages and about a single one of them has the
 additional means and synergy to pull it off with great performance.
 
+** Too Long, Don't Read
+
+We develop tiny SQL-like query engine from scratch in [[http://lisp-lang.org/][Common
+Lisp]] which performs on par with a cheating C++ version and handily
+outruns even more cheating Go version.
+
+This is possible because CL compilers are competent, blazing quick and
+can be programmatically evoked at runtime over arbitrary just-in-time
+generated functions.  This allows turning the task from the usual
+run-time interpreter hammering to an even simplified [[https://en.wikipedia.org/wiki/Metaprogramming][metaprogramming]]
+march.  Generation and native compilation of specialized for any
+concrete query code is deferred right back to query (run) time.  Where
+other languages must pre-compile recursive interpreter, CL compiles
+down a single if-condition.
+
+As for code generation we have the full power of the language plus
+whatever we've additionally defined, we show off arguably the most
+powerful [[https://en.wikipedia.org/wiki/Common_Lisp_Object_System][Common Lisp Object System]] (CLOS) in use.  This combined with
+the fact that generating code in Lisp is isomorphic to writing
+"regular" code, makes the solution so simple, concise and elegant,
+it's difficult to imagine it does the same thing as those unsung
+geniuses writing low-level optimizing compilers in all those powerless
+non-Lisp languages.
+
 * The Problem
 
 Here's our situation: there are over 100 let's say plain text dbs,
@@ -1084,7 +1108,8 @@ no way to specialize the code structure at that point, only the data.
 compilers. It will be all the same in such case.  Talking of CL
 implementations, there's bunch of standard compliant ones with
 different pros and cons - here's slightly outdated [[https://common-lisp.net/~dlw/LispSurvey.html][survey]] on most of
-them.
+them.  Probably the biggest omission is the recent [[https://github.com/clasp-developers/clasp][Clasp]]
+implementation.
 
 [fn:5] Array bound checks should be unconditionally elided within the
 *(safety 0)* [[http://www.lispworks.com/documentation/HyperSpec/Body/d_optimi.htm][optimization level]].  In case we decide to go
