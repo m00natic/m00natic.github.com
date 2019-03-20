@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-11-18 нд 16:49 -->
+<!-- 2019-03-20 ср 02:39 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Uniform Structured Syntax, Metaprogramming and Run-time Compilation</title>
@@ -297,14 +297,14 @@ for the JavaScript code in this tag.
 <p>
 Often times I hear the claim that (programming language) syntax
 doesn't matter or if it does, it's only to provide some subjective
-readability aesthetics.  It's somewhat surprising to me how large
+readability aesthetics. It's somewhat surprising to me how large
 majority of supposedly rational people like programmers/computer
-scientists would throw out objectivity with such confidence.  So let
-me provide a simple real world case where uniform syntax enables out
-of the box solution which is qualitatively simpler.  This is
-practically achievable (<a href="https://en.wikipedia.org/wiki/Turing_completeness">Turing-completeness</a> doesn't help much) and
-idiomatic in very few languages and about a single one of them has the
-additional means and synergy to pull it off with great performance.
+scientists would throw out objectivity with such confidence. So let me
+provide a simple real world case where uniform syntax enables out of
+the box solution which is qualitatively simpler. This is practically
+achievable (<a href="https://en.wikipedia.org/wiki/Turing_completeness">Turing-completeness</a> doesn't help much) and idiomatic in
+very few languages and about a single one of them has the additional
+means and synergy to pull it off with great performance.
 </p>
 </div>
 
@@ -312,26 +312,24 @@ additional means and synergy to pull it off with great performance.
 <h3 id="org0ec6d4a"><span class="section-number-3">1.1</span> Too Long, Don't Read</h3>
 <div class="outline-text-3" id="text-1-1">
 <p>
-We develop tiny SQL-like query engine from scratch in <a href="http://lisp-lang.org/">Common
-Lisp</a> which performs on par with a cheating C++ version and handily
-outruns even more cheating Go version.
+We develop tiny SQL-like query engine from scratch in <a href="http://lisp-lang.org/">Common Lisp</a>
+which performs on par with a cheating C++ version and handily outruns
+even more cheating Go version.
 </p>
 
 <p>
 This is possible because CL compilers are competent, blazing quick and
 can be programmatically evoked at runtime over arbitrary just-in-time
-generated functions.  This allows turning the task from the usual
-run-time interpreter hammering to an even simplified <a href="https://en.wikipedia.org/wiki/Metaprogramming">metaprogramming</a>
-march.  Generation and native compilation of specialized for any
-concrete query code is deferred right back to query (run) time.  Where
-other languages must pre-compile recursive interpreter, CL compiles
-down a single if-condition.
+generated functions. Generation and native compilation of specialized
+for any concrete query code is deferred right back to query (run)
+time. Where other languages must pre-compile recursive interpreter, CL
+compiles down a single if-condition.
 </p>
 
 <p>
 As for code generation we have the full power of the language plus
 whatever we've additionally defined, we show off arguably the most
-powerful <a href="https://en.wikipedia.org/wiki/Common_Lisp_Object_System">Common Lisp Object System</a> (CLOS) in use.  This combined with
+powerful <a href="https://en.wikipedia.org/wiki/Common_Lisp_Object_System">Common Lisp Object System</a> (CLOS) in use. This combined with
 the fact that generating code in Lisp is isomorphic to writing
 "regular" code, makes the solution so simple, concise and elegant,
 it's difficult to imagine it does the same thing as those unsung
@@ -364,7 +362,7 @@ S5YYF021160629999999IBG CY PE081CPETC201PET IN CABIN DOG
 
 <p>
 So you can consider that each db has a schema where each field is
-located at a fixed offset from the beginning of the line.  We have to
+located at a fixed offset from the beginning of the line. We have to
 provide subset of <a href="https://en.wikipedia.org/wiki/Sql">SQL</a>-like operations over them<sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup>, for example:
 </p>
 
@@ -388,13 +386,13 @@ affiliated with the well known Lisp company in that sector)
 
 <p>
 We'll have to iterate all db entries, check the WHERE filter over each
-line and extract information to be returned in case it passes.  These
+line and extract information to be returned in case it passes. These
 queries can happen to run over billions of entries so we'll eye some
 "systems" language, band-aids like Python are out of question.
 </p>
 
 <p>
-Let's focus only on the filter condition.  WHERE is essentially a tree
+Let's focus only on the filter condition. WHERE is essentially a tree
 where intermediate nodes are boolean predicates <b>and</b>, <b>or</b> or <b>not</b>
 and leaves being concrete line field operation - comparison, regular
 expression matching, either with constant string or other field.
@@ -412,7 +410,7 @@ expression matching, either with constant string or other field.
 <h2 id="org4514b78"><span class="section-number-2">3</span> Approach I - Interpreter</h2>
 <div class="outline-text-2" id="text-3">
 <p>
-So how do we go about it?  A straightforward way is to create a tree
+So how do we go about it? A straightforward way is to create a tree
 structure instance mirroring the WHERE clause and a matcher which
 would traverse it for each line to see if the clause is satisfied.
 </p>
@@ -502,7 +500,7 @@ Traverses the WHERE tree in <a href="https://en.wikipedia.org/wiki/Depth-first">
 <p>
 If there's one problem with the above, it would probably be that
 <b>match</b> is recursive (and not in good <a href="https://en.wikipedia.org/wiki/Tail_recursion">tail-recursive</a> way) so the
-compiler wouldn't be that jubilant.  There probably is a way to
+compiler wouldn't be that jubilant. There probably is a way to
 linearize the WHERE tree but I'm a little concerned to think out in
 depth how to conserve the short-circuiting without backtracking and
 getting a headache.
@@ -609,8 +607,8 @@ used in the hot loop.
 <div class="outline-text-3" id="text-4-1">
 <p>
 I actually didn't consider <b>Approach I</b> at all until much later, and
-that for educational purposes.  It somehow seems artificial and more
-complex than the problem it solves.  I mean, look at the SQL WHERE
+that for educational purposes. It somehow seems artificial and more
+complex than the problem it solves. I mean, look at the SQL WHERE
 clause - it's a boolean expression almost inviting for immediate
 evaluation, why do we have to write tree traversal and not "just" use
 our language's built-in machinery?
@@ -624,12 +622,12 @@ someone comes along and strikes:
 <blockquote>
 <p>
 <i>Can you extract me this and that field where such and such conditions
-are met?  Like in the next hour?  Thankyouverymuch!</i>
+are met? Like in the next hour? Thankyouverymuch!</i>
 </p>
 </blockquote>
 
 <p>
-What then, one-off program?  I bet in such case you'd write something
+What then, one-off program? I bet in such case you'd write something
 quick &amp; dirty, morally equivalent to:
 </p>
 
@@ -654,16 +652,16 @@ quick &amp; dirty, morally equivalent to:
 <p>
 Which is about as simple and efficient (save for some clause
 reordering that can be done in order to push cheaper checks earlier)
-as one can get.  No recursion, no switches, no loops.  Some contrast
-to the general solution!  Ignoring syntax noise, this is direct
+as one can get. No recursion, no switches, no loops. Some contrast to
+the general solution! Ignoring syntax noise, this is direct
 translation of the WHERE condition.
 </p>
 
 <p>
 Now imagine if on receiving a query we could temporarily pause time,
 write a simple and efficient matcher tailored to the specific query,
-compile and then let it fly over the db.  And remember to unpause
-cosmic time of course!  We can dream, or&#x2026;
+compile and then let it fly over the db. And remember to unpause
+cosmic time of course! We can dream, or&#x2026;
 </p>
 </div>
 </div>
@@ -672,14 +670,14 @@ cosmic time of course!  We can dream, or&#x2026;
 <h3 id="org3cde53f"><span class="section-number-3">4.2</span> Embedded domain specific languages</h3>
 <div class="outline-text-3" id="text-4-2">
 <p>
-By the way did you notice how ugly the one-off thing looks?  All those
-parenthesis&#x2026;  We declared interest only in "systems" languages but
+By the way did you notice how ugly the one-off thing looks? All those
+parenthesis&#x2026; We declared interest only in "systems" languages but
 let's see how we'd approach this problem from <a href="http://lisp-lang.org/">Common Lisp</a>'s
 side<sup><a id="fnr.2" class="footref" href="#fn.2">2</a></sup>.
 </p>
 
 <p>
-The usual thing to do is embed a <a href="https://en.wikipedia.org/wiki/Domain-specific_language">DSL</a>.  We can represent the selection
+The usual thing to do is embed a <a href="https://en.wikipedia.org/wiki/Domain-specific_language">DSL</a>. We can represent the selection
 example like this:
 </p>
 
@@ -697,12 +695,12 @@ example like this:
 
 <p>
 Don't know about you, but on my eyes this looks better than SQL's
-supposed to be humane syntax.  A recurring theme in Lisp eDSL
+supposed to be humane syntax. A recurring theme in Lisp eDSL
 programming is that one first chooses nice succinct <a href="https://en.wikipedia.org/wiki/S-expressions">S-expression</a>
 representation (leaving all parsing to the <a href="http://www.lispworks.com/documentation/HyperSpec/Body/02_b.htm">Lisp reader</a>) and then is
 confident that will be able to transform it to whatever executable
-code is needed.  We can of course implement <b>Approach I</b> now.  But we
-can do better.  Much better!
+code is needed. We can of course implement <b>Approach I</b> now. But we
+can do better. Much better!
 </p>
 </div>
 </div>
@@ -714,19 +712,20 @@ can do better.  Much better!
 So <b>select</b> has to be <a href="http://www.gigamonkeys.com/book/macros-defining-your-own.html">macro</a> (the chosen representation doesn't adhere
 to the function calling convention, for user convenience) which
 expands to procedure that maps over the given db, <span class="underline">compiles</span> (CL
-compilers are lightening fast) and then calls it.  Note that during
-its macro expansion, it will be observing a concrete query so it can
-check out the db and its schema, what fields are selected, what is the
-exact WHERE clause.  Instead of solving the problem for <span class="underline">all</span> possible
-queries as <b>Approach I</b> <span class="underline">must</span>, we <span class="underline">can</span> instead solve for this single
-case.  That's our time pausing mechanism.
+compilers are lightening fast) and then calls it. Note that during its
+macro expansion, it will be observing a concrete query so it can check
+out the db and its schema, what fields are selected, what is the exact
+WHERE clause and based on these - emit appropriate specialized
+code. Instead of solving the problem for <span class="underline">all</span> possible queries as
+<b>Approach I</b> <span class="underline">must</span>, we <span class="underline">can</span> instead solve for this single
+case. That's our time pausing mechanism.
 </p>
 
 <p>
 Since we are supposed to work over large dbs, we can gain a lot by
 first introspecting the request and specializing on its
-properties<sup><a id="fnr.3" class="footref" href="#fn.3">3</a></sup>.  So let's make a little impromptu <a href="https://en.wikipedia.org/wiki/Optimizing_compiler">optimizing
-compiler</a>!  Don't freak out, it's surprisingly easy&#x2026; in Lisp:
+properties<sup><a id="fnr.3" class="footref" href="#fn.3">3</a></sup>. So let's make a little impromptu <a href="https://en.wikipedia.org/wiki/Optimizing_compiler">optimizing
+compiler</a>! Don't freak out, it's surprisingly easy&#x2026; in Lisp:
 </p>
 
 <div class="org-src-container">
@@ -744,16 +743,16 @@ compiler</a>!  Don't freak out, it's surprisingly easy&#x2026; in Lisp:
 
 <p>
 Here <a href="#org0434eb9">do-lines</a> would be a macro that abstracts iteration over db
-entries.  <b>spec</b> is for example structure/object instance which holds
+entries. <b>spec</b> is for example structure/object instance which holds
 information about specific db - storage (file), entry size, field
-names with their offsets and sizes.  I won't spell it out, you can
+names with their offsets and sizes. I won't spell it out, you can
 imagine what methods working over it would do.
 </p>
 
 <p>
 Result wise we can get away only with the body of the procedure
 enclosed by <a href="#org0434eb9">do-lines</a> but depending on lisp implementation, this might
-get executed in interpreter mode<sup><a id="fnr.4" class="footref" href="#fn.4">4</a></sup>.  However, in this case we want
+get executed in interpreter mode<sup><a id="fnr.4" class="footref" href="#fn.4">4</a></sup>. However, in this case we want
 to explicitly ensure compilation happens.
 </p>
 </div>
@@ -786,7 +785,7 @@ example flat file db representation:
 <p>
 See, that's what it takes to provide convenient zero cost syntactic
 abstraction for specialized file line iteration in spirit of the
-built-in <a href="http://www.lispworks.com/documentation/HyperSpec/Body/m_dolist.htm">dolist</a>.  No need to hack the compiler, pray to <a href="https://en.wikipedia.org/wiki/BDFL">BDFL</a> and/or
+built-in <a href="http://www.lispworks.com/documentation/HyperSpec/Body/m_dolist.htm">dolist</a>. No need to hack the compiler, pray to <a href="https://en.wikipedia.org/wiki/BDFL">BDFL</a> and/or
 assemble language committee for agreement.
 </p>
 
@@ -794,14 +793,14 @@ assemble language committee for agreement.
 Since entry size for particular db is fixed and known, we declare (the
 compiler might infer this type on its own without the declaration) and
 pre-allocate appropriately typed and sized line buffer and read
-entries within it.  The declaration may further help the compiler
-elide array bound checks for the enclosed line operations.<sup><a id="fnr.5" class="footref" href="#fn.5">5</a></sup>
+entries within it. The declaration may further help the compiler elide
+array bound checks for the enclosed line operations.<sup><a id="fnr.5" class="footref" href="#fn.5">5</a></sup>
 </p>
 
 <p>
-I didn't name this <b>do-file-lines</b> because it can be extended to handle
-other db storage types, key-value, SQL, whatever.  This is the place
-to extend if we go for parallel processing too.
+I didn't name this <b>do-file-lines</b> because it can be extended to
+handle other db storage types, key-value, SQL, whatever. This is the
+place to extend if we go for parallel processing too.
 </p>
 </div>
 </div>
@@ -810,7 +809,7 @@ to extend if we go for parallel processing too.
 <h3 id="orgd81ac55"><span class="section-number-3">4.5</span> Generate WHERE tree</h3>
 <div class="outline-text-3" id="text-4-5">
 <p>
-Let's look at the WHERE transformation.  We can mirror the query tree
+Let's look at the WHERE transformation. We can mirror the query tree
 and replace necessary parts (the leaves in this case) with "real"
 code:
 </p>
@@ -841,7 +840,7 @@ generate appropriate code.
 
 <p>
 Amusingly this miniscule recursive, let's say <a href="https://en.wikipedia.org/wiki/Source-to-source_compiler">transpiler</a>, corresponds
-to the recursive <a href="#org035028d">match</a> procedure in the <b>Approach I</b> solution.  Only
+to the recursive <a href="#org035028d">match</a> procedure in the <b>Approach I</b> solution. Only
 the former solves the problem partly at compile-time (<a href="#orgc141078">macro expansion
 time</a> if we have to be pedantic) and eliminates run-time recursion,
 while the latter is confined to roar only at run-time.
@@ -879,7 +878,7 @@ helpers:
 <p>
 Above we introduce a class to represent both field references and
 constant string operands and (an implicit) <a href="http://www.gigamonkeys.com/book/object-reorientation-generic-functions.html">generic function</a> with
-couple of methods to dispatch the 2 cases.  Here come the actual
+couple of methods to dispatch the 2 cases. Here come the actual
 generators:
 </p>
 
@@ -976,18 +975,18 @@ result-preserving <a href="https://en.wikipedia.org/wiki/Boolean_algebra">boolea
 <div class="outline-text-3" id="text-4-7">
 <p>
 While the WHERE simplification is most substantial, other parts of the
-selection procedure can also enjoy improvement.  Concretely, under
+selection procedure can also enjoy improvement. Concretely, under
 <b>Approach I</b> one has to introduce cycle over the selected fields to
-print them.  We can do this of course but <b>Approach II</b> allows such
-loop to be unrolled during the <a href="#orgc141078">macro expansion phase</a>.  Why do this?
+print them. We can do this of course but <b>Approach II</b> allows such
+loop to be unrolled during the <a href="#orgc141078">macro expansion phase</a>. Why do this?
 </p>
 
 <p>
-Because we can!  More responsibly, combined with the above line size
+Because we can! More responsibly, combined with the above line size
 declaration, the compiler (if not sufficiently advanced to unroll on
 its own) will now be certain that all line operations are within array
-bounds.  And will open opportunity for other optimizations.  Here's
-how to do it:
+bounds. And will open opportunity for other optimizations. Here's how
+to do it:
 </p>
 
 <div class="org-src-container">
@@ -1029,10 +1028,10 @@ Which will expand to:
 
 <p>
 We can check if adjacent in the schema fields are selected next to
-each other and fold them within single <a href="http://www.lispworks.com/documentation/HyperSpec/Body/f_wr_stg.htm">write-string</a> call.  We can also
+each other and fold them within single <a href="http://www.lispworks.com/documentation/HyperSpec/Body/f_wr_stg.htm">write-string</a> call. We can also
 unroll just some fields and leave a loop for the rest if too many, not
-to blow executable size.  We are trying to help the compiler generate
-good code while the compiler is helping us generate good code.  <a href="https://en.wikipedia.org/wiki/Drawing_Hands">Escher</a>
+to blow executable size. We are trying to help the compiler generate
+good code while the compiler is helping us generate good code. <a href="https://en.wikipedia.org/wiki/Drawing_Hands">Escher</a>
 would approve.
 </p>
 </div>
@@ -1042,11 +1041,11 @@ would approve.
 <h3 id="orgf4b62af"><span class="section-number-3">4.8</span> End result</h3>
 <div class="outline-text-3" id="text-4-8">
 <p>
-Congratulations, we just made a working file query engine<sup><a id="fnr.6" class="footref" href="#fn.6">6</a></sup>!  We
+Congratulations, we just made a working file query engine<sup><a id="fnr.6" class="footref" href="#fn.6">6</a></sup>! We
 designed a nice query language, outsourced all parsing to the <a href="http://www.lispworks.com/documentation/HyperSpec/Body/02_b.htm">Lisp
-reader</a>, courageously went onto implementing a <a href="https://en.wikipedia.org/wiki/One-pass_compiler">one-pass</a> to source
+reader</a>, courageously went onto implementing a <a href="https://en.wikipedia.org/wiki/One-pass_compiler">one-pass</a> to-source
 compiler (which in this case is easier than <a href="https://en.wikipedia.org/wiki/Interpreter_(computing)">interpreter</a>!) and even
-managed to sprinkle some optimizations.  And on top of that, the
+managed to sprinkle some optimizations. And on top of that, the
 language implementation borrowed us its "real" compiler (at run-time!)
 to optimize the expansion and generate machine code.
 </p>
@@ -1160,16 +1159,15 @@ We can enjoy the total of our efforts using <a href="http://www.lispworks.com/do
 
 <p>
 Which is about what one would write by hand if not lazy to unroll
-loops&#x2026;and not afraid of magic constants.  And nice starting point
-for the compiler to generate machine code before running it over the
-db.
+loops&#x2026;and not afraid of magic constants. And nice starting point for
+the compiler to generate machine code before running it over the db.
 </p>
 
 <p>
 In fact, in similar vein the <a href="https://edicl.github.io/cl-ppcre/">cl-ppcre</a> library used here goes a step
 further than usual compiled languages to build regex <a href="https://en.wikipedia.org/wiki/Deterministic_finite_automaton">state machine</a>
 scanners for constant literals (as is the case in our expansion) at
-compile-time thanks to a <a href="#orgc141078">compiler macro</a>.  I hear people are still
+compile-time thanks to a <a href="#orgc141078">compiler macro</a>. I hear people are still
 struggling to <a href="https://github.com/hanickadot/compile-time-regular-expressions">hack limited form of this</a> with templates in C++?
 </p>
 </div>
@@ -1181,7 +1179,7 @@ struggling to <a href="https://github.com/hanickadot/compile-time-regular-expres
 <p>
 With such simple, straightforward code and few declarations, the
 superb <a href="http://sbcl.org/">Steel Bank Common Lisp</a> compiler in particular would be able to
-do respectable job.  But performance in this case will still be 4-5
+do respectable job. But performance in this case will still be 4-5
 times slower than competent C++ version for the following prosaic
 differences:
 </p>
@@ -1237,8 +1235,8 @@ The first requires adjusting only the <a href="#org0434eb9">do-lines</a> macro:
 <p>
 Skeleton is same as before, we only add a buffer dedicated to reading
 several lines at once and then slide through it, copying and
-converting bytes to the line variable.  With this, performance goes
-around 1.5 - 2 times slower than C++.  But we can do better!
+converting bytes to the line variable. With this, performance goes
+around 1.5 - 2 times slower than C++. But we can do better!
 </p>
 </div>
 </div>
@@ -1249,8 +1247,8 @@ around 1.5 - 2 times slower than C++.  But we can do better!
 <p>
 To go further we can try to leave aside copying and converting raw
 bytes and instead apply comparisons directly over them (what C++
-does).  So I <a href="https://www.quicklisp.org/">Quicklisp</a>-ed the <b>ascii-strings</b> contrib of the
-<a href="https://bitbucket.org/vityok/cl-string-match">cl-string-match</a> library to help with this.  Unfortunately I couldn't
+does). So I <a href="https://www.quicklisp.org/">Quicklisp</a>-ed the <b>ascii-strings</b> contrib of the
+<a href="https://bitbucket.org/vityok/cl-string-match">cl-string-match</a> library to help with this. Unfortunately I couldn't
 find substitute for the regex matcher that works on byte arrays, so
 we'd still have to make conversion for fields which are matched
 against regex.
@@ -1259,7 +1257,7 @@ against regex.
 <p>
 This requires changes mostly in <a href="#org36dd665">gen-field-clause</a> and friends, slight
 adjustment to <a href="#org4b11d40">gen-print-selection</a> and removing the line conversion
-loop from the improved <a href="#org31e949e">do-lines</a>.  Here's a prototype sketch of the
+loop from the improved <a href="#org31e949e">do-lines</a>. Here's a prototype sketch of the
 desired expansion (<b>#.</b> is a <a href="#orgc141078">reader macro</a> which evaluates the
 following expression at read-time):
 </p>
@@ -1350,7 +1348,7 @@ following expression at read-time):
 </div>
 
 <p>
-Now, that begins to look a bit more compilish.  Here's what changed:
+Now, that begins to look a bit more compilish. Here's what changed:
 </p>
 
 <ul class="org-ul">
@@ -1370,8 +1368,8 @@ and can skip filling on subsequent operations over the same line</li>
 <p>
 I won't go into detailed implementation, the previous snippets should
 have shown how programmatically manipulating code in Lisp is
-indistinguishable from juggling with data.  These adjustments are not
-really rocket science.  You can see a more elaborate and complete
+indistinguishable from juggling with data. These adjustments are not
+really rocket science. You can see a more elaborate and complete
 implementation in <a href="https://github.com/m00natic/fdbq">fdbq</a>.
 </p>
 </div>
@@ -1524,7 +1522,7 @@ while the CL <span class="underline">complete solutions</span> still use sequent
 </p>
 
 <p>
-Not bad for a "slow" dynamic language!  Anyway, CL and SBCL's
+Not bad for a "slow" dynamic language! Anyway, CL and SBCL's
 single thread disadvantage here comes from:
 </p>
 
@@ -1536,7 +1534,7 @@ unrolling pretty much neutralizes that)</li>
 </ul>
 
 <p>
-How does it compensate during parallelization?  It may have something
+How does it compensate during parallelization? It may have something
 to do with the excellent <a href="https://lparallel.org/">lparallel</a> library allowing easily wipe a
 scheme which better saturates the CPUs while playing well with the
 system caches.
@@ -1565,13 +1563,13 @@ Here's the essence of <b>Approach II</b>:
 <p>
 I like to call this tactic of plugging Ahead-Of-Time compilation on
 the fly (run-time) over newly assembled specialized code "Manual
-Just-In-Time compilation".  Works at a higher level than "automatic"
+Just-In-Time compilation". Works at a higher level than "automatic"
 <a href="https://en.wikipedia.org/wiki/Just-in-time_compilation">JIT</a> and opens opportunities for greater while orthogonal gain and as
-seen - even algorithm simplification.  This doesn't work (at least is
+seen - even algorithm simplification. This doesn't work (at least is
 not portable) for languages which leave only minimal dead skeleton of
 the program for run-time like&#x2026;er, about all compiled languages
-(unless <a href="https://en.wikipedia.org/wiki/Greenspun%27s_tenth_rule">greenspunning</a>).  It's idiomatic and easily available in most
-Lisps through macros.  Common Lisp is especially suited with:
+(unless <a href="https://en.wikipedia.org/wiki/Greenspun%27s_tenth_rule">greenspunning</a>). It's idiomatic and easily available in most
+Lisps through macros. Common Lisp is especially suited with:
 </p>
 
 <ul class="org-ul">
@@ -1586,7 +1584,7 @@ system</li>
 
 <p>
 Some CL implementations can leverage type declarations to rival static
-language <a href="https://en.wikipedia.org/wiki/Ahead-of-time_compilation">AOT</a> compilers<sup><a id="fnr.11" class="footref" href="#fn.11">11</a></sup>.  SBCL has certain ability to perform
+language <a href="https://en.wikipedia.org/wiki/Ahead-of-time_compilation">AOT</a> compilers<sup><a id="fnr.11" class="footref" href="#fn.11">11</a></sup>. SBCL has certain ability to perform
 <a href="https://en.wikipedia.org/wiki/Type_inference">type inference</a> during compilation and beside type errors, even
 provides hints where and why a micro-optimization couldn't be applied
 to guide type declaration refinements:
@@ -1608,7 +1606,7 @@ source.lisp:4:3:
 
 <p>
 As the examples show, Common Lisp actually has unexpectedly rich <a href="http://www.lispworks.com/documentation/HyperSpec/Body/04_bc.htm">type
-system</a>.  Combine this with <a href="https://en.wikipedia.org/wiki/Metaprogramming">metaprogramming</a> (where Lisps excel at) and
+system</a>. Combine this with <a href="https://en.wikipedia.org/wiki/Metaprogramming">metaprogramming</a> (where Lisps excel at) and
 one can generate pretty trimmed static code where needed.
 </p>
 
@@ -1627,7 +1625,7 @@ I can hear you say:
 
 <blockquote>
 <p>
-<i>THE PARENTHESIS, MY EYES!  Sir, just use "modern" dynamic language
+<i>THE PARENTHESIS, MY EYES! Sir, just use "modern" dynamic language
 which provides <b>eval</b>.</i>
 </p>
 </blockquote>
@@ -1649,8 +1647,8 @@ is rather Lisp with default random syntax<sup><a id="fnr.12" class="footref" hre
 
 <p>
 In contrast to random-syntax code-is-a-string/file-blob languages,
-Lisps deal with already parsed trees basically all the time.  Simple
-and reliable to generate, traverse, transform.  DSLs become so easy to
+Lisps deal with already parsed trees basically all the time. Simple
+and reliable to generate, traverse, transform. DSLs become so easy to
 implement, it feels like cheating.
 </p>
 </div>
@@ -1661,20 +1659,20 @@ implement, it feels like cheating.
 <div class="outline-text-4" id="text-5-1-2">
 <p>
 Nowadays there's multitude of languages that bolt on <a href="https://en.wikipedia.org/wiki/Quasi-quotation">quasi-quote</a>
-macros in the style of Common Lisp backquote expressions.  And people
+macros in the style of Common Lisp backquote expressions. And people
 are quick to assume that Lisps are now completely assimilated by more
 mainstream languages, yadda yadda (obviously never heard of <a href="http://www.gigamonkeys.com/book/object-reorientation-generic-functions.html">CLOS</a> or
-CL's <a href="http://www.gigamonkeys.com/book/beyond-exception-handling-conditions-and-restarts.html">condition system</a>).  Some of them are even statically typed,
-though these often have limitations on what can be done at compile
-time.  They are normally nice enough to easily implement syntax sugar
-like the simple version of <a href="#org0434eb9">do-lines</a>.  But once a task gets a bit
-harder like having to introspect, generate non trivially structured
-code and/or combine transformations - implementation (if at all
-possible) degrades to undecipherable syntax noise that requires PhD to
-figure out.  And the reason is that unlike Lisps, their random syntax
-is hardly representative of the abstract syntax trees the
-interpreter/compiler works with.  So they invent yet another random
-syntax sub-language to bridge them.  These ain't "acceptable Lisps".
+CL's <a href="http://www.gigamonkeys.com/book/beyond-exception-handling-conditions-and-restarts.html">condition system</a>). Some of them are even statically typed, though
+these often have limitations on what can be done at compile time. They
+are normally nice enough to easily implement syntax sugar like the
+simple version of <a href="#org0434eb9">do-lines</a>. But once a task gets a bit harder like
+having to introspect, generate non trivially structured code and/or
+combine transformations - implementation (if at all possible) degrades
+to undecipherable syntax noise that requires PhD to figure out. And
+the reason is that unlike Lisps, their random syntax is hardly
+representative of the abstract syntax trees the interpreter/compiler
+works with. So they invent yet another random syntax sub-language to
+bridge them. These ain't "acceptable Lisps".
 </p>
 </div>
 </div>
@@ -1684,13 +1682,13 @@ syntax sub-language to bridge them.  These ain't "acceptable Lisps".
 <h3 id="orgc141078"><span class="section-number-3">5.2</span> Life stages of a program</h3>
 <div class="outline-text-3" id="text-5-2">
 <p>
-Where metaprogramming power comes from?  Beside the infamous uniform
+Where metaprogramming power comes from? Beside the infamous uniform
 structured syntax which allows <a href="https://en.wikipedia.org/wiki/Homoiconicity">duality between code and data</a>, Lisps
 normally make distinction between several possibly interleaving and
-recurring phases of program existence and provide hooks into them.  Or
-rather rewrite rules.  And what language would you reprogram them in,
-some dumb pre-processor or half-assed template engine?  No,
-<a href="https://en.wikipedia.org/wiki/Turtles_all_the_way_down">it's turtles all the way</a>!
+recurring phases of program existence and provide hooks into them. Or
+rather rewrite rules. And what language would you reprogram them in,
+some dumb pre-processor or half-assed template engine? No, <a href="https://en.wikipedia.org/wiki/Turtles_all_the_way_down">it's
+turtles all the way</a>!
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -1771,8 +1769,8 @@ some dumb pre-processor or half-assed template engine?  No,
 While the above seems like the natural sequence of "events" - <a href="http://www.lispworks.com/documentation/HyperSpec/Body/f_rd_rd.htm">read</a>,
 <a href="http://www.lispworks.com/documentation/HyperSpec/Body/f_cmp.htm">compile</a>, can additionally happen at any time as any other function
 call (one of several reasons to prefer functions to macros when in
-doubt).  Notice how the <a href="#org245b3b7">select</a> macro is knitted together by amalgam of
-built-in and user defined functions and macros.  Here's wildly
+doubt). Notice how the <a href="#org245b3b7">select</a> macro is knitted together by amalgam of
+built-in and user defined functions and macros. Here's wildly
 approximate sketch how it may bounce around the phases after user
 invocation:
 </p>
@@ -1789,28 +1787,28 @@ invocation:
 <h3 id="org3021a61"><span class="section-number-3">5.3</span> Image based development and deploy</h3>
 <div class="outline-text-3" id="text-5-3">
 <p>
-Think Lisp tricks end here?  Common Lisp like <a href="https://en.wikipedia.org/wiki/Smalltalk">Smalltalk</a> is not just a
-compiler but an image environment.  The image initially contains just
+Think Lisp tricks end here? Common Lisp like <a href="https://en.wikipedia.org/wiki/Smalltalk">Smalltalk</a> is not just a
+compiler but an image environment. The image initially contains just
 the core language (and reader + compiler and/or interpreter) and is
 incrementally extended and changed during development/user
-interaction.  Be it by loading libraries, re/defining functions,
+interaction. Be it by loading libraries, re/defining functions,
 constants, re/setting global variables, executing code with side
 effects etc.
 </p>
 
 <p>
-How would one produce user facing executable?  Dump the current
-image<sup><a id="fnr.14" class="footref" href="#fn.14">14</a></sup>.  This opens opportunity to also embed data within the
+How would one produce user facing executable? Dump the current
+image<sup><a id="fnr.14" class="footref" href="#fn.14">14</a></sup>. This opens opportunity to also embed data within the
 image before dumping which would otherwise have to be loaded, parsed,
 pre/processed during execution.
 </p>
 
 <p>
 For our little query engine such data are the configuration
-specifications for the multiple dbs.  These rarely change and makes
+specifications for the multiple dbs. These rarely change and makes
 sense to be parsed down to particular structure instances and put into
 a global hash table variable for example before dump thus becoming
-available and ready to use immediately on image execution.  This would
+available and ready to use immediately on image execution. This would
 additionally improve executable's latency for queries.
 </p>
 </div>
@@ -1821,11 +1819,11 @@ additionally improve executable's latency for queries.
 <div class="outline-text-3" id="text-5-4">
 <p>
 One may object that all falls into place only if we "limit" users to
-S-expression DSLs.  What if forced to literary provide SQL syntax?
+S-expression DSLs. What if forced to literary provide SQL syntax?
 Common Lisp in particular has <a href="http://www.lispworks.com/documentation/HyperSpec/Body/23_aa.htm">reprogrammable reader</a> through <a href="#orgc141078">reader
 macros</a> which allows performing read-time transformation (before
 "regular" <a href="#orgc141078">macro expansion time</a>) of more funky syntax (with some
-limits) to good ole S-expressions.  We'll have to do some parsing by
+limits) to good ole S-expressions. We'll have to do some parsing by
 ourselves, like animals, but using this would allow us keep rest of
 our solution unchanged.
 </p>
@@ -1851,20 +1849,20 @@ but even the outline can suggest what sort of magic is possible.
 <p>
 Traditional recommendations for macro black belting are <a href="http://www.paulgraham.com/onlisp.html">On Lisp:
 Advanced Techniques for Common Lisp</a> and its logical successor <a href="https://letoverlambda.com/">Let Over
-Lambda</a>.  <a href="https://en.wikipedia.org/wiki/The_Art_of_the_Metaobject_Protocol">The Art of the Metaobject Protocol</a> is the bible of object
-system metaprogramming.  <a href="https://github.com/norvig/paip-lisp">Paradigms of Artificial Intelligence
+Lambda</a>. <a href="https://en.wikipedia.org/wiki/The_Art_of_the_Metaobject_Protocol">The Art of the Metaobject Protocol</a> is the bible of object
+system metaprogramming. <a href="https://github.com/norvig/paip-lisp">Paradigms of Artificial Intelligence
 Programming: Case Studies in Common Lisp</a> is an instructive showoff how
 complex systems become not so complex with a powerful language and
 clear idea.
 </p>
 
 <p>
-Most of the above require CL familiarity.  If one lacks such, <a href="http://stevelosh.com/blog/2018/08/a-road-to-common-lisp/">A road
-to Common Lisp</a> is an excellent getting started guide.  Newcomers are
+Most of the above require CL familiarity. If one lacks such, <a href="http://stevelosh.com/blog/2018/08/a-road-to-common-lisp/">A road to
+Common Lisp</a> is an excellent getting started guide. Newcomers are
 generally recommended <a href="http://www.gigamonkeys.com/book/">Practical Common Lisp</a> or if more humourous: <a href="http://landoflisp.com/">Land
-Of Lisp</a>; more seasoned practitioners: <a href="http://weitz.de/cl-recipes/">Common Lisp Recipes</a>.  For an
-advanced development environment, one can try <a href="https://portacle.github.io/">Portacle</a> or possibly <a href="https://github.com/cxxxr/lem">Lem</a>
-if not much into Emacs.
+Of Lisp</a>; more seasoned practitioners: <a href="http://weitz.de/cl-recipes/">Common Lisp Recipes</a> and <a href="https://lispcookbook.github.io/cl-cookbook/">The
+Common Lisp Cookbook</a>. For an advanced development environment, one can
+try <a href="https://portacle.github.io/">Portacle</a> or possibly <a href="https://github.com/cxxxr/lem">Lem</a> if not much into Emacs.
 </p>
 </div>
 </div>
@@ -1874,7 +1872,7 @@ if not much into Emacs.
 
 <div class="footdef"><sup><a id="fn.1" class="footnum" href="#fnr.1">1</a></sup> <div class="footpara"><p class="footpara">
 One may rightfully note that such data seems plain meant for SQL
-storage.  There are some complications in reality including size,
+storage. There are some complications in reality including size,
 performance needs and slight deviations from the fixed format why this
 is not done.
 </p></div></div>
@@ -1882,16 +1880,15 @@ is not done.
 <div class="footdef"><sup><a id="fn.2" class="footnum" href="#fnr.2">2</a></sup> <div class="footpara"><p class="footpara">
 Although Common Lisp (CL) is <a href="https://en.wikipedia.org/wiki/Type_system">dynamically typed</a> (also strongly typed)
 and everyone "knows" such languages are doomed to be slow, CL is rare
-exception.  One reason is <a href="https://en.wikipedia.org/wiki/Common_lisp">history</a>.  Lisps were the primordial wave of
+exception. One reason is <a href="https://en.wikipedia.org/wiki/Common_lisp">history</a>. Lisps were the primordial wave of
 <a href="https://en.wikipedia.org/wiki/Dynamic_programming_language">dynamic languages</a> and had to run acceptably on quite limited hardware
-compared to nowadays.  Thus they were crafted in ways where
-possibility for performance optimizations were kept in sight and with
-<a href="https://en.wikipedia.org/wiki/Moore%27s_law">Moore's law</a> still progressing - they were gradually catching up the
-statically typed languages.  To the point where <a href="https://en.wikipedia.org/wiki/Genera_(operating_system)">operating systems</a> were
-written from the ground up.  With Common Lisp being merger of the
-original line of dialects, there are many places in its specification
-where freeways for implementations to perform optimizations are
-present.
+compared to nowadays. Thus they were crafted in ways where possibility
+for performance optimizations were kept in sight and with <a href="https://en.wikipedia.org/wiki/Moore%27s_law">Moore's law</a>
+still progressing - they were gradually catching up the statically
+typed languages. To the point where <a href="https://en.wikipedia.org/wiki/Genera_(operating_system)">operating systems</a> were written
+from the ground up. With Common Lisp being merger of the original line
+of dialects, there are many places in its specification where freeways
+for implementations to perform optimizations are present.
 </p></div></div>
 
 <div class="footdef"><sup><a id="fn.3" class="footnum" href="#fnr.3">3</a></sup> <div class="footpara"><p class="footpara">
@@ -1902,16 +1899,16 @@ no way to specialize the code structure at that point, only the data.
 
 <div class="footdef"><sup><a id="fn.4" class="footnum" href="#fnr.4">4</a></sup> <div class="footpara"><p class="footpara">
 Some CL implementations work only as interpreters, others only as
-compilers. It will be all the same in such case.  Talking of CL
+compilers. It will be all the same in such case. Talking of CL
 implementations, there's bunch of standard compliant ones with
 different pros and cons - here's slightly outdated <a href="https://common-lisp.net/~dlw/LispSurvey.html">survey</a> on most of
-them.  Probably the biggest omission is the recent <a href="https://github.com/clasp-developers/clasp">Clasp</a>
+them. Probably the biggest omission is the recent <a href="https://github.com/clasp-developers/clasp">Clasp</a>
 implementation.
 </p></div></div>
 
 <div class="footdef"><sup><a id="fn.5" class="footnum" href="#fnr.5">5</a></sup> <div class="footpara"><p class="footpara">
 Array bound checks should be unconditionally elided within the
-<b>(safety 0)</b> <a href="http://www.lispworks.com/documentation/HyperSpec/Body/d_optimi.htm">optimization level</a>.  In case we decide to go
+<b>(safety 0)</b> <a href="http://www.lispworks.com/documentation/HyperSpec/Body/d_optimi.htm">optimization level</a>. In case we decide to go
 berserk&#x2026; like C/C++'s only mode of operation for <a href="https://en.wikipedia.org/wiki/Plain_old_data">POD</a> types.
 </p></div></div>
 
@@ -1923,8 +1920,8 @@ part of a full solution.
 
 <div class="footdef"><sup><a id="fn.7" class="footnum" href="#fnr.7">7</a></sup> <div class="footpara"><p class="footpara">
 That's <b>Approach I</b> without actual query parsing, just a
-mocked up specific WHERE tree instance.  So not quite a real solution
-either, thus times are a bit optimistic.  Yeah, I'm lazy (and life's
+mocked up specific WHERE tree instance. So not quite a real solution
+either, thus times are a bit optimistic. Yeah, I'm lazy (and life's
 too short for so much C++ ceremony).
 </p></div></div>
 
@@ -1943,7 +1940,7 @@ Beside metaprogrammability and being as imperative as it gets,
 CL sports fantastic object system, has adequate out of the box support
 for functional style and <a href="http://www.lispworks.com/documentation/HyperSpec/Body/12_aac.htm">lower level bit-twiddling</a> at the same time.
 Generally, it can assimilate many outside paradigms as if they were
-native thanks to being the programmable programming language.  There
+native thanks to being the programmable programming language. There
 are library extensions for <a href="https://cliki.net/Prolog">logic programming</a>, <a href="http://lisa.sourceforge.net/">expert systems</a>,
 <a href="http://nikodemus.github.io/screamer/">nondeterministic and constraint programming</a>, <a href="https://github.com/guicho271828/trivia">pattern matching</a>,
 <a href="https://borodust.github.io/projects/cl-flow/">dataflow</a>&#x2026; which normally blend with rest of the language, just like
@@ -1954,26 +1951,26 @@ user code becomes indistinguishable from the core functionality.
 See <a href="https://benchmarksgame-team.pages.debian.net/benchmarksgame/which-programs-are-fast.html">The Computer Language Benchmarks Game</a> to get rough
 idea. With all the usual toy micro benchmark disclaimers, Common
 Lisp/SBCL's competitiveness against statically typed languages is kind
-of embarrassing to the latter.  And that's using same algorithms.
+of embarrassing to the latter. And that's using same algorithms.
 </p></div></div>
 
 <div class="footdef"><sup><a id="fn.12" class="footnum" href="#fnr.12">12</a></sup> <div class="footpara"><p class="footpara">
 Julia can almost match Common Lisp for this query engine
-thing.  However, it seems to only be able to invoke (implicitly) the
+thing. However, it seems to only be able to invoke (implicitly) the
 compiler at run-time for <a href="https://docs.julialang.org/en/latest/manual/metaprogramming/#Generated-functions-1">generated functions</a> which only see argument
-types.  This is not sufficient for our queries.  Thus <a href="https://docs.julialang.org/en/latest/devdocs/eval/">eval</a>
+types. This is not sufficient for our queries. Thus <a href="https://docs.julialang.org/en/latest/devdocs/eval/">eval</a>
 interpretation has to be used and the compiler wouldn't be able to
-optimize the run-time generated code.  In this case <b>Approach I</b> being
-subject to "normal" AOT compilation may well fare better.  In
-contrast, with Common Lisp we are able to explicitly summon the
-compiler with full optimization over arbitrary generated function.
+optimize the run-time generated code. In this case <b>Approach I</b> being
+subject to "normal" AOT compilation may well fare better. In contrast,
+with Common Lisp we are able to explicitly summon the compiler with
+full optimization over arbitrary generated function.
 </p></div></div>
 
 <div class="footdef"><sup><a id="fn.13" class="footnum" href="#fnr.13">13</a></sup> <div class="footpara"><p class="footpara">
 The table is from Common Lisp's perspective but <a href="https://racket-lang.org/">Racket</a> seems to
-have even more elaborate <a href="https://docs.racket-lang.org/guide/phases.html">macro phase system</a>.  Part of the reason is
+have even more elaborate <a href="https://docs.racket-lang.org/guide/phases.html">macro phase system</a>. Part of the reason is
 Racket, being a <a href="https://en.wikipedia.org/wiki/Scheme_%28programming_language%29">Scheme</a> descendant, has single namespace for functions
-and variables (<a href="https://en.wikipedia.org/wiki/Common_Lisp#The_function_namespace">Lisp-1</a>).  And all those crazy academics!
+and variables (<a href="https://en.wikipedia.org/wiki/Common_Lisp#The_function_namespace">Lisp-1</a>). And all those crazy academics!
 </p></div></div>
 
 <div class="footdef"><sup><a id="fn.14" class="footnum" href="#fnr.14">14</a></sup> <div class="footpara"><p class="footpara">
@@ -1990,7 +1987,7 @@ Like <a href="https://european-lisp-symposium.org/static/2018/heisig.pdf">Petali
 </div></div>
 <div id="postamble" class="status">
 <p class="author">Author: Andrey Kotlarski</p>
-<p class="date">Created: 2018-11-18 нд 16:49</p>
+<p class="date">Created: 2019-03-20 ср 02:39</p>
 <p class="creator"><a href="https://www.gnu.org/software/emacs/">Emacs</a> 26.1 (<a href="https://orgmode.org">Org</a> mode 9.1.9)</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
